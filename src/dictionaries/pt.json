@@ -1,0 +1,16 @@
+{
+  "header": {
+    "about": "Sobre mim",
+    "experience": "Meus Trabalhos",
+    "contact": "Contato",
+    "blog": "Blog"
+  },
+  "home": {
+    "page1": {
+      "title": "Eu crio interações entre usuários e tecnologia!",
+      "subtitle": "Só pra deixar claro mesmo, vai que entrou aqui no meu portifólio achando que eu sei javascript... Sou um webdeveloper apaixonado por criar coisas novas, gosto de me sentir desafiado a crescer na minha carreira e evoluir os meus conhecimentos sobre programação.",
+      "button": "Leia mais sobre mim"
+    }
+  }
+}
+
