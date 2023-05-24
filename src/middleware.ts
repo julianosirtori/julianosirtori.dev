@@ -19,7 +19,6 @@ export function middleware(request: NextRequest) {
 
     const language = request.headers.get('accept-language');
     const locale = getLocale(language)
-
     // e.g. incoming request is /products
     // The new URL is now /en-US/products
     return NextResponse.redirect(
@@ -29,10 +28,6 @@ export function middleware(request: NextRequest) {
 }
  
 export const config = {
-  matcher: [
-    // Skip all internal paths (_next)
-    '/((?!_next).*)',
-    // Optional: only run on root (/) URL
-    // '/'
-  ],
+ // Matcher ignoring `/_next/` and `/api/`
+  matcher: ['/((?!api|_next|image|favicon.ico).*)'],
 }
