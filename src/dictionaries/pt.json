@@ -6,8 +6,9 @@
     "blog": "Blog"
   },
   "home": {
-    "title": "I create interactions between users and technology!",
-    "subtitle": "Só pra deixar claro mesmo, vai que entrou aqui no meu portifólio achando que eu sei javascript... Sou um webdeveloper apaixonado por criar coisas novas, gosto de me sentir desafiado a crescer na minha carreira e evoluir os meus conhecimentos sobre programação.",
+    "title": "Eu crio interações entre usuários e tecnologia!",
+    "subtitleLine1": "Só pra deixar claro mesmo, vai que entrou aqui no meu portifólio achando que eu sei javascript...",
+    "subtitleLine2": "Sou um webdeveloper apaixonado por criar coisas novas, gosto de me sentir desafiado a crescer na minha carreira e evoluir os meus conhecimentos sobre programação.",
     "button": "Leia mais sobre mim"
   }
 }

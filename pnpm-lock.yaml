@@ -2,6 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@formatjs/intl-localematcher': ^0.2.32
+  '@phosphor-icons/react': ^2.0.9
   '@testing-library/jest-dom': ^5.16.5
   '@testing-library/react': ^14.0.0
   '@testing-library/react-hooks': ^8.0.1
@@ -27,6 +28,7 @@ specifiers:
 
 dependencies:
   '@formatjs/intl-localematcher': 0.2.32
+  '@phosphor-icons/react': 2.0.9_biqbaboplfbrettd7655fr4n2y
   '@types/node': 20.2.1
   '@types/react': 18.2.6
   '@types/react-dom': 18.2.4
@@ -840,6 +842,17 @@ packages:
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.15.0
+    dev: false
+
+  /@phosphor-icons/react/2.0.9_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-/dtQ0M9MXAr35wy8zPlwF684EvYRvGWZPAv+Bd0BR4vzIhjzfLBdHSovFxSP1rj3UOHvVR08qgRL04Kv90oqHA==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      react: '>= 16.8'
+      react-dom: '>= 16.8'
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
     dev: false
 
   /@pkgr/utils/2.4.0:

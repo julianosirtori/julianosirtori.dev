@@ -28,7 +28,7 @@ export const Header = ({ i18n }: HeaderProps) => {
   const links = useMemo(() => getLinks(language), [language])
 
   return (
-    <header className="bg-bgPrimary text-primary flex flex-row w-full justify-evenly items-center py-4">
+    <header className="bg-bgPrimary text-primary flex flex-row w-full justify-evenly items-center py-4 fixed top-0  ">
       <Link href={'/'}>
         <Image src="/images/simple_logo.svg" alt="" width={48} height={28} />
       </Link>

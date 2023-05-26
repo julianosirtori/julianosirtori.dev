@@ -11,11 +11,9 @@ module.exports = {
         primary: '#142AE9',
         bgPrimary: '#F4F5FB',
       },
-      extend: {
-        fontFamily: {
-          sans: ['var(--font-darker-grotesque)'],
-          mono: ['var(--font-space-mono)'],
-        },
+      fontFamily: {
+        sans: ['var(--font-darker-grotesque)'],
+        spaceMono: ['var(--font-space-mono)'],
       },
     },
   },

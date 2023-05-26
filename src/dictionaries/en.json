@@ -7,7 +7,8 @@
   },
   "home": {
     "title": "I create interactions between users and technology!",
-    "subtitle": "Só pra deixar claro mesmo, vai que entrou aqui no meu portifólio achando que eu sei javascript... Sou um webdeveloper apaixonado por criar coisas novas, gosto de me sentir desafiado a crescer na minha carreira e evoluir os meus conhecimentos sobre programação.",
+    "subtitleLine1": "Just to make it clear, in case you stumbled upon my portfolio thinking that I know JavaScript...",
+    "subtitleLine2": "I'm a web developer passionate about creating new things. I enjoy being challenged to grow in my career and expand my programming knowledge.",
     "button": "Leia mais sobre mim"
   }
 }
