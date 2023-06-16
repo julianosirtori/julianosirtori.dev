@@ -1,4 +1,4 @@
-import { SpaceMono, DarkerGrotesque } from '@/fonts'
+import { InterFont } from '@/fonts'
 import './globals.css'
 
 
@@ -14,7 +14,7 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" className={`${SpaceMono.variable} ${DarkerGrotesque.variable}`}>
+    <html lang="en" className={`${InterFont.variable}`}>
       <body>{children}</body>
     </html>
   )

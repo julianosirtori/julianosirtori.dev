@@ -1,15 +1,5 @@
 {
-  "header": {
-    "about": "About",
-    "projects": "Projects",
-    "contact": "Contact",
-    "blog": "Blog"
-  },
-  "home": {
-    "title": "I create interactions between users and technology!",
-    "subtitleLine1": "Just to make it clear, in case you stumbled upon my portfolio thinking that I know JavaScript...",
-    "subtitleLine2": "I'm a web developer passionate about creating new things. I enjoy being challenged to grow in my career and expand my programming knowledge.",
-    "button": "Leia mais sobre mim"
-  }
+  "title": "Hello, I’m Juliano.",
+  "subTitle": "A front-end developer specialized in React and problem-solving."
 }
 
