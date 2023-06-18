@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/react';
 import { InterFont } from '@/fonts'
 import './globals.css'
 
@@ -15,7 +16,10 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" className={`${InterFont.variable}`}>
-      <body>{children}</body>
+      <body>
+        {children}
+        <Analytics />
+      </body>
     </html>
   )
 }
