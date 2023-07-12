@@ -1,3 +1,6 @@
+import { Header } from "@/components/shared/Header";
+import { Footer } from "@/components/shared/Footer";
+
 interface BlogRootLayoutProps {
   children: React.ReactNode,
 }
@@ -5,7 +8,11 @@ interface BlogRootLayoutProps {
 export default async function BlogRootLayout({ children }: BlogRootLayoutProps) {
   return (
     <>
-      {children}
+      <Header />
+      <main>
+        {children}
+      </main>
+      <Footer />
     </>
   )
 }
