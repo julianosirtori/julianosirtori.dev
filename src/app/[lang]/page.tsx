@@ -20,7 +20,7 @@ export default async function Home({ params: { lang } }: HomeProps) {
   const dict = await getDictionary(lang);
 
   return (
-    <div className='flex justify-center items-center h-screen w-full bg-bgPrimary'>
+    <div className='flex justify-center items-center h-[calc(100vh_-_300px)] w-full bg-bgPrimary'>
       <main className='w-[390px] px-8'>
         <Image src="/images/juliano.jpg" width={150} height={150} alt="A man with smiling"
           className="border border-8 border-primary rounded-full mb-8" />

@@ -36,6 +36,13 @@ const preview: Preview = {
             height: '1024px',
           },
         },
+        fullHD: {
+          name: 'Full HD',
+          styles: {
+            width: '1920px',
+            height: '1080px',
+          },
+        }
       },
     }
   },
