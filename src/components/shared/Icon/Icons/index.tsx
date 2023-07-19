@@ -7,6 +7,7 @@ import IconLandmark from "./IconLandmark";
 import IconLinkedin from "./IconLinkedin";
 import IconLogo from "./IconLogo";
 import IconTwitter from "./IconTwitter";
+import IconQuote from "./IconQuote";
 
 export const IconsMaps = {
   IconDiscord: (props: TIcon) => <IconDiscord {...props} />,
@@ -17,4 +18,5 @@ export const IconsMaps = {
   IconLinkedin: (props: TIcon) => <IconLinkedin  {...props} />,
   IconLogo: (props: TIcon) => <IconLogo {...props} />,
   IconTwitter: (props: TIcon) => <IconTwitter {...props} />,
+  IconQuote: (props: TIcon) => <IconQuote {...props} />,
 }
