@@ -25,7 +25,7 @@ export const Header = () => {
       },
       {
         label: 'blog',
-        href: '/blog'
+        href: '/contact'
       },
     ]
   }, [])

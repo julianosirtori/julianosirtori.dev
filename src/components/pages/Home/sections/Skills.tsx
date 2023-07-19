@@ -39,7 +39,7 @@ export const Skills = () => {
           <ImageSVG name="dots" width="63px" height="63px" className="top-[60%] left-[50%] absolute" />
           <ImageSVG name="logo" width="113px" height="113px" className="bottom-[10%] left-4 absolute" />
         </div>
-        <div className="grid grid-flow-col grid-rows-2 gap-4 pl-4 overflow-x-scroll">
+        <div className="grid grid-flow-col grid-rows-2 gap-4 pl-4 overflow-x-scroll lg:overflow-hidden">
           {skills.map((skill, index) => (
             <CardSkills key={index} {...skill} />
           ))}

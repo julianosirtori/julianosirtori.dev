@@ -1,20 +1,43 @@
+'use client'
 import { Button } from "@/components/shared/Button/Button"
 import { ImageSVG } from "@/components/shared/ImageSVG"
+import { useReducedMotion, motion } from "framer-motion"
 import Image from "next/image"
 
 export const Presentation = () => {
+  const shouldReduceMotion = useReducedMotion()
+
+  const childVariants = {
+    initial: { opacity: 0, y: shouldReduceMotion ? 0 : 25 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+  }
   return (
-    <section className="flex flex-col gap-6 px-4 mt-5 w-full lg:flex-row lg:max-w-5xl lg:mt-16 lg:m-auto lg:items-center">
-      <div className="w-full flex flex-col gap-6 pb-8">
-        <h1 className="font-semibold text-2xl text-white max-w-sm ">
+    <section className="flex flex-col gap-6 px-4 mt-5 w-full lg:flex-row lg:max-w-5xl lg:mt-16 lg:m-auto lg:items-center overflow-hidden">
+      <motion.div
+        initial="initial"
+        animate="visible"
+        variants={{
+          initial: { opacity: 0 },
+          visible: { opacity: 1, transition: { staggerChildren: 0.2 } },
+        }} className="w-full flex flex-col gap-6 pb-8"
+      >
+        <motion.h1 variants={childVariants} className="font-semibold text-2xl text-white max-w-sm ">
           Juliano is a <span className="text-primary">front-end web developer</span>
-        </h1>
-        <p className="text-gray ">He crafts responsive websites where technologies meet creativity</p>
-        <Button className="max-w-[160px]">
-          Contact me!!
-        </Button>
-      </div>
-      <div className="flex w-full flex-col items-center">
+        </motion.h1>
+        <motion.p variants={childVariants} className="text-gray ">He crafts responsive websites where technologies meet creativity</motion.p>
+        <motion.div
+          className="w-full"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1 }}
+        >
+          <Button className="max-w-[160px]">
+            Contact me!!
+          </Button>
+        </motion.div>
+
+      </motion.div>
+      <div className="flex w-full flex-col items-center overflow-hidden">
         <div className="relative w-full h-80 max-w-sm">
           <ImageSVG name="logo" width="104px" height="104px" className="z-0 absolute top-10 left-[-8px]" />
           <Image src="/images/Juliano.png" fill alt="Juliano`s photo" className="absolute z-1" />
