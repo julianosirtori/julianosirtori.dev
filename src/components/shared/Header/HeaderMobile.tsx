@@ -22,7 +22,7 @@ export const HeaderMobile = ({ links }: IHeaderMobileProps) => {
         </svg>)}
       </button>
       {isMenuOpen && (
-        <nav className="fixed z-50 w-full h-[calc(100vh_-_48px)] top-12 pt-12 bg-background">
+        <nav className="fixed z-50 w-full h-[calc(100vh_-_48px)] top-12 left-0 px-4 pt-12 bg-background">
           <ul className="flex flex-col justify-between gap-8">
             {links.map((link) => (
               <li key={link.href}>

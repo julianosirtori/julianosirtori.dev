@@ -13,7 +13,7 @@ export const HeaderDesktop = ({ links }: IHeaderDesktopProps) => {
         <ul className="flex flex-row justify-between gap-8">
           {links.map((link) => (
             <li key={link.href}>
-              <Link href={link.href} className="font-bold text-white">
+              <Link href={link.href} className="font-medium text-white">
                 <span className="text-primary" >#</span>{link.label}
               </Link>
             </li>
