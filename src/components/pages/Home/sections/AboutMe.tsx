@@ -14,13 +14,17 @@ export const AboutMe = () => {
         <div className="w-full flex flex-row">
           <div className="flex flex-col gap-4 w-full max-w-lg">
             <p className="text-gray ">
-              Hello, i’m Elias!
+              Hello, I’m Juliano!
             </p>
             <p className="text-gray ">
-              I’m a self-taught front-end developer based in Kyiv, Ukraine. I can develop responsive websites from scratch and raise them into modern user-friendly web experiences.
+              I am a web developer specialized in large-scale international projects. My expertise includes the development of robust and scalable web applications, as well as the integration with different technologies.
+
             </p>
             <p className="text-gray ">
-              Transforming my creativity and knowledge into a websites has been my passion for over a year. I have been helping various clients to establish their presence online. I always strive to learn about the newest technologies and frameworks.
+              I am highly skilled in working in multidisciplinary teams and agile environments, which allows me to deliver high-quality solutions within the established deadlines.
+            </p>
+            <p className="text-gray">
+              As a professional, I am always seeking to learn and update myself to stay at the forefront of new technologies and market trends. With my vast experience in web development, I am able to create efficient and customized solutions to meet the specific needs of my clients. My goal is always to exceed expectations and ensure total customer satisfaction.
             </p>
             <Button variant="primary" className="max-w-[160px]">
               {`Read more ->`}

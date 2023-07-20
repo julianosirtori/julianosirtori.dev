@@ -6,11 +6,11 @@ export const Skills = () => {
   const skills = [
     {
       title: "Languages",
-      skills: ["JavaScript", "TypeScript", "HTML", "CSS"]
+      skills: ["JavaScript", "TypeScript", "Python",]
     },
     {
       title: "Frameworks",
-      skills: ["React", "Next.js", "Gatsby", "Express", "Node.js"]
+      skills: ["React", "Next.js", "Express", "Remix"]
     },
     {
       title: "Database",
@@ -18,7 +18,7 @@ export const Skills = () => {
     },
     {
       title: "Tools",
-      skills: ["Git", "GitHub", "GitLab", "Jira", "Confluence", "Figma"]
+      skills: ["Git", "GitHub", "Jira", "Confluence", "Figma"]
     },
     {
       title: "Others",

@@ -3,6 +3,7 @@ import { Button } from "@/components/shared/Button/Button"
 import { ImageSVG } from "@/components/shared/ImageSVG"
 import { useReducedMotion, motion } from "framer-motion"
 import Image from "next/image"
+import Link from "next/link"
 
 export const Presentation = () => {
   const shouldReduceMotion = useReducedMotion()
@@ -24,16 +25,19 @@ export const Presentation = () => {
         <motion.h1 variants={childVariants} className="font-semibold text-2xl text-white max-w-sm ">
           Juliano is a <span className="text-primary">front-end web developer</span>
         </motion.h1>
-        <motion.p variants={childVariants} className="text-gray ">He crafts responsive websites where technologies meet creativity</motion.p>
+        <motion.p variants={childVariants} className="text-gray ">I specialize in designing and implementing seamless user interactions on the web, utilizing JavaScript, React, and HTML to create captivating and dynamic digital experiences.</motion.p>
         <motion.div
           className="w-full"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1 }}
         >
-          <Button className="max-w-[160px]">
-            Contact me!!
-          </Button>
+          <Link href="/#contact">
+            <Button className="max-w-[160px]" role="link">
+              Contact me!!
+            </Button>
+          </Link>
+
         </motion.div>
 
       </motion.div>
@@ -47,7 +51,10 @@ export const Presentation = () => {
           <div className="w-4 h-4 bg-primary" />
           <div className="flex flex-col lg:flex-row">
             <span className="text-gray font-semibold mr-2">Currently working on</span>
-            <span className="text-white font-bold">Portfolio</span>
+            <a href="https://ciandt.com/br/pt-br" target="_blank">
+              <span className="text-white font-bold">Portfolio</span>
+            </a>
+
           </div>
         </div>
       </div>
