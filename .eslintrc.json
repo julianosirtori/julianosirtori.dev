@@ -1,12 +1,20 @@
 {
   "root": true,
-  "extends": ["next/core-web-vitals"],
-  "plugins": ["testing-library"],
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:storybook/recommended"
+  ],
+  "plugins": [
+    "testing-library"
+  ],
   "overrides": [
     {
-      "files": ["**/?(*.)+(spec|test).[jt]s?(x)"],
-      "extends": ["plugin:testing-library/react"]
+      "files": [
+        "**/?(*.)+(spec|test).[jt]s?(x)"
+      ],
+      "extends": [
+        "plugin:testing-library/react"
+      ]
     }
   ]
 }
-

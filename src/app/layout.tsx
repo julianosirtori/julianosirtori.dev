@@ -1,7 +1,5 @@
 import { Analytics } from '@vercel/analytics/react';
-import { InterFont } from '@/fonts'
 import './globals.css'
-
 
 export const metadata = {
   title: 'Create Next App',
@@ -15,8 +13,8 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" className={`${InterFont.variable}`}>
-      <body>
+    <html>
+      <body className='bg-background'>
         {children}
         <Analytics />
       </body>
