@@ -1,6 +1,6 @@
-import { Icon } from "@/components/shared/Icon"
-import { ImageSVG } from "@/components/shared/ImageSVG"
-import { Title } from "@/components/shared/Title"
+import { Icon } from "@/components/atoms/Icon"
+import { ImageSVG } from "@/components/atoms/ImageSVG"
+import { Title } from "@/components/molecules/Title"
 
 export const Contacts = () => {
   return (

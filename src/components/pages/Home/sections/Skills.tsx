@@ -1,6 +1,6 @@
-import { CardSkills } from "@/components/shared/CardSkills"
-import { ImageSVG } from "@/components/shared/ImageSVG"
-import { Title } from "@/components/shared/Title"
+import { CardSkills } from "@/components/molecules/CardSkills"
+import { ImageSVG } from "@/components/atoms/ImageSVG"
+import { Title } from "@/components/molecules/Title"
 
 export const Skills = () => {
   const skills = [

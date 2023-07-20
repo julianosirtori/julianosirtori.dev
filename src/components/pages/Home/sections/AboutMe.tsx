@@ -1,6 +1,6 @@
-import { Button } from "@/components/shared/Button/Button"
-import { ImageSVG } from "@/components/shared/ImageSVG"
-import { Title } from "@/components/shared/Title"
+import { Button } from "@/components/atoms/Button/Button"
+import { ImageSVG } from "@/components/atoms/ImageSVG"
+import { Title } from "@/components/molecules/Title"
 
 export const AboutMe = () => {
   return (
