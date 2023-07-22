@@ -10,7 +10,9 @@ export const HeaderMobile = ({ links }: IHeaderMobileProps) => {
 
   return (
     <header className="relative flex justify-between items-end pt-4 pb-2 px-4 w-full flex-row bg-background m-auto">
-      <span className="text-white font-bold text-base">Juliano</span>
+      <Link href="/">
+        <span className="text-white font-bold text-base">Juliano</span>
+      </Link>
       <button onClick={() => setIsMenuOpen(isOpen => !isOpen)}>
         {isMenuOpen ? (<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
           <rect width="1" height="1" transform="matrix(1 0 0 -1 11 12)" fill="#D9D9D9" />

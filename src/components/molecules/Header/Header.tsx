@@ -11,14 +11,10 @@ export const Header = () => {
 
   const links = useMemo(() => {
     return [
-      // {
-      //   label: 'home',
-      //   href: '/'
-      // },
-      // {
-      //   label: 'projects',
-      //   href: '/projects'
-      // },
+      {
+        label: 'contacts',
+        href: '/contacts'
+      },
       // {
       //   label: 'about-me',
       //   href: '/about'

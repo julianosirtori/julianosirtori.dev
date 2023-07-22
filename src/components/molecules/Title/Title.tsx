@@ -11,7 +11,7 @@ export const titleVariants = {
   },
 }
 
-export const Title = ({ children, className, level = 1, variant = 'primary', ...props }: ITitleProps) => {
+export const Title = ({ children, className, level = 1, line, variant = 'primary', ...props }: ITitleProps) => {
   const TypeHeading = `h${level}` as keyof JSX.IntrinsicElements
   const variantStyle = titleVariants[variant]
 
@@ -21,7 +21,7 @@ export const Title = ({ children, className, level = 1, variant = 'primary', ...
         <span className="text-primary">{variantStyle.character}</span>
         {children}
       </TypeHeading>
-      <div className={`w-1/3 h-[1px] bg-primary ${variantStyle.line}`} />
+      <div className={`w-1/3 h-[1px] bg-primary ${line ? line : variantStyle.line}`} />
     </div>
   )
 }
