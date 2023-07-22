@@ -1,5 +1,5 @@
-import { Icon } from "@/components/shared/Icon"
-import { ImageSVG } from "@/components/shared/ImageSVG"
+import { Icon } from "@/components/atoms/Icon"
+import { ImageSVG } from "@/components/atoms/ImageSVG"
 
 export const Quote = () => {
   return (

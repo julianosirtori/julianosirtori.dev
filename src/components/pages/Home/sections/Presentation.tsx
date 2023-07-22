@@ -1,6 +1,6 @@
 'use client'
-import { Button } from "@/components/shared/Button/Button"
-import { ImageSVG } from "@/components/shared/ImageSVG"
+import { Button } from "@/components/atoms/Button"
+import { ImageSVG } from "@/components/atoms/ImageSVG"
 import { useReducedMotion, motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
