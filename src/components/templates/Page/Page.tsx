@@ -4,7 +4,7 @@ import { IPageProps, IPageSectionProps } from "./Page.type"
 export const Root = ({ title, subtitle, children, hideHeader = false, className, ...props }: IPageProps) => {
 
   return (
-    <div className={`flex flex-col bg-background w-full p-8 ${className}`} {...props}>
+    <div className={`flex flex-col bg-background w-full max-w-screen-lg m-auto p-8 ${className}`} {...props}>
       {!hideHeader && (
         <>
           <Title variant="primary" className="mb-3" >
