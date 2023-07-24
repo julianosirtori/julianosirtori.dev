@@ -1,14 +1,20 @@
 import { Icon } from "@/components/atoms/Icon"
 import * as Page from "@/components/templates/Page/Page"
+import { useTranslations } from "next-intl"
 
 export const Contact = () => {
+  const t = useTranslations('contacts')
   return (
-    <Page.Root title="contacts" subtitle="Who am i?" >
+    <Page.Root title={t('title')} >
       <Page.Section>
         <div className="flex flex-col lg:flex-row w-full justify-between ">
-          <p className="text-gray mb-8 lg:max-w-lg">I’m interested in freelance opportunities. However, if you have other request or question, don’t hesitate to contact me</p>
+          <p className="text-gray mb-8 lg:max-w-lg">
+            {t('description')}
+          </p>
           <div className="border border-gray p-4">
-            <span className="text-white font-semibold ">Message me here</span>
+            <span className="text-white font-semibold ">
+              {t('messageHere')}
+            </span>
             <a href="https://discordapp.com/users/juliano_sirtori" target="_blank" className="flex gap-1 mb-2 mt-4">
               <Icon name="IconDiscord" />
               <span className="text-gray">juliano_sirtori</span>
@@ -20,7 +26,7 @@ export const Contact = () => {
           </div>
         </div>
       </Page.Section>
-      <Page.Section title="all-media">
+      <Page.Section title={t('allMedia')}>
         <div className="flex flex-row gap-5 w-full flex-wrap">
           <a href="https://discordapp.com/users/juliano_sirtori" target="_blank" className="flex gap-1 items-center">
             <Icon name="IconDiscord" />

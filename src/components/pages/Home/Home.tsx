@@ -1,4 +1,3 @@
-import { Icon } from "@/components/atoms/Icon"
 import { AboutMe } from "./sections/AboutMe"
 import { Contacts } from "./sections/Contacts"
 import { Presentation } from "./sections/Presentation"

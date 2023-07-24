@@ -1,0 +1,19 @@
+{
+  "myName": "Juliano",
+  "myFullName": "Juliano Sirtori",
+  "role": "Desenvolvedor Front-end",
+  "header": {
+    "about": "sobre",
+    "contact": "contatos"
+  },
+  "footer": {
+    "copyright": "© Direitos autorais 2023. Feito por Juliano"
+  },
+  "email": "julianosirtori@gmail.com",
+  "media": "Mídia",
+  "social": {
+    "github": "https://github.com/julianosirtori/julianosirtori.dev",
+    "linkedin": "https://www.linkedin.com/in/juliano-sirtori/",
+    "discord": "https://discordapp.com/users/juliano_sirtori"
+  }
+}

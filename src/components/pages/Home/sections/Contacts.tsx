@@ -1,19 +1,25 @@
 import { Icon } from "@/components/atoms/Icon"
 import { ImageSVG } from "@/components/atoms/ImageSVG"
 import { Title } from "@/components/molecules/Title"
+import { useTranslations } from "next-intl"
 
 export const Contacts = () => {
+  const t = useTranslations('contacts')
   return (
     <section className="relative overflow-hidden" id="contact">
       <ImageSVG name="dots" width="103px" height="103px" className="absolute left-[-70px] top-12 hidden lg:block" />
       <div className="w-full px-4 lg:max-w-screen-lg lg:m-auto">
         <Title level={2} variant="secondary" className="mb-12" >
-          contacts
+          {t('title')}
         </Title>
         <div className="flex flex-col lg:flex-row w-full justify-between ">
-          <p className="text-gray mb-8 lg:max-w-lg">I’m interested in freelance opportunities. However, if you have other request or question, don’t hesitate to contact me</p>
+          <p className="text-gray mb-8 lg:max-w-lg">
+            {t('description')}
+          </p>
           <div className="border border-gray p-4">
-            <span className="text-white font-semibold ">Message me here</span>
+            <span className="text-white font-semibold ">
+              {t('messageHere')}
+            </span>
             <a href="https://discordapp.com/users/juliano_sirtori" target="_blank" className="flex gap-1 mb-2 mt-4">
               <Icon name="IconDiscord" />
               <span className="text-gray">juliano_sirtori</span>

@@ -1,0 +1,16 @@
+{
+  "title": "sobre-eu",
+  "subTitle": "Quem sou eu?",
+  "aboutMe": {
+    "phrase1": "Olá, eu sou o Juliano!",
+    "phrase2": "Sou um desenvolvedor web especializado em projetos internacionais de grande escala. Minha expertise inclui o desenvolvimento de aplicações web robustas e escaláveis, assim como a integração com diferentes tecnologias.",
+    "phrase3": "Tenho habilidades avançadas para trabalhar em equipes multidisciplinares e ambientes ágeis, o que me permite entregar soluções de alta qualidade dentro dos prazos estabelecidos.",
+    "phrase4": "Como profissional, estou sempre buscando aprender e me atualizar para estar na vanguarda das novas tecnologias e tendências do mercado. Com minha vasta experiência em desenvolvimento web, sou capaz de criar soluções eficientes e personalizadas para atender às necessidades específicas dos meus clientes. Meu objetivo é sempre superar as expectativas e garantir total satisfação do cliente."
+  },
+  "skills": {
+    "title": "Habilidades",
+    "items": {
+
+    }
+  }
+}

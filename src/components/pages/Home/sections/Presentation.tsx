@@ -2,11 +2,13 @@
 import { Button } from "@/components/atoms/Button"
 import { ImageSVG } from "@/components/atoms/ImageSVG"
 import { useReducedMotion, motion } from "framer-motion"
+import { useTranslations } from "next-intl"
 import Image from "next/image"
 import Link from "next/link"
 
 export const Presentation = () => {
   const shouldReduceMotion = useReducedMotion()
+  const t = useTranslations('home')
 
   const childVariants = {
     initial: { opacity: 0, y: shouldReduceMotion ? 0 : 25 },
@@ -23,9 +25,13 @@ export const Presentation = () => {
         }} className="w-full flex flex-col gap-6 pb-8"
       >
         <motion.h1 variants={childVariants} className="font-semibold text-2xl text-white max-w-sm ">
-          Juliano is a <span className="text-primary">front-end web developer</span>
+          {t.rich('title', {
+            span: (children) => <span className="text-primary">{children}</span>
+          })}
         </motion.h1>
-        <motion.p variants={childVariants} className="text-gray ">I specialize in designing and implementing seamless user interactions on the web, utilizing JavaScript, React, and HTML to create captivating and dynamic digital experiences.</motion.p>
+        <motion.p variants={childVariants} className="text-gray ">
+          {t('subtitle')}
+        </motion.p>
         <motion.div
           className="w-full"
           initial={{ opacity: 0 }}
@@ -33,11 +39,10 @@ export const Presentation = () => {
           transition={{ delay: 1 }}
         >
           <Link href="/#contact">
-            <Button className="max-w-[160px]" role="link">
-              Contact me!!
+            <Button className="max-w-[200px] w-full whitespace-nowrap" role="link">
+              {t('buttonContactMe')}
             </Button>
           </Link>
-
         </motion.div>
 
       </motion.div>
@@ -50,16 +55,13 @@ export const Presentation = () => {
         <div className="border border-gray p-2 flex flex-row gap-2 w-full">
           <div className="w-4 h-4 bg-primary" />
           <div className="flex flex-col lg:flex-row">
-            <span className="text-gray font-semibold mr-2">Currently working on</span>
+            <span className="text-gray font-semibold mr-2">{t('currentlyWork')}</span>
             <a href="https://ciandt.com/br/pt-br" target="_blank">
-              <span className="text-white font-bold">Portfolio</span>
+              <span className="text-white font-bold">{t('currentlyCompany')}</span>
             </a>
-
           </div>
         </div>
       </div>
-
-
     </section>
   )
 }

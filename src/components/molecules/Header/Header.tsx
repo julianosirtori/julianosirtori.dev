@@ -5,26 +5,24 @@ import { useMemo } from "react"
 
 import { HeaderMobile } from './HeaderMobile'
 import { HeaderDesktop } from "./HeaderDesktop"
+import { useTranslations } from "next-intl"
 
 export const Header = () => {
   const isMobile = useIsMobile()
+  const t = useTranslations('global.header')
 
   const links = useMemo(() => {
     return [
       {
-        label: 'about-me',
+        label: t('about'),
         href: '/about'
       },
       {
-        label: 'contacts',
+        label: t('contact'),
         href: '/contacts'
-      },
-      // {
-      //   label: 'blog',
-      //   href: '/contact'
-      // },
+      }
     ]
-  }, [])
+  }, [t])
 
   if (isMobile) {
     return <HeaderMobile links={links} />

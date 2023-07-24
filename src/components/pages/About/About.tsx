@@ -1,30 +1,25 @@
-import { Title } from "@/components/molecules/Title"
 import * as Page from "@/components/templates/Page/Page"
-import { ImageSVG } from "@/components/atoms/ImageSVG"
+import { useTranslations } from "next-intl"
 
 export const About = () => {
+  const t = useTranslations('about')
   return (
-    <Page.Root title="about-me" subtitle="Who am i?" >
+    <Page.Root title={t('title')} subtitle={t('subTitle')} >
       <div className="w-full  lg:max-w-screen-lg lg:m-auto">
-        <Title level={2} variant="secondary" className="mb-4" >
-          about-me
-        </Title>
         <div className="w-full flex flex-row">
           <div className="flex flex-col gap-4 w-full max-w-lg">
             <p className="text-gray ">
-              Hello, I’m Juliano!
+              {t('aboutMe.phrase1')}
             </p>
             <p className="text-gray ">
-              I am a web developer specialized in large-scale international projects. My expertise includes the development of robust and scalable web applications, as well as the integration with different technologies.
-
+              {t('aboutMe.phrase2')}
             </p>
             <p className="text-gray ">
-              I am highly skilled in working in multidisciplinary teams and agile environments, which allows me to deliver high-quality solutions within the established deadlines.
+              {t('aboutMe.phrase3')}
             </p>
             <p className="text-gray">
-              As a professional, I am always seeking to learn and update myself to stay at the forefront of new technologies and market trends. With my vast experience in web development, I am able to create efficient and customized solutions to meet the specific needs of my clients. My goal is always to exceed expectations and ensure total customer satisfaction.
+              {t('aboutMe.phrase4')}
             </p>
-
           </div>
         </div>
       </div>
