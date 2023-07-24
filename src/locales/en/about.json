@@ -1,0 +1,16 @@
+{
+  "title": "about-me",
+  "subTitle": "Who am i? ",
+  "aboutMe": {
+    "phrase1":  "Hello, I’m Juliano!",
+    "phrase2": "I am a web developer specialized in large-scale international projects. My expertise includes the development of robust and scalable web applications, as well as the integration with different technologies.",
+    "phrase3": "I am highly skilled in working in multidisciplinary teams and agile environments, which allows me to deliver high-quality solutions within the established deadlines.",
+    "phrase4": "As a professional, I am always seeking to learn and update myself to stay at the forefront of new technologies and market trends. With my vast experience in web development, I am able to create efficient and customized solutions to meet the specific needs of my clients. My goal is always to exceed expectations and ensure total customer satisfaction."
+  },
+  "skills": {
+    "title": "Skills",
+    "items": {
+      
+    }
+  }
+}

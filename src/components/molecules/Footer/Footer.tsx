@@ -1,19 +1,27 @@
 import { Icon } from "@/components/atoms/Icon"
+import { useTranslations } from "next-intl"
 
 export const Footer = () => {
+  const t = useTranslations('global')
   return (
     <footer className="border-t border-gray bg-background text-white w-full flex justify-center">
       <div className="flex p-3 gap-8 flex-col items-start w-full max-w-5xl lg:py-8 lg:px-8">
         <div className="flex gap-8 flex-col items-start lg:flex-row lg:justify-between w-full">
           <div className="flex flex-col gap-2">
             <div className="flex flex-row">
-              <span className="font-medium mr-6">Juliano</span>
-              <span className="text-gray">julianosirtori@gmail.com</span>
+              <span className="font-medium mr-6">
+                {t('myName')}
+              </span>
+              <span className="text-gray">
+                {t('email')}
+              </span>
             </div>
-            <span>Front-end developer</span>
+            <span>{t('role')}</span>
           </div>
           <div className="flex flex-col gap-2">
-            <span className="text-2xl font-medium">Media</span>
+            <span className="text-2xl font-medium">
+              {t('media')}
+            </span>
             <div className="flex flex-row gap-2">
               <a href="https://github.com/julianosirtori/julianosirtori.dev" target="_blank">
                 <Icon name="IconGithub" />
@@ -29,7 +37,7 @@ export const Footer = () => {
         </div>
 
         <div className="w-full flex lg:justify-center">
-          <span className="text-gray">© Copyright 2023. Made by Juliano</span>
+          <span className="text-gray">{t('footer.copyright')}</span>
         </div>
       </div>
     </footer>
