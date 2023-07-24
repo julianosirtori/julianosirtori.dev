@@ -1,3 +1,5 @@
+const { withContentlayer } = require("next-contentlayer");
+
 const withNextIntl = require('next-intl/plugin')(
   // This is the default (also the `src` folder is supported out of the box)
   './src/locales/index.ts'
@@ -9,4 +11,4 @@ const nextConfig = withNextIntl({
 });
 
 
-module.exports = nextConfig
+module.exports = withContentlayer(nextConfig) 

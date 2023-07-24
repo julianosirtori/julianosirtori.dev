@@ -20,6 +20,10 @@ export const Header = () => {
       {
         label: t('contact'),
         href: '/contacts'
+      },
+      {
+        label: t('blog'),
+        href: '/blog'
       }
     ]
   }, [t])

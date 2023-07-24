@@ -4,7 +4,8 @@
   "role": "Desenvolvedor Front-end",
   "header": {
     "about": "sobre",
-    "contact": "contatos"
+    "contact": "contatos",
+    "blog": "blog"
   },
   "footer": {
     "copyright": "© Direitos autorais 2023. Feito por Juliano"
