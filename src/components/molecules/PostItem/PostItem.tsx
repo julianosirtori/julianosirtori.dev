@@ -1,9 +1,9 @@
+import { useLocale } from "next-intl";
+import { useMemo } from "react";
 import Image from "next/image"
 import Link from "next/link";
 import Balancer from "react-wrap-balancer"
 import { IPostItemProps } from "./PostItem.type"
-import { useLocale } from "next-intl";
-import { useMemo } from "react";
 
 
 export const PostItem = ({ post }: IPostItemProps) => {
