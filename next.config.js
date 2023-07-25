@@ -7,7 +7,16 @@ const withNextIntl = require('next-intl/plugin')(
  
 /** @type {import('next').NextConfig} */
 const nextConfig = withNextIntl({
-  // Other Next.js configuration ...
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        port: '',
+        pathname: '/**',
+      },
+    ]
+  }
 });
 
 

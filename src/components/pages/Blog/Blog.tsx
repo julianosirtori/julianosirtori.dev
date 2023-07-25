@@ -8,12 +8,13 @@ import { IBlogProps } from "./Blog.types"
 
 export const Blog = ({ posts }: IBlogProps) => {
   const t = useTranslations('blog')
+
   return (
     <Page.Root title={t('title')} subtitle={t('subTitle')} >
       <Page.Section>
         {posts
           .sort((a, b) => {
-            if (new Date(a.publishedAt) > new Date(b.publishedAt)) {
+            if (new Date(a.date) > new Date(b.date)) {
               return -1;
             }
             return 1;
