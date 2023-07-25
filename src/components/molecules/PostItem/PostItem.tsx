@@ -18,7 +18,7 @@ export const PostItem = ({ post }: IPostItemProps) => {
   }, [post.date, locale])
 
   return (
-    <Link href={post.slug} className="flex flex-col max-w-xs bg-background border border-gray hover:border-primary">
+    <Link href={`/blog/${post.slug}`} className="flex flex-col max-w-xs bg-background border border-gray hover:border-primary">
       <div className="relative w-full  h-96 overflow-hidden">
         <Image src={post.urlImage} fill alt={post.bannerAlt || ''} className="object-cover" />
       </div>

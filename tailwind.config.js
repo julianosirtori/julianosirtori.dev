@@ -1,5 +1,11 @@
+import aspectRatio from '@tailwindcss/aspect-ratio'
+import typography from '@tailwindcss/typography';
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  corePlugins: {
+    aspectRatio: false,
+  },
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -14,5 +20,5 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [aspectRatio, typography],
 }
