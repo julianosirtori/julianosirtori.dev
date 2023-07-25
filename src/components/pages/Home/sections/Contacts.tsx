@@ -1,10 +1,17 @@
 import { Icon } from "@/components/atoms/Icon"
 import { ImageSVG } from "@/components/atoms/ImageSVG"
 import { Title } from "@/components/molecules/Title"
+import { useFeatureFlag } from "@/utils/featureFlag"
 import { useTranslations } from "next-intl"
 
 export const Contacts = () => {
   const t = useTranslations('contacts')
+  const showContacts = useFeatureFlag('CONTACTS')
+
+  if (!showContacts) {
+    return null
+  }
+
   return (
     <section className="relative overflow-hidden" id="contact">
       <ImageSVG name="dots" width="103px" height="103px" className="absolute left-[-70px] top-12 hidden lg:block" />
