@@ -1,34 +1,33 @@
-'use client'
-import useIsMobile from "@/utils/useIsMobile"
-
 import { useMemo } from "react"
 
-import { HeaderMobile } from './HeaderMobile'
-import { HeaderDesktop } from "./HeaderDesktop"
 import { useTranslations } from "next-intl"
+import { featureFlags } from "@/utils/featureFlag"
+import { ILinkItem } from "./Header.types"
+import { HeaderClient } from "./HeaderClient"
 
 export const Header = () => {
-  const isMobile = useIsMobile()
   const t = useTranslations('global.header')
 
   const links = useMemo(() => {
-    return [
-      {
-        label: t('about'),
-        href: '/about'
-      },
-      {
-        label: t('contact'),
-        href: '/contacts'
-      }
-    ]
+    const about = featureFlags.ABOUT && {
+      label: t('about'),
+      href: '/about'
+    }
+
+    const blog = featureFlags.BLOG && {
+      label: t('blog'),
+      href: '/blog'
+    }
+
+    const contact = featureFlags.CONTACTS && {
+      label: t('contact'),
+      href: '/contacts'
+    }
+
+    return [about, blog, contact].filter(item => !!item) as ILinkItem[]
   }, [t])
 
-  if (isMobile) {
-    return <HeaderMobile links={links} />
-  }
-
   return (
-    <HeaderDesktop links={links} />
+    <HeaderClient links={links} />
   )
 }

@@ -1,3 +1,5 @@
+const { withContentlayer } = require("next-contentlayer");
+
 const withNextIntl = require('next-intl/plugin')(
   // This is the default (also the `src` folder is supported out of the box)
   './src/locales/index.ts'
@@ -5,8 +7,17 @@ const withNextIntl = require('next-intl/plugin')(
  
 /** @type {import('next').NextConfig} */
 const nextConfig = withNextIntl({
-  // Other Next.js configuration ...
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        port: '',
+        pathname: '/**',
+      },
+    ]
+  }
 });
 
 
-module.exports = nextConfig
+module.exports = withContentlayer(nextConfig) 

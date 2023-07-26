@@ -1,10 +1,16 @@
 import { Button } from "@/components/atoms/Button/Button"
 import { ImageSVG } from "@/components/atoms/ImageSVG"
 import { Title } from "@/components/molecules/Title"
+import { useFeatureFlag } from "@/utils/featureFlag"
 import { useTranslations } from "next-intl"
 
 export const AboutMe = () => {
   const t = useTranslations('about')
+  const showAbout = useFeatureFlag('ABOUT')
+
+  if (!showAbout) {
+    return null
+  }
   return (
     <section className="relative overflow-hidden">
       <ImageSVG name="rectangle" width="155px" height="155px" className="absolute left-[-70px] top-12 hidden lg:block" />

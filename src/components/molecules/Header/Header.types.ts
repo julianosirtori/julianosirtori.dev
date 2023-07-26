@@ -3,10 +3,6 @@ export interface ILinkItem {
   href: string;
 }
 
-export interface IHeaderMobileProps {
-  links: ILinkItem[];
-}
-
-export interface IHeaderDesktopProps {
+export interface IHeaderProps {
   links: ILinkItem[];
 }

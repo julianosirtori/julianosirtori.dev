@@ -1,8 +1,10 @@
 import { CardSkills } from "@/components/molecules/CardSkills"
 import { ImageSVG } from "@/components/atoms/ImageSVG"
 import { Title } from "@/components/molecules/Title"
+import { useFeatureFlag } from "@/utils/featureFlag"
 
 export const Skills = () => {
+  const showSkills = useFeatureFlag('ABOUT')
   const skills = [
     {
       title: "Languages",
@@ -25,6 +27,10 @@ export const Skills = () => {
       skills: ["Agile", "Scrum", "Kanban"]
     },
   ]
+
+  if (!showSkills) {
+    return null
+  }
 
   return (
     <section className="w-full max-w-screen-lg m-auto  ">

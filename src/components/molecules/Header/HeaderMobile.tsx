@@ -1,11 +1,11 @@
 import { useState } from "react"
 import Link from "next/link"
 
-import { IHeaderMobileProps } from "./Header.types"
+import { IHeaderProps } from "./Header.types"
 
 
 
-export const HeaderMobile = ({ links }: IHeaderMobileProps) => {
+export const HeaderMobile = ({ links }: IHeaderProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (

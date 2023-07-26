@@ -1,8 +1,8 @@
 import Link from "next/link"
 
-import { IHeaderDesktopProps } from "./Header.types"
+import { IHeaderProps } from "./Header.types"
 
-export const HeaderDesktop = ({ links }: IHeaderDesktopProps) => {
+export const HeaderDesktop = ({ links }: IHeaderProps) => {
 
   return (
     <header className="flex justify-between max-w-5xl items-end pt-8 pb-2 px-4 w-full flex-row bg-background m-auto">

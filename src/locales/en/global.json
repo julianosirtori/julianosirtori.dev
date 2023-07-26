@@ -4,7 +4,8 @@
   "role": "Front-end Developer",
   "header": {
     "about": "about-me",
-    "contact": "contacts"
+    "contact": "contacts",
+    "blog": "blog"
   },
   "footer": {
     "copyright": "© Copyright 2023. Made by Juliano"
