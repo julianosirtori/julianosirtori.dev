@@ -1,6 +1,6 @@
 'use client'
-import { Button } from "@/components/atoms/Button"
 import { ImageSVG } from "@/components/atoms/ImageSVG"
+import { useFeatureFlag } from "@/utils/featureFlag"
 import { useReducedMotion, motion } from "framer-motion"
 import { useTranslations } from "next-intl"
 import Image from "next/image"
@@ -32,19 +32,6 @@ export const Presentation = () => {
         <motion.p variants={childVariants} className="text-gray ">
           {t('subtitle')}
         </motion.p>
-        <motion.div
-          className="w-full"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1 }}
-        >
-          <Link href="/#contact">
-            <Button className="max-w-[200px] w-full whitespace-nowrap" role="link">
-              {t('buttonContactMe')}
-            </Button>
-          </Link>
-        </motion.div>
-
       </motion.div>
       <div className="flex w-full flex-col items-center overflow-hidden">
         <div className="relative w-full h-80 max-w-sm">
