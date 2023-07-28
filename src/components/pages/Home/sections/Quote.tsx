@@ -6,10 +6,6 @@ export const Quote = () => {
   const t = useTranslations("home");
   return (
     <section className="relative overflow-hidden pt-4">
-      <ImageSVG
-        name="rectangle"
-        className="absolute right-[-16px] top-4 hidden lg:block"
-      />
       <div className="relative mx-4 flex max-w-3xl flex-col items-end lg:m-auto  ">
         <Icon name="IconQuote" className="absolute left-3 top-[-14px]" />
         <div className="border border-gray ">
