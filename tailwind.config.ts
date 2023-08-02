@@ -1,0 +1,23 @@
+import { type Config } from "tailwindcss";
+import aspectRatio from "@tailwindcss/aspect-ratio";
+import typography from "@tailwindcss/typography";
+
+module.exports = {
+  darkMode: "class",
+  corePlugins: {
+    aspectRatio: false,
+  },
+  theme: {
+    extend: {
+      colors: {
+        highlight: "var(--color-highlight-current)",
+      },
+    },
+  },
+  content: [
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  plugins: [aspectRatio, typography],
+} satisfies Config;
