@@ -1,54 +1,81 @@
-'use client'
-import { ImageSVG } from "@/components/atoms/ImageSVG"
-import { useFeatureFlag } from "@/utils/featureFlag"
-import { useReducedMotion, motion } from "framer-motion"
-import { useTranslations } from "next-intl"
-import Image from "next/image"
-import Link from "next/link"
+"use client";
+import { ImageSVG } from "@/components/atoms/ImageSVG";
+import { palletColor } from "@/utils/theme/pallet";
+import { useReducedMotion, motion } from "framer-motion";
+import { useTranslations } from "next-intl";
+import Image from "next/image";
 
 export const Presentation = () => {
-  const shouldReduceMotion = useReducedMotion()
-  const t = useTranslations('home')
+  const shouldReduceMotion = useReducedMotion();
+  const t = useTranslations("home");
 
   const childVariants = {
     initial: { opacity: 0, y: shouldReduceMotion ? 0 : 25 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-  }
+  };
+
   return (
-    <section className="flex flex-col gap-6 px-4 mt-5 w-full lg:flex-row lg:max-w-5xl lg:mt-16 lg:m-auto lg:items-center overflow-hidden">
+    <section className="mt-5 flex w-full flex-col gap-6 overflow-hidden px-4 lg:m-auto lg:mt-16 lg:max-w-5xl lg:flex-row lg:items-center">
       <motion.div
         initial="initial"
         animate="visible"
         variants={{
           initial: { opacity: 0 },
           visible: { opacity: 1, transition: { staggerChildren: 0.2 } },
-        }} className="w-full flex flex-col gap-6 pb-8"
+        }}
+        className="flex w-full flex-col gap-6 pb-8"
       >
-        <motion.h1 variants={childVariants} className="font-semibold text-2xl text-white max-w-sm ">
-          {t.rich('title', {
-            span: (children) => <span className="text-primary">{children}</span>
+        <motion.h1
+          variants={childVariants}
+          className="text-primary max-w-sm text-2xl font-semibold "
+        >
+          {t.rich("title", {
+            span: (children) => (
+              <span className="text-highlight">{children}</span>
+            ),
           })}
         </motion.h1>
-        <motion.p variants={childVariants} className="text-gray ">
-          {t('subtitle')}
+        <motion.p variants={childVariants} className="text-secondary ">
+          {t("subtitle")}
         </motion.p>
       </motion.div>
-      <div className="flex w-full flex-col items-center overflow-hidden">
-        <div className="relative w-full h-80 max-w-sm">
-          <ImageSVG name="logo" width="104px" height="104px" className="z-0 absolute top-10 left-[-8px]" />
-          <Image src="/images/Juliano.png" fill alt="Juliano`s photo" className="absolute z-1" />
-          <ImageSVG name="dots" width="56px" height="56px" className="z-2 absolute bottom-8 right-4" />
+      <motion.div className="flex w-full flex-col items-center overflow-hidden">
+        <div className="relative h-80 w-full max-w-sm">
+          <ImageSVG
+            name="logo"
+            width="104px"
+            height="104px"
+            className="absolute left-[-8px] top-10 z-0 text-highlight"
+          />
+          <Image
+            src={`/images/juliano_${palletColor}.png`}
+            width="0"
+            height="0"
+            sizes="100vw"
+            alt="Juliano`s photo"
+            className="z-1 absolute h-auto w-full"
+          />
+          <ImageSVG
+            name="dots"
+            width="60px"
+            height="60px"
+            className="z-2 absolute bottom-8 right-4 text-black dark:text-white"
+          />
         </div>
-        <div className="border border-gray p-2 flex flex-row gap-2 w-full">
-          <div className="w-4 h-4 bg-primary" />
+        <div className="border-gray bg-primary z-10 flex w-full max-w-sm flex-row items-center gap-2 border p-2">
+          <div className="h-4 w-4 bg-highlight" />
           <div className="flex flex-col lg:flex-row">
-            <span className="text-gray font-semibold mr-2">{t('currentlyWork')}</span>
-            <a href="https://ciandt.com/br/pt-br" target="_blank">
-              <span className="text-white font-bold">{t('currentlyCompany')}</span>
+            <span className="text-secondary mr-2 font-semibold">
+              {t("currentlyWork")}
+            </span>
+            <a href={t("currentlyCompanyLink")} target="_blank">
+              <span className="text-primary font-bold">
+                {t("currentlyCompany")}
+              </span>
             </a>
           </div>
         </div>
-      </div>
+      </motion.div>
     </section>
-  )
-}
+  );
+};

@@ -22,7 +22,10 @@ export const HeaderSelectLang = () => {
 
   return (
     <Select.Root onValueChange={handleSelect} defaultValue={currentLocale}>
-      <Select.Trigger className="flex flex-row items-center gap-1 p-1 font-semibold text-gray">
+      <Select.Trigger
+        aria-label="change language"
+        className="text-primary flex flex-row items-center gap-1 p-1 font-semibold"
+      >
         <Select.Value placeholder={currentLocale.toUpperCase()} />
         <Select.Icon>
           <ChevronDownIcon width={16} height={16} />
@@ -30,12 +33,13 @@ export const HeaderSelectLang = () => {
       </Select.Trigger>
       <Select.Portal>
         <Select.SelectContent>
-          <Select.SelectViewport className="flex flex-col gap-2 border border-gray bg-background p-1 px-2">
+          <Select.SelectViewport className="border-primary bg-primary flex flex-col gap-2 border p-1 px-2">
             {langs.map((lang) => (
               <Select.Item
                 key={lang}
                 value={lang}
-                className="flex flex-row gap-1 p-1 text-gray hover:cursor-pointer"
+                aria-label={lang}
+                className="text-primary flex flex-row gap-1 p-1 hover:cursor-pointer"
               >
                 <Select.ItemText>{lang.toUpperCase()}</Select.ItemText>
                 <Select.ItemIndicator>

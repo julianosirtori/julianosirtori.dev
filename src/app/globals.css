@@ -5,13 +5,59 @@
 
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --color-highlight-unknown: #36a3ff;
+  --color-highlight-blue: #36a3ff;
+  --color-highlight-red: #ff4545;
+  --color-highlight-purple: #a086ff;
+  --color-highlight-green: #00ff00;
+  --color-highlight-current: var(--color-highlight-unknown);
 }
 
 body{
   font-family: 'Fira Code', monospace;
   padding: 0;
+}
+
+.set-color-highlight-current-green {
+  --color-highlight-current: var(--color-highlight-green);
+}
+
+.set-color-highlight-current-purple {
+  --color-highlight-current: var(--color-highlight-purple);
+}
+
+.set-color-highlight-current-red {
+  --color-highlight-current: var(--color-highlight-red);
+}
+
+.set-color-highlight-current-blue {
+  --color-highlight-current: var(--color-highlight-blue);
+}
+
+@layer utilities {
+  .bg-primary {
+    @apply bg-white dark:bg-gray-900;
+  }
+
+  .bg-secondary {
+    @apply bg-gray-100 dark:bg-gray-800;
+  }
+
+  .border-primary {
+    @apply border-gray-900 dark:border-white;
+  }
+
+  .border-secondary {
+    @apply border-gray-200 dark:border-gray-600;
+  }
+
+  .text-primary {
+    @apply text-black dark:text-white;
+  }
+
+  .text-secondary {
+    @apply text-gray-500 dark:text-slate-500;
+  }
+
 }
 

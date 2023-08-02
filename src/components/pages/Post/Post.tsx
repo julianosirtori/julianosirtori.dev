@@ -1,8 +1,8 @@
-import * as Page from "@/components/templates/Page/Page"
-import { IPostProps } from "./Post.type"
-import { Mdx } from '@/components/atoms/Mdx';
+import * as Page from "@/components/templates/Page/Page";
+import { IPostProps } from "./Post.type";
+import { Mdx } from "@/components/atoms/Mdx";
 import Link from "next/link";
-import { ArrowLeftIcon } from '@radix-ui/react-icons'
+import { ArrowLeftIcon } from "@radix-ui/react-icons";
 import { useLocale } from "next-intl";
 import { useMemo } from "react";
 import Image from "next/image";
@@ -12,32 +12,37 @@ export const Post = ({ post }: IPostProps) => {
 
   const dateFormatted = useMemo(() => {
     return new Date(post.date).toLocaleString(locale, {
-      year: 'numeric',
-      month: 'numeric',
-      day: 'numeric'
-    })
-  }, [post.date, locale])
+      year: "numeric",
+      month: "numeric",
+      day: "numeric",
+    });
+  }, [post.date, locale]);
 
   return (
-    <section className="w-full max-w-screen-lg m-auto flex flex-col px-4">
-
-      <Link href='/blog' className="flex  mt-12 mb-8 items-center">
-        <ArrowLeftIcon className="text-white mr-4" width={24} height={24} />
-        <span className="text-white font-semibold text-lg">Back to overview</span>
+    <section className="m-auto flex w-full max-w-screen-lg flex-col px-4">
+      <Link href="/blog" className="mb-8  mt-12 flex items-center">
+        <ArrowLeftIcon className="text-primary mr-4" width={24} height={24} />
+        <span className="text-primary text-lg font-semibold">
+          Back to overview
+        </span>
       </Link>
-      <header className="flex flex-col w-full mb-10">
+      <header className="mb-10 flex w-full flex-col">
         <h2 className="text-primary text-2xl font-bold">{post.title}</h2>
-        <h3 className="text-gray text-lg font-medium mt-2">{`${dateFormatted} - ${post.readTime} min read`}</h3>
+        <h3 className="text-secondary mt-2 text-lg font-medium">{`${dateFormatted} - ${post.readTime} min read`}</h3>
         <div className="relative mt-10">
           <div className="aspect-h-2 aspect-w-3">
-            <Image src={post.urlImage} fill alt={post.bannerAlt || ''} className="object-cover w-full " />
+            <Image
+              src={post.urlImage}
+              fill
+              alt={post.bannerAlt || ""}
+              className="w-full object-cover "
+            />
           </div>
         </div>
       </header>
       <main>
         <Mdx code={post.body.code} />
       </main>
-
     </section>
-  )
-}
+  );
+};

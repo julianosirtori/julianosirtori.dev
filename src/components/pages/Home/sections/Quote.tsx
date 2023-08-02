@@ -1,19 +1,23 @@
 import { Icon } from "@/components/atoms/Icon";
-import { ImageSVG } from "@/components/atoms/ImageSVG";
 import { useTranslations } from "next-intl";
 
 export const Quote = () => {
   const t = useTranslations("home");
   return (
     <section className="relative overflow-hidden pt-4">
-      <div className="relative mx-4 flex max-w-3xl flex-col items-end lg:m-auto  ">
+      <div className="text-primary relative mx-4 flex max-w-3xl flex-col items-end lg:m-auto ">
         <Icon name="IconQuote" className="absolute left-3 top-[-14px]" />
-        <div className="border border-gray ">
-          <p className="p-8 font-medium text-white lg:text-2xl">{t("quote")}</p>
+        <div className="border-primary border ">
+          <p className="text-primary p-8 font-medium lg:text-2xl">
+            {t("quote")}
+          </p>
         </div>
-        <Icon name="IconQuote" className="absolute bottom-12 right-3" />
-        <div className="max-w-max border-b border-l border-r border-gray p-4">
-          <span className="text-xl text-white">- {t("quoteAuthor")}</span>
+        <Icon
+          name="IconQuote"
+          className="text-primary absolute bottom-12 right-3"
+        />
+        <div className="border-primary max-w-max border-b border-l border-r p-4">
+          <span className="text-primary text-xl">- {t("quoteAuthor")}</span>
         </div>
       </div>
     </section>

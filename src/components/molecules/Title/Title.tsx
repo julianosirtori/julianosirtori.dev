@@ -1,27 +1,41 @@
-import { ITitleProps } from "./Title.types"
+import { ITitleProps } from "./Title.types";
 
 export const titleVariants = {
   primary: {
-    line: 'hidden',
-    character: '/',
+    line: "hidden",
+    character: "/",
   },
   secondary: {
-    line: '',
-    character: '#'
+    line: "",
+    character: "#",
   },
-}
+};
 
-export const Title = ({ children, className, level = 1, line, variant = 'primary', ...props }: ITitleProps) => {
-  const TypeHeading = `h${level}` as keyof JSX.IntrinsicElements
-  const variantStyle = titleVariants[variant]
+export const Title = ({
+  children,
+  className,
+  level = 1,
+  line,
+  variant = "primary",
+  ...props
+}: ITitleProps) => {
+  const TypeHeading = `h${level}` as keyof JSX.IntrinsicElements;
+  const variantStyle = titleVariants[variant];
 
   return (
-    <div className={`flex w-full flex-row text-3xl gap-4 items-center ${className}`} {...props}>
-      <TypeHeading className="text-white m-0 font-semibold">
+    <div
+      className={`flex w-full flex-row items-center gap-4 text-3xl ${className}`}
+      {...props}
+    >
+      <TypeHeading className="text-primary m-0 font-semibold">
         <span className="text-primary">{variantStyle.character}</span>
         {children}
       </TypeHeading>
-      <div className={`w-1/3 h-[1px] bg-primary ${line ? line : variantStyle.line}`} />
+      <div
+        className={`bg-primary h-[1px] w-1/3 ${
+          line ? line : variantStyle.line
+        }`}
+      />
     </div>
-  )
-}
+  );
+};
