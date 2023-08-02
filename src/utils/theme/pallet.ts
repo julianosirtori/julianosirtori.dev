@@ -7,4 +7,4 @@ export const getRandomPallet = () => {
 
 // TODO: fix this to be random and shared the same color between server and client
 // export const palletColor = getRandomPallet();
-export const palletColor = process.env.NEXT_PUBLIC_PALLET;
+export const palletColor = process.env.NEXT_PUBLIC_PALLET || "red";
