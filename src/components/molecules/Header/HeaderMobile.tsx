@@ -9,14 +9,19 @@ export const HeaderMobile = ({ links }: IHeaderProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="bg-primary relative m-auto flex w-full flex-row items-end justify-between px-4 pb-2 pt-4">
+    <header className="bg-primary relative  m-auto flex w-full flex-row items-end justify-between px-4 pb-2 pt-4">
       <Link href="/">
-        <span className="text-base font-bold text-highlight">Juliano</span>
+        <span className="text-lg font-bold text-highlight">Juliano</span>
       </Link>
       <div className="flex flex-row items-center">
+        <HeaderSelectLang />
+        <HeaderDarkMode />
         {links.length > 0 && (
           <>
-            <button onClick={() => setIsMenuOpen((isOpen) => !isOpen)}>
+            <button
+              onClick={() => setIsMenuOpen((isOpen) => !isOpen)}
+              className="text-highlight"
+            >
               {isMenuOpen ? (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -29,7 +34,7 @@ export const HeaderMobile = ({ links }: IHeaderProps) => {
                     width="1"
                     height="1"
                     transform="matrix(1 0 0 -1 11 12)"
-                    fill="#D9D9D9"
+                    fill="currentColor"
                   />
                   <rect
                     x="3"
@@ -37,7 +42,7 @@ export const HeaderMobile = ({ links }: IHeaderProps) => {
                     width="24"
                     height="2"
                     transform="rotate(-45 3 19.9706)"
-                    fill="#D9D9D9"
+                    fill="currentColor"
                   />
                   <rect
                     x="4"
@@ -45,7 +50,7 @@ export const HeaderMobile = ({ links }: IHeaderProps) => {
                     width="24"
                     height="2"
                     transform="rotate(45 4 3)"
-                    fill="#D9D9D9"
+                    fill="currentColor"
                   />
                 </svg>
               ) : (
@@ -56,8 +61,14 @@ export const HeaderMobile = ({ links }: IHeaderProps) => {
                   viewBox="0 0 24 24"
                   fill="none"
                 >
-                  <rect y="5" width="24" height="2" fill="#D9D9D9" />
-                  <rect x="9" y="12" width="15" height="2" fill="#D9D9D9" />
+                  <rect y="5" width="24" height="2" fill="currentColor" />
+                  <rect
+                    x="9"
+                    y="12"
+                    width="15"
+                    height="2"
+                    fill="currentColor"
+                  />
                 </svg>
               )}
             </button>
@@ -67,6 +78,7 @@ export const HeaderMobile = ({ links }: IHeaderProps) => {
                   {links.map((link) => (
                     <li key={link.href}>
                       <Link
+                        onClick={() => setIsMenuOpen(false)}
                         href={link.href}
                         className="text-primary text-3xl font-bold"
                       >
@@ -80,8 +92,6 @@ export const HeaderMobile = ({ links }: IHeaderProps) => {
             )}
           </>
         )}
-        <HeaderSelectLang />
-        <HeaderDarkMode />
       </div>
     </header>
   );

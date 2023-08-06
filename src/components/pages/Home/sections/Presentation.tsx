@@ -1,9 +1,11 @@
 "use client";
+import { Button } from "@/components/atoms/Button";
 import { ImageSVG } from "@/components/atoms/ImageSVG";
 import { palletColor } from "@/utils/theme/pallet";
 import { useReducedMotion, motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import Link from "next/link";
 
 export const Presentation = () => {
   const shouldReduceMotion = useReducedMotion();
@@ -38,6 +40,11 @@ export const Presentation = () => {
         <motion.p variants={childVariants} className="text-secondary ">
           {t("subtitle")}
         </motion.p>
+        <Link href={`/files/${t("linkCurriculum")}`} target="_blank">
+          <Button variant="highlight" className="max-w-max	">
+            {t("buttonCurriculum")}
+          </Button>
+        </Link>
       </motion.div>
       <motion.div className="flex w-full flex-col items-center overflow-hidden">
         <div className="relative h-80 w-full max-w-sm">
@@ -45,7 +52,7 @@ export const Presentation = () => {
             name="logo"
             width="104px"
             height="104px"
-            className="absolute left-[-8px] top-10 z-0 text-highlight"
+            className="absolute left-[-1px] top-10 z-0 text-highlight"
           />
           <Image
             src={`/images/juliano_${palletColor}.png`}

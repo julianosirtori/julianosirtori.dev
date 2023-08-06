@@ -12,18 +12,18 @@ export const AboutMe = () => {
     return null;
   }
   return (
-    <section className="relative overflow-hidden">
+    <section className="relative overflow-hidden" id="about">
       <ImageSVG
         name="rectangle"
         width="155px"
         height="155px"
-        className="absolute left-[-70px] top-12 hidden lg:block"
+        className="text-primary absolute left-[-70px] top-12 hidden lg:block"
       />
       <ImageSVG
         name="dots"
         width="103px"
         height="103px"
-        className="absolute bottom-12 right-[-20px] hidden lg:block"
+        className="absolute bottom-12 right-[-20px] hidden text-highlight lg:block"
       />
       <div className="w-full px-4 lg:m-auto lg:max-w-screen-lg">
         <Title level={2} variant="secondary" className="mb-4">

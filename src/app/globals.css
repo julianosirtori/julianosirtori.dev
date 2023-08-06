@@ -18,6 +18,12 @@ body{
   padding: 0;
 }
 
+@layer base {
+  html {
+    scroll-behavior: smooth !important;
+  }
+}
+
 .set-color-highlight-current-green {
   --color-highlight-current: var(--color-highlight-green);
 }

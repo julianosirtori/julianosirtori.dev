@@ -1,7 +1,8 @@
 {
   "title": "Juliano is a <span>front-end web developer</span>",
   "subtitle": "I specialize in designing and implementing seamless user interactions on the web, utilizing JavaScript, React, and HTML to create captivating and dynamic digital experiences.",
-  "buttonContactMe": "Contact me!!",
+  "buttonCurriculum": "Curriculum",
+  "linkCurriculum": "English -Juliano Sirtori - Resume.pdf",
   "currentlyWork": "Currently working on ",
   "currentlyCompany": "CI&T",
   "currentlyCompanyLink": "https://ciandt.com",

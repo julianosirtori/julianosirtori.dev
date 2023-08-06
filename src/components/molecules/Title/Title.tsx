@@ -27,8 +27,8 @@ export const Title = ({
       className={`flex w-full flex-row items-center gap-4 text-3xl ${className}`}
       {...props}
     >
-      <TypeHeading className="text-primary m-0 font-semibold">
-        <span className="text-primary">{variantStyle.character}</span>
+      <TypeHeading className="m-0 font-semibold text-highlight">
+        <span className="text-highlight">{variantStyle.character}</span>
         {children}
       </TypeHeading>
       <div

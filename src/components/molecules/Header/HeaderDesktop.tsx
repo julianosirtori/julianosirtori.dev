@@ -8,8 +8,8 @@ export const HeaderDesktop = ({ links }: IHeaderProps) => {
   return (
     <header className="bg-primary m-auto flex w-full max-w-5xl flex-row items-end justify-between px-4 pb-2 pt-8">
       <div>
-        <Link href="/">
-          <span className="text-base font-bold text-highlight">Juliano</span>
+        <Link href="/" className="flex flex-row items-center gap-1">
+          <span className="text-xl font-bold text-highlight">Juliano</span>
         </Link>
       </div>
       <nav>

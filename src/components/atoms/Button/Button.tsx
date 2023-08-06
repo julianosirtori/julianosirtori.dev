@@ -10,6 +10,10 @@ export const Variants = {
     button: "border-primary hover:bg-gray active:opacity-50",
     span: "text-secondary",
   },
+  highlight: {
+    button: "border-highlight hover:bg-gray active:opacity-50",
+    span: "text-highlight",
+  },
 };
 
 export const Button = ({
