@@ -24,7 +24,7 @@ export const Header = () => {
       href: "/#contact",
     };
 
-    return [about, blog, contact].filter((item) => !!item) as ILinkItem[];
+    return [blog, about, contact].filter((item) => !!item) as ILinkItem[];
   }, [t]);
 
   return <HeaderClient links={links} />;

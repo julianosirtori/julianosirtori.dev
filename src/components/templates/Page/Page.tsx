@@ -40,7 +40,7 @@ export const Root = ({
           <p className="text-secondary">{subtitle}</p>
         </motion.div>
       )}
-      <div className="mt-16 flex w-full flex-col gap-24">{children}</div>
+      <div className="mt-8 flex w-full flex-col gap-24">{children}</div>
     </div>
   );
 };

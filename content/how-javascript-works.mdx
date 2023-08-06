@@ -1,0 +1,103 @@
+---
+title: "Nos bastidores, como o javascript funciona"
+date: 2023-05-01
+description: "O JavaScript é uma linguagem de programação que pode ser bastante confusa para quem está começando, principalmente quando se trata de callbacks e promises. "
+meta:
+  keywords:
+    - javascript
+    - react
+    - programming
+    - beginners
+    - webdev
+bannerCloudinaryId: unsplash/photo-1593436878396-e943a3cac98f
+bannerCredit: Photo by [Mika Baumeister](https://unsplash.com/pt-br/@mbaumi)
+---
+
+O JavaScript é uma linguagem de programação que pode ser bastante confusa para quem está começando, principalmente quando se trata de callbacks e promises. Vejamos um exemplo de código abaixo:
+
+```
+function printHelloWorld() {
+  console.log("Hello World");
+}
+
+function sayHi() {
+  console.log("Hi!");
+}
+
+function blockFor7000ms() {
+  for (let i = 0; i < 1000000000; i++) {}
+  console.log("end for");
+}
+
+setTimeout(printHelloWorld, 0);
+
+blockFor7000ms();
+
+new Promise((resolve) => {
+  sayHi();
+  resolve();
+});
+```
+
+Se executarmos esse código, teremos essa resposta no console:
+
+```
+> end for
+> Hi!
+> Hello World
+```
+
+Por que o `end for` foi executado primeiro, mesmo que ele tenha demorado 7000ms? O `setTimeout` não deveria ter sido executado primeiro? E por que a `Promise` também foi executada antes do `setTimeout`?
+
+Para responder a essas perguntas, primeiro temos que entender alguns princípios básicos do JavaScript.
+
+### Event Loop e Call Stack
+
+O Call Stack e o Event Loop são dois dos principais mecanismos que trabalham juntos para gerenciar a execução de código em JavaScript. O Call Stack é uma estrutura de dados que rastreia a execução das funções no código. Quando uma função é chamada, ela é adicionada ao topo do Call Stack. Quando a função é concluída, ela é removida do Call Stack e o controle é devolvido para a função que a chamou.
+
+O Event Loop, por outro lado, é responsável por gerenciar a fila de eventos. Eventos, como interações do usuário ou respostas de rede, são adicionados à fila de eventos. O Event Loop monitora constantemente a fila de eventos e, quando o Call Stack está vazio, o próximo evento da fila é retirado e processado.
+
+Quando o JavaScript executa um trecho de código, ele é adicionado ao Call Stack. Se o código contém operações síncronas que exigem tempo de processamento, o Call Stack pode ser bloqueado até que as operações sejam concluídas. No entanto, se o código contém operações assíncronas, como uma chamada de API ou manipulação de eventos do usuário, essas operações são adicionadas à fila de eventos em vez de serem executadas imediatamente.
+
+Quando uma operação assíncrona é concluída, ela é adicionada à fila de tarefas, juntamente com outras operações assíncronas que foram concluídas. O Event Loop monitora a fila de tarefas, dando prioridade às micro-tarefas em relação às macro-tarefas. As micro-tarefas são executadas antes das macro-tarefas, mesmo que tenham sido adicionadas posteriormente.
+
+### Depurando nosso codigo
+
+Sabendo disso, vamos depurar nosso código para compreender melhor esses conceitos.
+
+![print do vscode ](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/ymvrupuu8t5kgnjsv5cx.png)
+
+**1.** Até a linha 13, o JavaScript apenas salvou em memória nossas funções. Na linha 14, ele adicionará no topo do nosso call stack a função do `setTimeout`. O `setTimeout` faz parte das features do browser, logo, ele será executado pelo browser após o tempo que foi passado como parâmetro. Como foi passado 0 segundos, ele é executado imediatamente. O browser envia a nossa função `printHelloWorld` para o Callback Queue (macro tarefas), que ficará aguardando até que não haja mais nada no call stack.
+
+**2.** Em seguida, a função `blockFor7000ms()` é adicionada ao call stack. Esta função consiste em um loop for que itera um grande número de vezes. Isso levará um tempo significativo para ser concluído e, enquanto isso, o restante do código não será executado, bloqueando o nosso call stack. E a nossa função `printHelloWorld` continuará no Callback Queue aguardando para ser executada. Se olharmos para o console nesse ponto, ele acabará de imprimir o nosso `end for` quando a função `blockFor7000ms()` finalizar.
+
+```
+> end for
+```
+
+**3.** Finalizando o `blockFor7000ms`, ele adicionará a nossa `Promise` para o call stack. Ao executar a nossa Promise, ele enviará a função `sayHi()` para a fila de micro-tarefas.
+
+**4.** Depois disso, o nosso programa entra em um estado de espera, aguardando que o call stack fique vazio. Isso acontece porque a execução da Promise é assíncrona e não bloqueia o call stack.
+
+**5.** Agora, o event loop verificará que não tem mais nada no call stack. Ele verificará primeiro na fila de micro-tarefas. Nessa fila, ele encontrará a função `sayHi()` e a passará para o call stack. No Call stack, a função `sayHi()` será executada e irá imprimir o nosso console.log. Se olharmos no console, ficará assim:
+
+```
+> end for
+> Hi!
+```
+
+**6.** Nesse ponto, o nosso call stack ficará vazio novamente, e o nosso event loop verificará primeiro a nossa fila de micro-tarefas. Como não teremos nada, ele verificará as nossas macro-tarefas. Nas macro-tarefas, ele encontrará o nosso `printHelloWorld` e o passará para o call stack, executando-o e imprimindo o console.log. Por fim, nosso console ficará assim:
+
+```
+> end for
+> Hi!
+> Hello World
+```
+
+### Conclusão
+
+Em um primeiro momento javascript pode ser bastante obscuro e confuso, mas isso se deve a forma como ele funciona, se entendermos a teoria veremos q ele é bastante simples e poderoso.
+
+#### Ref:
+
+https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Guide/Using_promises#composi%C3%A7%C3%A3o

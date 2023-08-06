@@ -41,6 +41,10 @@ body{
 }
 
 @layer utilities {
+  .focus-ring {
+    @apply ring-highlight ring-offset-4 ring-offset-white transition duration-300 focus-within:outline-none focus-within:ring-2 focus-within:ring-highlight hover:ring-2 hover:ring-highlight focus:outline-none focus:ring-2 focus:ring-highlight disabled:ring-0 group-hover:ring-2 group-hover:ring-highlight group-focus:ring-2 group-focus:ring-highlight dark:ring-offset-gray-900;
+  }
+
   .bg-primary {
     @apply bg-white dark:bg-gray-900;
   }
@@ -65,5 +69,12 @@ body{
     @apply text-gray-500 dark:text-slate-500;
   }
 
+  .prose h3, .prose h2 {
+    color: var(--color-highlight-current);
+  }
+  
+  .prose p {
+    @apply text-gray-200
+  }
 }
 

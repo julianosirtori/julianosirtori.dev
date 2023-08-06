@@ -19,14 +19,14 @@ export const PostItem = ({ post }: IPostItemProps) => {
   return (
     <Link
       href={`/blog/${post.slug}`}
-      className="bg-primary border-primary hover:border-primary flex max-w-xs flex-col border"
+      className="bg-primary  hover:border-primary flex max-w-xs flex-col  p-1"
     >
-      <div className="relative h-96  w-full overflow-hidden">
+      <div className="focus-ring relative  h-96 w-full overflow-hidden  rounded-md">
         <Image
           src={post.urlImage}
           fill
           alt={post.bannerAlt || ""}
-          className="object-cover"
+          className="object-cover "
         />
       </div>
 
