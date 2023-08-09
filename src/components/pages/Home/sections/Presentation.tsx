@@ -40,10 +40,12 @@ export const Presentation = () => {
         <motion.p variants={childVariants} className="text-secondary ">
           {t("subtitle")}
         </motion.p>
-        <Link href={`/files/${t("linkCurriculum")}`} target="_blank">
-          <Button variant="highlight" className="max-w-max	">
-            {t("buttonCurriculum")}
-          </Button>
+        <Link
+          href={`/files/${t("linkCurriculum")}`}
+          target="_blank"
+          className="max-w-max"
+        >
+          <Button variant="highlight">{t("buttonCurriculum")}</Button>
         </Link>
       </motion.div>
       <motion.div className="flex w-full flex-col items-center overflow-hidden">
