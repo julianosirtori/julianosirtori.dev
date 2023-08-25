@@ -1,43 +1,37 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Karla:wght@400;500;600;700&family=Rubik:wght@400;500;600;700&display=swap');
 
 
 :root {
-  --color-highlight-unknown: #36a3ff;
-  --color-highlight-blue: #36a3ff;
-  --color-highlight-red: #ff4545;
-  --color-highlight-purple: #a086ff;
-  --color-highlight-green: #00ff00;
-  --color-highlight-current: var(--color-highlight-unknown);
-}
-
-body{
-  font-family: 'Fira Code', monospace;
-  padding: 0;
+  --colors-yellow: #ffff80;
+  --colors-pink: #ff80bf;
+  --colors-purple: #9580ff;
+  --colors-red: #ff9580;
+  --colors-orange: #ffca80;
+  --colors-green: #8aff80;
+  --colors-cyan: #80ffea;
+  --colors-primary: #f2f2f2;
+  --colors-secondary: #8f9ba8;
+  --colors-background: #08070b;
+  --colors-hover: #212024;
+  --colors-command: rgba(255, 255, 255, 0.05);
+  --fonts-body: Inter, sans-serif;
+  --fonts-code: Fira Code, monospace;
+  --space-navHeightDesktop: 60px;
+  --space-navHeightMobile: 110px;
+  --transitions-duration: 0.2s;
+  --radii-borderRadius: 8px;
 }
 
 @layer base {
   html {
     scroll-behavior: smooth !important;
   }
-}
-
-.set-color-highlight-current-green {
-  --color-highlight-current: var(--color-highlight-green);
-}
-
-.set-color-highlight-current-purple {
-  --color-highlight-current: var(--color-highlight-purple);
-}
-
-.set-color-highlight-current-red {
-  --color-highlight-current: var(--color-highlight-red);
-}
-
-.set-color-highlight-current-blue {
-  --color-highlight-current: var(--color-highlight-blue);
+  body {
+    font-family: var(--fonts-body);
+  }
 }
 
 @layer utilities {
@@ -45,29 +39,6 @@ body{
     @apply ring-highlight ring-offset-4 ring-offset-white transition duration-300 focus-within:outline-none focus-within:ring-2 focus-within:ring-highlight hover:ring-2 hover:ring-highlight focus:outline-none focus:ring-2 focus:ring-highlight disabled:ring-0 group-hover:ring-2 group-hover:ring-highlight group-focus:ring-2 group-focus:ring-highlight dark:ring-offset-gray-900;
   }
 
-  .bg-primary {
-    @apply bg-white dark:bg-gray-900;
-  }
-
-  .bg-secondary {
-    @apply bg-gray-100 dark:bg-gray-800;
-  }
-
-  .border-primary {
-    @apply border-gray-900 dark:border-white;
-  }
-
-  .border-secondary {
-    @apply border-gray-200 dark:border-gray-600;
-  }
-
-  .text-primary {
-    @apply text-black dark:text-white;
-  }
-
-  .text-secondary {
-    @apply text-gray-500 dark:text-slate-500;
-  }
 
   .prose h3, .prose h2 {
     color: var(--color-highlight-current);

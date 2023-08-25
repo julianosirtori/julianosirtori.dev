@@ -24,7 +24,7 @@ export const HeaderSelectLang = () => {
     <Select.Root onValueChange={handleSelect} defaultValue={currentLocale}>
       <Select.Trigger
         aria-label="change language"
-        className="text-primary flex flex-row items-center gap-1 p-1 font-semibold"
+        className="flex flex-row items-center gap-1 p-1 font-semibold text-secondary"
       >
         <Select.Value placeholder={currentLocale.toUpperCase()} />
         <Select.Icon>
@@ -33,13 +33,13 @@ export const HeaderSelectLang = () => {
       </Select.Trigger>
       <Select.Portal>
         <Select.SelectContent>
-          <Select.SelectViewport className="border-primary bg-primary flex flex-col gap-2 border p-1 px-2">
+          <Select.SelectViewport className=" absolute top-10 flex flex-col gap-2 border border-primary bg-background p-1 px-2">
             {langs.map((lang) => (
               <Select.Item
                 key={lang}
                 value={lang}
                 aria-label={lang}
-                className="text-primary flex flex-row gap-1 p-1 hover:cursor-pointer"
+                className="flex flex-row gap-1 p-1 text-secondary hover:cursor-pointer"
               >
                 <Select.ItemText>{lang.toUpperCase()}</Select.ItemText>
                 <Select.ItemIndicator>

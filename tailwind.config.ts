@@ -11,6 +11,9 @@ module.exports = {
     extend: {
       colors: {
         highlight: "var(--color-highlight-current)",
+        primary: "var(--colors-primary)",
+        secondary: "var(--colors-secondary)",
+        background: "var(--colors-background)",
       },
     },
   },

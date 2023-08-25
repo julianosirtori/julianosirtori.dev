@@ -5,17 +5,14 @@
   "header": {
     "about": "about-me",
     "contact": "contacts",
-    "blog": "blog"
-  },
-  "footer": {
-    "copyright": "© Copyright 2023. Made by Juliano"
+    "blog": "blog",
+    "projects": "projects"
   },
   "email": "julianosirtori@gmail.com",
-  "media": "Media",
   "social": {
     "github": "https://github.com/julianosirtori/julianosirtori.dev",
     "linkedin": "https://www.linkedin.com/in/juliano-sirtori/",
-    "discord": "https://discordapp.com/users/juliano_sirtori"
+    "discord": "https://discordapp.com/users/juliano_sirtori",
+    "twitter": "https://twitter.com/julianosirtori"
   }
-
 }
