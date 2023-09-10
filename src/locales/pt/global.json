@@ -2,12 +2,25 @@
   "myName": "Juliano",
   "myFullName": "Juliano Sirtori",
   "role": "Desenvolvedor Front-end",
+  "slogan": "Eu crio interações entre usuários e tecnologia!",
+  "tapToStart": "Toque para começar",
   "header": {
     "about": "sobre",
-    "contact": "contatos",
-    "blog": "blog",
+    "blog": "artigos",
     "projects": "projetos"
   },
+  "kbar": {
+    "email": "Enviar Email",
+    "source": "Ver Código Fonte",
+    "home": "Início",
+    "about": "Sobre",
+    "contact": "Contato",
+    "articles": "Blog",
+    "project": "Projetos",
+    "defaultSearch": "Pesquisar"
+  },
+  "goTo": "Ir Para",
+  "general": "Geral",
   "email": "julianosirtori@gmail.com",
   "social": {
     "github": "https://github.com/julianosirtori/julianosirtori.dev",

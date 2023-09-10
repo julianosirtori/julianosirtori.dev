@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useMemo } from "react";
+import React, { useMemo } from "react";
 import * as Select from "@radix-ui/react-select";
 import { ChevronDownIcon, CheckIcon } from "@radix-ui/react-icons";
 import { useLocale } from "next-intl";
@@ -26,13 +26,14 @@ export const HeaderSelectLang = () => {
         aria-label="change language"
         className="flex flex-row items-center gap-1 p-1 font-semibold text-secondary"
       >
-        <Select.Value placeholder={currentLocale.toUpperCase()} />
+        <Select.Value>{currentLocale.toUpperCase()}</Select.Value>
+
         <Select.Icon>
-          <ChevronDownIcon width={16} height={16} />
+          <ChevronDownIcon width={16} height={16} className="mb-1" />
         </Select.Icon>
       </Select.Trigger>
       <Select.Portal>
-        <Select.SelectContent>
+        <Select.SelectContent className="z-20">
           <Select.SelectViewport className=" absolute top-10 flex flex-col gap-2 border border-primary bg-background p-1 px-2">
             {langs.map((lang) => (
               <Select.Item

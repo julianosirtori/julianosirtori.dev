@@ -3,10 +3,12 @@ import { Analytics } from "@vercel/analytics/react";
 import { NextIntlClientProvider, useLocale } from "next-intl";
 import { notFound } from "next/navigation";
 
+import { biotifFont } from "@/utils/fonts";
 import { Header } from "@/components/molecules/Header";
 import { Footer } from "@/components/molecules/Footer";
 import { importLocale } from "@/locales";
 import { Metadata } from "next";
+import { CommandBar } from "@/components/CommandBar";
 
 interface BlogRootLayoutProps {
   children: React.ReactNode;
@@ -41,12 +43,18 @@ export default async function BlogRootLayout({
 
   return (
     <html lang={locale}>
-      <body className="relative bg-background">
+      <body
+        className={`relative bg-background ${biotifFont.variable} font-sans`}
+      >
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <Header />
-          {children}
-          <Footer />
-          <Analytics />
+          <CommandBar>
+            <div className="flex min-h-screen flex-col">
+              <Header />
+              {children}
+              <Footer />
+            </div>
+            <Analytics />
+          </CommandBar>
         </NextIntlClientProvider>
       </body>
     </html>

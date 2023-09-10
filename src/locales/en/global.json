@@ -2,11 +2,22 @@
   "myName": "Juliano",
   "myFullName": "Juliano Sirtori",
   "role": "Front-end Developer",
+  "slogan": "I create interactions between users and technology!",
+  "tapToStart": "Tap to start",
   "header": {
-    "about": "about-me",
-    "contact": "contacts",
+    "about": "about",
     "blog": "blog",
     "projects": "projects"
+  },
+  "kbar": {
+    "email": "Send Email",
+    "source": "View Source",
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact",
+    "articles": "Articles",
+    "project": "Projects",
+    "defaultSearch": "Search"
   },
   "email": "julianosirtori@gmail.com",
   "social": {
