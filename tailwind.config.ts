@@ -19,6 +19,8 @@ module.exports = {
         background: "var(--colors-background)",
         command: "var(--colors-command)",
         hover: "var(--colors-hover)",
+        pink: "var(--colors-pink)",
+        purple: "var(--colors-purple)",
       },
       padding: {
         "nav-height-desktop": "var(--space-navHeightDesktop)",
