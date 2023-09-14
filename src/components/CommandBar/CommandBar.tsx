@@ -70,9 +70,9 @@ export function CommandBar({ children }: TCommandBarProps) {
     },
     {
       id: "articles",
-      name: t("articles"),
+      name: t("blog"),
       shortcut: ["g", "b"],
-      keywords: "go-articles",
+      keywords: "go-blog",
       section: "Go To",
       perform: () => router.push("/blog"),
       icon: <FileTextIcon />,
@@ -96,8 +96,8 @@ export function CommandBar({ children }: TCommandBarProps) {
       }}
     >
       <KBarPortal>
-        <KBarPositioner className="bg-[rgba(255, 255, 255, .1)] fixed inset-0 z-20 box-border flex w-full items-start justify-center px-4 pt-[14vh]">
-          <KBarAnimator className="backdrop-saturate-500 [&>div>div]:no-scrollbar w-full max-w-2xl overflow-hidden rounded-lg bg-command text-primary backdrop-blur-2xl">
+        <KBarPositioner className="fixed inset-0 z-20 box-border flex w-full items-start justify-center bg-[#000000cc] px-4 pt-[14vh]">
+          <KBarAnimator className="[&>div>div]:no-scrollbar w-full max-w-2xl overflow-hidden rounded-lg bg-command text-primary backdrop-blur-3xl backdrop-saturate-200">
             <KBarSearch
               defaultPlaceholder={t("defaultSearch")}
               className="m-0 box-border w-full bg-command px-4 py-3 text-base text-primary outline-none"

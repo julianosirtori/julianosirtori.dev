@@ -3,7 +3,6 @@ import aspectRatio from "@tailwindcss/aspect-ratio";
 import typography from "@tailwindcss/typography";
 
 module.exports = {
-  darkMode: "class",
   corePlugins: {
     aspectRatio: false,
   },
@@ -21,6 +20,9 @@ module.exports = {
         hover: "var(--colors-hover)",
         pink: "var(--colors-pink)",
         purple: "var(--colors-purple)",
+        cyan: "var(--colors-cyan)",
+        green: "var(--colors-green)",
+        yellow: "var(--colors-yellow)",
       },
       padding: {
         "nav-height-desktop": "var(--space-navHeightDesktop)",

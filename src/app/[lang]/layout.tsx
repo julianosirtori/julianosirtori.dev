@@ -3,9 +3,9 @@ import { Analytics } from "@vercel/analytics/react";
 import { NextIntlClientProvider, useLocale } from "next-intl";
 import { notFound } from "next/navigation";
 
-import { biotifFont } from "@/utils/fonts";
-import { Header } from "@/components/molecules/Header";
-import { Footer } from "@/components/molecules/Footer";
+import { biotifFont } from "@/app/fonts";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 import { importLocale } from "@/locales";
 import { Metadata } from "next";
 import { CommandBar } from "@/components/CommandBar";

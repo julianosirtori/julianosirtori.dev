@@ -55,8 +55,8 @@ export default function About() {
       <section className="flex flex-col">
         <h2 className="mt-10 text-2xl text-primary">Career</h2>
         <ul>
-          {experiences.map((item) => (
-            <li key={item.jobTitle} className="mb-10">
+          {experiences.map((item, index) => (
+            <li key={index} className="mb-10">
               <h3 className="mt-5 text-lg text-primary">{item.jobTitle}</h3>
               <p className="m-0 text-base leading-8 text-secondary">
                 <a

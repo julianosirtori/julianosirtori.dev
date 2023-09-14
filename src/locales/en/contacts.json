@@ -1,7 +1,15 @@
 {
-  "title": "contacts",
+  "title": "Email me. Like in the old days.",
   "description": "I’m interested in freelance opportunities. However, if you have other request or question, don’t hesitate to contact me",
-  "messageHere": "Message me here",
-  "allMedia": "all-media"
-
+  "email": {
+    "title": "Send an email",
+    "labelName": "name",
+    "placeholderName": "James Bond",
+    "labelEmail": "email",
+    "placeholderEmail": "james@bond.com",
+    "labelMessage": "message",
+    "placeholderMessage": "How can I help you?",
+    "button": "Send",
+    "buttonLoading": "Loading..."
+  }
 }

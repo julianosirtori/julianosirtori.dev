@@ -1,14 +1,10 @@
-import Balancer from 'react-wrap-balancer';
-
-import { allPosts } from 'contentlayer/generated';
-import { notFound } from 'next/navigation';
-
-import { Post as PostPage } from '@/components/pages/Post';
+import { allPosts } from "contentlayer/generated";
+import { notFound } from "next/navigation";
 
 interface IPostProps {
   params: {
-    slug: string
-  }
+    slug: string;
+  };
 }
 
 export default async function Post({ params }: IPostProps) {
@@ -19,6 +15,8 @@ export default async function Post({ params }: IPostProps) {
   }
 
   return (
-    <PostPage post={post} />
-  )
+    <main>
+      <h1>Post</h1>
+    </main>
+  );
 }
