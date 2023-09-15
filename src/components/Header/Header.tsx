@@ -39,7 +39,7 @@ export const Header = () => {
                 href={link.href}
                 className="appearance-none rounded-lg border-none px-5 py-3 uppercase duration-500 hover:bg-hover hover:text-white"
               >
-                <span className="text-xs">{link.label}</span>
+                <span className="text-xs tracking-widest	">{link.label}</span>
               </Link>
             </HeaderItemWrapper>
           ))}
