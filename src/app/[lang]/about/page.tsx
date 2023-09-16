@@ -17,20 +17,34 @@ export default function About() {
           {t("title")}
         </span>
       </h1>
-      <section className="flex flex-col gap-4 md:flex-row md:justify-between">
-        <Image
-          width={336}
-          height={336}
-          placeholder="blur"
-          blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAP0lEQVQImQE0AMv/AFBQUJKSkqmpqaOjowCurq7v7+/Jycm5ubkA////jIyMn5+fg4ODADAwMD09PWlpaQAAAApRGnEHblMWAAAAAElFTkSuQmCC"
-          priority
-          className="rounded-lg object-cover"
-          src="/images/juliano.jpeg"
-          alt="juliano"
-        />
-        <div>
-          <p className="m-4">{t("bio.phrase1")}</p>
-          <p className="m-4">{t("bio.phrase2")}</p>
+      <section className="flex flex-col gap-4 md:flex-row md:justify-start">
+        <div className="relative h-[336px] w-[40%]">
+          <Image
+            fill
+            placeholder="blur"
+            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAP0lEQVQImQE0AMv/AFBQUJKSkqmpqaOjowCurq7v7+/Jycm5ubkA////jIyMn5+fg4ODADAwMD09PWlpaQAAAApRGnEHblMWAAAAAElFTkSuQmCC"
+            priority
+            className="rounded-lg object-cover"
+            src="/images/juliano.jpeg"
+            alt="juliano"
+          />
+        </div>
+
+        <div className="w-[50%]">
+          <p className="m-4">
+            {t.rich("bio.phrase1", {
+              important: (chunks) => (
+                <strong className="text-primary">{chunks}</strong>
+              ),
+            })}
+          </p>
+          <p className="m-4">
+            {t.rich("bio.phrase2", {
+              important: (chunks) => (
+                <strong className="text-primary">{chunks}</strong>
+              ),
+            })}
+          </p>
           <p className="m-4">{t("bio.phrase3")}</p>
         </div>
       </section>
