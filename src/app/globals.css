@@ -21,8 +21,9 @@
     --transitions-duration: 0.2s;
     --radii-borderRadius: 8px;
   }
-  html {
+  html, body {
     scroll-behavior: smooth !important;
+    -webkit-font-smoothing: antialiased;
   }
 
   .prose {

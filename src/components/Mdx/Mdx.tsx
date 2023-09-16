@@ -8,7 +8,7 @@ export const Mdx = ({ code }: MdxProps) => {
   const Component = useMDXComponent(code);
 
   return (
-    <article className="prose prose-stone max-w-none pb-8 ">
+    <article className="prose prose-stone m-auto w-full max-w-3xl pb-5 ">
       <Component />
     </article>
   );
