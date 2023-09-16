@@ -88,7 +88,7 @@ export const ContactForm = () => {
         <button
           disabled={isLoading}
           type="submit"
-          className="hover:text-cyan-500 focus:text-cyan-500 mt-4 w-full cursor-pointer rounded-lg border bg-primary bg-white p-1 text-[12px] text-background outline-none duration-200 ease-in-out hover:border-cyan hover:bg-transparent focus:border-cyan focus:bg-transparent disabled:opacity-50"
+          className="focus:text-cyan-500  mt-4 w-full cursor-pointer rounded-lg border bg-primary bg-white p-1 text-[12px] text-background outline-none duration-200 ease-in-out hover:border-cyan hover:bg-transparent hover:text-cyan focus:border-cyan focus:bg-transparent disabled:opacity-50"
         >
           {isLoading ? t("buttonLoading") : t("button")}
         </button>
