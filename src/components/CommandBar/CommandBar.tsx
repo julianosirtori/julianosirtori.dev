@@ -146,7 +146,8 @@ const ResultItem = forwardRef(function ResultItem(
       ref={ref}
     >
       <div className="flex items-center gap-4">
-        {action.icon && action.icon}
+        <div className="text-primary">{action.icon && action.icon}</div>
+
         <div className="flex flex-col">
           <span>{action.name}</span>
         </div>
