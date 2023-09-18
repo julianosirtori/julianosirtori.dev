@@ -140,7 +140,7 @@ const ResultItem = forwardRef(function ResultItem(
       className={clsx({
         "m-0 flex w-full cursor-pointer items-center justify-between px-4 py-3":
           true,
-        "bg-[rgba(255, 255, 255, 0.1)] text-primary": active,
+        "bg-[#1a1c1e)] text-primary": active,
         "bg-command text-secondary": !active,
       })}
       ref={ref}
@@ -155,7 +155,7 @@ const ResultItem = forwardRef(function ResultItem(
       <div className="grid grid-flow-col gap-1">
         {action.shortcut.map((shortcut: string) => (
           <kbd
-            className="bg-black px-2 py-1 uppercase text-secondary"
+            className="rounded-md bg-hover px-2 py-1 uppercase text-secondary"
             key={shortcut}
           >
             {shortcut}

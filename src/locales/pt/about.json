@@ -3,6 +3,8 @@
   "bio": {
     "phrase1": "Olá, eu sou o <important>Juliano Sirtori</important>",
     "phrase2": "Atuo como <important>Desenvolvedor Frontend Web</important>, mas já trabalhei como Analista de BI e desenvolvedor Android. Estou sempre em busca de entregar <important>software de alta qualidade.</important>",
-    "phrase3": "Além de gostar muito de programar, também sou apaixonado por esportes e passar tempo com minha família é muito importante para mim."
-  }
+    "phrase3": "Além de gostar muito de programar, também sou apaixonado por esportes e passar tempo com minha família."
+  },
+  "recommendations": "Recomendações",
+  "career": "Carreira"
 }

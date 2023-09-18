@@ -18,7 +18,7 @@ export default function About() {
         </span>
       </h1>
       <section className="flex flex-col gap-4 md:flex-row md:justify-start">
-        <div className="relative h-[336px] w-[40%]">
+        <div className="relative h-[400px] w-[40%]">
           <Image
             fill
             placeholder="blur"
@@ -49,7 +49,9 @@ export default function About() {
         </div>
       </section>
       <section className="flex flex-col">
-        <h2 className="mt-14 text-2xl text-primary">Recommendations</h2>
+        <h2 className="mt-14 text-2xl font-semibold text-primary">
+          {t("recommendations")}
+        </h2>
         <ul>
           {recommendations.map((item, index) => (
             <li key={index} className="mb-10">
@@ -67,7 +69,9 @@ export default function About() {
         </ul>
       </section>
       <section className="flex flex-col">
-        <h2 className="mt-10 text-2xl text-primary">Career</h2>
+        <h2 className="mt-10 text-2xl font-semibold text-primary">
+          {t("career")}
+        </h2>
         <ul>
           {experiences.map((item, index) => (
             <li key={index} className="mb-10">

@@ -23,13 +23,13 @@ export default function Blog() {
       <p className="text-base leading-8 text-secondary ">{t("description")}</p>
       <section className="mt-14 w-full">
         <h2 className="px-2 text-2xl font-semibold leading-8 text-primary">
-          All Articles
+          {t("allArticles")}
         </h2>
         <ul className="mt-2 w-full">
           {postsSorted.map((post) => (
             <li
               key={post.title}
-              className="w-full rounded-md border-b border-hover px-2 transition-all duration-200 hover:bg-hover"
+              className="w-full rounded-none border-b border-hover px-2 transition-all duration-200 hover:rounded-md hover:bg-hover"
             >
               <Link
                 href={`/blog/${post.slug}`}

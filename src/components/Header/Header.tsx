@@ -28,7 +28,7 @@ export const Header = () => {
 
   return (
     <header className=" absolute top-0 z-10 order-1 mt-3 flex min-h-[60px] w-full flex-row flex-wrap items-center justify-between text-sm">
-      <Link href="/" className="pl-5 text-lg font-extrabold text-primary">
+      <Link href="/" className="pl-5 text-lg  font-bold text-primary">
         JS
       </Link>
       <nav className=" order-3  mt-4 flex-1 px-5 text-secondary min-[480px]:order-2 min-[480px]:mt-0">

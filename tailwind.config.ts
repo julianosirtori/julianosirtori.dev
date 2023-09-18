@@ -28,6 +28,20 @@ module.exports = {
         "nav-height-desktop": "var(--space-navHeightDesktop)",
         "nav-height-mobile": "var(--space-navHeightMobile)",
       },
+      animation: {
+        textclip: "textclip 5000ms linear infinite",
+      },
+      keyframes: {
+        textclip: {
+          to: {
+            backgroundPosition: "200% center",
+          },
+        },
+      },
+      backgroundImage: {
+        "linear-dracula":
+          "linear-gradient(-225deg, var(--colors-cyan) 0%, var(--colors-green) 52%, var(--colors-cyan) 100% )",
+      },
     },
   },
   content: [

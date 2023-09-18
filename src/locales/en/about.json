@@ -4,5 +4,7 @@
     "phrase1": "Hello, I am <important>Juliano Sirtori</important>!",
     "phrase2": "I work as a <important>Frontend Web Developer</important>, but I have also worked as a Business Intelligence Analyst and an Android developer. I am always striving to <important>deliver high-quality software</important>.",
     "phrase3": "In addition to enjoying programming a lot, I am also passionate about sports, and spending time with my family is very important to me."
-  }
+  },
+  "recommendations": "Recommendation",
+  "career": "Career"
 }

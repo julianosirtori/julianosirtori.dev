@@ -3,7 +3,7 @@
   "myFullName": "Juliano Sirtori",
   "role": "Front-end Developer",
   "slogan": "I create interactions between users and technology!",
-  "tapToStart": "Tap to start",
+  "tapToStart": "Press <firstKey>⌘</firstKey> <secondKey>k</secondKey> to start",
   "header": {
     "about": "about",
     "blog": "blog",

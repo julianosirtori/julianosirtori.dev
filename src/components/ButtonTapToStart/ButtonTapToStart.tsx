@@ -10,9 +10,22 @@ export function ButtonTapToStart() {
   return (
     <button
       onClick={query.toggle}
-      className="flex flex-row items-center gap-2 px-3 py-2 text-base font-semibold text-primary "
+      className="flex flex-row items-center gap-2 rounded px-3 py-2 text-base font-semibold text-primary transition-all duration-200 hover:bg-hover"
     >
-      <span>{t("tapToStart")}</span>
+      <span>
+        {t.rich("tapToStart", {
+          firstKey: (chunk) => (
+            <kbd className="rounded bg-secondary px-1 py-[1px] text-sm text-background">
+              {chunk}
+            </kbd>
+          ),
+          secondKey: (chunk) => (
+            <kbd className="rounded bg-secondary px-1 py-[1px] text-sm text-background">
+              {chunk}
+            </kbd>
+          ),
+        })}
+      </span>
       <ArrowRightIcon />
     </button>
   );
