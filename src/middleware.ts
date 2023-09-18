@@ -14,5 +14,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!cdn|auth|api|_next|.*\\..*).*)"],
+  matcher: ["/((?!cdn|auth|api|_next|sitemap.xml|robots.txt|.*\\..*).*)"],
 };
