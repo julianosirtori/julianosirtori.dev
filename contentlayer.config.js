@@ -1,4 +1,8 @@
-import { defineDocumentType, defineNestedType, makeSource } from "contentlayer/source-files";
+import {
+  defineDocumentType,
+  defineNestedType,
+  makeSource,
+} from "contentlayer/source-files";
 import remarkGfm from "remark-gfm";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
@@ -17,14 +21,14 @@ const computedFields = {
   urlImage: {
     type: "string",
     resolve: (post) => {
-      const bannerIdSplitted = post.bannerCloudinaryId.split('/')
+      const bannerIdSplitted = post.bannerCloudinaryId.split("/");
       switch (bannerIdSplitted[0]) {
-        case 'unsplash':
+        case "unsplash":
           return `https://images.unsplash.com/${bannerIdSplitted[1]}`;
         default:
-          return post.bannerCloudinaryId
+          return post.bannerCloudinaryId;
       }
-    }
+    },
   },
   readTime: {
     type: "number",
@@ -32,23 +36,22 @@ const computedFields = {
       const wordsPerMinute = 200;
       const textLength = post.body.raw.split(" ").length;
       return Math.ceil(textLength / wordsPerMinute);
-    }
-  }
+    },
+  },
 };
 
 const Meta = defineNestedType(() => ({
-  name: 'Meta',
+  name: "Meta",
   fields: {
-    keywords: { 
-      type: 'list', 
+    keywords: {
+      type: "list",
       of: {
-        type: 'string'
-      }, 
-      required: true 
+        type: "string",
+      },
+      required: true,
     },
   },
-}))
-
+}));
 
 export const Post = defineDocumentType(() => ({
   name: "Post",
@@ -71,10 +74,10 @@ export const Post = defineDocumentType(() => ({
       type: "list",
       of: {
         type: "string",
-      }
+      },
     },
     meta: {
-      type: 'nested',
+      type: "nested",
       of: Meta,
     },
     bannerCloudinaryId: {
@@ -87,8 +90,8 @@ export const Post = defineDocumentType(() => ({
     },
     bannerAlt: {
       type: "string",
-    }
-  },  
+    },
+  },
   computedFields,
 }));
 
@@ -102,7 +105,7 @@ export default makeSource({
       [
         rehypePrettyCode,
         {
-          theme: "one-dark-pro",
+          theme: "dracula-soft",
           onVisitLine(node) {
             // Prevent lines from collapsing in `display: grid` mode, and allow empty
             // lines to be copy/pasted

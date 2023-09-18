@@ -1,4 +1,6 @@
 {
-  "title": "Blog",
-  "subTitle": "A blog by me"
+  "title": "Teaching is learning.",
+  "description": "Here, you will find articles on the subjects I am studying, mastering, and wish to share with friends, or that are part of my career.",
+  "allArticles": "All articles",
+  "readTime": "min - read time"
 }

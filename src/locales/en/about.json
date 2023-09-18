@@ -1,16 +1,10 @@
 {
-  "title": "about-me",
-  "subTitle": "Who am i? ",
-  "aboutMe": {
-    "phrase1":  "Hello, I’m Juliano!",
-    "phrase2": "I am a web developer specialized in large-scale international projects. My expertise includes the development of robust and scalable web applications, as well as the integration with different technologies.",
-    "phrase3": "I am highly skilled in working in multidisciplinary teams and agile environments, which allows me to deliver high-quality solutions within the established deadlines.",
-    "phrase4": "As a professional, I am always seeking to learn and update myself to stay at the forefront of new technologies and market trends. With my vast experience in web development, I am able to create efficient and customized solutions to meet the specific needs of my clients. My goal is always to exceed expectations and ensure total customer satisfaction."
+  "title": "Discover more about me",
+  "bio": {
+    "phrase1": "Hello, I am <important>Juliano Sirtori</important>!",
+    "phrase2": "I work as a <important>Frontend Web Developer</important>, but I have also worked as a Business Intelligence Analyst and an Android developer. I am always striving to <important>deliver high-quality software</important>.",
+    "phrase3": "In addition to enjoying programming a lot, I am also passionate about sports, and spending time with my family is very important to me."
   },
-  "skills": {
-    "title": "Skills",
-    "items": {
-      
-    }
-  }
+  "recommendations": "Recommendation",
+  "career": "Career"
 }

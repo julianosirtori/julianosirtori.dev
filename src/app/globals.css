@@ -1,80 +1,146 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap');
-
-
-:root {
-  --color-highlight-unknown: #36a3ff;
-  --color-highlight-blue: #36a3ff;
-  --color-highlight-red: #ff4545;
-  --color-highlight-purple: #a086ff;
-  --color-highlight-green: #00ff00;
-  --color-highlight-current: var(--color-highlight-unknown);
-}
-
-body{
-  font-family: 'Fira Code', monospace;
-  padding: 0;
-}
 
 @layer base {
-  html {
-    scroll-behavior: smooth !important;
+  :root {
+    --colors-yellow: #ffff80;
+    --colors-pink: #ff80bf;
+    --colors-purple: #9580ff;
+    --colors-red: #ff9580;
+    --colors-orange: #ffca80;
+    --colors-green: #8aff80;
+    --colors-cyan: #80ffea;
+    --colors-primary: #f2f2f2;
+    --colors-secondary: #8f9ba8;
+    --colors-background: #08070b;
+    --colors-hover: #212024;
+    --colors-command: rgba(255, 255, 255, 0.05);
+    --space-navHeightDesktop: 90px;
+    --space-navHeightMobile: 110px;
+    --transitions-duration: 0.2s;
+    --radii-borderRadius: 8px;
   }
-}
+  html, body {
+    scroll-behavior: smooth !important;
+    -webkit-font-smoothing: antialiased;
+  }
 
-.set-color-highlight-current-green {
-  --color-highlight-current: var(--color-highlight-green);
-}
+  .prose {
+    overflow: hidden;
+  }
 
-.set-color-highlight-current-purple {
-  --color-highlight-current: var(--color-highlight-purple);
-}
+  .prose p {
+    margin: 20px 0;
+    color: var(--colors-secondary);
+    font-size: 16px;
+    line-height: 32px;
+  }
 
-.set-color-highlight-current-red {
-  --color-highlight-current: var(--color-highlight-red);
-}
+  .prose h2 {
+    margin: 60px 0 0; 
+    color: var(--colors-primary);
+    font-size: 24px;
+    line-height: 32px;
+  }
 
-.set-color-highlight-current-blue {
-  --color-highlight-current: var(--color-highlight-blue);
+  .prose h3 {
+    margin: 48px 0 0; 
+    color: var(--colors-primary);
+    font-size: 18px;
+    line-height: 28px;
+  }
+
+  .prose a {
+    text-decoration:  none;
+    border-bottom:  .5px solid var(--colors-secondary);
+    color: var(--colors-primary);
+  }
+
+  .prose strong {
+    color: var(--colors-primary);
+  }
+
+  .prose code {
+    color: var(--colors-primary);
+  }
+
+  [data-rehype-pretty-code-fragment] code {
+    @apply grid min-w-full break-words rounded-none border-0 bg-transparent p-0 text-sm text-black;
+    counter-reset: line;
+    box-decoration-break: clone;
+  }
+
+  [data-rehype-pretty-code-fragment] .line {
+    @apply py-1;
+  }
+
+  [data-rehype-pretty-code-fragment] [data-line-numbers] > .line::before {
+    counter-increment: line;
+    content: counter(line);
+    display: inline-block;
+    width: 1rem;
+    margin-right: 1rem;
+    text-align: right;
+    color: gray;
+  }
+
+  [data-rehype-pretty-code-fragment] .line--highlighted {
+    @apply bg-slate-500 bg-opacity-10;
+  }
+
+  [data-rehype-pretty-code-fragment] .line-highlighted span {
+    @apply relative;
+  }
+
+  [data-rehype-pretty-code-fragment] .word--highlighted {
+    @apply rounded-md bg-slate-500 bg-opacity-10 p-1;
+  }
+
+  [data-rehype-pretty-code-title] {
+    @apply px-4 py-3 font-mono text-xs font-medium border rounded-t-lg text-neutral-200 border-[#333333] bg-[#1c1c1c];
+  }
+
+  [data-rehype-pretty-code-title] + pre {
+    @apply mt-0 rounded-t-none border-t-0;
+  }
+
+
+code {
+  counter-reset: line;
+}
+ 
+code > [data-line]::before {
+  counter-increment: line;
+  content: counter(line);
+ 
+  /* Other styling */
+  display: inline-block;
+  width: 1rem;
+  margin-right: 2rem;
+  text-align: right;
+  color: gray;
+}
+ 
+code[data-line-numbers-max-digits='2'] > [data-line]::before {
+  width: 2rem;
+}
+ 
+code[data-line-numbers-max-digits='3'] > [data-line]::before {
+  width: 3rem;
+}
 }
 
 @layer utilities {
-  .focus-ring {
-    @apply ring-highlight ring-offset-4 ring-offset-white transition duration-300 focus-within:outline-none focus-within:ring-2 focus-within:ring-highlight hover:ring-2 hover:ring-highlight focus:outline-none focus:ring-2 focus:ring-highlight disabled:ring-0 group-hover:ring-2 group-hover:ring-highlight group-focus:ring-2 group-focus:ring-highlight dark:ring-offset-gray-900;
+   /* Hide scrollbar for Chrome, Safari and Opera */
+   .no-scrollbar::-webkit-scrollbar {
+    display: none;
   }
 
-  .bg-primary {
-    @apply bg-white dark:bg-gray-900;
-  }
-
-  .bg-secondary {
-    @apply bg-gray-100 dark:bg-gray-800;
-  }
-
-  .border-primary {
-    @apply border-gray-900 dark:border-white;
-  }
-
-  .border-secondary {
-    @apply border-gray-200 dark:border-gray-600;
-  }
-
-  .text-primary {
-    @apply text-black dark:text-white;
-  }
-
-  .text-secondary {
-    @apply text-gray-500 dark:text-slate-500;
-  }
-
-  .prose h3, .prose h2 {
-    color: var(--color-highlight-current);
-  }
-  
-  .prose p {
-    @apply text-gray-200
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
   }
 }
 

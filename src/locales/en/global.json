@@ -2,20 +2,28 @@
   "myName": "Juliano",
   "myFullName": "Juliano Sirtori",
   "role": "Front-end Developer",
+  "slogan": "I create interactions between users and technology!",
+  "tapToStart": "Press <firstKey>⌘</firstKey> <secondKey>k</secondKey> to start",
   "header": {
-    "about": "about-me",
-    "contact": "contacts",
-    "blog": "blog"
+    "about": "about",
+    "blog": "blog",
+    "projects": "projects"
   },
-  "footer": {
-    "copyright": "© Copyright 2023. Made by Juliano"
+  "kbar": {
+    "email": "Send Email",
+    "source": "View Source",
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact",
+    "blog": "Blog",
+    "project": "Projects",
+    "defaultSearch": "Search"
   },
   "email": "julianosirtori@gmail.com",
-  "media": "Media",
   "social": {
     "github": "https://github.com/julianosirtori/julianosirtori.dev",
     "linkedin": "https://www.linkedin.com/in/juliano-sirtori/",
-    "discord": "https://discordapp.com/users/juliano_sirtori"
+    "discord": "https://discordapp.com/users/juliano_sirtori",
+    "twitter": "https://twitter.com/julianosirtori"
   }
-
 }
