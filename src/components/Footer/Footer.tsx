@@ -39,6 +39,7 @@ export const Footer = () => {
         <Link
           href={link.href}
           key={link.href}
+          aria-label={link.label}
           target="_blank"
           className="flex flex-row  items-center gap-2 p-5 text-secondary hover:text-primary sm:w-[130px] sm:[&>i]:hidden sm:[&>i]:hover:block"
         >
