@@ -17,20 +17,20 @@ export default function About() {
           {t("title")}
         </span>
       </h1>
-      <section className="flex flex-col gap-4 md:flex-row md:justify-start">
-        <div className="relative h-[400px] w-[40%]">
+      <section className="flex w-full flex-col gap-4 md:flex-row md:justify-start">
+        <div className="relative h-[400px] w-full lg:w-[40%]">
           <Image
             fill
             placeholder="blur"
             blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAP0lEQVQImQE0AMv/AFBQUJKSkqmpqaOjowCurq7v7+/Jycm5ubkA////jIyMn5+fg4ODADAwMD09PWlpaQAAAApRGnEHblMWAAAAAElFTkSuQmCC"
             priority
             className="rounded-lg object-cover"
-            src="/images/juliano.jpeg"
+            src={t("image")}
             alt="juliano"
           />
         </div>
 
-        <div className="w-[50%]">
+        <div className="w-full lg:w-[50%]">
           <p className="m-4">
             {t.rich("bio.phrase1", {
               important: (chunks) => (
