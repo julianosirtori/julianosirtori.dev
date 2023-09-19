@@ -1,10 +1,4 @@
 export const projectsGroupedByYear = {
-  "2022": [
-    {
-      title: "Bees Uk",
-      href: "https://mybees.uk",
-    },
-  ],
   "2021": [
     {
       title: "Aiqfome no super app do magalu",
@@ -13,7 +7,7 @@ export const projectsGroupedByYear = {
   ],
   "2020": [
     {
-      title: "Gerenciado de pedidos do aiqfome",
+      title: "Gerenciador de pedidos do aiqfome",
       href: "https://geraldo-restaurantes.aiqfome.com",
     },
   ],

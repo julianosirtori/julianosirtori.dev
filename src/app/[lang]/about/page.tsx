@@ -91,7 +91,7 @@ export default function About() {
                 <span> – </span>
                 <span>
                   {item.endDate
-                    ? dayjs(item.startDate).format("MMM YYYY")
+                    ? dayjs(item.endDate).format("MMM YYYY")
                     : "Present"}
                 </span>
                 <span> • </span>
