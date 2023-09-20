@@ -11,4 +11,10 @@ export const projectsGroupedByYear = {
       href: "https://geraldo-restaurantes.aiqfome.com",
     },
   ],
+  "2018": [
+    {
+      title: "Gerenciador de tarefas para supermercados",
+      href: "https://www.rpinfo.com.br/produto/task/79",
+    },
+  ],
 };
