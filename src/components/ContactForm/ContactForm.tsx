@@ -15,9 +15,11 @@ export const ContactForm = () => {
     try {
       setIsLoading(true);
       const target = e.currentTarget;
-      await fetch(`${process.env.NEXT_PUBLIC_LOCAL_DOMAIN}/api/email`, {
+      await fetch(`/api/email`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           name: target.nameContact.value,
           email: target.email.value,
@@ -28,8 +30,8 @@ export const ContactForm = () => {
       setIsEmailSent(true);
     } catch (error) {
       setShowToast(true);
-      setIsEmailSent(true);
-      console.error(e);
+      setIsEmailSent(false);
+      console.error(error);
     }
     setIsLoading(false);
   };

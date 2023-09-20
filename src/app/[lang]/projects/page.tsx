@@ -16,7 +16,7 @@ export default function Contacts() {
       </h1>
       <p className="text-base leading-8 text-secondary ">{t("description")}</p>
       <h2 className="mt-14 px-2 text-2xl font-semibold leading-8 text-primary">
-        All Articles
+        {t("allProjects")}
       </h2>
       {years.map((year) => (
         <div key={year}>
