@@ -4,6 +4,8 @@ import relativeTime from "dayjs/plugin/relativeTime";
 
 import { experiences, recommendations } from "@/data/about";
 import { useTranslations } from "next-intl";
+import { LinkedInLogoIcon } from "@radix-ui/react-icons";
+import Link from "next/link";
 
 dayjs.extend(relativeTime);
 
@@ -55,7 +57,16 @@ export default function About() {
         <ul>
           {recommendations.map((item, index) => (
             <li key={index} className="mb-10">
-              <h3 className="mt-5 text-lg text-primary">{item.name}</h3>
+              <h3 className="mt-5 flex flex-row items-center gap-1 text-lg text-primary">
+                <Link
+                  href={item.linkedIn}
+                  className="flex flex-row items-center gap-2"
+                >
+                  <span className="font-semibold">{item.name}</span> -
+                  <span className="text-base font-medium">{item.role}</span>
+                  <LinkedInLogoIcon />
+                </Link>
+              </h3>
               {item.content.map((paragraph, index) => (
                 <p
                   key={index}
