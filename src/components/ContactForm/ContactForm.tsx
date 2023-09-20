@@ -31,7 +31,7 @@ export const ContactForm = () => {
       setIsEmailSent(true);
     } catch (error) {
       setShowToast(true);
-      setIsEmailSent(true);
+      setIsEmailSent(false);
       console.error(e);
     }
     setIsLoading(false);
