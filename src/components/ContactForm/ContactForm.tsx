@@ -17,7 +17,10 @@ export const ContactForm = () => {
       const target = e.currentTarget;
       await fetch(`${process.env.NEXT_PUBLIC_LOCAL_DOMAIN}/api/email`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          origin: `${process.env.NEXT_PUBLIC_LOCAL_DOMAIN}`,
+        },
         body: JSON.stringify({
           name: target.nameContact.value,
           email: target.email.value,
