@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import { useTranslations } from "next-intl";
 import { notFound } from "next/navigation";
 
-interface IPostProps {
+export interface IPostProps {
   params: {
     slug: string;
   };

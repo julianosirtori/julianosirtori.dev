@@ -24,7 +24,7 @@ export async function generateMetadata({
   const messages = (await importLocale({ locale: params.lang })).messages;
   return {
     title: "Juliano Sirtori",
-    description: messages.home.subtitle,
+    description: messages.global.slogan,
   };
 }
 
