@@ -20,7 +20,7 @@ export async function generateMetadata({
   const post = allPosts.find((post) => post.slug === params.slug);
 
   const title = `Juliano Sirtori - ${post?.title}`;
-  const description = messages.global.slogan;
+  const description = post?.description || messages.global.slogan;
 
   return {
     title,
