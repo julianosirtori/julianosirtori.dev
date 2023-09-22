@@ -33,10 +33,6 @@ export async function generateMetadata({
       description,
       url: "https://julianosirtori.dev/",
     },
-    twitter: {
-      title,
-      description,
-    },
   };
 }
 
