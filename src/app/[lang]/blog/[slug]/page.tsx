@@ -1,12 +1,39 @@
 import { Mdx } from "@/components/Mdx";
+import { importLocale } from "@/locales";
 import { allPosts } from "contentlayer/generated";
 import dayjs from "dayjs";
+import { Metadata } from "next";
 import { useTranslations } from "next-intl";
 import { notFound } from "next/navigation";
 
 export interface IPostProps {
   params: {
+    lang: string;
     slug: string;
+  };
+}
+
+export async function generateMetadata({
+  params,
+}: IPostProps): Promise<Metadata> {
+  const messages = (await importLocale({ locale: params.lang })).messages;
+  const post = allPosts.find((post) => post.slug === params.slug);
+
+  const title = `Juliano Sirtori - ${post?.title}`;
+  const description = messages.global.slogan;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: "https://julianosirtori.dev/",
+    },
+    twitter: {
+      title: "Juliano Sirtori",
+      description,
+    },
   };
 }
 

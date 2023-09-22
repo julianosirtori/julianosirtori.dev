@@ -20,11 +20,23 @@ interface BlogRootLayoutProps {
 export async function generateMetadata({
   params,
 }: BlogRootLayoutProps): Promise<Metadata> {
-  params.lang;
   const messages = (await importLocale({ locale: params.lang })).messages;
+
+  const title = "Juliano Sirtori";
+  const description = messages.global.slogan;
+
   return {
-    title: "Juliano Sirtori",
-    description: messages.global.slogan,
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: "https://julianosirtori.dev/",
+    },
+    twitter: {
+      title,
+      description,
+    },
   };
 }
 

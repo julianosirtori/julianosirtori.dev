@@ -6,8 +6,6 @@ export const runtime = "edge";
 
 export const contentType = "image/png";
 export const alt = "Juliano Sirtori - FrontEnd Developer";
-export const title = "Juliano Sirtori";
-export const url = "https://julianosirtori.dev/";
 
 export const size = {
   width: 1200,
