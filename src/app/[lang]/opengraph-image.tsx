@@ -5,8 +5,9 @@ import { ImageResponse } from "next/server";
 export const runtime = "edge";
 
 export const contentType = "image/png";
-
 export const alt = "Juliano Sirtori - FrontEnd Developer";
+export const title = "Juliano Sirtori";
+export const url = "https://julianosirtori.dev/";
 
 export const size = {
   width: 1200,
@@ -21,7 +22,7 @@ export default async function GET() {
 
     return new ImageResponse(
       (
-        <div tw="w-full h-full flex text-center flex-nowrap flex-col justify-center bg-[#08070b]">
+        <div tw="w-full h-full flex text-center px-10 flex-nowrap flex-col justify-center bg-[#08070b]">
           <div tw="flex flex-col justify-center px-10">
             <h1
               style={{

@@ -5,8 +5,8 @@ import { allPosts } from "contentlayer/generated";
 export const runtime = "edge";
 
 export const contentType = "image/png";
-
 export const alt = "Juliano Sirtori - FrontEnd Developer";
+export const title = "Juliano Sirtori";
 
 export const size = {
   width: 1200,
