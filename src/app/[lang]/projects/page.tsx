@@ -1,10 +1,36 @@
 import { useTranslations } from "next-intl";
 import { projectsGroupedByYear } from "@/data/projects";
 import Link from "next/link";
+import { Metadata } from "next";
+import { importLocale } from "@/locales";
 
-export default function Contacts() {
+interface ProjectsProps {
+  params: {
+    lang: string;
+  };
+}
+
+export async function generateMetadata({
+  params,
+}: ProjectsProps): Promise<Metadata> {
+  const messages = (await importLocale({ locale: params.lang })).messages;
+
+  const title = "Juliano Sirtori | Projects";
+  const description = messages.projects.description;
+
+  return {
+    title: title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: "https://julianosirtori.dev/projects",
+    },
+  };
+}
+
+export default function Projects() {
   const t = useTranslations("projects");
-
   const years = Object.keys(projectsGroupedByYear).reverse();
 
   return (

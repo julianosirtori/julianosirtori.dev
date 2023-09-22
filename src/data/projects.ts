@@ -1,4 +1,20 @@
 export const projectsGroupedByYear = {
+  "2023": [
+    {
+      title: "Life in Weeks",
+      href: "https://life-in-weeks.julianosirtori.dev/",
+    },
+    {
+      title: "julianosirtori.dev",
+      href: "https://julianosirtori.dev/",
+    },
+  ],
+  "2022": [
+    {
+      title: "Pick-up Lines",
+      href: "https://cantadas.julianosirtori.dev/",
+    },
+  ],
   "2021": [
     {
       title: "Aiqfome no super app do magalu",
