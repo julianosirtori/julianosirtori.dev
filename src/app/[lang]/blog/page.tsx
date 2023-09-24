@@ -1,6 +1,5 @@
 import { dateTool } from "@/utils/date";
 import { allPosts } from "contentlayer/generated";
-import dayjs from "dayjs";
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 
