@@ -1,5 +1,5 @@
-import { useTranslations } from "next-intl";
-import { projectsGroupedByYear } from "@/data/projects";
+import { useLocale, useTranslations } from "next-intl";
+import { projects } from "@/data/projects";
 import Link from "next/link";
 import { Metadata } from "next";
 import { importLocale } from "@/locales";
@@ -31,6 +31,9 @@ export async function generateMetadata({
 
 export default function Projects() {
   const t = useTranslations("projects");
+  const currentLocale = useLocale();
+  const projectsGroupedByYear =
+    projects[currentLocale as keyof typeof projects];
   const years = Object.keys(projectsGroupedByYear).reverse();
 
   return (
