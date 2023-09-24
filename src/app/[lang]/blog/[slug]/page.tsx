@@ -1,9 +1,10 @@
 import { Mdx } from "@/components/Mdx";
 import { importLocale } from "@/locales";
+import { dateTool } from "@/utils/date";
 import { allPosts } from "contentlayer/generated";
-import dayjs from "dayjs";
+
 import { Metadata } from "next";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { notFound } from "next/navigation";
 
 export interface IPostProps {
@@ -35,7 +36,12 @@ export async function generateMetadata({
 
 export default function Post({ params }: IPostProps) {
   const t = useTranslations("blog");
-  const post = allPosts.find((post) => post.slug === params.slug);
+  const locale = useLocale();
+  const post = allPosts.find(
+    (post) => post.slug === params.slug && post.language === locale,
+  );
+
+  const dayjs = dateTool(locale);
 
   if (!post) {
     notFound();
