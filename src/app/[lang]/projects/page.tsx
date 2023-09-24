@@ -34,7 +34,7 @@ export default function Projects() {
   const years = Object.keys(projectsGroupedByYear).reverse();
 
   return (
-    <main className="mx-auto my-5 flex w-full max-w-4xl flex-1 flex-col	 px-5 py-nav-height-mobile text-base  leading-8 text-secondary lg:py-nav-height-desktop">
+    <main className="mx-auto my-5 flex w-full max-w-4xl flex-1 flex-col	 px-5 py-nav-height-mobile text-base  leading-8 text-secondary selection:bg-cyan selection:text-black lg:py-nav-height-desktop">
       <h1 className="mb-4 text-5xl font-bold text-primary">
         <span className="bg-gradient-to-r from-purple to-cyan bg-clip-text text-transparent">
           {t("title")}
@@ -54,6 +54,7 @@ export default function Projects() {
               <li key={index}>
                 <Link
                   href={project.href}
+                  target="_blank"
                   className="border-b border-secondary text-primary "
                 >
                   {project.title}
