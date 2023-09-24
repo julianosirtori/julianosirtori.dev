@@ -13,7 +13,7 @@ export default function About() {
   const t = useTranslations("about");
 
   return (
-    <main className="mx-auto my-5 flex w-full max-w-4xl flex-1 flex-col	 px-5 py-nav-height-mobile text-base  leading-8 text-secondary lg:py-nav-height-desktop">
+    <main className="mx-auto my-5 flex w-full max-w-4xl flex-1 flex-col	 px-5 py-nav-height-mobile text-base  leading-8 text-secondary selection:bg-pink selection:text-black lg:py-nav-height-desktop">
       <h1 className="mb-5 text-5xl font-bold text-primary">
         <span className="bg-gradient-to-r from-pink to-purple bg-clip-text text-transparent">
           {t("title")}
@@ -60,10 +60,14 @@ export default function About() {
               <h3 className="mt-5 flex flex-row items-center gap-1 text-lg text-primary">
                 <Link
                   href={item.linkedIn}
-                  className="flex flex-row items-center gap-2"
+                  className="flex flex-row items-center justify-center gap-2 lg:justify-start"
                 >
-                  <span className="font-semibold">{item.name}</span> -
-                  <span className="text-base font-medium">{item.role}</span>
+                  <div className="flex flex-col gap-2 lg:flex-row lg:items-center">
+                    <span className="font-semibold">{item.name}</span>
+                    <span className="hidden lg:block">-</span>
+                    <span className="text-base font-medium">{item.role}</span>
+                  </div>
+
                   <LinkedInLogoIcon />
                 </Link>
               </h3>

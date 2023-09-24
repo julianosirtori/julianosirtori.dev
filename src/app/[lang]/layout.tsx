@@ -26,6 +26,7 @@ export async function generateMetadata({
   const description = messages.global.slogan;
 
   return {
+    metadataBase: new URL("https://julianosirtori.dev"),
     title,
     description,
     openGraph: {
