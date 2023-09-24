@@ -1,0 +1,101 @@
+---
+title: "Behind the scenes, how JavaScript works."
+date: 2023-05-01
+description: "JavaScript is a programming language that can be quite confusing for beginners, especially when it comes to callbacks and promises."
+meta:
+  keywords:
+    - javascript
+    - react
+    - programming
+    - beginners
+    - webdev
+bannerCloudinaryId: unsplash/photo-1593436878396-e943a3cac98f
+bannerCredit: Photo by [Mika Baumeister](https://unsplash.com/pt-br/@mbaumi)
+---
+
+JavaScript can be quite confusing for beginners, especially when it comes to callbacks and promises. Let's look at a code example below:
+
+```js showLineNumbers
+function printHelloWorld() {
+  console.log("Hello World");
+}
+
+function sayHi() {
+  console.log("Hi!");
+}
+
+function `blockFor7000ms`() {
+  for (let i = 0; i < 1000000000; i++) {}
+  console.log("end for");
+}
+
+setTimeout(printHelloWorld, 0);
+
+`blockFor7000ms`();
+
+new Promise((resolve) => {
+  sayHi();
+  resolve();
+});
+```
+
+If we execute this code, we will get the following console output:
+
+```
+> end for
+> Hi!
+> Hello World
+```
+
+Why did `end for` execute first, even though it took 7000ms? Shouldn't `setTimeout` have been executed first? And why was the `Promise` also executed before `setTimeout`?
+
+To answer these questions, we first need to understand some basic principles of JavaScript.
+
+## Event Loop and Call Stack
+
+The Call Stack and the Event Loop are two of the main mechanisms that work together to manage code execution in JavaScript. The Call Stack is a data structure that tracks the execution of functions in the code. When a function is called, it is added to the top of the Call Stack. When the function is completed, it is removed from the Call Stack, and control is returned to the calling function.
+
+The Event Loop, on the other hand, is responsible for managing the event queue. Events, such as user interactions or network responses, are added to the event queue. The Event Loop constantly monitors the event queue, and when the Call Stack is empty, the next event from the queue is dequeued and processed.
+
+When JavaScript executes a piece of code, it is added to the Call Stack. If the code contains synchronous operations that require processing time, the Call Stack may be blocked until the operations are completed. However, if the code contains asynchronous operations, such as an API call or user event handling, these operations are added to the event queue instead of being executed immediately.
+
+When an asynchronous operation is completed, it is added to the task queue, along with other completed asynchronous operations. The Event Loop monitors the task queue, giving priority to micro-tasks over macro-tasks. Micro-tasks are executed before macro-tasks, even if they were added later.
+
+## Debugging Our Code
+
+With this understanding, let's debug our code to better grasp these concepts.
+
+**1.**  Up to line 13, JavaScript has only stored our functions in memory. On line 14, it will add the `setTimeout` function to the top of our call stack. `setTimeout` is a browser feature, so it will be executed by the browser after the time passed as a parameter. Since 0 seconds were passed, it is executed immediately. The browser sends our `printHelloWorld` function to the Callback Queue (macro-tasks), where it waits until there is nothing left in the call stack.
+
+**2.** Next, the `blockFor7000ms()` function is added to the call stack. This function consists of a for loop that iterates a large number of times. This will take a significant amount of time to complete, and during this time, the rest of the code will not be executed, blocking our call stack. The `printHelloWorld` function will continue to wait in the Callback Queue until it is executed. If we look at the console at this point, it will just have printed our `end for` when the `blockFor7000ms()` function finishes.
+
+```
+> end for
+```
+
+**3.** After completing `blockFor7000ms`, it will add our Promise to the call stack. When executing our `Promise`, it will send the `sayHi()` function to the micro-task queue.
+
+**4.** After that, our program enters a waiting state, waiting for the call stack to become empty. This happens because the execution of the Promise is asynchronous and does not block the call stack.
+
+**5.** Now, the event loop will check that there is nothing in the call stack. It will first check the micro-task queue. In this queue, it will find the `sayHi()` function and pass it to the call stack. In the call stack, the `sayHi()` function will be executed and print the `console.log`. If we look at the console, it will look like this:
+
+```
+> end for
+> Hi!
+```
+
+**6.**  At this point, our call stack will be empty again, and the event loop will check the micro-task queue first. Since there is nothing in it, it will check our macro-task queue. In the macro-task queue, it will find our `printHelloWorld` and pass it to the call stack, executing it and printing the `console.log`. Finally, our console will look like this:
+
+```
+> end for
+> Hi!
+> Hello World
+```
+
+## Conclusion
+
+Initially, JavaScript may seem quite obscure and confusing, but this is due to how it operates. If we understand the theory, we will see that it is straightforward and powerful.
+
+### Ref:
+
+https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Guide/Using_promises#composi%C3%A7%C3%A3o

@@ -1,17 +1,23 @@
+import { dateTool } from "@/utils/date";
 import { allPosts } from "contentlayer/generated";
 import dayjs from "dayjs";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 
 export default function Blog() {
   const t = useTranslations("blog");
+  const locale = useLocale();
 
-  const postsSorted = allPosts.sort((a, b) => {
-    if (new Date(a.date) > new Date(b.date)) {
-      return -1;
-    }
-    return 1;
-  });
+  const dayjs = dateTool(locale);
+
+  const postsSorted = allPosts
+    .filter((post) => post.language === locale)
+    .sort((a, b) => {
+      if (new Date(a.date) > new Date(b.date)) {
+        return -1;
+      }
+      return 1;
+    });
 
   return (
     <main className="mx-auto my-5 flex w-full max-w-4xl flex-1 flex-col	 px-5 py-nav-height-mobile text-base  leading-8 text-secondary selection:bg-yellow selection:text-black lg:py-nav-height-desktop">
