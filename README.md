@@ -16,7 +16,7 @@
 
   <h2 align="center">My Blog</h2>
   <p align="center">
-    My Personal Blog. You can access [here](https://julianosirtori.dev/blog/hello-world) for more details.
+    My Personal Blog. You can access <a href="https://julianosirtori.dev/blog/hello-world">here</a> for more details.
     <br />
     <br />
     <a href="https://julianosirtori.dev/">View Demo</a>
