@@ -1,0 +1,69 @@
+---
+title: "Hello World: My first blog/portfolio"
+date: 2023-09-25
+description: "My first blog. In this article, I will detail the development process, the technologies I used, the challenges I encountered, and what the next steps will be."
+meta:
+  keywords:
+    - portfólio
+    - blog
+    - relatos
+bannerCloudinaryId: unsplash/photo-1611262588019-db6cc2032da3
+bannerCredit: Photo by [Alexander Shatov](https://unsplash.com/pt-br/@alexbemore)
+---
+
+
+One of my goals for the year 2023 was to finally implement my blog. I had been wanting to create one for a while to improve and expand my online presence. Fortunately, I managed to overcome procrastination and finally completed it.
+
+In this article, I will detail the development and design process, the libraries I used for implementation, and the next steps. If you wish to examine the code, you can access it on my GitHub: [https://github.com/julianosirtori/julianosirtori.dev](https://github.com/julianosirtori/julianosirtori.dev)
+
+## Design
+
+I believe the most challenging part of this project was defining the design. Initially, I had in mind a concept with many animations and impressive visual effects. However, after analyzing some references in the field, such as the website [https://kentcdodds.com](https://kentcdodds.com/) and [https://leerob.io](https://leerob.io/), I opted for a simpler approach.
+
+### First Version
+
+I managed to implement a first version of the design, which is presented below:
+
+![First Version of the blog](https://res.cloudinary.com/dfgrg43vh/image/upload/f_auto,q_auto/v1/blog/sc7j5iep4zuag6u03gtm)
+
+I wasn't very satisfied with the result; I thought the screen looked somewhat cluttered. I was looking for something simpler and more minimalist.
+
+### Second Version
+
+I came across the website of [Zeno Rocha](https://zenorocha.com/), liked his design a lot, and ended up replicating both the layout and the structure of his blog, making only a few minor adjustments.
+
+![Second Version of the blog](https://res.cloudinary.com/dfgrg43vh/image/upload/f_auto,q_auto/v1/blog/o5tavft6bqr3sfyti0hy)
+
+In the future, I plan to make some changes to customize the blog according to my style, but at this early stage, I am quite satisfied with the result.
+
+## Technology Stack Used
+
+As for the technology used, I opted for a stack composed of the following options:
+
+* **Next.js 13:** I chose Next.js due to my familiarity with it and took the opportunity to test the new features of version 13.
+
+* **Tailwind CSS:** This is my first project using Tailwind CSS. The learning curve is a bit steep, but the use of extensions for VSCode has been very helpful. I am pleased with the results and plan to use Tailwind CSS in future projects.
+
+* **Contentlayer:** To transform my files, which are in Markdown format, into data, similar to a CMS, I chose to use Contentlayer. The integration was quite easy, and it wasn't necessary to set up any additional CMS services. Additionally, it provides type safety for my articles.
+
+* **Next-intl:** As you can see, my blog offers the option to choose between English and Portuguese. To implement this internationalization, I used Next-intl, opting for a beta version due to the use of server components and the app router.
+
+* **Resend:** I also chose Resend as my email service. I had never used it before, but I found the integration quite easy to perform.
+
+* **Vercel:** As for the infrastructure, I chose to use Vercel.
+
+## Future Improvements
+
+On GitHub, I have mapped out some improvements that I plan to implement, such as the integration of end-to-end tests, the creation of pipelines for CI/CD, and the replacement of kbar with cmdk.
+
+In addition to the topics mentioned above, I plan to make some changes to the layout by adding transition animations and exploring the inclusion of more images to enrich articles and projects.
+
+## Writing Habit
+
+I intend to cultivate the habit of writing, which will help me better solidify the content I learn and strengthen my online presence. I'm documenting this here so that you can hold me accountable later. My intention is to publish one article per week.
+
+## Conclusion
+
+The project is open-source under the MIT license, so feel free to clone it, open issues, or submit pull requests.
+
+THAT'S ALL FOLKS

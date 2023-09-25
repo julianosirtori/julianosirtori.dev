@@ -57,6 +57,10 @@
     color: var(--colors-primary);
   }
 
+  .prose li {
+    color: var(--colors-secondary);
+  }
+
   .prose strong {
     color: var(--colors-primary);
   }

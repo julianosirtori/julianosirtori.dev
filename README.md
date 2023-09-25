@@ -16,7 +16,7 @@
 
   <h2 align="center">My Blog</h2>
   <p align="center">
-    My blog showcases my portfolio, some of the projects I've been involved in, and occasionally, I write some articles. I drew inspiration from <a href="https://zenorocha.com/">Zeno Rocha's website</a> for the layout, making only a few minor adjustments. I plan to incorporate some animations in the future as well.
+    My Personal Blog. You can access [here](https://julianosirtori.dev/blog/hello-world) for more details.
     <br />
     <br />
     <a href="https://julianosirtori.dev/">View Demo</a>
