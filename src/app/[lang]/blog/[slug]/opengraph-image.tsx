@@ -1,4 +1,4 @@
-import { ImageResponse } from "next/server";
+import { ImageResponse } from "next/og";
 import { IPostProps } from "./page";
 import { allPosts } from "contentlayer/generated";
 
