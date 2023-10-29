@@ -75,6 +75,10 @@
     box-decoration-break: clone;
   }
 
+  [data-rehype-pretty-code-fragment] pre::-webkit-scrollbar {
+    display: none;
+  }
+
   [data-rehype-pretty-code-fragment] .line {
     @apply py-1;
   }
