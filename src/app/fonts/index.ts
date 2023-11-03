@@ -1,6 +1,7 @@
 import localFont from "next/font/local";
 
 export const biotifFont = localFont({
+  preload: false,
   src: [
     {
       path: "./Biotif-SemiBold.woff2",
