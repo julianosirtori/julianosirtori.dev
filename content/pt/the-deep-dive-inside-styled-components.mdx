@@ -1,0 +1,63 @@
+---
+title: "Como funciona styled-components?"
+date: 2023-11-02
+description: "Hoje styled-components é um biblioteca css-in-js mais utilizada no frontend, nesse artigo mostro como que ela funciona transformando css em components React."
+meta:
+  keywords:
+    - css
+    - javascript
+    - how-works
+bannerCloudinaryId: unsplash/photo-1623682687826-fe06bf64e6d8
+bannerCredit: Photo by [Mika Baumeister](https://unsplash.com/@mbaumi)
+---
+
+Depois de ter escrito o [último artigo](https://julianosirtori.dev/blog/nextjs-and-sql-injection) e entender como 
+que funciona [tagged templates](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#tagged_templates), 
+fiquei curiso para entender como que funciona o [style-components](https://github.com/styled-components/styled-components) que utiliza 
+essa mesma abordagem nas funções `styled` e `css`.
+
+Acabei mergulhando no codigo fonte do styled-components para entender como que ele funciona e irei demostrar aqui o que 
+eu descobri, alem disso vamos desenvolver a nossa propriea versão do styled-components. 
+
+## O que é styled-components?
+
+Styled Components é uma biblioteca `css-in-js`, isto é, ele permite escrever CSS dentro do javascript, transformando nossos estilos em 
+componentes React. Segue um exemplo abaixo:
+
+```js
+const Button = styled.button`
+  background: transparent;
+  border-radius: 3px;
+  border: 2px solid #BF4F74;
+  color: #BF4F74;
+  margin: 0 1em;
+  padding: 0.25em 1em;
+`
+```
+
+Essa variavel `Button` é um component react que podemos utilizar desta maneira: `<Button>Salvar</Button>`. O styled-components também 
+permite que passamos parametros, desta forma o estilo pode mudar de acordo com nossas variaveis, isso tudo em tempo de execução, sem precisar 
+escrever multiplas classes, deixando nosso css muito mais enxuto. 
+
+```js
+const Button = styled.button`
+  color: ${({disabled}) => disabled ? #000 : #fff};
+  background: ${({disabled}) => disabled ? #f0f0f0 : #BF4F74};
+  margin: 0 1em;
+  padding: 0.25em 1em;
+`
+```
+
+Desta forma, podemos chamar o nosso component passando uma propriedade `disabled`, ficando assim `<Button disabled={true}>Salvar</Button>`
+
+Para ter mais exemplos, e saber como usar o styled-components, você pode acessar diretamente a [documentação](https://styled-components.com/).
+
+## Como que funciona?
+
+Agora que sabemos o q é styled-components e aprendemos como usar ele, vamos entender como que ele funciona. 
+
+
+## Refs:
+* [Styled Components](https://styled-components.com/)
+
+
