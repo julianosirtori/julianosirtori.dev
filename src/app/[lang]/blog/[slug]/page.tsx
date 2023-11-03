@@ -1,3 +1,4 @@
+import { Comments } from "@/components/Comments";
 import { Mdx } from "@/components/Mdx";
 import { importLocale } from "@/locales";
 import { dateTool } from "@/utils/date";
@@ -60,6 +61,7 @@ export default function Post({ params }: IPostProps) {
       </div>
 
       <Mdx code={post.body.code} />
+      <Comments locale={locale} />
     </main>
   );
 }
