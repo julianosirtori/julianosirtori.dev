@@ -17,6 +17,9 @@ jobs:
         run: |
           pnpm install
           pnpm run build
+        env:
+          NEXT_PUBLIC_LOCAL_DOMAIN: ${{ secrets.NEXT_PUBLIC_LOCAL_DOMAIN }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
       - name: run Lighthouse CI
         run: |
           pnpm install -g @lhci/cli@0.12.x
