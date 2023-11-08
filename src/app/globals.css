@@ -51,6 +51,10 @@
     line-height: 28px;
   }
 
+  .prose h4 {
+     color: var(--colors-secondary);
+  }
+
   .prose a {
     text-decoration:  none;
     border-bottom:  .5px solid var(--colors-secondary);
