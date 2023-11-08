@@ -1,0 +1,135 @@
+---
+title: "Reecriando o styled-components"
+date: 2023-11-02
+description: "Depois de ter escrito o e entender como que funciona tagged templates fiquei curiso para entender como que funciona o styled-components que utiliza essa mesma abordagem nas funções `styled` e `css`"
+meta:
+  keywords:
+    - css
+    - javascript
+    - how-works
+bannerCloudinaryId: unsplash/photo-1623682687826-fe06bf64e6d8
+bannerCredit: Photo by [Mika Baumeister](https://unsplash.com/@mbaumi)
+---
+
+Depois de ter escrito o [último artigo](https://julianosirtori.dev/blog/nextjs-and-sql-injection) e entender como funciona [tagged templates](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#tagged_templates), fiquei curioso para entender como funciona o [styled-components](https://github.com/styled-components/styled-components), que utiliza essa mesma abordagem nas funções `styled` e `css`.
+
+Acabei mergulhando no código-fonte do styled-components para entender como ele funciona e, para fixar o que aprendi, acabei tentando reescrever o styled-components. Neste artigo, vou mostrar como desenvolvi uma "cópia" do styled-components em menos de 100 linhas de código **(com bem menos funcionalidades rsrs)**.
+
+## O que é styled-components?
+
+#### Caso você já saiba o que é styled-components vc pode pular essa parte.
+
+Styled Components é uma biblioteca "CSS-in-JS", ou seja, ela permite escrever CSS dentro do JavaScript, transformando nossos estilos em componentes React. Segue um exemplo abaixo:
+
+```js
+const Button = styled.button`
+  background: transparent;
+  border-radius: 3px;
+  border: 2px solid #BF4F74;
+  color: #BF4F74;
+  margin: 0 1em;
+  padding: 0.25em 1em;
+`
+```
+
+Essa variável `Button` é um componente React que podemos utilizar da seguinte maneira: `<Button>Salvar</Button>`. O styled-components também permite que passemos parâmetros, dessa forma, o estilo pode mudar de acordo com nossas variáveis, tudo isso em tempo de execução, sem precisar escrever múltiplas classes, tornando nosso CSS muito mais enxuto.
+
+```js
+const Button = styled.button`
+  color: ${({disabled}) => disabled ? #000 : #fff};
+  background: ${({disabled}) => disabled ? #f0f0f0 : #BF4F74};
+  margin: 0 1em;
+  padding: 0.25em 1em;
+`
+```
+
+Desta forma, podemos chamar o nosso componente passando a propriedade `disabled`, ficando assim `<Button disabled={true}>Salvar</Button>`.
+
+Para ter mais exemplos e saber mais sobre styled-components, você pode acessar diretamente a [documentação](https://styled-components.com/).
+
+## Como implementei?
+
+Agora que já sabemos o que é styled-components e aprendemos como usá-lo, vou mostrar como eu o implementei:
+
+```js
+import { createElement } from "react";
+import { compile, serialize, stringify } from "stylis";
+import { phash, hash } from "../utils/hash";
+import generateAlphabeticName from "../utils/generateAlphabeticName";
+
+function makeStyleTag() {
+  let styleTag = document.querySelector("#styled-components");
+  if (!styleTag) {
+    const head = document.head;
+    styleTag = document.createElement("style");
+    styleTag.setAttribute("type", "text/css");
+    styleTag.setAttribute("id", "styled-components");
+    head.appendChild(styleTag);
+  }
+  return styleTag;
+}
+
+function createClassName(domElement) {
+  return generateAlphabeticName(phash(hash(1234), domElement));
+}
+
+function injectStyle(className, styles) {
+  const styleTag = makeStyleTag();
+  const rule = serialize(compile(`.${className}{${styles}}`), stringify);
+  const node = document.createTextNode(rule);
+  styleTag.appendChild(node);
+}
+
+function interpolateStyle(strs, props, exprs) {
+  return exprs.reduce((result, expr, index) => {
+    const isFunc = typeof expr === "function";
+    const value = isFunc ? expr(props) : expr;
+    return result + value + strs[index + 1];
+  }, strs[0]);
+}
+
+const styledBase =
+  (domElement) =>
+  (strs, ...exprs) => {
+    const Element = (props) => {
+      const className = createClassName(domElement);
+      const styles = interpolateStyle(strs, props, exprs);
+      injectStyle(className, styles);
+      return createElement(domElement, { className }, props.children);
+    };
+    return Element;
+  };
+
+const domElements = ["button", "div", "a", "h1", "h2", "p"];
+const styled = {};
+domElements.forEach((dom) => {
+  styled[dom] = styledBase(dom);
+});
+
+export const styled;
+```
+Você pode conferir o código completo por meio deste link: [styled.js](https://github.com/julianosirtori/poc-styled-components/blob/main/src/lib/styled.js). 
+
+O styled-components cria um identificador para o componente, gera uma classe com base nesse nome, processa os estilos e os injeta dentro de uma tag style. Você pode conferir mais detalhes [aqui](https://medium.com/styled-components/how-styled-components-works-618a69970421). O algoritmo acima basicamente segue esses mesmos passos. 
+
+Na **linha 41**, geramos nossa classe com base no nosso elemento DOM e a salvamos em uma constante chamada de `className`. Para gerar essa classe, primeiro geramos um hash baseado no algoritmo djb2 e, em seguida, geramos um nome alfabético. Basicamente, essas duas funções (hash e generateAlphabeticName) foram copiadas diretamente da biblioteca do styled-components.  
+
+O segundo passo é interpolar os estilos de CSS, executando as funções que temos no meio dos nossos estilos, na **linha 42**. Para isso, temos que percorrer todas as nossas expressões, verificando se nossa expressão é realmente uma função. Caso seja, a chamamos e concatenamos o resultado em nossa string de estilos.
+
+Em seguida, injetamos nossos estilos com nossa classe gerada dentro de uma tag style, na **linha 43**. Nessa etapa, como podemos ver na **linha 23**, buscamos nossa tag style, ou a criamos caso ela não exista, na **linha 7**. Após isso, processamos nossos estilos utilizando a biblioteca [stylis](https://stylis.js.org/), na **linha 24**, que é a mesma biblioteca que o styled-components utiliza. Por fim, injetamos nossos estilos processados dentro da tag style, na **linha 26**.
+
+E finalmente criamos nosso component React através do `React.createElement`, passando o nome da classe que foi criada, **linha 44**. 
+
+
+## Conclução
+Esse código acima mostra, de forma bem resumida, como o styled-components funciona. Na verdade, ele possui muitas outras funcionalidades, como o compartilhamento de temas através do Context API. Ele também fornece algumas APIs, como a função `css`, entre outras coisas.
+
+No entanto, é interessante aprofundarmos nosso entendimento sobre como as bibliotecas funcionam por baixo dos panos. Isso nos ajuda a desmistificar a biblioteca e nos fornece insights para futuros projetos.
+
+**Deixando claro que o código acima foi criado em um fim de semana por curiosidade. Se nos aprofundarmos, existem várias melhorias a serem feitas, mas ele tem caráter apenas didático.**
+
+## Refs:
+* [Styled Components](https://styled-components.com/)
+* [How styled-components works: A deep dive under the hood](https://medium.com/styled-components/how-styled-components-works-618a69970421)
+
+
