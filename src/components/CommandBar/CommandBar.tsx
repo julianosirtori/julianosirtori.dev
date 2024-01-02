@@ -10,7 +10,7 @@ import {
   useMatches,
 } from "kbar";
 import { TCommandBarProps } from "./CommandBar.types";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/locales/navigation";
 import { LegacyRef, forwardRef } from "react";
 import clsx from "clsx";
 import { useTranslations } from "next-intl";

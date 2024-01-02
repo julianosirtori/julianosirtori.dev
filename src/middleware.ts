@@ -1,12 +1,8 @@
-import { languages } from "@/locales/languages";
+import { config as configI18n } from "@/locales/config";
 import createIntlMiddleware from "next-intl/middleware";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 
-const handleI18nRouting = createIntlMiddleware({
-  locales: Object.keys(languages),
-  defaultLocale: "en",
-  localePrefix: "always",
-});
+const handleI18nRouting = createIntlMiddleware(configI18n);
 
 export function middleware(request: NextRequest) {
   const response = handleI18nRouting(request);
