@@ -1,5 +1,6 @@
 import { Analytics } from "@vercel/analytics/react";
-
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Metadata } from "next";
 import { NextIntlClientProvider, useLocale } from "next-intl";
 import { notFound } from "next/navigation";
 
@@ -7,7 +8,6 @@ import { biotifFont } from "@/app/fonts";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { importLocale } from "@/locales";
-import { Metadata } from "next";
 import { CommandBar } from "@/components/CommandBar";
 
 interface BlogRootLayoutProps {
@@ -56,6 +56,7 @@ export default async function BlogRootLayout({
         className={`relative bg-background ${biotifFont.variable} font-sans`}
       >
         <NextIntlClientProvider locale={locale} messages={messages}>
+          <SpeedInsights />
           <CommandBar>
             <div className="flex min-h-screen flex-col">
               <Header />
