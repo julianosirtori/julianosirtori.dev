@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 
 import { useTranslations } from "next-intl";
-import Link from "next/link";
+import { Link } from "@/locales/navigation";
 import { HeaderSelectLang } from "./HeaderSelectLang";
 import { HeaderKBar } from "./HeaderKbar";
 import { HeaderItemWrapper } from "./HeaderItemWrapper";

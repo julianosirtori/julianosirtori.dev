@@ -3,7 +3,7 @@ import React, { useMemo } from "react";
 import * as Select from "@radix-ui/react-select";
 import { ChevronDownIcon, CheckIcon } from "@radix-ui/react-icons";
 import { useLocale } from "next-intl";
-import { usePathname, useRouter } from "next-intl/client";
+import { usePathname, useRouter } from "@/locales/navigation";
 import { languages } from "@/locales/languages";
 
 export const HeaderSelectLang = () => {

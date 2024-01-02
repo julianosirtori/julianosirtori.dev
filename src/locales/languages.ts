@@ -1,18 +1,20 @@
 export const languages = {
   en: {
-      native: 'English',
-      flag: 'gb',
+    native: "English",
+    flag: "gb",
   },
   pt: {
-      native: 'Português (Brasil)',
-      flag: 'pt-br',
+    native: "Português (Brasil)",
+    flag: "pt-br",
   },
 } satisfies Record<
   string,
   {
-      native: string;
-      flag: string;
+    native: string;
+    flag: string;
   }
 >;
 
 export type Language = keyof typeof languages;
+
+export const locales = Object.keys(languages);

@@ -1,7 +1,7 @@
 import { dateTool } from "@/utils/date";
 import { allPosts } from "contentlayer/generated";
 import { useLocale, useTranslations } from "next-intl";
-import Link from "next/link";
+import { Link } from "@/locales/navigation";
 
 export default function Blog() {
   const t = useTranslations("blog");
