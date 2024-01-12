@@ -1,6 +1,15 @@
 name: CI
 on: [push]
 jobs:
+  lint: 
+    name: "Lin"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install modules
+        run: pnpm install
+      - name: Run ESLint
+        run: pnpm lint
   lhci:
     name: Lighthouse
     runs-on: ubuntu-latest
