@@ -45,7 +45,14 @@ export const Header = () => {
           ))}
         </ul>
       </nav>
-      <div className="order-2 flex flex-row gap-2 pr-5 min-[480px]:order-3">
+      <div className="order-2 flex flex-row items-center gap-4 pr-5 min-[480px]:order-3">
+        <Link
+          target="_blank"
+          href="https://cv.julianosirtori.dev/"
+          className="font-semibold text-secondary"
+        >
+          CV
+        </Link>
         <HeaderSelectLang />
         <HeaderKBar />
       </div>
