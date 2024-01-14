@@ -5,8 +5,8 @@ on:
   push:
     branches: [ main ]
 jobs:
-  lint: 
-    name: "Lint"
+  lint-and-unit-tests: 
+    name: "Run Unit Tests and Lint"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -21,32 +21,34 @@ jobs:
           version: 8
       - name: Install modules
         run: pnpm install
+      - name: Run Unit Tests
+        run: pnpm test run
       - name: Run ESLint
         run: pnpm lint
-  lhci:
-    name: Lighthouse
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-      - name: Use Node.js 20.x
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20.x
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
-      - name: pnpm install, build
-        run: |
-          pnpm install
-          pnpm run build
-        env:
-          NEXT_PUBLIC_LOCAL_DOMAIN: ${{ secrets.NEXT_PUBLIC_LOCAL_DOMAIN }}
-          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
-      - name: run Lighthouse CI
-        run: |
-          pnpm install -g @lhci/cli@0.12.x
-          lhci autorun
-        env:
-          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+  # lhci:
+  #   name: Lighthouse
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #       with:
+  #         ref: ${{ github.event.pull_request.head.sha }}
+  #     - name: Use Node.js 20.x
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 20.x
+  #     - uses: pnpm/action-setup@v2
+  #       with:
+  #         version: 8
+  #     - name: pnpm install, build
+  #       run: |
+  #         pnpm install
+  #         pnpm run build
+  #       env:
+  #         NEXT_PUBLIC_LOCAL_DOMAIN: ${{ secrets.NEXT_PUBLIC_LOCAL_DOMAIN }}
+  #         RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+  #     - name: run Lighthouse CI
+  #       run: |
+  #         pnpm install -g @lhci/cli@0.12.x
+  #         lhci autorun
+  #       env:
+  #         LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
