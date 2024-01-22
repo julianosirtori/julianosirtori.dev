@@ -93,6 +93,7 @@ export default function About() {
               <h3 className="mt-5 text-lg text-primary">{item.jobTitle}</h3>
               <p className="m-0 text-base leading-8 text-secondary">
                 <a
+                  rel="noopener noreferrer"
                   href={item.companyUrl}
                   target="_blank"
                   className="border-b border-secondary text-primary "
