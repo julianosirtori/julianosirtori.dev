@@ -10,7 +10,7 @@ export default function Blog() {
   const dayjs = dateTool(locale);
 
   const postsSorted = allPosts
-    .filter((post) => post.language === locale)
+    .filter((post) => post.language === locale && !post.draft)
     .sort((a, b) => {
       if (new Date(a.date) > new Date(b.date)) {
         return -1;

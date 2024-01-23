@@ -95,6 +95,9 @@ export const Post = defineDocumentType(() => ({
     bannerAlt: {
       type: "string",
     },
+    draft: {
+      type: "boolean",
+    },
   },
   computedFields,
 }));

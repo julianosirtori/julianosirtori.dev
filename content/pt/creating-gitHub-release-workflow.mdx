@@ -1,0 +1,84 @@
+---
+title: "Criando um workflow de release no github"
+date: 2024-01-23
+description: "Nesse post vou mostrar como implementei o workflow de release do meu blog."
+meta:
+  keywords:
+    - github
+    - ci/cd
+    - pipeline
+bannerCloudinaryId: unsplash/photo-1611262588019-db6cc2032da3
+bannerCredit: Photo by [Alexander Shatov](https://unsplash.com/pt-br/@alexbemore)
+draft: true
+---
+
+Processos automatizados nos ajudam a entregar software com qualidade e agilidade, e um desses processos é o CI/CD. Neste texto, pretendo detalhar como implementei esse processo no meu portfólio.
+
+
+## Problemas
+
+Anteriormente, eu tinha integrado o repositório diretamente com a Vercel. No entanto, enfrentei alguns problemas:
+
+- O deploy era realizado sempre que a branch era atualizada, mesmo quando os testes falhavam.
+- Não tinha muito controle sobre quando o deploy era realizado, pois sempre ocorria quando a branch main era atualizada.
+
+**PS:** Talvez houvesse algumas configurações na Vercel que pudessem corrigir esses pontos. No entanto, optei por implementar o CI/CD para explorar essa funcionalidade no GitHub e também como objeto de estudo.
+
+
+## Solução
+
+Para solucionar esses problemas, acabei criando dois fluxos de trabalho no GitHub:
+
+- **CI (Continuous Integration):** Nesta etapa, serão executados builds de testes e linters para verificar a integridade e qualidade do projeto. A ideia aqui é receber um feedback rápido sobre as modificações enviadas para a branch principal, evitando possíveis falhas.
+- **CD (Continuous Delivery):** Esta etapa estende a CI e tem a responsabilidade de implementar o software em diferentes ambientes. O objetivo é garantir que o software esteja pronto para ser implementado rapidamente.
+
+A seguir, vou detalhar a implementação de cada um. Para saber mais sobre como implementar fluxos de trabalho no GitHub, você pode consultar diretamente a [documentação](https://docs.github.com/en/actions/using-workflows/about-workflows).
+
+### CI
+
+No CI, acabo executando 2 jobs:
+
+- **Lint e Unit Tests:** Executa o lint no projeto e falha se encontrar uma inconsistência. Também executa os testes unitários.
+- **Lighthouse:** Executa o Lighthouse em diferentes browsers e falha se a pontuação for baixa.
+
+Futuramente, pretendo adicionar testes de integração também.
+
+O trigger para esse fluxo de trabalho é acionado a cada pull request enviada para a branch main ou sempre que a branch main é atualizada.
+
+Você pode verificar o código desse fluxo de trabalho [aqui](https://github.com/julianosirtori/julianosirtori.dev/blob/main/.github/workflows/ci.yml).
+
+### CD
+
+Para implementar o fluxo de trabalho de CD, tive um pouco de dificuldade, pois desejava que esse fluxo fosse executado somente após o CI ser concluído com sucesso. Após algumas buscas na internet, acabei implementando da seguinte forma:
+
+- Adicionei um acionador que é executado sempre que o CI é executado na branch main.
+
+```yml
+on:
+  workflow_run:
+    workflows: ["CI"]
+    branches: [main]
+    types: 
+      - completed
+```
+
+- Dentro do job, adicionei uma condição que verifica se o fluxo de trabalho do CI foi concluído com sucesso.
+
+
+```yml
+jobs:
+  Deploy-Preview:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+```
+
+
+Você pode verificar o código completo desse fluxo de trabalho [aqui](https://github.com/julianosirtori/julianosirtori.dev/blob/main/.github/workflows/cd.yml). 
+
+## Conclusão
+
+Gostei bastante do resultado, e toda sugestão de melhoria é bem-vinda. Agora, os próximos passos são criar uma cobertura maior de testes unitários e implementar/integrar testes end-to-end também.
+ 
+
+**THAT`S ALL FOLKS**
