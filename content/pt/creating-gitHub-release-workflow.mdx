@@ -1,5 +1,5 @@
 ---
-title: "Criando um workflow de release no github"
+title: "Criando workflows de CI/CD no github"
 date: 2024-01-23
 description: "Nesse post vou mostrar como implementei o workflow de release do meu blog."
 meta:
@@ -9,7 +9,7 @@ meta:
     - pipeline
 bannerCloudinaryId: unsplash/photo-1611262588019-db6cc2032da3
 bannerCredit: Photo by [Alexander Shatov](https://unsplash.com/pt-br/@alexbemore)
-draft: true
+draft: false
 ---
 
 Processos automatizados nos ajudam a entregar software com qualidade e agilidade, e um desses processos é o CI/CD. Neste texto, pretendo detalhar como implementei esse processo no meu portfólio.
@@ -36,9 +36,9 @@ A seguir, vou detalhar a implementação de cada um. Para saber mais sobre como 
 
 ### CI
 
-No CI, acabo executando 2 jobs:
+No CI, acabo executando 2 jobs em paralelo:
 
-- **Lint e Unit Tests:** Executa o lint no projeto e falha se encontrar uma inconsistência. Também executa os testes unitários.
+- **Lint e Unit Tests:** Executa o lint no projeto e falha se encontrar alguma inconsistência. Também executa os testes unitários.
 - **Lighthouse:** Executa o Lighthouse em diferentes browsers e falha se a pontuação for baixa.
 
 Futuramente, pretendo adicionar testes de integração também.
@@ -51,7 +51,7 @@ Você pode verificar o código desse fluxo de trabalho [aqui](https://github.com
 
 Para implementar o fluxo de trabalho de CD, tive um pouco de dificuldade, pois desejava que esse fluxo fosse executado somente após o CI ser concluído com sucesso. Após algumas buscas na internet, acabei implementando da seguinte forma:
 
-- Adicionei um acionador que é executado sempre que o CI é executado na branch main.
+- Adicionei um trigger que é executado sempre que o CI é executado na branch main.
 
 ```yml
 on:
@@ -74,11 +74,39 @@ jobs:
 ```
 
 
-Você pode verificar o código completo desse fluxo de trabalho [aqui](https://github.com/julianosirtori/julianosirtori.dev/blob/main/.github/workflows/cd.yml). 
+No step de deploy utilizei o[ Vercel CLI](https://vercel.com/docs/cli) para fazer o deploy na deploy, segue o exemplo:
+
+
+```yml
+    steps:
+    - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.x
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Build Project Artifacts
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Deploy Project Artifacts to Vercel
+        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+```
+
+
+Você pode verificar o código completo desse fluxo de trabalho [aqui](https://github.com/julianosirtori/julianosirtori.dev/blob/main/.github/workflows/cd.yml).  
+
+Futuramente pretendo criar workflows de deploy para ambientes de preview e de produção.
 
 ## Conclusão
 
-Gostei bastante do resultado, e toda sugestão de melhoria é bem-vinda. Agora, os próximos passos são criar uma cobertura maior de testes unitários e implementar/integrar testes end-to-end também.
+Como mencionado anteriormente, a implementação de workflows no GitHub proporciona um maior controle sobre nossos processos de CI/CD. Dessa maneira, podemos configurá-los de forma a otimizar sua eficácia e atender às nossas necessidades de maneira mais eficiente.  
  
 
 **THAT`S ALL FOLKS**
