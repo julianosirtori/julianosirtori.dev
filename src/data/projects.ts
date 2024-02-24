@@ -1,5 +1,11 @@
 export const projects = {
   en: {
+    "2024": [
+      {
+        title: "CLI: cowsay-pragmatic-programmer",
+        href: "https://www.npmjs.com/package/cowsay-pragmatic-programmer",
+      },
+    ],
     "2023": [
       {
         title: "Life in Weeks",
@@ -36,6 +42,12 @@ export const projects = {
     ],
   },
   pt: {
+    "2024": [
+      {
+        title: "CLI: cowsay-pragmatic-programmer",
+        href: "https://www.npmjs.com/package/cowsay-pragmatic-programmer",
+      },
+    ],
     "2023": [
       {
         title: "Life in Weeks",
