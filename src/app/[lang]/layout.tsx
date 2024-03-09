@@ -3,12 +3,14 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Metadata } from "next";
 import { NextIntlClientProvider, useLocale } from "next-intl";
 import { notFound } from "next/navigation";
+import { unstable_setRequestLocale } from "next-intl/server";
 
 import { biotifFont } from "@/app/fonts";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { importLocale } from "@/locales";
 import { CommandBar } from "@/components/CommandBar";
+import { LOCALES } from "@/common/constants";
 
 interface BlogRootLayoutProps {
   children: React.ReactNode;
@@ -37,10 +39,16 @@ export async function generateMetadata({
   };
 }
 
+export function generateStaticParams() {
+  return LOCALES.map((lang) => ({ lang }));
+}
+
 export default async function BlogRootLayout({
   children,
   params,
 }: BlogRootLayoutProps) {
+  unstable_setRequestLocale(params.lang);
+
   const locale = useLocale();
   let messages = {};
 

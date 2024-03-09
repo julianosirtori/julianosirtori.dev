@@ -1,9 +1,19 @@
+import { useLocale, useTranslations } from "next-intl";
+import { unstable_setRequestLocale } from "next-intl/server";
+
 import { dateTool } from "@/utils/date";
 import { allPosts } from "contentlayer/generated";
-import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/locales/navigation";
 
-export default function Blog() {
+interface BlogProps {
+  params: {
+    lang: string;
+  };
+}
+
+export default function Blog({ params }: BlogProps) {
+  unstable_setRequestLocale(params.lang);
+
   const t = useTranslations("blog");
   const locale = useLocale();
 

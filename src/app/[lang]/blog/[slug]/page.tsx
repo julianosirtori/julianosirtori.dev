@@ -1,12 +1,13 @@
+import { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
+import { allPosts } from "contentlayer/generated";
+import { unstable_setRequestLocale } from "next-intl/server";
+
 import { Comments } from "@/components/Comments";
 import { Mdx } from "@/components/Mdx";
 import { importLocale } from "@/locales";
 import { dateTool } from "@/utils/date";
-import { allPosts } from "contentlayer/generated";
-
-import { Metadata } from "next";
-import { useLocale, useTranslations } from "next-intl";
-import { notFound } from "next/navigation";
 
 export interface IPostProps {
   params: {
@@ -36,6 +37,8 @@ export async function generateMetadata({
 }
 
 export default function Post({ params }: IPostProps) {
+  unstable_setRequestLocale(params.lang);
+
   const t = useTranslations("blog");
   const locale = useLocale();
   const post = allPosts.find(

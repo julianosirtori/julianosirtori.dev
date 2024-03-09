@@ -1,7 +1,17 @@
-import { ContactForm } from "@/components/ContactForm";
 import { useTranslations } from "next-intl";
+import { unstable_setRequestLocale } from "next-intl/server";
 
-export default function Contacts() {
+import { ContactForm } from "@/components/ContactForm";
+
+interface ContactsProps {
+  params: {
+    lang: string;
+  };
+}
+
+export default function Contacts({ params }: ContactsProps) {
+  unstable_setRequestLocale(params.lang);
+
   const t = useTranslations("contacts");
   return (
     <main className="mx-auto my-5 flex w-full max-w-4xl flex-1 flex-col	 px-5 py-nav-height-mobile text-base  leading-8 text-secondary selection:bg-green selection:text-black lg:py-nav-height-desktop">

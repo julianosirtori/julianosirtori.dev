@@ -1,7 +1,17 @@
-import { ButtonTapToStart } from "@/components/ButtonTapToStart";
+import { unstable_setRequestLocale } from "next-intl/server";
 import { useTranslations } from "next-intl";
 
-export default function Home() {
+import { ButtonTapToStart } from "@/components/ButtonTapToStart";
+
+export interface HomeProps {
+  params: {
+    lang: string;
+  };
+}
+
+export default function Home({ params }: HomeProps) {
+  unstable_setRequestLocale(params.lang);
+
   const t = useTranslations("global");
 
   return (
