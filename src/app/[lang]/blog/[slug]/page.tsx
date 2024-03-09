@@ -8,6 +8,7 @@ import { Comments } from "@/components/Comments";
 import { Mdx } from "@/components/Mdx";
 import { importLocale } from "@/locales";
 import { dateTool } from "@/utils/date";
+import { LOCALES } from "@/common/constants";
 
 export interface IPostProps {
   params: {
@@ -34,6 +35,20 @@ export async function generateMetadata({
       url: "https://julianosirtori.dev/",
     },
   };
+}
+
+export function generateStaticParams() {
+  const params: { lang: string; slug: string }[] = [];
+  allPosts.forEach((post) => {
+    if (post.slug && LOCALES.includes(post.language)) {
+      params.push({
+        lang: post.language,
+        slug: post.slug,
+      });
+    }
+  });
+
+  return params;
 }
 
 export default function Post({ params }: IPostProps) {
