@@ -1,0 +1,53 @@
+---
+title: "Melhorando a velocidade de navegação utilizando o prefetch"
+date: 2024-03-13
+description: "Pesquisas demostram que um carregamento mais rápido resulta em uma conversão de usuário maior, e podemos conseguir isso atráves do prefetch... "
+meta:
+  keywords:
+    - html
+    - javascript
+    - programming
+    - beginners
+    - webdev
+bannerCloudinaryId: unsplash/photo-1593436878396-e943a3cac98f
+bannerCredit: Photo by [Mika Baumeister](https://unsplash.com/pt-br/@mbaumi)
+---
+
+Pesquisas demostram que um carregamento mais rápido [resulta em uma conversão de usuário maior](https://wpostats.com/). Sabendo quais paginas serão acessadas subsequentes podemos realizar o download desse conteúdo com antecedência assim conseguimos diminuir substancialmente o tempo de carregamento. 
+
+Felizmente hoje temos bibliotecas e recursos nativos  que nos ajudam a implementar essa funcionalidade. Esse artigo irá explorar como funciona esse recurso e demostrará diferentes casos de uso.
+
+## Prefetch
+
+Implementar o prefetch consiste em adicionar esse parâmetro `rel=prefetch` à um link, desta forma:
+```html
+<link rel="prefetch" href="/articles/" as="document">
+```
+Isso instrui o navegador fazer o download de recursos em background que podem ser usados futuramente. 
+
+Porém temos que tomar cuidado ao utilizar o prefetch pois esse recurso consome recursos extras do navegador ao consumir dados que podem não ser necessários no futuro. 
+
+### Next.js
+
+O next.js implementa por padrão o prefetch quando utilizamos o `<Link/>`,  podemos ver mais sobre essa configuração nesse [link](https://nextjs.org/docs/pages/api-reference/components/link#prefetch).
+
+Nesse print, podemos ver na prática o prefetch em ação no next.js.
+
+![Exemplo do prefetch com Nextjs](https://res.cloudinary.com/dfgrg43vh/image/upload/f_auto,q_auto/v1/blog/q82k6mj3gkuo99e3ege2)
+
+
+### Bibliotecas
+
+Como vimos na introdução, implementar essa feature é bastante simples, porém temos que tomar cuidado com o alto consumo de dados pelo cliente.  Hoje existe algumas bibliotecas que nos ajudam a implementar essa feature.
+
+Uma dessas bibliotecas é o [quicklink](https://github.com/GoogleChromeLabs/quicklink), internamente ele implementa o [API Intersection Observer](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) para identificar quando os links estão visíveis e o  [API Network Information](https://developer.mozilla.org/docs/Web/API/Network_Information_API) para não realizar o prefetch quando identificar que a rede está lenta.
+
+## Conclusão 
+
+O uso do prefetch nos ajuda muito na velocidade de paginas subsequentes, porem ele pode aumentar substancialmente o uso de rede do cliente, por isso se recomenda utilizar essa técnica com bastante cuidado. 
+
+
+## Referencia 
+
+* [MDN rel=prefetch](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel/prefetch)
+* [Buscar recursos para acelerar navegações futuras](https://web.dev/articles/link-prefetch?hl=pt-br)
