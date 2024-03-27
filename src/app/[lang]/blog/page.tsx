@@ -4,6 +4,7 @@ import { unstable_setRequestLocale } from "next-intl/server";
 import { dateTool } from "@/utils/date";
 import { allPosts } from "contentlayer/generated";
 import { Link } from "@/locales/navigation";
+import { FeaturedPosts } from "@/components/FeaturedPosts";
 
 interface BlogProps {
   params: {
@@ -28,6 +29,8 @@ export default function Blog({ params }: BlogProps) {
       return 1;
     });
 
+  const postsFeatured = postsSorted.filter((post) => post.featured);
+
   return (
     <main className="mx-auto my-5 flex w-full max-w-4xl flex-1 flex-col	 px-5 py-nav-height-mobile text-base  leading-8 text-secondary selection:bg-yellow selection:text-black lg:py-nav-height-desktop">
       <h1 className="mb-4 text-5xl font-bold text-primary">
@@ -36,6 +39,7 @@ export default function Blog({ params }: BlogProps) {
         </span>
       </h1>
       <p className="text-base leading-8 text-secondary ">{t("description")}</p>
+      <FeaturedPosts posts={postsFeatured} />
       <section className="mt-14 w-full">
         <h2 className="px-2 text-2xl font-semibold leading-8 text-primary">
           {t("allArticles")}
