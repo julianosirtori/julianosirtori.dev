@@ -1,0 +1,93 @@
+---
+title: "Como rodar o sonarqube localmente"
+date: 2024-04-04
+description: "Em muitos projetos utilizamos o sonarqube para garantir a qualidade de código, ele nos ajuda a identificar e corrigir code smalls, bugs, issues de segurança, nesse tutorial veremos como executar ele localmente."
+meta:
+  keywords:
+    - sonarqube
+    - ci/cd
+    - qualidade de código
+bannerCloudinaryId: unsplash/photo-1593436878396-e943a3cac98f
+bannerCredit: Photo by [Mika Baumeister](https://unsplash.com/pt-br/@mbaumi)
+draft: true
+---
+
+Em muitos projetos, utilizamos o SonarQube para garantir a qualidade do código. Ele nos ajuda a identificar e corrigir code smells, bugs, e questões de segurança, entre outras coisas. Você pode acessar o [site](https://www.sonarsource.com/products/sonarqube/) do SonarQube para saber mais.
+
+Este tutorial irá mostrar como executar o SonarQube localmente para que você possa testar o seu projeto pessoal e identificar possíveis code smells, ou até mesmo identificar rapidamente possíveis bloqueios sem esperar o SonarQube passar pela pipeline.
+
+> Antes de seguir para o tutorial, você precisa ter o Docker instalado.
+
+## Instalando o sonarqube
+
+Para executar o SonarQube localmente, você pode utilizar o seguinte comando:
+
+```bash
+$ docker run -d --name sonarqube -e SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true -p 9000:9000 sonarqube:latest
+```
+Com isso, o SonarQube estará disponível nesse endereço `http://localhost:9000` e você precisará utilizar as seguintes credenciais para fazer o primeiro login:
+
+* **Login**: admin
+* **Senha**: admin
+
+No primeiro acesso, ele pedirá para trocar a senha:
+
+![Tela para redefinir a senha do SonarQube](https://res.cloudinary.com/dfgrg43vh/image/upload/f_auto,q_auto/v1/blog/squjvc7jjzdoaycou3io)
+
+## Criando o projeto no SonarQube
+
+Após trocar a senha, você verá a tela inicial do SonarQube e poderá clicar em "Create a local project":
+
+![Tela inicial do SonarQube, sem nenhum projeto](https://res.cloudinary.com/dfgrg43vh/image/upload/f_auto,q_auto/v1/blog/gipb20odzzjnzmh99qc6)
+
+Na próxima tela, digite o nome do projeto, a chave (key) e a branch principal:
+
+![Tela de criação do projeto no SonarQube](https://res.cloudinary.com/dfgrg43vh/image/upload/f_auto,q_auto/v1/blog/ni10ouafpnpil2hg9rb6)
+
+Selecione a opção "Use the global setting" e clique no botão **Create project**:
+
+![Passo 2 da tela de criação do projeto no SonarQube](https://res.cloudinary.com/dfgrg43vh/image/upload/f_auto,q_auto/v1/blog/c9ertb1rchd17sx8mcdn)
+
+Por fim, você verá um projeto vazio. O próximo passo será escanear o nosso projeto localmente para visualizar a análise no SonarQube.
+
+## Escaneando o projeto
+
+Na tela do projeto que você acabou de criar no SonarQube, clique no botão "Locally":
+
+![Tela de um projeto no SonarQube que ainda não foi escaneado](https://res.cloudinary.com/dfgrg43vh/image/upload/f_auto,q_auto/v1/blog/tkcu6wqnrjanpr8vid7u)
+
+Após selecionar a análise "Locally", outra tela será exibida. Nela, vamos gerar o nosso token. Para isso, clique no botão "Generate". Anote em algum lugar a chave do projeto (projectKey) e o token que acabou de ser gerado.
+
+![Tela do SonarQube para obter o token](https://res.cloudinary.com/dfgrg43vh/image/upload/f_auto,q_auto/v1/blog/pza5ze3ny4fefryszdge)
+
+Para escanear o projeto, podemos utilizar diferentes métodos, como o [Sonar Scanner CLI](https://docs.sonarsource.com/sonarqube/10.4/analyzing-source-code/scanners/sonarscanner/). Neste tutorial, utilizaremos o Docker:
+
+```bash
+docker run \
+	--rm \
+	-e SONAR_HOST_URL="http://${SONARQUBE_URL}" \
+	-e SONAR_SCANNER_OPTS="-Dsonar.projectKey=${YOUR_PROJECT_KEY}" \
+	-e SONAR_TOKEN="myAuthenticationToken" \ -v "${YOUR_REPO}:/usr/src" \
+	sonarsource/sonar-scanner-cli
+```
+
+Vamos substituir as variáveis `${SONARQUBE_URL}`, `${YOUR_PROJECT_KEY}` e `${YOUR_REPO}`. No meu exemplo, ficou assim:
+
+```bash
+docker run \
+  --rm --network=host \
+  -e SONAR_HOST_URL="http://localhost:9000" \
+  -e SONAR_SCANNER_OPTS="-Dsonar.projectKey=julianosirtori.dev" \
+  -e SONAR_TOKEN="sqp_c1e32013b835c40d29ede97706d9842729112b0f" \
+  -v "/Users/julianosirtori/Developer/julianosirtori.dev:/usr/src" \
+  sonarsource/sonar-scanner-cli
+```
+
+Após executado, podemos acessar a página do nosso projeto, e provavelmente irá aparecer desta forma:
+
+![Tela do projeto analisado](https://res.cloudinary.com/dfgrg43vh/image/upload/f_auto,q_auto/v1/blog/acyifoqe9k0e3jbmrhdh)
+
+## Conclusão 
+
+Agora é só identificar as possíveis issues e realizar o tracking de novos códigos, tudo isso de uma maneira gratuita, sem precisar rodar nenhuma pipeline.
+
