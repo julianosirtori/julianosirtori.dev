@@ -9,7 +9,7 @@ meta:
     - qualidade de código
 bannerCloudinaryId: unsplash/photo-1593436878396-e943a3cac98f
 bannerCredit: Photo by [Mika Baumeister](https://unsplash.com/pt-br/@mbaumi)
-draft: true
+draft: false
 ---
 
 Em muitos projetos, utilizamos o SonarQube para garantir a qualidade do código. Ele nos ajuda a identificar e corrigir code smells, bugs, e questões de segurança, entre outras coisas. Você pode acessar o [site](https://www.sonarsource.com/products/sonarqube/) do SonarQube para saber mais.
@@ -64,7 +64,7 @@ Para escanear o projeto, podemos utilizar diferentes métodos, como o [Sonar Sca
 
 ```bash
 docker run \
-	--rm \
+	--rm --network=host \
 	-e SONAR_HOST_URL="http://${SONARQUBE_URL}" \
 	-e SONAR_SCANNER_OPTS="-Dsonar.projectKey=${YOUR_PROJECT_KEY}" \
 	-e SONAR_TOKEN="myAuthenticationToken" \ -v "${YOUR_REPO}:/usr/src" \
