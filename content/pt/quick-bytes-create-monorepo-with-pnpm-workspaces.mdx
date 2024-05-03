@@ -1,0 +1,50 @@
+---
+title: "QuickBytes 1 - Criando um monorepo com pnpm workspaces"
+date: 2024-05-03
+description: "Este é o primeiro artigo de uma série intitulada QuickBytes. Serão artigos curtos abordando uma variedade de temas. O primeiro deles é sobre como criar um monorepo com pnpm workspaces."
+meta:
+  keywords:
+    - pnpm
+    - monorepo
+    - QuickBytes
+bannerCloudinaryId: unsplash/photo-1611262588019-db6cc2032da3
+bannerCredit: Photo by [Alexander Shatov](https://unsplash.com/pt-br/@alexbemore)
+draft: false
+---
+
+Este é o primeiro artigo de uma série intitulada QuickBytes. Serão artigos curtos abordando uma variedade de temas. O primeiro deles é sobre como criar um monorepo com pnpm workspaces.
+
+Para criar um monorepo com pnpm, precisaremos criar um arquivo chamado `pnpm-workspace.yaml` dentro do nosso repositório.
+
+```shell
+touch pnpm-workspace.yaml
+```
+
+Dentro do `pnpm-workspace.yaml`, vamos definir nossos pacotes. Ele terá uma estrutura semelhante a esta:
+
+```yml
+packages:
+  - 'app'
+  - 'api'
+  - 'utils'
+  - 'services'
+```
+
+Agora podemos fazer referência aos nossos pacotes do workspace da seguinte forma:
+
+```json
+{  
+	"dependencies": {  
+		"@repo/utils": "workspace:*",
+		"@repo/services": "workspace:*"  
+	}  
+}
+```
+
+Você pode encontrar mais detalhes na [documentação do pnpm](https://pnpm.io/workspaces). E como podemos observar, muitos dos maiores frameworks do mercado adotam essa abordagem.
+
+### Bônus 
+
+Para otimizar nosso fluxo de desenvolvimento, podemos integrar o [Turborepo](https://turbo.build/repo/docs/getting-started/add-to-project), uma ferramenta que simplifica a execução de scripts em vários `packages.json` simultaneamente.
+
+ 
