@@ -1,6 +1,6 @@
-import { LocalePrefix } from "next-intl/dist/types/src/shared/types";
 import { locales } from "./languages";
 
+type LocalePrefix = "as-needed" | "always" | "never";
 export const config = {
   locales,
   defaultLocale: "en",
