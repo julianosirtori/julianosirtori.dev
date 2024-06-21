@@ -1,3 +1,4 @@
+import { use } from "react";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Metadata } from "next";
@@ -43,7 +44,7 @@ export function generateStaticParams() {
   return LOCALES.map((lang) => ({ lang }));
 }
 
-export default async function BlogRootLayout({
+export default function BlogRootLayout({
   children,
   params,
 }: BlogRootLayoutProps) {
@@ -56,7 +57,7 @@ export default async function BlogRootLayout({
   if (params.lang !== locale) {
     notFound();
   }
-  messages = (await importLocale({ locale })).messages;
+  messages = use(importLocale({ locale })).messages;
 
   return (
     <html lang={locale}>
