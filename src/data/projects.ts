@@ -9,6 +9,10 @@ export const projects = {
         title: "CLI: cowsay-pragmatic-programmer",
         href: "https://www.npmjs.com/package/cowsay-pragmatic-programmer",
       },
+      {
+        title: "Landing Page para Fisioterapeuta ",
+        href: "https://fisiomilenaaranha.com/",
+      },
     ],
     "2023": [
       {
@@ -54,6 +58,10 @@ export const projects = {
       {
         title: "CLI: cowsay-pragmatic-programmer",
         href: "https://www.npmjs.com/package/cowsay-pragmatic-programmer",
+      },
+      {
+        title: "Physiotherapist Landing Page",
+        href: "https://fisiomilenaaranha.com/",
       },
     ],
     "2023": [
