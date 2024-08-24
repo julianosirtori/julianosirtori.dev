@@ -1,0 +1,84 @@
+---
+title: "Capturar, gravar e enviar um áudio no navegador"
+date: 2024-08-23
+description: "Este artigo explora técnicas eficientes para mesclar e remover duplicados de arrays em JavaScript, comparando o uso de concat, spread operator, indexOf e Set para otimizar o desempenho do seu código."
+meta:
+  keywords:
+    - javascript
+    - perfomance
+bannerCloudinaryId: unsplash/photo-1584786379647-c10852954d2b
+bannerCredit: Photo by [Lance Grandahl](https://unsplash.com/pt-br/@lg17)
+draft: true
+---
+
+
+![two roads](https://images.unsplash.com/photo-1584786379647-c10852954d2b?q=80&w=2838&auto=format&fit=crop)
+
+Alguns dias atrás, precisei desenvolver uma feature que exigia o merge de dois arrays. Inicialmente, utilizei o [spread operator (...)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax), resultando no seguinte código:
+
+```js
+const array1 = Array.from({length: 10000}, (_, index) => index)
+const array2 = Array.from({length: 10000}, (_, index) => index)
+
+const all = [...array1, ...array2 ]
+```
+_Duração do script em milissegundos  **7.838104993104935**_
+
+A princípio, isso resolveu meu problema, e consegui realizar o merge dos arrays. No entanto, fiquei me perguntando se haveria uma maneira de melhorar a performance. Ao consultar a documentação, encontrei o método [concat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat).
+
+
+## Merge com o Concat
+
+O método `concat` é utilizado justamente para mesclar dois ou mais arrays, sem alterar os arrays existentes, mas retornando um novo array mesclado. Com o uso do `concat`, o merge ficaria da seguinte forma:
+
+```js
+const array1 = Array.from({length: 10000}, (_, index) => index)
+const array2 = Array.from({length: 10000}, (_, index) => index)
+
+const all = [].concat(array1, array2)
+```
+_Duração do script em milissegundos:  **2.6480610072612762**_
+
+Como podemos ver, com o uso do `concat`, conseguimos uma redução de mais de 50% no tempo de execução do merge, tornando-o, em muitos casos, uma alternativa muito mais eficiente que o spread operator.
+
+## Bônus: remover itens duplicados
+
+Nessa mesma feature em que estive trabalhando, precisei remover os itens duplicados do array retornado do merge. Podemos fazer isso utilizando o método [indexOf](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf), ficando da seguinte maneira:
+
+```js
+const array1 = Array.from({ length: 10000 }, (_, index) => index);
+const array2 = Array.from({ length: 10000 }, (_, index) => index);
+
+const all = [].concat(array1, array2);
+
+const arrayWithoutDuplicates = all.filter(
+    (item, index) => all.indexOf(item) === index
+);
+```
+_Duração do script em milissegundos:  **36.275166511535645**_
+
+Como podemos ver acima, fazemos um filtro no nosso array mergeado, passando um callback que verifica se o índice do primeiro aparecimento do `item` no array `all` é igual ao índice atual (`index`) do loop. Dessa forma, o callback retorna `true` apenas para a primeira ocorrência do `item`.
+
+Porém, podemos remover os itens duplicados de uma maneira muito mais performática utilizando o [Set](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Set). O objeto `Set` permite armazenar valores únicos — cada valor pode ocorrer apenas uma vez. Essa nova abordagem ficaria da seguinte forma:
+
+```js
+const array1 = Array.from({ length: 10000 }, (_, index) => index);
+const array2 = Array.from({ length: 10000 }, (_, index) => index);
+
+const all = [].concat(array1, array2);
+
+const arrayWithoutDuplicates = new Set(all);
+```
+_Duração do script em milissegundos:  **2.5936660766601562**_
+
+## Conclusão
+
+Como podemos ver nos exemplos acima, o uso adequado de técnicas em JavaScript pode melhorar substancialmente a performance do seu código. Para mesclar arrays, podemos usar o método `concat`, e para remover duplicados, podemos utilizar o objeto `Set`.
+
+
+## Referências
+
+- [Spread Syntax](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax) - MDN Web Docs
+- [Array.prototype.concat()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat) - MDN Web Docs
+- [Array.prototype.indexOf()](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf) - MDN Web Docs
+- [Set](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Set) - MDN Web Docs
