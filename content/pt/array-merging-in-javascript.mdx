@@ -8,7 +8,7 @@ meta:
     - perfomance
 bannerCloudinaryId: unsplash/photo-1584786379647-c10852954d2b
 bannerCredit: Photo by [Lance Grandahl](https://unsplash.com/pt-br/@lg17)
-draft: true
+draft: false
 ---
 ![two roads](https://images.unsplash.com/photo-1584786379647-c10852954d2b?q=80&w=2838&auto=format&fit=crop)
 
@@ -23,7 +23,6 @@ const all = [...array1, ...array2 ]
 _Duração do script em milissegundos  **7.838104993104935**_
 
 A princípio, isso resolveu meu problema, e consegui realizar o merge dos arrays. No entanto, fiquei me perguntando se haveria uma maneira de melhorar a performance. Ao consultar a documentação, encontrei o método [concat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat).
-
 
 ## Merge com o Concat
 
@@ -55,7 +54,7 @@ const arrayWithoutDuplicates = all.filter(
 ```
 _Duração do script em milissegundos:  **36.275166511535645**_
 
-Como podemos ver acima, fazemos um filtro no nosso array mergeado, passando um callback que verifica se o índice do primeiro aparecimento do `item` no array `all` é igual ao índice atual (`index`) do loop. Dessa forma, o callback retorna `true` apenas para a primeira ocorrência do `item`.
+Como podemos ver acima, fazemos um filtro no nosso array mergead  o, passando um callback que verifica se o índice do primeiro aparecimento do `item` no array `all` é igual ao índice atual (`index`) do loop. Dessa forma, o callback retorna `true` apenas para a primeira ocorrência do `item`.
 
 Porém, podemos remover os itens duplicados de uma maneira muito mais performática utilizando o [Set](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Set). O objeto `Set` permite armazenar valores únicos — cada valor pode ocorrer apenas uma vez. Essa nova abordagem ficaria da seguinte forma:
 
@@ -72,7 +71,6 @@ _Duração do script em milissegundos:  **2.5936660766601562**_
 ## Conclusão
 
 Como podemos ver nos exemplos acima, o uso adequado de técnicas em JavaScript pode melhorar substancialmente a performance do seu código. Para mesclar arrays, podemos usar o método `concat`, e para remover duplicados, podemos utilizar o objeto `Set`.
-
 
 ## Referências
 

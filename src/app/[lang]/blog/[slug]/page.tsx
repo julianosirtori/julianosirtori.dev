@@ -72,7 +72,7 @@ export default function Post({ params }: IPostProps) {
         <h1 className="mt-20 text-center text-4xl font-semibold leading-[42px] text-primary lg:text-5xl lg:leading-[60px] ">
           {post.title}
         </h1>
-        <h2 className="mb-20 text-base font-medium text-secondary">
+        <h2 className="mb-4 text-base font-medium text-secondary">
           {dayjs(post.date).format("MMM DD, YYYY")} •{" "}
           {`${post.readTime} ${t("readTime")}`}
         </h2>
