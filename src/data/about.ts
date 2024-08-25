@@ -1,9 +1,18 @@
 export const experiences = [
   {
     jobTitle: "Front-End Web Developer",
+    company: "Avenue Code",
+    companyUrl: "https://www.avenuecode.com",
+    startDate: "2022-02-15",
+    location: "Remote",
+    skills: "E2E · vue · vuex · javascript · Jira · TypeScript · Scrum",
+  },
+  {
+    jobTitle: "Front-End Web Developer",
     company: "CI&T",
     companyUrl: "https://ciandt.com",
-    startDate: "2022-02-14",
+    startDate: "2022-02-11",
+    endDate: "2024-04-11",
     location: "Remote",
     skills:
       "E2E · styled-components · Continuous Integration (CI) · Solução de problemas técnicos · Sistemas distribuídos · Jira · Inglês · TypeScript · Migration Projects · Storybooks · Scrum · Next.js · Web Development · JavaScript · React.js",
