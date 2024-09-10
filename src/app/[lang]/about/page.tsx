@@ -36,7 +36,7 @@ export default function About({ params }: AboutProps) {
             blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAP0lEQVQImQE0AMv/AFBQUJKSkqmpqaOjowCurq7v7+/Jycm5ubkA////jIyMn5+fg4ODADAwMD09PWlpaQAAAApRGnEHblMWAAAAAElFTkSuQmCC"
             priority
             className="rounded-lg object-cover"
-            src="/images/juliano.jpeg"
+            src="/images/juliano2.jpg"
             alt="juliano"
           />
         </div>
