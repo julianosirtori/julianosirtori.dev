@@ -56,7 +56,13 @@ export default function About({ params }: AboutProps) {
               ),
             })}
           </p>
-          <p className="m-4">{t("bio.phrase3")}</p>
+          <p className="m-4">
+            {t.rich("bio.phrase3", {
+              important: (chunks) => (
+                <strong className="text-primary">{chunks}</strong>
+              ),
+            })}
+          </p>
         </div>
       </section>
       <section className="flex flex-col">
