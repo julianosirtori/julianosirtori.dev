@@ -1,0 +1,46 @@
+---
+title: "Creating a Monorepo with pnpm Workspaces"
+date: 2024-05-03
+description: "To create a monorepo with pnpm, you need to configure a pnpm-workspace.yaml file and define the packages to be used in the project."
+meta:
+  keywords:
+    - pnpm
+    - monorepo
+    - QuickBytes
+bannerCloudinaryId: unsplash/photo-1611262588019-db6cc2032da3
+bannerCredit: Photo by [Alexander Shatov](https://unsplash.com/@alexbemore)
+draft: false
+---
+
+To create a monorepo with pnpm, we will need to create a file named `pnpm-workspace.yaml` inside our repository.
+
+```shell
+touch pnpm-workspace.yaml
+```
+
+Inside the `pnpm-workspace.yaml`, we will define our packages. It will have a structure similar to this:
+
+```yml
+packages:
+  - 'app'
+  - 'api'
+  - 'utils'
+  - 'services'
+```
+
+Now we can reference our workspace packages as follows:
+
+```json
+{  
+	"dependencies": {  
+		"@repo/utils": "workspace:*",
+		"@repo/services": "workspace:*"  
+	}  
+}
+```
+
+You can find more details in the [pnpm documentation](https://pnpm.io/workspaces). As we can see, many of the largest frameworks in the market use this approach.
+
+### Bonus
+
+To optimize our development workflow, we can integrate [Turborepo](https://turbo.build/repo/docs/getting-started/add-to-project), a tool that simplifies running scripts across multiple `packages.json` simultaneously.

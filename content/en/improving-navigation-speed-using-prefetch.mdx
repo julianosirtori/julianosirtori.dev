@@ -1,0 +1,51 @@
+---
+title: "Improving Browsing Speed Using Prefetch"
+date: 2024-03-13
+description: "Research shows that faster loading results in higher user conversion, and we can achieve this through prefetching..."
+meta:
+  keywords:
+    - html
+    - javascript
+    - programming
+    - beginners
+    - webdev
+bannerCloudinaryId: unsplash/photo-1593436878396-e943a3cac98f
+bannerCredit: Photo by [Mika Baumeister](https://unsplash.com/@mbaumi)
+---
+
+Research shows that faster loading [results in higher user conversion](https://wpostats.com/). By knowing which pages will be accessed next, we can download this content in advance, thus substantially reducing loading time.
+
+Fortunately, we now have libraries and native resources that help us implement this functionality. This article will explore how this feature works and demonstrate different use cases.
+
+## Prefetch
+
+Implementing prefetching involves adding the parameter `rel=prefetch` to a link, like this:
+```html
+<link rel="prefetch" href="/articles/" as="document">
+```
+This instructs the browser to download resources in the background that may be used in the future.
+
+However, we need to be careful when using prefetching, as this feature consumes extra browser resources by downloading data that may not be necessary later.
+
+### Next.js
+
+Next.js implements prefetching by default when we use the `<Link/>` component. We can learn more about this configuration at this [link](https://nextjs.org/docs/pages/api-reference/components/link#prefetch).
+
+In this screenshot, we can see prefetching in action in Next.js.
+
+![Example of prefetching with Next.js](https://res.cloudinary.com/dfgrg43vh/image/upload/f_auto,q_auto/v1/blog/q82k6mj3gkuo99e3ege2)
+
+### Libraries
+
+As we saw in the introduction, implementing this feature is quite simple, but we need to be cautious about the high data consumption by the client. There are currently several libraries that help us implement this feature.
+
+One of these libraries is [quicklink](https://github.com/GoogleChromeLabs/quicklink). It internally uses the [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API) to identify when links are visible and the [Network Information API](https://developer.mozilla.org/docs/Web/API/Network_Information_API) to avoid prefetching when it detects that the network is slow.
+
+## Conclusion 
+
+Using prefetching greatly helps with the speed of subsequent pages; however, it can significantly increase the client's network usage, so it is recommended to use this technique with caution.
+
+## References 
+
+* [MDN rel=prefetch](https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel/prefetch)
+* [Fetch resources to speed up future navigations](https://web.dev/articles/link-prefetch?hl=en)

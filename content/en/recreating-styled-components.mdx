@@ -1,0 +1,139 @@
+---
+title: "Capture, Record, and Send Audio in the Browser"
+date: 2024-03-03
+description: "In this article, I will demonstrate how I implemented microphone capture and used the `MediaRecorder` class to store the audio and send it in a RESTful request."
+meta:
+  keywords:
+    - javascript
+    - browser api
+    - audio
+bannerCloudinaryId: unsplash/photo-1611262588019-db6cc2032da3
+bannerCredit: Photo by [Alexander Shatov](https://unsplash.com/@alexbemore)
+draft: false
+---
+
+I am currently working on a POC to validate the development of a system that interacts with artificial intelligence, something similar to this [site](https://talkpal.ai/learn-english/).
+
+In this article, I will demonstrate how I implemented microphone capture and used the `MediaRecorder` class to store the audio and send it in a RESTful request for the POC I'm developing.
+
+## Capturing Audio from the Microphone
+
+First, we need to check if the browser supports microphone access. We can do this using the following condition:
+
+```js
+if (navigator.mediaDevices.getUserMedia) {
+	// has access
+} else {
+	// does not have access
+}
+```
+
+Next, we will use the [getUserMedia](https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia) method, passing audio input as the parameter. When calling this function, the browser will request permission to capture only the computer's audio. If the user denies permission, an error will be thrown. If permission is granted, a [MediaStream](https://developer.mozilla.org/en-US/docs/Web/API/MediaStream) object will be provided. Our code will look like this:
+
+```js
+if (!navigator.mediaDevices.getUserMedia) {
+	// does not have access
+	return;
+}
+
+navigator.mediaDevices.getUserMedia({ audio: true }).then(
+	(stream) => {
+		// User granted permission
+	},
+	(err) => {
+		// User denied permission
+		console.error("The following error occurred: " + err);
+	}
+);
+```
+
+## Storing Audio with `MediaRecorder`
+
+Once we have permission to capture the audio and receive the [MediaStream](https://developer.mozilla.org/en-US/docs/Web/API/MediaStream), we will use the [MediaRecorder](https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder) to store our stream of data.
+
+According to the [MDN](https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder) documentation, this interface provides several methods. For our example, we will use only three: `start`, `stop`, and `requestData`. We can implement a `button` to trigger these methods. For more details on `MediaRecorder`, you can check out the documentation: [MediaStream Recording API](https://developer.mozilla.org/en-US/docs/Web/API/MediaStream_Recording_API). Our code will look like this:
+
+```js
+if (!navigator.mediaDevices.getUserMedia) {
+	// does not have access
+	return;
+}
+
+navigator.mediaDevices.getUserMedia({ audio: true }).then(
+	(stream) => {
+		// User granted permission
+		const mediaRecorder = new MediaRecorder(stream);
+		mediaRecorder.ondataavailable = async (e) => {
+			// here we will call our request
+		}
+
+		const micButton = document.querySelector(".mic-button");
+		micButton.onclick = async () => {
+			const pressed = micButton.getAttribute("aria-pressed") === "true";
+			micButton.setAttribute("aria-pressed", !pressed);
+			
+			if (!pressed) {
+				mediaRecorder.start();
+				return;
+			}
+			mediaRecorder.stop();
+		}
+			
+	},
+	(err) => {
+		// User denied permission
+		console.error("The following error occurred: " + err);
+	}
+);
+```
+
+## Sending Audio to an API
+
+Now, we just need to send the audio via a request. To do this, we'll create a `blob` file and send it via a POST request in `FormData`. This finalizes our code:
+
+```js
+if (!navigator.mediaDevices.getUserMedia) {
+	// does not have access
+	return;
+}
+
+navigator.mediaDevices.getUserMedia({ audio: true }).then(
+	(stream) => {
+		// User granted permission
+		const mediaRecorder = new MediaRecorder(stream);
+		mediaRecorder.ondataavailable = async (e) => {
+			const blob = new Blob([e.data], { type: "audio/mp3" });
+			const formData = new FormData();
+			formData.append("audio", blob, "recording.mp3");
+			const response = await fetch("http://localhost:3001/transcribe", {
+				method: "POST",
+				body: formData,
+			});
+			// rest of the implementation...
+		}
+
+		const micButton = document.querySelector(".mic-button");
+		micButton.onclick = async () => {
+			const pressed = micButton.getAttribute("aria-pressed") === "true";
+			micButton.setAttribute("aria-pressed", !pressed);
+			
+			if (!pressed) {
+				mediaRecorder.start();
+				return;
+			}
+			mediaRecorder.stop();
+		}
+			
+	},
+	(err) => {
+		// User denied permission
+		console.error("The following error occurred: " + err);
+	}
+);
+```
+
+## Conclusion
+
+We have demonstrated how to capture, record, and send audio. You can view the complete code at this link: [poc-talk-ai](https://github.com/julianosirtori/poc-talk-ai). If you have any questions or suggestions, feel free to leave them in the comments below.
+
+Until next time, and thanks for all the fish.

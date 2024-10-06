@@ -1,0 +1,80 @@
+---
+title: "Merging Arrays in JavaScript"
+date: 2024-08-23
+description: "This article explores efficient techniques for merging and removing duplicates from arrays in JavaScript, comparing the use of concat, spread operator, indexOf, and Set to optimize your code's performance."
+meta:
+  keywords:
+    - javascript
+    - performance
+bannerCloudinaryId: unsplash/photo-1584786379647-c10852954d2b
+bannerCredit: Photo by [Lance Grandahl](https://unsplash.com/@lg17)
+draft: false
+---
+![two roads](https://images.unsplash.com/photo-1584786379647-c10852954d2b?q=80&w=2838&auto=format&fit=crop)
+
+A few days ago, I had to develop a feature that required merging two arrays. Initially, I used the [spread operator (...)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax), resulting in the following code:
+
+```js
+const array1 = Array.from({length: 10000}, (_, index) => index)
+const array2 = Array.from({length: 10000}, (_, index) => index)
+
+const all = [...array1, ...array2 ]
+```
+_Script duration in milliseconds **7.838104993104935**_
+
+At first, this solved my problem, and I was able to merge the arrays. However, I wondered if there was a way to improve performance. Upon reviewing the documentation, I came across the [concat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat) method.
+
+## Merge with Concat
+
+The `concat` method is used specifically for merging two or more arrays without altering the existing arrays, but returning a new merged array. With `concat`, the merge would look like this:
+
+```js
+const array1 = Array.from({length: 10000}, (_, index) => index)
+const array2 = Array.from({length: 10000}, (_, index) => index)
+
+const all = [].concat(array1, array2)
+```
+_Script duration in milliseconds: **2.6480610072612762**_
+
+As we can see, by using `concat`, we achieve a reduction of more than 50% in execution time, making it, in many cases, a much more efficient alternative than the spread operator.
+
+## Bonus: removing duplicate items
+
+In the same feature I was working on, I needed to remove duplicate items from the merged array. We can do this using the [indexOf](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf) method, as shown below:
+
+```js
+const array1 = Array.from({ length: 10000 }, (_, index) => index);
+const array2 = Array.from({ length: 10000 }, (_, index) => index);
+
+const all = [].concat(array1, array2);
+
+const arrayWithoutDuplicates = all.filter(
+    (item, index) => all.indexOf(item) === index
+);
+```
+_Script duration in milliseconds: **36.275166511535645**_
+
+As shown above, we filter the merged array by passing a callback that checks if the index of the first occurrence of the `item` in the `all` array is equal to the current `index` of the loop. This way, the callback returns `true` only for the first occurrence of the `item`.
+
+However, we can remove duplicate items in a much more efficient way by using [Set](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set). The `Set` object allows us to store unique values — each value can only occur once. This new approach would look like this:
+
+```js
+const array1 = Array.from({ length: 10000 }, (_, index) => index);
+const array2 = Array.from({ length: 10000 }, (_, index) => index);
+
+const all = [].concat(array1, array2);
+
+const arrayWithoutDuplicates = new Set(all);
+```
+_Script duration in milliseconds: **2.5936660766601562**_
+
+## Conclusion
+
+As we can see from the examples above, proper use of techniques in JavaScript can significantly improve your code's performance. To merge arrays, we can use the `concat` method, and to remove duplicates, we can use the `Set` object.
+
+## References
+
+- [Spread Syntax](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax) - MDN Web Docs
+- [Array.prototype.concat()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat) - MDN Web Docs
+- [Array.prototype.indexOf()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf) - MDN Web Docs
+- [Set](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set) - MDN Web Docs

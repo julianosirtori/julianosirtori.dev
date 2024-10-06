@@ -1,0 +1,123 @@
+---
+title: "SQL Injection and the Next.js Conf"
+date: 2023-10-28
+description: "During the last Next.js Conf, server actions were presented, and the example used sparked a series of criticisms about SQL injection. In this article, I will share my opinion."
+meta:
+  keywords:
+    - opinion
+    - javascript
+    - next.js
+bannerCloudinaryId: unsplash/photo-1623682687826-fe06bf64e6d8
+bannerCredit: Photo by [Mika Baumeister](https://unsplash.com/@mbaumi)
+---
+
+Last week, the Next.js Conf took place, where [Server Actions](https://nextjs.org/docs/app/api-reference/functions/server-actions) 
+were introduced as a stable feature. During this presentation, an example caused quite a stir in the community.
+
+![Screenshot from nextjs.conf showing SQL component code using server actions](https://res.cloudinary.com/dfgrg43vh/image/upload/f_auto,q_auto/v1/blog/jtpjdie4q8megtcjwazj)
+
+Many people criticized or mocked this approach, claiming that this example represents a serious **SQL injection** vulnerability. 
+The purpose of this article is to demonstrate that this approach is safe and does not cause SQL injection.
+
+## What is SQL Injection?
+
+An SQL Injection attack consists of passing a malicious query to be executed on your database. 
+This query can alter or even delete your data.
+
+Here’s an example:
+
+```js
+const { rows } = await client.query(
+`SELECT * from USERS where user_id='${params.userId}'`
+);
+```
+
+This query is vulnerable to an SQL Injection attack because the user input is inserted directly into the SQL query 
+without any validation.
+
+For example, if we pass the following code as a parameter in userID: **"'; DROP TABLE USERS; --";** the query that would 
+be executed would look like this:
+
+```sql
+SELECT * from USERS where user_id=''; DROP TABLE USERS; --'
+```
+Resulting in the deletion of our `users` table.
+
+To avoid this, we should use [parameterized queries](https://node-postgres.com/features/queries#parameterized-query):
+
+```js
+client.query(query, [parameter])
+```
+
+The `client.query()` function takes two parameters: the first is our SQL query, and the second is an array of our parameters, like this:
+
+```js
+postgres.query("SELECT * from USERS where user_id = $1", [params.user_id])
+```
+This way, PostgreSQL takes care of validating our parameters, ensuring our safety against SQL injection attacks.
+
+However, how does writing `SQL` followed by [template strings](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) 
+as demonstrated in the Next.js Conf not become vulnerable? The reason is that a template string was used 
+combined with a **tag function**.
+
+## How do Tag Functions Work?
+
+Tag functions are functions that modify the output of our template string. 
+Let’s look at an example:
+
+```js
+let name = "Juliano"
+function greeting(strings, name) {
+    console.log(strings) // []
+    return `Hello, ${name}`
+}
+greeting`${name}` // "Hello, Juliano"
+```
+Here, the string **Hello** was added by our function. Another example of a tag function that many of us have used is writing CSS with [styled-components](https://styled-components.com/).
+
+Now that we’ve briefly seen how tag functions work, let’s demonstrate how the `sql` function from the package [@vercel-postgres](https://vercel.com/docs/storage/vercel-postgres/sdk#sql) 
+utilizes the same concept.
+
+See the example below:
+
+```js
+// custom tag function
+export function sqlTemplate(strings, ...values) {
+    // This ensures that the function is called correctly
+    if (!isTemplateStringsArray(strings) || !Array.isArray(values)) {
+        throw new VercelPostgresError(
+            'incorrect_tagged_template_call',
+            "It looks like you tried to call `sql` as a function. Make sure to use it as a tagged template.\n\tExample: sql`SELECT * FROM users`, not sql('SELECT * FROM users')",
+        );
+    }
+    let result = strings[0] ?? '';
+    for (let i = 1; i < strings.length; i++) {
+        result += `$${i}${strings[i] ?? ''}`;
+    }
+    return [result, values]; // returns the template literal and the values to be interpolated as an array.
+}
+
+// the `sql` function uses the `sqlTemplate` function. This returns a parameterized query, which is protected against SQL injection attacks.
+async function sql(strings, ...values) {
+    const [query, params] = sqlTemplate(strings, ...values);
+    return this.query(query, params);
+}
+```
+The first function `sqlTemplate` returns two items: the query and the parameters that will be used for it. This function is 
+used within the `sql` function, which executes the `query` following the parameterized query approach, preventing 
+SQL injection attacks.
+
+## Conclusion
+
+As we saw above, the example presented at the Next.js Conf is safe and does not cause SQL injection, as the `sql` function uses a concept called tag functions, which modifies the output of template strings.
+
+Internally, the `sql` function formats the strings passed as parameters and executes `client.query()` using **parameterized queries**, making it completely safe against SQL injection.
+
+There is also another discussion in the community about whether we should mix back-end concepts with front-end ones, but I believe that is content for another article.
+
+See you later, and thanks for all the fish.
+
+## References: 
+* [Why SQL template tags are not vulnerable to SQL injection attacks](https://neon.tech/blog/sql-template-tags)
+* [Everyone's Making Fun of Next.js 14.0](https://www.youtube.com/watch?v=2Ggf45daK7k)
+* [Template Strings](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals)

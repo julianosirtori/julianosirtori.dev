@@ -1,0 +1,105 @@
+---
+title: "Creating CI/CD Workflows on GitHub"
+date: 2024-01-23
+description: "In this post, I will show how I implemented the release workflow for my blog."
+meta:
+  keywords:
+    - github
+    - ci/cd
+    - pipeline
+bannerCloudinaryId: unsplash/photo-1611262588019-db6cc2032da3
+bannerCredit: Photo by [Alexander Shatov](https://unsplash.com/@alexbemore)
+draft: false
+---
+
+Automated processes help us deliver software with quality and agility, and one of these processes is CI/CD. In this post, I intend to detail how I implemented this process in my portfolio.
+
+## Problems
+
+Previously, I had integrated the repository directly with Vercel. However, I faced some issues:
+
+- The deployment was triggered whenever the branch was updated, even when the tests failed.
+- I didn’t have much control over when the deployment occurred, as it always happened when the main branch was updated.
+
+**PS:** There might have been some settings in Vercel that could fix these points. However, I decided to implement CI/CD to explore this feature on GitHub and also as a learning experience.
+
+## Solution
+
+To address these problems, I ended up creating two workflows on GitHub:
+
+- **CI (Continuous Integration):** At this stage, build tests and linters are run to check the project's integrity and quality. The idea is to get quick feedback on changes sent to the main branch, avoiding potential failures.
+- **CD (Continuous Delivery):** This stage extends CI and is responsible for deploying the software in different environments. The goal is to ensure the software is ready for deployment quickly.
+
+Next, I’ll detail the implementation of each. To learn more about how to implement workflows on GitHub, you can check out the [documentation](https://docs.github.com/en/actions/using-workflows/about-workflows).
+
+### CI
+
+In the CI workflow, I run two jobs in parallel:
+
+- **Lint and Unit Tests:** Runs the lint in the project and fails if any inconsistencies are found. It also runs unit tests.
+- **Lighthouse:** Runs Lighthouse in different browsers and fails if the score is too low.
+
+In the future, I plan to add integration tests as well.
+
+The trigger for this workflow is fired every time a pull request is submitted to the main branch or when the main branch is updated.
+
+You can check out the workflow code [here](https://github.com/julianosirtori/julianosirtori.dev/blob/main/.github/workflows/ci.yml).
+
+### CD
+
+To implement the CD workflow, I faced some challenges because I wanted this workflow to only run after the CI had successfully completed. After doing some research, I implemented it as follows:
+
+- I added a trigger that runs whenever the CI runs on the main branch.
+
+``` yml
+on:
+  workflow_run:
+    workflows: ["CI"]
+    branches: [main]
+    types: 
+      - completed
+```
+
+- Inside the job, I added a condition to check if the CI workflow was completed successfully.
+
+``` yml
+jobs:
+  Deploy-Preview:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+```
+
+In the deploy step, I used the [Vercel CLI](https://vercel.com/docs/cli) to deploy, as shown below:
+
+``` yml
+    steps:
+    - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.x
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Build Project Artifacts
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Deploy Project Artifacts to Vercel
+        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+```
+
+You can check the complete workflow code [here](https://github.com/julianosirtori/julianosirtori.dev/blob/main/.github/workflows/cd.yml).
+
+In the future, I plan to create deploy workflows for preview and production environments.
+
+## Conclusion
+
+As mentioned earlier, implementing workflows on GitHub gives you more control over your CI/CD processes. This way, you can configure them to optimize their efficiency and meet your needs more effectively.
+
+**THAT'S ALL FOLKS**
