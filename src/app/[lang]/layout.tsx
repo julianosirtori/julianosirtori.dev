@@ -5,6 +5,7 @@ import { Metadata } from "next";
 import { NextIntlClientProvider, useLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { unstable_setRequestLocale } from "next-intl/server";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 import { biotifFont } from "@/app/fonts";
 import { Header } from "@/components/Header";
@@ -76,6 +77,7 @@ export default function BlogRootLayout({
           </CommandBar>
         </NextIntlClientProvider>
       </body>
+      <GoogleAnalytics gaId="G-VNFLVEVSCC" />
     </html>
   );
 }
