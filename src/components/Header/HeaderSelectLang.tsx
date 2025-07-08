@@ -3,8 +3,8 @@ import React, { useMemo } from "react";
 import * as Select from "@radix-ui/react-select";
 import { ChevronDownIcon, CheckIcon } from "@radix-ui/react-icons";
 import { useLocale } from "next-intl";
-import { usePathname, useRouter } from "@/locales/navigation";
-import { languages } from "@/locales/languages";
+import { languages } from "@/i18n/navigation";
+import { usePathname, useRouter } from "@/i18n/navigation";
 
 export const HeaderSelectLang = () => {
   const pathname = usePathname();

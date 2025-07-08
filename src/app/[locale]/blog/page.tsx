@@ -1,32 +1,22 @@
 import { useLocale, useTranslations } from "next-intl";
-import { unstable_setRequestLocale } from "next-intl/server";
 
 import { dateTool } from "@/utils/date";
-import { allPosts } from "contentlayer/generated";
-import { Link } from "@/locales/navigation";
+import { Link } from "@/i18n/navigation";
 
-interface BlogProps {
-  params: {
-    lang: string;
-  };
-}
-
-export default function Blog({ params }: BlogProps) {
-  unstable_setRequestLocale(params.lang);
-
+export default function Blog() {
   const t = useTranslations("blog");
   const locale = useLocale();
 
   const dayjs = dateTool(locale);
 
-  const postsSorted = allPosts
-    .filter((post) => post.language === locale && !post.draft)
-    .sort((a, b) => {
-      if (new Date(a.date) > new Date(b.date)) {
-        return -1;
-      }
-      return 1;
-    });
+  // const postsSorted = allPosts
+  //   .filter((post) => post.language === locale && !post.draft)
+  //   .sort((a, b) => {
+  //     if (new Date(a.date) > new Date(b.date)) {
+  //       return -1;
+  //     }
+  //     return 1;
+  //   });
 
   return (
     <main className="mx-auto my-5 flex w-full max-w-4xl flex-1 flex-col	 px-5 py-nav-height-mobile text-base  leading-8 text-secondary selection:bg-yellow selection:text-black lg:py-nav-height-desktop">
@@ -40,7 +30,7 @@ export default function Blog({ params }: BlogProps) {
         <h2 className="px-2 text-2xl font-semibold leading-8 text-primary">
           {t("allArticles")}
         </h2>
-        <ul className="mt-2 w-full">
+        {/* <ul className="mt-2 w-full">
           {postsSorted.map((post) => (
             <li
               key={post.title}
@@ -59,7 +49,7 @@ export default function Blog({ params }: BlogProps) {
               </Link>
             </li>
           ))}
-        </ul>
+        </ul> */}
       </section>
     </main>
   );

@@ -1,17 +1,8 @@
-import { unstable_setRequestLocale } from "next-intl/server";
 import { useTranslations } from "next-intl";
 
 import { ButtonTapToStart } from "@/components/ButtonTapToStart";
 
-export interface HomeProps {
-  params: {
-    lang: string;
-  };
-}
-
-export default function Home({ params }: HomeProps) {
-  unstable_setRequestLocale(params.lang);
-
+export default function Home() {
   const t = useTranslations("global");
 
   return (

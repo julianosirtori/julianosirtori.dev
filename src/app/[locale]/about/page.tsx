@@ -1,4 +1,3 @@
-import { unstable_setRequestLocale } from "next-intl/server";
 import Image from "next/image";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -10,15 +9,7 @@ import Link from "next/link";
 
 dayjs.extend(relativeTime);
 
-export interface AboutProps {
-  params: {
-    lang: string;
-  };
-}
-
-export default function About({ params }: AboutProps) {
-  unstable_setRequestLocale(params.lang);
-
+export default function About() {
   const t = useTranslations("about");
 
   return (

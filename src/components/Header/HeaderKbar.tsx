@@ -1,16 +1,8 @@
 "use client";
-import { useKBar } from "kbar";
 
 export function HeaderKBar() {
-  const { query } = useKBar();
-
   return (
-    <div
-      role="button"
-      aria-label="Command"
-      className="py-2"
-      onClick={query.toggle}
-    >
+    <div role="button" aria-label="Command" className="py-2">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"

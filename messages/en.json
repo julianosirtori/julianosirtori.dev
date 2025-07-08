@@ -1,0 +1,79 @@
+{ 
+  "home": {
+    "title": "Juliano is a <span>front-end web developer</span>",
+    "subtitle": "I specialize in designing and implementing seamless user interactions on the web, utilizing JavaScript, React, and HTML to create captivating and dynamic digital experiences.",
+    "buttonCurriculum": "Curriculum",
+    "linkCurriculum": "English -Juliano Sirtori - Resume.pdf",
+    "currentlyWork": "Currently working on ",
+    "currentlyCompany": "CI&T",
+    "currentlyCompanyLink": "https://ciandt.com",
+    "quote": "“The only way to do great work is to love what you do.”",
+    "quoteAuthor": "Steve Jobs"
+  }, 
+  "about": {
+    "title": "Discover more about me",
+    "bio": {
+      "phrase1": "Hello, I am <important>Juliano Sirtori</important>!",
+      "phrase2": "I am a software developer with over <important>7 years of experience</important> and enjoy working with technology.  I <important>like solving problems</important>, working with teams, and learning more to stay updated in the field.",
+      "phrase3": "I’m always studying to improve my skills and learn new things. During my career, I have worked on projects that needed <important>creative solutions and scalable systems</important>."
+    },
+    "recommendations": "Recommendations",
+    "image": "https://res.cloudinary.com/dfgrg43vh/image/upload/f_auto,q_auto/v1/blog/ogo9cvs85rvlwnbjers8",
+    "career": "Career"
+  }, 
+  "contacts": {
+    "title": "Get in touch with me.",
+    "description": "I'm interested in freelance job opportunities. However, if you have any other requests or questions, please don't hesitate to contact me.",
+    "email": {
+      "title": "Send an email.",
+      "labelName": "name",
+      "placeholderName": "James Bond",
+      "labelEmail": "email",
+      "placeholderEmail": "james@bond.com",
+      "labelMessage": "message",
+      "placeholderMessage": "How can I assist you?",
+      "button": "Send",
+      "buttonLoading": "Loading..."
+    }
+  }, 
+  "global": {
+    "myName": "Juliano",
+    "myFullName": "Juliano Sirtori",
+    "role": "Front-end Developer",
+    "slogan": "I create interactions between users and technology!",
+    "tapToStart": "Press <firstKey>⌘</firstKey> <secondKey>k</secondKey> to start",
+    "header": {
+      "about": "about",
+      "blog": "blog",
+      "projects": "projects"
+    },
+    "kbar": {
+      "email": "Send Email",
+      "source": "View Source",
+      "home": "Home",
+      "about": "About",
+      "contact": "Contact",
+      "blog": "Blog",
+      "project": "Projects",
+      "defaultSearch": "Search"
+    },
+    "email": "julianosirtori@gmail.com",
+    "social": {
+      "github": "https://github.com/julianosirtori/julianosirtori.dev",
+      "linkedin": "https://www.linkedin.com/in/juliano-sirtori/",
+      "discord": "https://discordapp.com/users/juliano_sirtori",
+      "twitter": "https://twitter.com/julianosirtori"
+    }
+  }, 
+  "blog": {
+    "title": "Teaching is learning.",
+    "description": "Here, you will find articles on the subjects I am studying, mastering, and wish to share with friends, or that are part of my career.",
+    "allArticles": "All articles",
+    "readTime": "min - read time"
+  },
+  "projects": {
+    "title": "Projects and Side Projects",
+    "description": "In addition to studying, I really enjoy programming and putting into practice what I've learned. Here, you will find a list of projects I've been involved in, personal projects from my GitHub, and some other information.",
+    "allProjects": "All Projects"
+  }
+}

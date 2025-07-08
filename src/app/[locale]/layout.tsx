@@ -4,30 +4,27 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Metadata } from "next";
 import { NextIntlClientProvider, useLocale } from "next-intl";
 import { notFound } from "next/navigation";
-import { unstable_setRequestLocale } from "next-intl/server";
 import { GoogleAnalytics } from "@next/third-parties/google";
 
 import { biotifFont } from "@/app/fonts";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { importLocale } from "@/locales";
-import { CommandBar } from "@/components/CommandBar";
+import { routing } from "@/i18n/routing";
 import { LOCALES } from "@/common/constants";
+import { hasLocale } from "next-intl";
 
-interface BlogRootLayoutProps {
+interface LocaleLayoutProps {
   children: React.ReactNode;
-  params: {
-    lang: string;
-  };
+  params: Promise<{ locale: string }>;
 }
 
 export async function generateMetadata({
   params,
-}: BlogRootLayoutProps): Promise<Metadata> {
-  const messages = (await importLocale({ locale: params.lang })).messages;
+}: LocaleLayoutProps): Promise<Metadata> {
+  const { locale } = await params;
 
   const title = "Juliano Sirtori";
-  const description = messages.global.slogan;
+  const description = "messages.global.slogan";
 
   return {
     metadataBase: new URL("https://julianosirtori.dev"),
@@ -45,36 +42,30 @@ export function generateStaticParams() {
   return LOCALES.map((lang) => ({ lang }));
 }
 
-export default function BlogRootLayout({
+export default async function LocaleLayout({
   children,
   params,
-}: BlogRootLayoutProps) {
-  unstable_setRequestLocale(params.lang);
+}: LocaleLayoutProps) {
+  const { locale } = await params;
+  console.log(params);
 
-  const locale = useLocale();
-  let messages = {};
-
-  // Show a 404 error if the user requests an unknown locale
-  if (params.lang !== locale) {
+  if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
-  messages = use(importLocale({ locale })).messages;
 
   return (
     <html lang={locale}>
       <body
         className={`relative bg-background ${biotifFont.variable} font-sans`}
       >
-        <NextIntlClientProvider locale={locale} messages={messages}>
+        <NextIntlClientProvider>
           <SpeedInsights />
-          <CommandBar>
-            <div className="flex min-h-screen flex-col">
-              <Header />
-              {children}
-              <Footer />
-            </div>
-            <Analytics />
-          </CommandBar>
+          <div className="flex min-h-screen flex-col">
+            <Header />
+            {children}
+            <Footer />
+          </div>
+          <Analytics />
         </NextIntlClientProvider>
       </body>
       <GoogleAnalytics gaId="G-VNFLVEVSCC" />

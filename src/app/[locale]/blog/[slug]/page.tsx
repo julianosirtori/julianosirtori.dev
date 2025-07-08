@@ -1,12 +1,10 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
-import { allPosts } from "contentlayer/generated";
-import { unstable_setRequestLocale } from "next-intl/server";
+// import { allPosts } from "contentlayer/generated";
 
 import { Comments } from "@/components/Comments";
 import { Mdx } from "@/components/Mdx";
-import { importLocale } from "@/locales";
 import { dateTool } from "@/utils/date";
 import { LOCALES } from "@/common/constants";
 
@@ -17,21 +15,23 @@ export interface IPostProps {
   };
 }
 
+const allPosts: any[] = [];
+
 export async function generateMetadata({
   params,
 }: IPostProps): Promise<Metadata> {
-  const messages = (await importLocale({ locale: params.lang })).messages;
+  // const messages = (await importLocale({ locale: params.lang })).messages;
   const post = allPosts.find((post) => post.slug === params.slug);
 
   const title = `Juliano Sirtori - ${post?.title}`;
-  const description = post?.description || messages.global.slogan;
+  // const description = post?.description || messages.global.slogan;
 
   return {
     title,
-    description,
+    description: "",
     openGraph: {
       title,
-      description,
+      description: "",
       url: "https://julianosirtori.dev/",
     },
   };
@@ -52,8 +52,6 @@ export function generateStaticParams() {
 }
 
 export default function Post({ params }: IPostProps) {
-  unstable_setRequestLocale(params.lang);
-
   const t = useTranslations("blog");
   const locale = useLocale();
   const post = allPosts.find(

@@ -1,10 +1,10 @@
 import { useMemo } from "react";
 
 import { useTranslations } from "next-intl";
-import { Link } from "@/locales/navigation";
 import { HeaderSelectLang } from "./HeaderSelectLang";
 import { HeaderKBar } from "./HeaderKbar";
 import { HeaderItemWrapper } from "./HeaderItemWrapper";
+import { Link } from "@/i18n/navigation";
 
 export const Header = () => {
   const t = useTranslations("global.header");

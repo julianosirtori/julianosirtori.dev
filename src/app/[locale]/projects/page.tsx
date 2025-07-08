@@ -1,16 +1,9 @@
 import { useLocale, useTranslations } from "next-intl";
-import { unstable_setRequestLocale } from "next-intl/server";
 
 import { projects } from "@/data/projects";
 import Link from "next/link";
 import { Metadata } from "next";
 import { importLocale } from "@/locales";
-
-interface ProjectsProps {
-  params: {
-    lang: string;
-  };
-}
 
 export async function generateMetadata({
   params,
@@ -31,9 +24,7 @@ export async function generateMetadata({
   };
 }
 
-export default function Projects({ params }: ProjectsProps) {
-  unstable_setRequestLocale(params.lang);
-
+export default function Projects() {
   const t = useTranslations("projects");
   const currentLocale = useLocale();
   const projectsGroupedByYear =
