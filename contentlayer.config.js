@@ -2,13 +2,13 @@ import {
   defineDocumentType,
   defineNestedType,
   makeSource,
-} from "contentlayer/source-files";
+} from "contentlayer2/source-files";
 import remarkGfm from "remark-gfm";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 
-/** @type {import('contentlayer/source-files').ComputedFields} */
+/** @type {import('contentlayer2/source-files').ComputedFields} */
 const computedFields = {
   slug: {
     type: "string",

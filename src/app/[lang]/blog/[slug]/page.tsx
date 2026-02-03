@@ -1,27 +1,27 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { useLocale, useTranslations } from "next-intl";
+import { getLocale, getTranslations, setRequestLocale } from "next-intl/server";
 import { allPosts } from "contentlayer/generated";
-import { unstable_setRequestLocale } from "next-intl/server";
 
 import { Comments } from "@/components/Comments";
 import { Mdx } from "@/components/Mdx";
 import { importLocale } from "@/locales";
 import { dateTool } from "@/utils/date";
-import { LOCALES } from "@/common/constants";
+import { routing } from "@/locales/config";
 
 export interface IPostProps {
-  params: {
+  params: Promise<{
     lang: string;
     slug: string;
-  };
+  }>;
 }
 
 export async function generateMetadata({
   params,
 }: IPostProps): Promise<Metadata> {
-  const messages = (await importLocale({ locale: params.lang })).messages;
-  const post = allPosts.find((post) => post.slug === params.slug);
+  const { lang, slug } = await params;
+  const { messages } = await importLocale(lang);
+  const post = allPosts.find((post) => post.slug === slug);
 
   const title = `Juliano Sirtori - ${post?.title}`;
   const description = post?.description || messages.global.slogan;
@@ -40,7 +40,7 @@ export async function generateMetadata({
 export function generateStaticParams() {
   const params: { lang: string; slug: string }[] = [];
   allPosts.forEach((post) => {
-    if (post.slug && LOCALES.includes(post.language)) {
+    if (post.slug && routing.locales.includes(post.language as "en" | "pt")) {
       params.push({
         lang: post.language,
         slug: post.slug,
@@ -51,13 +51,14 @@ export function generateStaticParams() {
   return params;
 }
 
-export default function Post({ params }: IPostProps) {
-  unstable_setRequestLocale(params.lang);
+export default async function Post({ params }: IPostProps) {
+  const { lang, slug } = await params;
+  setRequestLocale(lang);
 
-  const t = useTranslations("blog");
-  const locale = useLocale();
+  const t = await getTranslations("blog");
+  const locale = await getLocale();
   const post = allPosts.find(
-    (post) => post.slug === params.slug && post.language === locale,
+    (post) => post.slug === slug && post.language === locale,
   );
 
   const dayjs = dateTool(locale);

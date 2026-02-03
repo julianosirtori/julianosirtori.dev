@@ -1,5 +1,4 @@
-import { useLocale, useTranslations } from "next-intl";
-import { unstable_setRequestLocale } from "next-intl/server";
+import { getLocale, getTranslations, setRequestLocale } from "next-intl/server";
 
 import { projects } from "@/data/projects";
 import Link from "next/link";
@@ -7,15 +6,16 @@ import { Metadata } from "next";
 import { importLocale } from "@/locales";
 
 interface ProjectsProps {
-  params: {
+  params: Promise<{
     lang: string;
-  };
+  }>;
 }
 
 export async function generateMetadata({
   params,
 }: ProjectsProps): Promise<Metadata> {
-  const messages = (await importLocale({ locale: params.lang })).messages;
+  const { lang } = await params;
+  const { messages } = await importLocale(lang);
 
   const title = "Juliano Sirtori | Projects";
   const description = messages.projects.description;
@@ -31,11 +31,12 @@ export async function generateMetadata({
   };
 }
 
-export default function Projects({ params }: ProjectsProps) {
-  unstable_setRequestLocale(params.lang);
+export default async function Projects({ params }: ProjectsProps) {
+  const { lang } = await params;
+  setRequestLocale(lang);
 
-  const t = useTranslations("projects");
-  const currentLocale = useLocale();
+  const t = await getTranslations("projects");
+  const currentLocale = await getLocale();
   const projectsGroupedByYear =
     projects[currentLocale as keyof typeof projects];
   const years = Object.keys(projectsGroupedByYear).reverse();

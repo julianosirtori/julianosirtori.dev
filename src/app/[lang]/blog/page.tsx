@@ -1,21 +1,21 @@
-import { useLocale, useTranslations } from "next-intl";
-import { unstable_setRequestLocale } from "next-intl/server";
+import { getLocale, getTranslations, setRequestLocale } from "next-intl/server";
 
 import { dateTool } from "@/utils/date";
 import { allPosts } from "contentlayer/generated";
 import { Link } from "@/locales/navigation";
 
 interface BlogProps {
-  params: {
+  params: Promise<{
     lang: string;
-  };
+  }>;
 }
 
-export default function Blog({ params }: BlogProps) {
-  unstable_setRequestLocale(params.lang);
+export default async function Blog({ params }: BlogProps) {
+  const { lang } = await params;
+  setRequestLocale(lang);
 
-  const t = useTranslations("blog");
-  const locale = useLocale();
+  const t = await getTranslations("blog");
+  const locale = await getLocale();
 
   const dayjs = dateTool(locale);
 
