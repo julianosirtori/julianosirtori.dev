@@ -1,25 +1,25 @@
-import { unstable_setRequestLocale } from "next-intl/server";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import Image from "next/image";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 
 import { experiences, recommendations } from "@/data/about";
-import { useTranslations } from "next-intl";
 import { LinkedInLogoIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 
 dayjs.extend(relativeTime);
 
 export interface AboutProps {
-  params: {
+  params: Promise<{
     lang: string;
-  };
+  }>;
 }
 
-export default function About({ params }: AboutProps) {
-  unstable_setRequestLocale(params.lang);
+export default async function About({ params }: AboutProps) {
+  const { lang } = await params;
+  setRequestLocale(lang);
 
-  const t = useTranslations("about");
+  const t = await getTranslations("about");
 
   return (
     <main className="mx-auto my-5 flex w-full max-w-4xl flex-1 flex-col	 px-5 py-nav-height-mobile text-base  leading-8 text-secondary selection:bg-pink selection:text-black lg:py-nav-height-desktop">

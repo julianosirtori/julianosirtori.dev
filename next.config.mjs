@@ -1,12 +1,10 @@
-const { withContentlayer } = require("next-contentlayer");
+import { withContentlayer } from "next-contentlayer2";
+import createNextIntlPlugin from "next-intl/plugin";
 
-const withNextIntl = require("next-intl/plugin")(
-  // This is the default (also the `src` folder is supported out of the box)
-  "./src/locales/index.ts",
-);
+const withNextIntl = createNextIntlPlugin("./src/locales/index.ts");
 
 /** @type {import('next').NextConfig} */
-const nextConfig = withNextIntl({
+const nextConfig = {
   images: {
     remotePatterns: [
       {
@@ -23,6 +21,6 @@ const nextConfig = withNextIntl({
       },
     ],
   },
-});
+};
 
-module.exports = withContentlayer(nextConfig);
+export default withContentlayer(withNextIntl(nextConfig));

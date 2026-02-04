@@ -14,11 +14,13 @@ export const size = {
 
 export default async function GET({ params }: IPostProps) {
   try {
+    const { slug } = await params;
+
     const fontDataBold = await fetch(
       new URL("../../../fonts/Biotif-Bold.ttf", import.meta.url),
     ).then((res) => res.arrayBuffer());
 
-    const post = allPosts.find((post) => post.slug === params.slug);
+    const post = allPosts.find((post) => post.slug === slug);
 
     return new ImageResponse(
       (
@@ -60,8 +62,8 @@ export default async function GET({ params }: IPostProps) {
         ],
       },
     );
-  } catch (e: any) {
-    console.log(`${e.message}`);
+  } catch (e: unknown) {
+    console.log(`${e instanceof Error ? e.message : String(e)}`);
     return new Response(`Failed to generate the image`, {
       status: 500,
     });

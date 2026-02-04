@@ -1,18 +1,19 @@
-import { unstable_setRequestLocale } from "next-intl/server";
-import { useTranslations } from "next-intl";
+import { setRequestLocale } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 
 import { ButtonTapToStart } from "@/components/ButtonTapToStart";
 
 export interface HomeProps {
-  params: {
+  params: Promise<{
     lang: string;
-  };
+  }>;
 }
 
-export default function Home({ params }: HomeProps) {
-  unstable_setRequestLocale(params.lang);
+export default async function Home({ params }: HomeProps) {
+  const { lang } = await params;
+  setRequestLocale(lang);
 
-  const t = useTranslations("global");
+  const t = await getTranslations("global");
 
   return (
     <main className="mx-auto flex flex-1 items-center overflow-hidden px-0 py-nav-height-desktop selection:bg-green selection:text-black lg:w-full lg:max-w-3xl">

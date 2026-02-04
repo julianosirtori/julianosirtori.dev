@@ -1,10 +1,9 @@
-import { use } from "react";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Metadata } from "next";
-import { NextIntlClientProvider, useLocale } from "next-intl";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { unstable_setRequestLocale } from "next-intl/server";
 import { GoogleAnalytics } from "@next/third-parties/google";
 
 import { biotifFont } from "@/app/fonts";
@@ -12,19 +11,20 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { importLocale } from "@/locales";
 import { CommandBar } from "@/components/CommandBar";
-import { LOCALES } from "@/common/constants";
+import { routing } from "@/locales/config";
 
 interface BlogRootLayoutProps {
   children: React.ReactNode;
-  params: {
+  params: Promise<{
     lang: string;
-  };
+  }>;
 }
 
 export async function generateMetadata({
   params,
 }: BlogRootLayoutProps): Promise<Metadata> {
-  const messages = (await importLocale({ locale: params.lang })).messages;
+  const { lang } = await params;
+  const { messages } = await importLocale(lang);
 
   const title = "Juliano Sirtori";
   const description = messages.global.slogan;
@@ -42,23 +42,23 @@ export async function generateMetadata({
 }
 
 export function generateStaticParams() {
-  return LOCALES.map((lang) => ({ lang }));
+  return routing.locales.map((lang) => ({ lang }));
 }
 
-export default function BlogRootLayout({
+export default async function BlogRootLayout({
   children,
   params,
 }: BlogRootLayoutProps) {
-  unstable_setRequestLocale(params.lang);
+  const { lang } = await params;
 
-  const locale = useLocale();
-  let messages = {};
-
-  // Show a 404 error if the user requests an unknown locale
-  if (params.lang !== locale) {
+  if (!routing.locales.includes(lang as "en" | "pt")) {
     notFound();
   }
-  messages = use(importLocale({ locale })).messages;
+
+  setRequestLocale(lang);
+
+  const locale = await getLocale();
+  const messages = await getMessages();
 
   return (
     <html lang={locale}>

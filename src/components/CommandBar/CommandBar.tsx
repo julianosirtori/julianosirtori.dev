@@ -131,8 +131,14 @@ function RenderResults() {
   );
 }
 
+interface KBarAction {
+  icon?: React.ReactNode;
+  name: string;
+  shortcut?: string[];
+}
+
 const ResultItem = forwardRef(function ResultItem(
-  { action, active }: { action: any; active: boolean },
+  { action, active }: { action: KBarAction; active: boolean },
   ref?: LegacyRef<HTMLDivElement>,
 ) {
   return (
@@ -152,16 +158,18 @@ const ResultItem = forwardRef(function ResultItem(
           <span>{action.name}</span>
         </div>
       </div>
-      <div className="grid grid-flow-col gap-1">
-        {action.shortcut.map((shortcut: string) => (
-          <kbd
-            className="rounded-md bg-hover px-2 py-1 uppercase text-secondary"
-            key={shortcut}
-          >
-            {shortcut}
-          </kbd>
-        ))}
-      </div>
+      {action.shortcut && (
+        <div className="grid grid-flow-col gap-1">
+          {action.shortcut.map((shortcut: string) => (
+            <kbd
+              className="rounded-md bg-hover px-2 py-1 uppercase text-secondary"
+              key={shortcut}
+            >
+              {shortcut}
+            </kbd>
+          ))}
+        </div>
+      )}
     </div>
   );
 });

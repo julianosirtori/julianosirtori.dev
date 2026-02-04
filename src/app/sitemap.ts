@@ -7,22 +7,22 @@ export default async function sitemap() {
   const pages = ["about", "blog", "contact", "project"];
   const host = process.env.NEXT_PUBLIC_LOCAL_DOMAIN;
 
-  let routes: MetadataRoute.Sitemap = [];
-  langs.forEach((lang) => {
-    allPosts.forEach((post) => {
+  const routes: MetadataRoute.Sitemap = [];
+  for (const lang of langs) {
+    for (const post of allPosts) {
       routes.push({
         url: `${host}/${lang}/blog/${post.slug}`,
         lastModified: post.date,
       });
-    });
+    }
 
-    pages.forEach((page) => {
+    for (const page of pages) {
       routes.push({
         url: `${host}/${lang}/${page}`,
         lastModified: new Date().toISOString().split("T")[0],
       });
-    });
-  });
+    }
+  }
 
   return routes;
 }
