@@ -30,13 +30,6 @@ test.describe("Home Page", () => {
     await expect(page).toHaveURL(/.*\/about/);
   });
 
-  test("should navigate to contact page", async ({ page }) => {
-    await page.goto("/en");
-
-    await page.click('a[href="/en/contact"]');
-    await expect(page).toHaveURL(/.*\/contact/);
-  });
-
   test("should navigate to projects page", async ({ page }) => {
     await page.goto("/en");
 

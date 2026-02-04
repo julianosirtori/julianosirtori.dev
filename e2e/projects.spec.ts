@@ -4,7 +4,7 @@ test.describe("Projects Page", () => {
   test("should display the projects page", async ({ page }) => {
     await page.goto("/en/projects");
 
-    await expect(page.locator("h1")).toContainText("Projects");
+    await expect(page.locator("h1")).toContainText("Projects and Side Projects");
     await expect(page.locator("ul li").first()).toBeVisible();
   });
 
@@ -17,6 +17,6 @@ test.describe("Projects Page", () => {
   test("should display projects page in Portuguese", async ({ page }) => {
     await page.goto("/pt/projects");
 
-    await expect(page.locator("h1")).toContainText("Projetos");
+    await expect(page.locator("h1")).toContainText("Trabalho e Side Projects");
   });
 });

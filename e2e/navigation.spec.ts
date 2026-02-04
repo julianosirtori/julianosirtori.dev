@@ -4,10 +4,9 @@ test.describe("Navigation", () => {
   test("should have working header navigation", async ({ page }) => {
     await page.goto("/en");
 
-    // Check that all main navigation links are present
+    // Check that all main navigation links are present (About, Blog, Projects)
     await expect(page.locator('a[href="/en/blog"]')).toBeVisible();
     await expect(page.locator('a[href="/en/about"]')).toBeVisible();
-    await expect(page.locator('a[href="/en/contact"]')).toBeVisible();
     await expect(page.locator('a[href="/en/projects"]')).toBeVisible();
   });
 
@@ -16,6 +15,13 @@ test.describe("Navigation", () => {
 
     const footer = page.locator("footer");
     await expect(footer).toBeVisible();
+  });
+
+  test("should have CV link", async ({ page }) => {
+    await page.goto("/en");
+
+    const cvLink = page.locator('a[href="https://cv.julianosirtori.dev/"]');
+    await expect(cvLink).toBeVisible();
   });
 
   test("should open command bar with keyboard shortcut", async ({ page }) => {
