@@ -5,7 +5,7 @@ test.describe("Contact Page", () => {
     await page.goto("/en/contact");
 
     await expect(page.locator("h1")).toContainText("Get in touch with me");
-    await expect(page.locator('input[name="name"]')).toBeVisible();
+    await expect(page.locator('input[name="nameContact"]')).toBeVisible();
     await expect(page.locator('input[name="email"]')).toBeVisible();
     await expect(page.locator('textarea[name="message"]')).toBeVisible();
   });
@@ -22,6 +22,6 @@ test.describe("Contact Page", () => {
     await page.goto("/pt/contact");
 
     await expect(page.locator("h1")).toContainText("Entre em contato comigo");
-    await expect(page.locator('input[name="name"]')).toBeVisible();
+    await expect(page.locator('input[name="nameContact"]')).toBeVisible();
   });
 });
