@@ -21,6 +21,8 @@ import {
   FileTextIcon,
   HomeIcon,
   PersonIcon,
+  ChatBubbleIcon,
+  ClockIcon,
 } from "@radix-ui/react-icons";
 
 export function CommandBar({ children }: TCommandBarProps) {
@@ -86,6 +88,24 @@ export function CommandBar({ children }: TCommandBarProps) {
       perform: () => router.push("/projects"),
       icon: <BackpackIcon />,
     },
+    {
+      id: "guestbook",
+      name: t("guestbook"),
+      shortcut: ["g", "g"],
+      keywords: "go-guestbook",
+      section: "Go To",
+      perform: () => router.push("/guestbook"),
+      icon: <ChatBubbleIcon />,
+    },
+    {
+      id: "now",
+      name: t("now"),
+      shortcut: ["g", "n"],
+      keywords: "go-now",
+      section: "Go To",
+      perform: () => router.push("/now"),
+      icon: <ClockIcon />,
+    },
   ];
 
   return (
@@ -97,10 +117,10 @@ export function CommandBar({ children }: TCommandBarProps) {
     >
       <KBarPortal>
         <KBarPositioner className="fixed inset-0 z-20 box-border flex w-full items-start justify-center bg-[#000000cc] px-4 pt-[14vh]">
-          <KBarAnimator className="[&>div>div]:no-scrollbar w-full max-w-2xl overflow-hidden rounded-lg bg-command text-primary backdrop-blur-3xl backdrop-saturate-200">
+          <KBarAnimator className="[&>div>div]:no-scrollbar bg-command text-primary w-full max-w-2xl overflow-hidden rounded-lg backdrop-blur-3xl backdrop-saturate-200">
             <KBarSearch
               defaultPlaceholder={t("defaultSearch")}
-              className="m-0 box-border w-full bg-command px-4 py-3 text-base text-primary outline-none"
+              className="bg-command text-primary m-0 box-border w-full px-4 py-3 text-base outline-none"
             />
             <RenderResults />
           </KBarAnimator>
@@ -120,7 +140,7 @@ function RenderResults() {
       items={results}
       onRender={({ item, active }) =>
         typeof item === "string" ? (
-          <div className="bg-command px-4 py-2 text-[10px] uppercase text-secondary">
+          <div className="bg-command text-secondary px-4 py-2 text-[10px] uppercase">
             {item}
           </div>
         ) : (
@@ -144,8 +164,7 @@ const ResultItem = forwardRef(function ResultItem(
   return (
     <div
       className={clsx({
-        "m-0 flex w-full cursor-pointer items-center justify-between px-4 py-3":
-          true,
+        "m-0 flex w-full cursor-pointer items-center justify-between px-4 py-3": true,
         "bg-[#1a1c1e)] text-primary": active,
         "bg-command text-secondary": !active,
       })}
@@ -162,7 +181,7 @@ const ResultItem = forwardRef(function ResultItem(
         <div className="grid grid-flow-col gap-1">
           {action.shortcut.map((shortcut: string) => (
             <kbd
-              className="rounded-md bg-hover px-2 py-1 uppercase text-secondary"
+              className="bg-hover text-secondary rounded-md px-2 py-1 uppercase"
               key={shortcut}
             >
               {shortcut}

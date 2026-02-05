@@ -1,0 +1,8 @@
+{
+  "title": "Guestbook",
+  "description": "Leave a message! Share your thoughts, say hello, or just let me know you stopped by. I'd love to hear from you.",
+  "placeholderName": "Your name",
+  "placeholderMessage": "Leave a message...",
+  "submit": "Sign Guestbook",
+  "empty": "No messages yet. Be the first to sign!"
+}

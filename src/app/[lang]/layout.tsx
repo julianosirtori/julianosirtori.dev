@@ -9,6 +9,7 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import { biotifFont } from "@/app/fonts";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { BackToTop } from "@/components/BackToTop";
 import { importLocale } from "@/locales";
 import { CommandBar } from "@/components/CommandBar";
 import { routing } from "@/locales/config";
@@ -63,7 +64,7 @@ export default async function BlogRootLayout({
   return (
     <html lang={locale}>
       <body
-        className={`relative bg-background ${biotifFont.variable} font-sans`}
+        className={`bg-background relative ${biotifFont.variable} font-sans`}
       >
         <NextIntlClientProvider locale={locale} messages={messages}>
           <SpeedInsights />
@@ -73,6 +74,7 @@ export default async function BlogRootLayout({
               {children}
               <Footer />
             </div>
+            <BackToTop />
             <Analytics />
           </CommandBar>
         </NextIntlClientProvider>

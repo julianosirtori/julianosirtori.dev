@@ -1,0 +1,29 @@
+{
+  "title": "Agora",
+  "description": "Esta é uma 'now page' - um resumo do que estou focado atualmente na vida e no trabalho.",
+  "lastUpdated": "Última atualização",
+  "updateDate": "Fevereiro de 2026",
+  "work": {
+    "title": "Trabalho",
+    "description": "Atualmente trabalhando como Desenvolvedor Front-end na CI&T, construindo aplicações web escaláveis com React e TypeScript. Focado em criar experiências incríveis para usuários e mentorar desenvolvedores juniores."
+  },
+  "learning": {
+    "title": "Aprendendo",
+    "item1": "Aprofundando conhecimentos em Design de Sistemas e Arquitetura",
+    "item2": "Explorando integração de IA/ML em aplicações web",
+    "item3": "Melhorando habilidades em acessibilidade (a11y)"
+  },
+  "reading": {
+    "title": "Lendo",
+    "description": "Atualmente lendo 'O Programador Pragmático' pela segunda vez. Também passando por alguns artigos sobre otimização de Performance Web."
+  },
+  "projects": {
+    "title": "Projetos Paralelos",
+    "description": "Trabalhando em melhorar meu portfólio e blog. Experimentando novas tecnologias e construindo pequenas ferramentas que resolvem meus problemas do dia a dia."
+  },
+  "life": {
+    "title": "Vida",
+    "description": "Morando em Maringá, Brasil. Aproveitando o tempo com a família, aprendendo a tocar violão e tentando manter um equilíbrio saudável entre trabalho e vida pessoal."
+  },
+  "inspired": "Inspirado por"
+}

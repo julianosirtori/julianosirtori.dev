@@ -1,5 +1,5 @@
 {
-  "title": "Juliano é um <span>desenvolvedor web front-end </span>",
+  "title": "Juliano é um <span>desenvolvedor web front-end</span>",
   "subtitle": "Sou especializado em projetar e implementar interações perfeitas para o usuário na web, utilizando JavaScript, React e HTML para criar experiências digitais cativantes e dinâmicas.",
   "buttonCurriculum": "Currículo",
   "linkCurriculum": "Portuguese -Juliano Sirtori - Resume.pdf",
@@ -7,5 +7,14 @@
   "currentlyCompany": "CI&T",
   "currentlyCompanyLink": "https://ciandt.com",
   "quote": "A única maneira de fazer um ótimo trabalho é amar o que você faz.",
-  "quoteAuthor": "Steve Jobs"
+  "quoteAuthor": "Steve Jobs",
+  "featuredProjects": "Projetos em Destaque",
+  "viewAllProjects": "Ver todos",
+  "latestPosts": "Últimos Posts",
+  "viewAllPosts": "Ver todos",
+  "techStack": "Tech Stack",
+  "readTime": "min de leitura",
+  "getInTouch": "Entre em Contato",
+  "contactDescription": "Tem um projeto em mente ou só quer conversar? Adoraria ouvir de você.",
+  "contactButton": "Diga Olá"
 }
