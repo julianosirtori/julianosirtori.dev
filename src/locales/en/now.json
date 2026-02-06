@@ -1,0 +1,29 @@
+{
+  "title": "Now",
+  "description": "This is a 'now page' - a snapshot of what I'm currently focused on in life and work.",
+  "lastUpdated": "Last updated",
+  "updateDate": "February 2026",
+  "work": {
+    "title": "Work",
+    "description": "Currently working as a Front-end Developer at CI&T, building scalable web applications with React and TypeScript. Focused on creating amazing user experiences and mentoring junior developers."
+  },
+  "learning": {
+    "title": "Learning",
+    "item1": "Deepening my knowledge in System Design and Architecture",
+    "item2": "Exploring AI/ML integration in web applications",
+    "item3": "Improving my skills in accessibility (a11y)"
+  },
+  "reading": {
+    "title": "Reading",
+    "description": "Currently reading 'The Pragmatic Programmer' for the second time. Also going through some articles about Web Performance optimization."
+  },
+  "projects": {
+    "title": "Side Projects",
+    "description": "Working on improving my portfolio and blog. Experimenting with new technologies and building small tools that solve my daily problems."
+  },
+  "life": {
+    "title": "Life",
+    "description": "Living in Maringá, Brazil. Enjoying time with family, learning to play guitar, and trying to maintain a healthy work-life balance."
+  },
+  "inspired": "Inspired by"
+}
