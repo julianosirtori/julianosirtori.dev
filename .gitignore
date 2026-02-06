@@ -8,6 +8,9 @@
 # testing
 /coverage
 /.lighthouseci
+/test-results
+/playwright-report
+pnpm-workspace.yaml
 
 # next.js
 /.next/
