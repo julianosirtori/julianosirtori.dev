@@ -12,12 +12,17 @@ const components = {
   pre: (props: ComponentProps<"pre">) => <CodeBlock {...props} />,
 };
 
-export const Mdx = ({ code }: MdxProps) => {
+/* eslint-disable react-hooks/static-components -- contentlayer's useMDXComponent intentionally creates a stateless component from MDX code */
+function MdxContent({ code }: MdxProps) {
   const Component = useMDXComponent(code);
+  return <Component components={components} />;
+}
+/* eslint-enable react-hooks/static-components */
 
+export const Mdx = ({ code }: MdxProps) => {
   return (
     <article className="prose prose-stone m-auto w-full max-w-3xl pb-5">
-      <Component components={components} />
+      <MdxContent code={code} />
     </article>
   );
 };

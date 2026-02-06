@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface ReactionsProps {
@@ -20,22 +20,17 @@ const REACTIONS = [
 ];
 
 export function Reactions({ slug }: ReactionsProps) {
-  const [reactions, setReactions] = useState<ReactionData>({});
-  const [userReactions, setUserReactions] = useState<string[]>([]);
+  const [reactions, setReactions] = useState<ReactionData>(() => {
+    if (typeof window === "undefined") return {};
+    const stored = localStorage.getItem(`reactions-${slug}`);
+    return stored ? JSON.parse(stored) : {};
+  });
+  const [userReactions, setUserReactions] = useState<string[]>(() => {
+    if (typeof window === "undefined") return [];
+    const stored = localStorage.getItem(`user-reactions-${slug}`);
+    return stored ? JSON.parse(stored) : [];
+  });
   const [showBurst, setShowBurst] = useState<string | null>(null);
-
-  useEffect(() => {
-    // Load reactions from localStorage
-    const storedReactions = localStorage.getItem(`reactions-${slug}`);
-    const storedUserReactions = localStorage.getItem(`user-reactions-${slug}`);
-
-    if (storedReactions) {
-      setReactions(JSON.parse(storedReactions));
-    }
-    if (storedUserReactions) {
-      setUserReactions(JSON.parse(storedUserReactions));
-    }
-  }, [slug]);
 
   const handleReaction = (key: string) => {
     const hasReacted = userReactions.includes(key);

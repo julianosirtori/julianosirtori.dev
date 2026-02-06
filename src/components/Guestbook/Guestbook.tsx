@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, FormEvent } from "react";
+import { useState, FormEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { PaperPlaneIcon, PersonIcon } from "@radix-ui/react-icons";
 
@@ -60,31 +60,21 @@ export function Guestbook({
   submitText,
   emptyText,
 }: GuestbookProps) {
-  const [entries, setEntries] = useState<GuestbookEntry[]>([]);
-  const [name, setName] = useState("");
+  const [entries, setEntries] = useState<GuestbookEntry[]>(() => {
+    if (typeof window === "undefined") return [];
+    const stored = localStorage.getItem("guestbook-entries");
+    return stored ? JSON.parse(stored) : [];
+  });
+  const [name, setName] = useState(() => {
+    if (typeof window === "undefined") return "";
+    return localStorage.getItem("guestbook-name") || "";
+  });
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [locale, setLocale] = useState("en");
-
-  useEffect(() => {
-    // Detect locale from URL
-    const path = window.location.pathname;
-    if (path.startsWith("/pt")) {
-      setLocale("pt");
-    }
-
-    // Load entries from localStorage
-    const stored = localStorage.getItem("guestbook-entries");
-    if (stored) {
-      setEntries(JSON.parse(stored));
-    }
-
-    // Load saved name
-    const savedName = localStorage.getItem("guestbook-name");
-    if (savedName) {
-      setName(savedName);
-    }
-  }, []);
+  const [locale] = useState(() => {
+    if (typeof window === "undefined") return "en";
+    return window.location.pathname.startsWith("/pt") ? "pt" : "en";
+  });
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
