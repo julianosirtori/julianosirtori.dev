@@ -1,0 +1,78 @@
+---
+title: "Ué, por que está renderizando duas vezes"
+date: 2025-11-23
+description: "Como encontrei um bug por causa do StrictMode do React. E como desativar caso você queira."
+meta:
+  keywords:
+    - front-end
+    - react
+    - javascript
+bannerCloudinaryId: unsplash/photo-1593436878396-e943a3cac98f
+bannerCredit: Photo by [Mika Baumeister](https://unsplash.com/pt-br/@mbaumi)
+---
+
+Eu precisava chamar uma request do tipo `POST` logo após do componente ser renderizado, para isso implementei algo parecido com isso:
+
+```jsx
+function MyComponent() {
+    useEffect(() => {
+        fetch('/api/data', {
+            method: 'POST'
+        });
+    }, [])
+
+    return <h1>MyComponent</h1>
+}
+```
+
+Quando a página recarregou percebi que a minha requisição chamou duas vezes, percebi que o component também estava renderizando multiplas vezes.
+
+Com uma pesquisa rápida no google acabei chegando em algumas respostas que irei compartilhar abaixo, caso tenham o mesmo problema que o meu.
+
+## O que é StrictMode
+
+É uma feature do React que fica disponivel apenas no modo de desenvolvimento, através dela podemos descobrir rapidamente comportamentos estranhos nas nossas aplicações ainda na fase de desenvolvimento.
+
+Segunda a documentação do React:
+
+> * Your components will re-render an extra time to find bugs caused by impure rendering.
+> * Your components will re-run Effects an extra time to find bugs caused by missing Effect cleanup.
+> * Your components will re-run refs callbacks an extra time to find bugs caused by missing ref cleanup.
+> * Your components will be checked for usage of deprecated APIs.
+
+## Como desativar ele?
+
+É altamente recomendado que vc não desative, pois ele ajudará a encontrar comportamentos estranhos, mas caso queira desativar é só seguir esses passos abaixos:
+
+### Next.js
+
+No next.js adicione essa configuração no `next.config.js`
+
+```js
+module.exports = {
+  reactStrictMode: false,
+}
+```
+
+#### Outside Next.js
+
+Se vc náo esta usando Next.js basta remover wrapper `<StrictMode>`, exemplo com StrictMode:
+
+```jsx
+<StrictMode>
+  <App />
+</StrictMode>
+```
+
+Exemplo sem:
+
+```jsx
+<App />
+```
+
+## Referências
+
+Caso vc queira saber mais detalhes segue abaixo os link da documentação:
+
+* [React StrictMode](https://react.dev/reference/react/StrictMode)
+* [Next.js StrictMode](https://nextjs.org/docs/app/api-reference/config/next-config-js/reactStrictMode)

@@ -1,0 +1,78 @@
+---
+title: "Wait, why is this rendering twice?"
+date: 2025-11-23
+description: "How I found a bug caused by React's StrictMode. And how to disable it if you want."
+meta:
+  keywords:
+    - front-end
+    - react
+    - javascript
+bannerCloudinaryId: unsplash/photo-1593436878396-e943a3cac98f
+bannerCredit: Photo by [Mika Baumeister](https://unsplash.com/@mbaumi)
+---
+
+I needed to call a `POST` request right after the component rendered. So I implemented something along these lines:
+
+```jsx
+function MyComponent() {
+    useEffect(() => {
+        fetch('/api/data', {
+            method: 'POST'
+        });
+    }, [])
+
+    return <h1>MyComponent</h1>
+}
+```
+
+When the page reloaded, I noticed that my request was being called twice, and the component was also rendering multiple times.
+
+A quick Google search led me to a few answers that I'll share below, in case you run into the same problem I did.
+
+## What is StrictMode
+
+It's a React feature available only in development mode. Through it, we can quickly catch strange behaviors in our applications while still in the development phase.
+
+According to the React documentation:
+
+> * Your components will re-render an extra time to find bugs caused by impure rendering.
+> * Your components will re-run Effects an extra time to find bugs caused by missing Effect cleanup.
+> * Your components will re-run refs callbacks an extra time to find bugs caused by missing ref cleanup.
+> * Your components will be checked for usage of deprecated APIs.
+
+## How do I disable it?
+
+I strongly recommend that you do not disable it, since it helps you catch strange behaviors. But if you want to disable it anyway, here's how:
+
+### Next.js
+
+In Next.js, add this configuration to `next.config.js`:
+
+```js
+module.exports = {
+  reactStrictMode: false,
+}
+```
+
+#### Outside Next.js
+
+If you are not using Next.js, just remove the `<StrictMode>` wrapper. With StrictMode:
+
+```jsx
+<StrictMode>
+  <App />
+</StrictMode>
+```
+
+Without it:
+
+```jsx
+<App />
+```
+
+## References
+
+If you want to dig deeper, the documentation links are below:
+
+* [React StrictMode](https://react.dev/reference/react/StrictMode)
+* [Next.js StrictMode](https://nextjs.org/docs/app/api-reference/config/next-config-js/reactStrictMode)
