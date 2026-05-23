@@ -46,13 +46,14 @@ export const Header = () => {
         </nav>
 
         <div className="order-2 flex flex-row items-center gap-2 sm:order-3">
-          <Link
+          <a
             target="_blank"
-            href="https://cv.julianosirtori.dev/"
+            rel="noopener noreferrer"
+            href="/Juliano_Sirtori_Resume.pdf"
             className="text-fg-muted hover:text-fg text-sm transition-colors"
           >
             CV
-          </Link>
+          </a>
           <HeaderSelectLang />
           <ThemeToggle />
           <HeaderKBar />

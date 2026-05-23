@@ -1,6 +1,8 @@
 "use client";
 
 import { Command } from "cmdk";
+import * as Dialog from "@radix-ui/react-dialog";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import {
@@ -32,6 +34,7 @@ interface Action {
 export function CommandBar({ children }: TCommandBarProps) {
   const router = useRouter();
   const t = useTranslations("global.kbar");
+  const tSections = useTranslations("global");
   const [open, setOpen] = useState(false);
 
   const close = useCallback(() => setOpen(false), []);
@@ -148,60 +151,55 @@ export function CommandBar({ children }: TCommandBarProps) {
       <Command.Dialog
         open={open}
         onOpenChange={setOpen}
+        shouldFilter
         label={t("defaultSearch")}
-        className="fixed inset-0 z-50 grid place-items-start justify-center bg-black/40 px-4 pt-[14vh] backdrop-blur-sm"
-        overlayClassName="hidden"
-        contentClassName="border-border bg-bg-elevated w-full max-w-xl overflow-hidden rounded-xl border shadow-2xl"
+        className="flex w-full flex-col"
+        overlayClassName="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm"
+        contentClassName="border-border bg-bg-elevated fixed top-[10vh] left-1/2 z-50 flex w-[calc(100vw-2rem)] max-w-2xl -translate-x-1/2 flex-col overflow-hidden rounded-xl border shadow-2xl"
       >
-        <Command shouldFilter className="flex flex-col">
-          <Command.Input
-            placeholder={t("defaultSearch")}
-            className="placeholder:text-fg-subtle text-fg border-border w-full border-b bg-transparent px-4 py-3.5 text-sm outline-none"
-          />
-          <Command.List className="max-h-80 overflow-y-auto p-2">
-            <Command.Empty className="text-fg-muted px-3 py-6 text-center text-sm">
-              No results.
-            </Command.Empty>
+        <VisuallyHidden>
+          <Dialog.Title>{t("defaultSearch")}</Dialog.Title>
+          <Dialog.Description>{t("defaultSearch")}</Dialog.Description>
+        </VisuallyHidden>
+        <Command.Input
+          placeholder={t("defaultSearch")}
+          className="placeholder:text-fg-subtle text-fg border-border w-full border-b bg-transparent px-4 py-3.5 text-sm outline-none"
+        />
+        <Command.List className="[&::-webkit-scrollbar-thumb]:bg-bg-muted [&_[cmdk-group-heading]]:text-fg-subtle max-h-[60vh] overflow-y-auto p-2 [&_[cmdk-group-heading]]:px-3 [&_[cmdk-group-heading]]:pt-3 [&_[cmdk-group-heading]]:pb-1.5 [&_[cmdk-group-heading]]:text-[11px] [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:tracking-wider [&_[cmdk-group-heading]]:uppercase [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent">
+          <Command.Empty className="text-fg-muted px-3 py-6 text-center text-sm">
+            No results.
+          </Command.Empty>
 
-            {general.length > 0 && (
-              <Command.Group heading={sectionLabel("general")}>
-                {general.map((action) => (
-                  <CommandRow
-                    key={action.id}
-                    action={action}
-                    onRun={runAction}
-                  />
-                ))}
-              </Command.Group>
-            )}
+          {general.length > 0 && (
+            <Command.Group heading={tSections("general")}>
+              {general.map((action) => (
+                <CommandRow key={action.id} action={action} onRun={runAction} />
+              ))}
+            </Command.Group>
+          )}
 
-            {navigate.length > 0 && (
-              <Command.Group heading={sectionLabel("navigate")}>
-                {navigate.map((action) => (
-                  <CommandRow
-                    key={action.id}
-                    action={action}
-                    onRun={runAction}
-                  />
-                ))}
-              </Command.Group>
-            )}
-          </Command.List>
-          <div className="border-border text-fg-subtle flex items-center justify-between border-t px-3 py-2 text-xs">
-            <span>
-              <Kbd>↑</Kbd>
-              <Kbd>↓</Kbd>
-              <span className="ml-2">navigate</span>
-            </span>
-            <span>
-              <Kbd>↵</Kbd>
-              <span className="ml-1">open</span>
-              <span className="mx-2">·</span>
-              <Kbd>esc</Kbd>
-              <span className="ml-1">close</span>
-            </span>
-          </div>
-        </Command>
+          {navigate.length > 0 && (
+            <Command.Group heading={tSections("goTo")}>
+              {navigate.map((action) => (
+                <CommandRow key={action.id} action={action} onRun={runAction} />
+              ))}
+            </Command.Group>
+          )}
+        </Command.List>
+        <div className="border-border text-fg-subtle flex items-center justify-between border-t px-3 py-2 text-xs">
+          <span>
+            <Kbd>↑</Kbd>
+            <Kbd>↓</Kbd>
+            <span className="ml-2">navigate</span>
+          </span>
+          <span>
+            <Kbd>↵</Kbd>
+            <span className="ml-1">open</span>
+            <span className="mx-2">·</span>
+            <Kbd>esc</Kbd>
+            <span className="ml-1">close</span>
+          </span>
+        </div>
       </Command.Dialog>
     </CommandBarContext.Provider>
   );
@@ -218,7 +216,7 @@ function CommandRow({
     <Command.Item
       value={`${action.label} ${action.keywords}`}
       onSelect={() => onRun(action)}
-      className="text-fg-muted data-[selected=true]:bg-bg-muted data-[selected=true]:text-fg flex cursor-pointer items-center gap-3 rounded-md px-3 py-2 text-sm"
+      className="text-fg-muted data-[selected=true]:bg-bg-muted data-[selected=true]:text-fg flex cursor-pointer items-center gap-3 rounded-md px-3 py-2.5 text-sm"
     >
       <span className="text-fg-subtle flex h-4 w-4 items-center justify-center">
         {action.icon}
@@ -234,8 +232,4 @@ function Kbd({ children }: { children: React.ReactNode }) {
       {children}
     </kbd>
   );
-}
-
-function sectionLabel(section: Action["section"]): string {
-  return section;
 }

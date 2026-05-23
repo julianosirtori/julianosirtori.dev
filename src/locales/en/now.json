@@ -2,10 +2,10 @@
   "title": "Now",
   "description": "This is a 'now page' - a snapshot of what I'm currently focused on in life and work.",
   "lastUpdated": "Last updated",
-  "updateDate": "February 2026",
+  "updateDate": "May 2026",
   "work": {
     "title": "Work",
-    "description": "Currently working as a Front-end Developer at CI&T, building scalable web applications with React and TypeScript. Focused on creating amazing user experiences and mentoring junior developers."
+    "description": "Currently working as a Senior Front-End Engineer at Avenue Code on the Stellantis account (fiat.com.br, ram.com.br). Acting as the technical reference for microfrontend architecture on high-traffic brand sites with millions of monthly visitors."
   },
   "learning": {
     "title": "Learning",

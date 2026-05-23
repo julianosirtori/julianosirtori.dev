@@ -1,14 +1,16 @@
 {
   "myName": "Juliano",
   "myFullName": "Juliano Sirtori",
-  "role": "Front-end Engineer",
-  "slogan": "Front-end engineer writing about the craft.",
+  "role": "Senior Front-end Engineer",
+  "slogan": "Senior front-end engineer, writing about the craft.",
   "tapToStart": "Press <firstKey>⌘</firstKey> <secondKey>k</secondKey> to navigate",
   "header": {
     "about": "about",
     "blog": "blog",
     "projects": "projects"
   },
+  "general": "General",
+  "goTo": "Go To",
   "kbar": {
     "email": "Send Email",
     "source": "View Source",

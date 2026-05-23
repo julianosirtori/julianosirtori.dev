@@ -2,8 +2,8 @@
   "title": "Discover more about me",
   "bio": {
     "phrase1": "Hello, I am <important>Juliano Sirtori</important>!",
-    "phrase2": "I am a software developer with over <important>7 years of experience</important> and enjoy working with technology.  I <important>like solving problems</important>, working with teams, and learning more to stay updated in the field.",
-    "phrase3": "I’m always studying to improve my skills and learn new things. During my career, I have worked on projects that needed <important>creative solutions and scalable systems</important>."
+    "phrase2": "I'm a senior front-end engineer with <important>9+ years of experience</important> building scalable, high-performance web applications. I work mostly with <important>React, Next.js, and TypeScript</important>, and I care deeply about component architecture, design systems, and accessibility.",
+    "phrase3": "Throughout my career I've shipped products that range from high-traffic brand sites with millions of monthly visits to B2B SaaS platforms running in 18+ countries. I genuinely enjoy the craft, and I'm always studying to sharpen it."
   },
   "recommendations": "Recommendations",
   "image": "https://res.cloudinary.com/dfgrg43vh/image/upload/f_auto,q_auto/v1/blog/ogo9cvs85rvlwnbjers8",

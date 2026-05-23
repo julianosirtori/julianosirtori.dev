@@ -1,0 +1,119 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R 8 0 R] /Count 2 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R /F2 6 0 R /F3 7 0 R >> >> >>
+endobj
+4 0 obj
+<< /Length 6662 >>
+stream
+BT /F2 24 Tf 0.17 0.24 0.31 rg 48.0 726.0 Td (JULIANO SIRTORI) Tj ET
+BT /F1 11 Tf 0.25 0.32 0.40 rg 48.0 711.0 Td (Senior Front-End Engineer  |  React  |  Next.js  |  TypeScript  |  Node.js) Tj ET
+BT /F1 9.5 Tf 0.42 0.42 0.42 rg 48.0 696.5 Td (Brazil \(Remote\)  |  linkedin.com/in/juliano-sirtori  |  julianosirtori.dev) Tj ET
+0.17 0.24 0.31 RG 2 w 48.0 690.0 m 564.0 690.0 l S
+BT /F2 11 Tf 0.17 0.24 0.31 rg 48.0 665.0 Td (PROFESSIONAL SUMMARY) Tj ET
+0.75 0.78 0.80 RG 0.5 w 48.0 660.0 m 564.0 660.0 l S
+BT /F1 9.3 Tf 0.18 0.18 0.18 rg 48.0 640.7 Td (Senior Front-End Engineer with 9+ years of professional software engineering experience building scalable,) Tj ET
+BT /F1 9.3 Tf 0.18 0.18 0.18 rg 48.0 628.2 Td (high-performance web applications. Expert-level proficiency in React, Next.js, and TypeScript with deep) Tj ET
+BT /F1 9.3 Tf 0.18 0.18 0.18 rg 48.0 615.7 Td (understanding of component architecture, scalable UI systems, design systems, and reusable UI components.) Tj ET
+BT /F1 9.3 Tf 0.18 0.18 0.18 rg 48.0 603.2 Td (Strong mastery of HTML5, CSS3, modern layout techniques, and responsive design. Proven experience building) Tj ET
+BT /F1 9.3 Tf 0.18 0.18 0.18 rg 48.0 590.7 Td (complex web applications from scratch, delivering high-quality, visually polished, and performant results.) Tj ET
+BT /F1 9.3 Tf 0.18 0.18 0.18 rg 48.0 578.2 Td (Strong experience with state management and client-side performance optimization. Advocate for frontend best) Tj ET
+BT /F1 9.3 Tf 0.18 0.18 0.18 rg 48.0 565.7 Td (practices and accessibility. Skilled collaborating across engineering, product, and design teams. Comfortable) Tj ET
+BT /F1 9.3 Tf 0.18 0.18 0.18 rg 48.0 553.2 Td (working across the stack with Node.js, REST APIs, and PostgreSQL.) Tj ET
+BT /F2 11 Tf 0.17 0.24 0.31 rg 48.0 525.0 Td (TECHNICAL SKILLS) Tj ET
+0.75 0.78 0.80 RG 0.5 w 48.0 520.0 m 564.0 520.0 l S
+BT /F2 9.3 Tf 0.17 0.24 0.31 rg 48.0 500.7 Td (Frontend:) Tj ET
+BT /F1 9.3 Tf 0.18 0.18 0.18 rg 108.0 500.7 Td (React.js, Next.js, TypeScript, JavaScript \(ES6+\), Vue.js, HTML5, CSS3, Tailwind CSS,) Tj ET
+BT /F1 9.3 Tf 0.18 0.18 0.18 rg 108.0 487.7 Td (Styled Components, Redux, Responsive Design, Microfrontends, Design Systems, Accessibility) Tj ET
+BT /F2 9.3 Tf 0.17 0.24 0.31 rg 48.0 472.7 Td (Backend:) Tj ET
+BT /F1 9.3 Tf 0.18 0.18 0.18 rg 104.0 472.7 Td (Node.js, Express.js, REST APIs, PostgreSQL, Laravel, AWS) Tj ET
+BT /F2 9.3 Tf 0.17 0.24 0.31 rg 48.0 457.7 Td (Tools:) Tj ET
+BT /F1 9.3 Tf 0.18 0.18 0.18 rg 88.0 457.7 Td (Git, CI/CD Pipelines, Cypress \(E2E\), AEM, QlikView, Vercel, Agile/Scrum, Code Review) Tj ET
+BT /F2 11 Tf 0.17 0.24 0.31 rg 48.0 442.0 Td (PROFESSIONAL EXPERIENCE) Tj ET
+0.75 0.78 0.80 RG 0.5 w 48.0 437.0 m 564.0 437.0 l S
+BT /F2 10.5 Tf 0.17 0.24 0.31 rg 48.0 416.5 Td (Frontend Developer \(Senior\)) Tj ET
+BT /F1 9 Tf 0.42 0.42 0.42 rg 483.0 418.0 Td (Apr 2024 - Present) Tj ET
+BT /F3 9 Tf 0.35 0.35 0.35 rg 48.0 404.0 Td (Avenue Code  |  Remote  |  Client: Stellantis \(Fiat, Ram\)  |  Millions of Monthly Visitors) Tj ET
+BT /F1 9 Tf 0.18 0.18 0.18 rg 54.0 390.0 Td (-  Technical reference for microfrontend architecture on high-traffic brand sites \(fiat.com.br, ram.com.br\)) Tj ET
+BT /F1 9 Tf 0.18 0.18 0.18 rg 54.0 378.0 Td (-  Built lead capture flows and vehicle configurator features using Vue.js, AEM, microfrontend architecture) Tj ET
+BT /F1 9 Tf 0.18 0.18 0.18 rg 54.0 366.0 Td (-  Established frontend quality standards via code review, CI/CD pipelines, and deployment gates) Tj ET
+BT /F1 9 Tf 0.18 0.18 0.18 rg 54.0 354.0 Td (-  Ensured platform reliability for a nationally scaled automotive brand with millions of visitors) Tj ET
+BT /F2 10.5 Tf 0.17 0.24 0.31 rg 48.0 332.5 Td (Front-End Web Developer \(Senior\)) Tj ET
+BT /F1 9 Tf 0.42 0.42 0.42 rg 478.5 334.0 Td (Feb 2022 - Apr 2024) Tj ET
+BT /F3 9 Tf 0.35 0.35 0.35 rg 48.0 320.0 Td (CI&T  |  Remote  |  B2B SaaS Platform  |  2.7M+ MAU, 18+ Countries) Tj ET
+BT /F1 9 Tf 0.18 0.18 0.18 rg 54.0 306.0 Td (-  Scaled B2B SaaS platform to 2.7M+ MAU across 18+ countries \(i18n, feature dev, migration tooling\)) Tj ET
+BT /F1 9 Tf 0.18 0.18 0.18 rg 54.0 294.0 Td (-  Built within React/Next.js microfrontend architecture with code review, quality pipelines, auto deploys) Tj ET
+BT /F1 9 Tf 0.18 0.18 0.18 rg 54.0 282.0 Td (-  Developed country-specific customizations \(translations, business logic, UI variants\) in shared codebase) Tj ET
+BT /F1 9 Tf 0.18 0.18 0.18 rg 54.0 270.0 Td (-  Leveraged Redux for state management and styled-components for scalable CSS architecture) Tj ET
+BT /F2 10.5 Tf 0.17 0.24 0.31 rg 48.0 248.5 Td (Frontend Web Developer / Tech Lead) Tj ET
+BT /F1 9 Tf 0.42 0.42 0.42 rg 478.5 250.0 Td (Feb 2020 - Feb 2022) Tj ET
+BT /F3 9 Tf 0.35 0.35 0.35 rg 48.0 236.0 Td (aiqfome  |  Hybrid \(Maringa, Brazil\)  |  Food Tech  |  Acquired by Magazine Luiza) Tj ET
+BT /F1 9 Tf 0.18 0.18 0.18 rg 54.0 222.0 Td (-  Led frontend development as Tech Lead: architecture decisions, code review, and team delivery) Tj ET
+BT /F1 9 Tf 0.18 0.18 0.18 rg 54.0 210.0 Td (-  Built real-time restaurant management UI using React, Next.js, PostgreSQL, AWS, with Cypress E2E) Tj ET
+BT /F1 9 Tf 0.18 0.18 0.18 rg 54.0 198.0 Td (-  Contributed to technical integration between aiqfome and Magazine Luiza post-acquisition) Tj ET
+BT /F1 9 Tf 0.18 0.18 0.18 rg 54.0 186.0 Td (-  Implemented client-side performance optimizations for high-traffic real-time interfaces) Tj ET
+BT /F2 10.5 Tf 0.17 0.24 0.31 rg 48.0 164.5 Td (Full Stack Developer) Tj ET
+BT /F1 9 Tf 0.42 0.42 0.42 rg 478.5 166.0 Td (Aug 2018 - Feb 2020) Tj ET
+BT /F3 9 Tf 0.35 0.35 0.35 rg 48.0 152.0 Td (Grupo Superpao  |  On-site \(Guarapuava, Brazil\)  |  Retail) Tj ET
+BT /F1 9 Tf 0.18 0.18 0.18 rg 54.0 138.0 Td (-  Built internal HR system managing 10,000+ candidate profiles \(React, Express, PostgreSQL\)) Tj ET
+BT /F1 9 Tf 0.18 0.18 0.18 rg 54.0 126.0 Td (-  Reduced issue resolution time from 3 days to under 1 hour via process automation) Tj ET
+BT /F1 9 Tf 0.18 0.18 0.18 rg 54.0 114.0 Td (-  Created BI reports in QlikView for audit and productivity analysis) Tj ET
+BT /F2 10.5 Tf 0.17 0.24 0.31 rg 48.0 92.5 Td (Full Stack Developer) Tj ET
+BT /F1 9 Tf 0.42 0.42 0.42 rg 478.5 94.0 Td (Aug 2017 - Jul 2018) Tj ET
+BT /F3 9 Tf 0.35 0.35 0.35 rg 48.0 80.0 Td (RP Info Sistemas  |  On-site \(Curitiba, Brazil\)  |  Retail Tech) Tj ET
+BT /F1 9 Tf 0.18 0.18 0.18 rg 54.0 66.0 Td (-  Developed mobile task management app for supermarket operations \(Java, Android, PostgreSQL\)) Tj ET
+BT /F1 9 Tf 0.18 0.18 0.18 rg 54.0 54.0 Td (-  Improved store efficiency by reducing task execution time through redesigned UX) Tj ET
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+6 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>
+endobj
+7 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Oblique /Encoding /WinAnsiEncoding >>
+endobj
+8 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 9 0 R /Resources << /Font << /F1 5 0 R /F2 6 0 R /F3 7 0 R >> >> >>
+endobj
+9 0 obj
+<< /Length 1187 >>
+stream
+BT /F2 11 Tf 0.17 0.24 0.31 rg 48.0 739.0 Td (EDUCATION) Tj ET
+0.75 0.78 0.80 RG 0.5 w 48.0 734.0 m 564.0 734.0 l S
+BT /F2 10 Tf 0.17 0.24 0.31 rg 48.0 714.0 Td (Bootcamp - Web & Mobile Development \(Full Stack\)) Tj ET
+BT /F1 9 Tf 0.42 0.42 0.42 rg 546.0 715.0 Td (2019) Tj ET
+BT /F1 9 Tf 0.35 0.35 0.35 rg 48.0 701.0 Td (Rocketseat  |  React, React Native, Node.js, Express.js, TypeScript, Styled Components) Tj ET
+BT /F2 10 Tf 0.17 0.24 0.31 rg 48.0 682.0 Td (Bachelor of Systems Analysis and Development) Tj ET
+BT /F1 9 Tf 0.42 0.42 0.42 rg 478.5 683.0 Td (Feb 2015 - Jun 2017) Tj ET
+BT /F1 9 Tf 0.35 0.35 0.35 rg 48.0 669.0 Td (UniGuairaca Centro Universitario  |  GPA: 100  |  Software Development, Requirement Analysis) Tj ET
+BT /F2 11 Tf 0.17 0.24 0.31 rg 48.0 653.0 Td (CERTIFICATIONS) Tj ET
+0.75 0.78 0.80 RG 0.5 w 48.0 648.0 m 564.0 648.0 l S
+BT /F1 9.3 Tf 0.18 0.18 0.18 rg 48.0 628.7 Td (-  Vite - Frontend Masters \(Jun 2024\)) Tj ET
+BT /F1 9.3 Tf 0.18 0.18 0.18 rg 48.0 615.7 Td (-  Web Performance Fundamentals - Frontend Masters \(Sep 2023\)) Tj ET
+BT /F1 9.3 Tf 0.18 0.18 0.18 rg 48.0 602.7 Td (-  +7 additional certifications on Frontend Masters and Rocketseat) Tj ET
+endstream
+endobj
+xref
+0 10
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000121 00000 n 
+0000000267 00000 n 
+0000006980 00000 n 
+0000007077 00000 n 
+0000007179 00000 n 
+0000007284 00000 n 
+0000007430 00000 n 
+trailer
+<< /Size 10 /Root 1 0 R >>
+startxref
+8668
+%%EOF
