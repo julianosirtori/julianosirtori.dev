@@ -1,0 +1,148 @@
+---
+title: "Real-Time with SSE in Next.js"
+date: 2026-01-04
+description: "Server-Sent Events (SSE) is a technology that enables real-time communication between server and client. This article shows how to implement it in Next.js."
+meta:
+  keywords:
+    - front-end
+    - next.js
+    - real-time
+    - sse
+bannerCloudinaryId: unsplash/photo-1623682687826-fe06bf64e6d8
+bannerCredit: Photo by [Mika Baumeister](https://unsplash.com/@mbaumi)
+---
+
+## Server-Sent Events
+
+Here's a short summary about SSE based on the [Front-End System Design](https://frontendmasters.com/courses/frontend-system-design/) course.
+
+### Pros
+
+* Automatic reconnection.
+* Low battery consumption (uses only the receiving antenna).
+* Scales relatively easily in terms of infrastructure.
+* Low network overhead (receives only the data, without many headers).
+* Fast communication.
+
+### Cons
+
+* Does not allow sending data from client to server.
+* Supports only text-based data, requiring payload parsing.
+
+### When to use
+
+* Desktop or mobile web applications that need to receive data with minimal latency.
+* As an alternative to WebSocket when a small delay is acceptable.
+* Streaming large volumes of text.
+
+### When to avoid
+
+Simple desktop applications, where long-polling is already enough.
+
+## Example with Next.js
+
+* Backend code: `app/api/sse/route.ts`
+
+```ts
+import { NextRequest, NextResponse } from "next/server";
+
+export async function GET(request: NextRequest) {
+    const params = new URL(request.url).searchParams;
+    const token = params.get("token");
+
+    let interval: NodeJS.Timeout;
+    const stream = new ReadableStream({
+        async start(controller) {
+            let counter = 0;
+            const encoder = new TextEncoder();
+            interval = setInterval(() => {
+                counter++;
+                const data = `data: Message ${counter}\n\n`;
+                controller.enqueue(encoder.encode(data));
+            }, 1000);
+        },
+        cancel() {
+            clearInterval(interval);
+        }
+    })
+
+    return new NextResponse(stream, {
+        headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Cache-Control": "no-cache, no-transform",
+        Connection: "keep-alive",
+        "Content-Type": "text/event-stream",
+        },
+        status: 200,
+    });
+}
+```
+
+* Client code: `app/page.tsx`
+
+```tsx
+'use client'
+import { useEffect, useRef, useState } from "react";
+
+export default function Home() {
+  const [message, setMessage] = useState("")
+  const eventRef = useRef<EventSource | null>(null);
+
+  useEffect(() => {
+    eventRef.current = new EventSource("/api/sse");
+
+    eventRef.current.onmessage = function (event) {
+      console.log("New message:", event.data);
+    }
+
+    return () => {
+      eventRef.current?.close();
+    }
+  }, [])
+
+  async function handleSaveMessage(){
+    eventRef.current?.close();
+
+    const response = await fetch('/api/save', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ message }),
+    });
+
+    console.log('Message saved:', await response.json());
+  }
+
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
+      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-center py-32 px-6 bg-white dark:bg-black sm:items-start">
+        <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">Type a message</h1>
+
+        <div className="mt-6 w-full max-w-sm flex flex-col items-stretch gap-4">
+          <input
+            type="text"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            placeholder="Type your message"
+            className="w-full px-4 py-3 rounded-lg border border-gray-200 bg-white text-gray-900 shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-300 transition-shadow dark:bg-zinc-900 dark:border-zinc-700 dark:text-white"
+          />
+
+          <button
+            type="button"
+            onClick={handleSaveMessage}
+            className="w-full inline-flex items-center justify-center px-4 py-3 rounded-lg bg-indigo-600 text-white font-medium shadow hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-300 transition-colors disabled:opacity-60"
+          >
+            Save message
+          </button>
+        </div>
+      </main>
+    </div>
+  );
+}
+```
+
+If you want to dig deeper and better understand the code above, I suggest reading the articles below:
+
+* [Using server-sent events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events)
+* [Server-Sent Events vs WebSockets](https://www.freecodecamp.org/news/server-sent-events-vs-websockets)
