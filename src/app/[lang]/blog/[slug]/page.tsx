@@ -2,7 +2,6 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getLocale, getTranslations, setRequestLocale } from "next-intl/server";
 import { allPosts, type Post } from "contentlayer/generated";
-import Image from "next/image";
 
 import { Comments } from "@/components/Comments";
 import { Mdx } from "@/components/Mdx";
@@ -100,8 +99,6 @@ export default async function PostPage({ params }: IPostProps) {
   const dayjs = dateTool(locale);
 
   const toc = (post.toc ?? []) as TocItem[];
-  const hasBanner =
-    typeof post.urlImage === "string" && post.urlImage.length > 0;
 
   return (
     <>
@@ -131,18 +128,6 @@ export default async function PostPage({ params }: IPostProps) {
               <h1 className="text-fg text-3xl leading-tight font-medium tracking-tight md:text-4xl">
                 {post.title}
               </h1>
-              {hasBanner && (
-                <div className="border-border relative mt-8 aspect-[16/9] overflow-hidden rounded-lg border">
-                  <Image
-                    src={post.urlImage}
-                    alt={post.bannerAlt ?? post.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 672px"
-                    className="object-cover"
-                    priority
-                  />
-                </div>
-              )}
             </header>
 
             <article className="prose">

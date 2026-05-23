@@ -131,7 +131,6 @@ export function useTerminal({ initialLang }: UseTerminalArgs): TerminalApi {
     const raw = input;
     const prompt = `${promptFor(lang, cwd)}${raw}`;
     setInput("");
-    setHint([]);
     setHistoryIdx(null);
 
     if (!raw.trim()) {
