@@ -5,5 +5,10 @@
   "readTime": "min read",
   "searchPlaceholder": "Search articles...",
   "allCategories": "All",
-  "noResults": "No articles found. Try a different search term."
+  "noResults": "No articles found. Try a different search term.",
+  "onThisPage": "On this page",
+  "prev": "Previous",
+  "next": "Next",
+  "related": "Related",
+  "updated": "Updated"
 }

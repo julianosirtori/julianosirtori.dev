@@ -30,6 +30,7 @@
     "dayjs": "^1.11.13",
     "framer-motion": "^12.4.3",
     "geist": "^1.7.1",
+    "github-slugger": "^2.0.0",
     "lottie-react": "^2.4.1",
     "negotiator": "^1.0.0",
     "next": "^15.5.0",

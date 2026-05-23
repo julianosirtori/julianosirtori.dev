@@ -5,5 +5,10 @@
   "readTime": "min de leitura",
   "searchPlaceholder": "Buscar artigos...",
   "allCategories": "Todos",
-  "noResults": "Nenhum artigo encontrado. Tente um termo diferente."
+  "noResults": "Nenhum artigo encontrado. Tente um termo diferente.",
+  "onThisPage": "Nesta página",
+  "prev": "Anterior",
+  "next": "Próximo",
+  "related": "Relacionados",
+  "updated": "Atualizado"
 }

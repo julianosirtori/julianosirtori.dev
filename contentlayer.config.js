@@ -7,6 +7,7 @@ import remarkGfm from "remark-gfm";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import GithubSlugger from "github-slugger";
 
 /** @type {import('contentlayer2/source-files').ComputedFields} */
 const computedFields = {
@@ -42,6 +43,30 @@ const computedFields = {
       return Math.ceil(textLength / wordsPerMinute);
     },
   },
+  toc: {
+    type: "json",
+    resolve: (post) => {
+      const slugger = new GithubSlugger();
+      const raw = post.body.raw;
+      const lines = raw.split("\n");
+      const items = [];
+      let inFence = false;
+      for (const line of lines) {
+        const trimmed = line.trim();
+        if (trimmed.startsWith("```") || trimmed.startsWith("~~~")) {
+          inFence = !inFence;
+          continue;
+        }
+        if (inFence) continue;
+        const match = line.match(/^(#{2,3})\s+(.+?)\s*$/);
+        if (!match) continue;
+        const level = match[1].length;
+        const text = match[2].replace(/`/g, "");
+        items.push({ level, text, slug: slugger.slug(text) });
+      }
+      return items;
+    },
+  },
 };
 
 const Meta = defineNestedType(() => ({
@@ -49,9 +74,7 @@ const Meta = defineNestedType(() => ({
   fields: {
     keywords: {
       type: "list",
-      of: {
-        type: "string",
-      },
+      of: { type: "string" },
       required: true,
     },
   },
@@ -70,15 +93,20 @@ export const Post = defineDocumentType(() => ({
       type: "date",
       required: true,
     },
+    updated: {
+      type: "date",
+    },
     description: {
       type: "string",
       required: true,
     },
     categories: {
       type: "list",
-      of: {
-        type: "string",
-      },
+      of: { type: "string" },
+    },
+    tags: {
+      type: "list",
+      of: { type: "string" },
     },
     meta: {
       type: "nested",
@@ -94,6 +122,9 @@ export const Post = defineDocumentType(() => ({
     },
     bannerAlt: {
       type: "string",
+    },
+    featured: {
+      type: "boolean",
     },
     draft: {
       type: "boolean",
@@ -114,8 +145,6 @@ export default makeSource({
         {
           theme: "dracula-soft",
           onVisitLine(node) {
-            // Prevent lines from collapsing in `display: grid` mode, and allow empty
-            // lines to be copy/pasted
             if (node.children.length === 0) {
               node.children = [{ type: "text", value: " " }];
             }
