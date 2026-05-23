@@ -4,10 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
+    "prebuild": "contentlayer2 build",
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --max-warnings 0",
     "prepare": "husky",
+    "pretest": "contentlayer2 build",
     "test": "vitest",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui"
