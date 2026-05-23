@@ -76,7 +76,7 @@ export const sudo: CommandDef = {
   run: ({ lang }) => [
     err(
       lang === "pt"
-        ? "Permission denied: nice try."
+        ? "Permissão negada: boa tentativa."
         : "Permission denied: nice try.",
     ),
     dim(
@@ -128,6 +128,7 @@ export const rmrf: CommandDef = {
   },
 };
 
+// hire-me is a hidden command and intentionally side-effecting: typing it expresses intent.
 export const hireMe: CommandDef = {
   name: "hire-me",
   aliases: ["hire", "contratar"],

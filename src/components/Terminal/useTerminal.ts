@@ -41,7 +41,6 @@ export interface TerminalApi {
   navigateHistory: (dir: -1 | 1) => void;
   tab: () => void;
   clear: () => void;
-  hint: string[];
   ready: boolean;
 }
 
@@ -55,7 +54,6 @@ export function useTerminal({ initialLang }: UseTerminalArgs): TerminalApi {
   const [overlay, setOverlay] = useState<OverlayState>({ kind: "none" });
   const [highScore, setHighScoreState] = useState(0);
   const [history, setHistory] = useState<string[]>([]);
-  const [hint, setHint] = useState<string[]>([]);
   const [historyIdx, setHistoryIdx] = useState<number | null>(null);
   const [ready, setReady] = useState(false);
 
@@ -72,7 +70,9 @@ export function useTerminal({ initialLang }: UseTerminalArgs): TerminalApi {
     if (bootRanRef.current) return;
     bootRanRef.current = true;
     void runBoot(setOutput, lang).then(() => setReady(true));
-  }, [lang]);
+    // boot runs once; deps intentionally empty (lang captured by closure)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const setTheme = useCallback((t: ThemeName) => {
     setThemeState(t);
@@ -208,16 +208,8 @@ export function useTerminal({ initialLang }: UseTerminalArgs): TerminalApi {
     if (result.completed !== input) setInput(result.completed);
     if (result.options.length > 1) {
       push([dim(result.options.join("  "))]);
-      setHint(result.options);
-    } else {
-      setHint([]);
     }
   }, [input, cwd, push]);
-
-  useEffect(() => {
-    if (!ready) return;
-    if (input === "" && hint.length > 0) setHint([]);
-  }, [input, hint.length, ready]);
 
   return {
     output,
@@ -234,7 +226,6 @@ export function useTerminal({ initialLang }: UseTerminalArgs): TerminalApi {
     navigateHistory,
     tab,
     clear,
-    hint,
     ready,
   };
 }

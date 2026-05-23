@@ -3,13 +3,13 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
+import { createStorage } from "@/utils/storage";
+
 interface ReactionsProps {
   slug: string;
 }
 
-interface ReactionData {
-  [key: string]: number;
-}
+type ReactionData = Record<string, number>;
 
 const REACTIONS = [
   { emoji: "👍", label: "Like", key: "like" },
@@ -19,16 +19,35 @@ const REACTIONS = [
   { emoji: "❤️", label: "Love", key: "love" },
 ];
 
+const VALID_KEYS = new Set(REACTIONS.map((r) => r.key));
+const storage = createStorage("reactions");
+
+function sanitizeCounts(value: unknown): ReactionData {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return {};
+  const out: ReactionData = {};
+  for (const [key, count] of Object.entries(value as Record<string, unknown>)) {
+    if (VALID_KEYS.has(key) && typeof count === "number" && count >= 0) {
+      out[key] = Math.floor(count);
+    }
+  }
+  return out;
+}
+
+function sanitizeUserKeys(value: unknown): string[] {
+  if (!Array.isArray(value)) return [];
+  return value.filter(
+    (k): k is string => typeof k === "string" && VALID_KEYS.has(k),
+  );
+}
+
 export function Reactions({ slug }: ReactionsProps) {
   const [reactions, setReactions] = useState<ReactionData>({});
   const [userReactions, setUserReactions] = useState<string[]>([]);
   const [showBurst, setShowBurst] = useState<string | null>(null);
 
   useEffect(() => {
-    const storedReactions = localStorage.getItem(`reactions-${slug}`);
-    const storedUserReactions = localStorage.getItem(`user-reactions-${slug}`);
-    if (storedReactions) setReactions(JSON.parse(storedReactions));
-    if (storedUserReactions) setUserReactions(JSON.parse(storedUserReactions));
+    setReactions(sanitizeCounts(storage.get(`counts-${slug}`, {})));
+    setUserReactions(sanitizeUserKeys(storage.get(`user-${slug}`, [])));
   }, [slug]);
 
   const handleReaction = (key: string) => {
@@ -51,11 +70,8 @@ export function Reactions({ slug }: ReactionsProps) {
     setUserReactions(newUserReactions);
     setReactions(newReactions);
 
-    localStorage.setItem(`reactions-${slug}`, JSON.stringify(newReactions));
-    localStorage.setItem(
-      `user-reactions-${slug}`,
-      JSON.stringify(newUserReactions),
-    );
+    storage.set(`counts-${slug}`, newReactions);
+    storage.set(`user-${slug}`, newUserReactions);
   };
 
   const totalReactions = Object.values(reactions).reduce(

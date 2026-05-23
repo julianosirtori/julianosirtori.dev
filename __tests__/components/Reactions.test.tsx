@@ -100,12 +100,12 @@ describe("Reactions", () => {
     fireEvent.click(likeButton);
 
     const storedReactions = JSON.parse(
-      localStorageMock.getItem("reactions-test-post") || "{}",
+      localStorageMock.getItem("reactions:counts-test-post") || "{}",
     );
     expect(storedReactions.like).toBe(1);
 
     const storedUserReactions = JSON.parse(
-      localStorageMock.getItem("user-reactions-test-post") || "[]",
+      localStorageMock.getItem("reactions:user-test-post") || "[]",
     );
     expect(storedUserReactions).toContain("like");
   });

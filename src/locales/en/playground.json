@@ -6,22 +6,5 @@
     "history": "↑/↓ for history",
     "clear": "Ctrl+L to clear",
     "help": "type 'help' to start"
-  },
-  "boot": {
-    "welcome": "Welcome to juliano@portfolio",
-    "version": "v1.0.0 — built with React, served with curiosity",
-    "loading": "Loading modules",
-    "ready": "Ready.",
-    "hint": "Type 'help' to list available commands."
-  },
-  "errors": {
-    "unknown": "command not found: {cmd}",
-    "didYouMean": "did you mean: {suggestion}?",
-    "noArgs": "missing arguments. usage: {usage}",
-    "notFound": "{target}: no such file or directory",
-    "permission": "permission denied"
-  },
-  "prompt": {
-    "user": "guest"
   }
 }

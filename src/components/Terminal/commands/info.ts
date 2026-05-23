@@ -104,16 +104,28 @@ export const experience: CommandDef = {
 export const contact: CommandDef = {
   name: "contact",
   description: { en: "get in touch", pt: "entre em contato" },
-  run: ({ env, lang }) => {
-    env.router.push("/contact");
-    return [
-      line("email: julianosirtori@gmail.com"),
-      dim(
-        lang === "pt"
-          ? "abrindo formulário de contato..."
-          : "opening contact form...",
-      ),
-    ];
+  usage: "contact [--open]",
+  run: ({ args, env, lang }) => {
+    const out = [line("email: julianosirtori@gmail.com")];
+    if (args.includes("--open")) {
+      env.router.push("/contact");
+      out.push(
+        dim(
+          lang === "pt"
+            ? "abrindo formulário de contato..."
+            : "opening contact form...",
+        ),
+      );
+    } else {
+      out.push(
+        dim(
+          lang === "pt"
+            ? "tip: 'contact --open' abre o formulário"
+            : "tip: 'contact --open' opens the form",
+        ),
+      );
+    }
+    return out;
   },
 };
 
@@ -160,7 +172,8 @@ export const posts: CommandDef = {
   name: "posts",
   aliases: ["blog", "articles"],
   description: { en: "recent blog posts", pt: "posts recentes" },
-  run: ({ lang, env }) => {
+  usage: "posts [--open]",
+  run: ({ args, env, lang }) => {
     const filtered = allPosts
       .filter((p) => p.language === lang && !p.draft)
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
@@ -175,14 +188,19 @@ export const posts: CommandDef = {
       out.push(line(`  ${date}  ${post.title}`));
     }
     out.push(blank());
-    out.push(
-      dim(
-        lang === "pt"
-          ? "tip: 'cd blog' pra ir pra listagem · '/blog' aberto"
-          : "tip: 'cd blog' to navigate · '/blog' opening",
-      ),
-    );
-    env.router.push("/blog");
+
+    if (args.includes("--open")) {
+      env.router.push("/blog");
+      out.push(dim(lang === "pt" ? "abrindo /blog..." : "opening /blog..."));
+    } else {
+      out.push(
+        dim(
+          lang === "pt"
+            ? "tip: 'posts --open' abre a listagem"
+            : "tip: 'posts --open' opens the listing",
+        ),
+      );
+    }
     return out;
   },
 };

@@ -14,13 +14,11 @@ export async function generateMetadata({
   params,
 }: PlaygroundPageProps): Promise<Metadata> {
   const { lang } = await params;
-  const isPortuguese = lang === "pt";
+  const t = await getTranslations({ locale: lang, namespace: "playground" });
 
   return {
-    title: "Juliano Sirtori - Playground",
-    description: isPortuguese
-      ? "Terminal interativo. Cada visitante explora do seu jeito."
-      : "Interactive terminal. Every visitor explores it their own way.",
+    title: `Juliano Sirtori - ${t("title")}`,
+    description: t("description"),
   };
 }
 

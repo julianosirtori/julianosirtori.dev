@@ -1,35 +1,15 @@
 import { CommandDef, OutputLine } from "../types";
 import { blank, dim, err, line, ok } from "../lines";
 import { THEME_NAMES } from "../themes";
+import { registry } from "./index";
 
-const REGISTRY_DESCRIPTIONS: Record<string, { en: string; pt: string }> = {
-  whoami: { en: "who is this person", pt: "quem é essa pessoa" },
-  about: { en: "show bio", pt: "mostra a bio" },
-  skills: { en: "tech stack", pt: "stack de tecnologias" },
-  experience: { en: "work history", pt: "histórico profissional" },
-  social: { en: "social links", pt: "links sociais" },
-  contact: { en: "get in touch", pt: "entre em contato" },
-  projects: { en: "side projects", pt: "projetos paralelos" },
-  posts: { en: "recent blog posts", pt: "posts recentes" },
-  cat: { en: "read a file", pt: "lê um arquivo" },
-  ls: { en: "list directory", pt: "lista o diretório" },
-  cd: { en: "change directory", pt: "muda de diretório" },
-  pwd: { en: "show current path", pt: "mostra o caminho atual" },
-  open: { en: "open a URL", pt: "abre uma URL" },
-  help: { en: "this list", pt: "essa lista" },
-  clear: { en: "clear screen", pt: "limpa a tela" },
-  echo: { en: "print arguments", pt: "imprime argumentos" },
-  date: { en: "current date", pt: "data atual" },
-  theme: { en: "switch theme", pt: "troca o tema" },
-  lang: { en: "switch language", pt: "troca o idioma" },
-  exit: { en: "go home", pt: "ir pra home" },
-  joke: { en: "random dev joke", pt: "piada de dev aleatória" },
-  quote: { en: "wise words", pt: "palavras sábias" },
-  cowsay: { en: "cow says...", pt: "vaca diz..." },
-  coffee: { en: "essential fuel", pt: "combustível essencial" },
-  fortune: { en: "your fortune", pt: "sua sorte" },
-  matrix: { en: "enter the matrix", pt: "entre na matrix" },
-  snake: { en: "play snake", pt: "jogar snake" },
+const GROUPS: Record<string, string[]> = {
+  info: ["whoami", "about", "skills", "experience", "social", "contact"],
+  content: ["projects", "posts", "cat"],
+  nav: ["ls", "cd", "pwd", "open"],
+  system: ["help", "clear", "echo", "date", "theme", "lang", "exit"],
+  fun: ["joke", "quote", "cowsay", "coffee", "fortune"],
+  apps: ["matrix", "snake"],
 };
 
 export const help: CommandDef = {
@@ -41,19 +21,11 @@ export const help: CommandDef = {
       line("juliano@portfolio — commands", "success"),
       blank(),
     ];
-    const groups: Record<string, string[]> = {
-      info: ["whoami", "about", "skills", "experience", "social", "contact"],
-      content: ["projects", "posts", "cat"],
-      nav: ["ls", "cd", "pwd", "open"],
-      system: ["help", "clear", "echo", "date", "theme", "lang", "exit"],
-      fun: ["joke", "quote", "cowsay", "coffee", "fortune"],
-      apps: ["matrix", "snake"],
-    };
 
-    for (const [groupName, names] of Object.entries(groups)) {
+    for (const [groupName, names] of Object.entries(GROUPS)) {
       out.push(line(`  ${groupName}`, "muted"));
       for (const name of names) {
-        const desc = REGISTRY_DESCRIPTIONS[name]?.[lang] ?? "";
+        const desc = registry[name]?.description[lang] ?? "";
         out.push(line(`    ${name.padEnd(14)} ${desc}`));
       }
       out.push(blank());
