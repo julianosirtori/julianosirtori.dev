@@ -6,5 +6,16 @@ import blog from "./blog.json";
 import projects from "./projects.json";
 import guestbook from "./guestbook.json";
 import now from "./now.json";
+import playground from "./playground.json";
 
-export { home, about, contacts, global, blog, projects, guestbook, now };
+export {
+  home,
+  about,
+  contacts,
+  global,
+  blog,
+  projects,
+  guestbook,
+  now,
+  playground,
+};

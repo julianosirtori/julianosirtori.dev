@@ -13,6 +13,8 @@ import { BackToTop } from "@/components/BackToTop";
 import { importLocale } from "@/locales";
 import { CommandBar } from "@/components/CommandBar";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { KonamiEgg } from "@/components/KonamiEgg";
+import { ConsoleGreeting } from "@/components/ConsoleGreeting";
 import { routing } from "@/locales/config";
 
 interface BlogRootLayoutProps {
@@ -79,6 +81,8 @@ export default async function BlogRootLayout({
                 <Footer />
               </div>
               <BackToTop />
+              <KonamiEgg />
+              <ConsoleGreeting />
               <Analytics />
             </CommandBar>
           </NextIntlClientProvider>

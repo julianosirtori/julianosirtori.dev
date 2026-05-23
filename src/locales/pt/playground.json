@@ -1,0 +1,27 @@
+{
+  "title": "playground",
+  "description": "Um terminal interativo. Digite um comando, aperte Enter. Tenta 'help' se estiver perdido.",
+  "hint": {
+    "tab": "TAB pra autocompletar",
+    "history": "↑/↓ pro histórico",
+    "clear": "Ctrl+L pra limpar",
+    "help": "digite 'help' pra começar"
+  },
+  "boot": {
+    "welcome": "Bem-vindo ao juliano@portfolio",
+    "version": "v1.0.0 — feito em React, servido com curiosidade",
+    "loading": "Carregando módulos",
+    "ready": "Pronto.",
+    "hint": "Digite 'help' para listar os comandos disponíveis."
+  },
+  "errors": {
+    "unknown": "comando não encontrado: {cmd}",
+    "didYouMean": "você quis dizer: {suggestion}?",
+    "noArgs": "argumentos faltando. uso: {usage}",
+    "notFound": "{target}: arquivo ou diretório não encontrado",
+    "permission": "permissão negada"
+  },
+  "prompt": {
+    "user": "guest"
+  }
+}
