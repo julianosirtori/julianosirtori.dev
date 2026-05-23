@@ -5,56 +5,58 @@ import { Link } from "@/locales/navigation";
 import { HeaderSelectLang } from "./HeaderSelectLang";
 import { HeaderKBar } from "./HeaderKbar";
 import { HeaderItemWrapper } from "./HeaderItemWrapper";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export const Header = () => {
   const t = useTranslations("global.header");
 
   const links = useMemo(() => {
     return [
-      {
-        label: t("about"),
-        href: "/about",
-      },
-      {
-        label: t("blog"),
-        href: "/blog",
-      },
-      {
-        label: t("projects"),
-        href: "/projects",
-      },
+      { label: t("about"), href: "/about" },
+      { label: t("blog"), href: "/blog" },
+      { label: t("projects"), href: "/projects" },
     ];
   }, [t]);
 
   return (
-    <header className=" absolute top-0 z-10 order-1 mt-3 flex min-h-[60px] w-full flex-row flex-wrap items-center justify-between text-sm">
-      <Link href="/" className="pl-5 text-lg  font-bold text-primary">
-        JS
-      </Link>
-      <nav className=" order-3  mt-4 flex-1 px-5 text-secondary min-[480px]:order-2 min-[480px]:mt-0">
-        <ul className=" flex flex-row justify-center min-[480px]:gap-4 ">
-          {links.map((link) => (
-            <HeaderItemWrapper key={link.label} href={link.href}>
-              <Link
-                href={link.href}
-                className="appearance-none rounded-lg border-none px-5 py-3 uppercase duration-500 hover:bg-hover hover:text-white"
-              >
-                <span className="text-xs tracking-widest	">{link.label}</span>
-              </Link>
-            </HeaderItemWrapper>
-          ))}
-        </ul>
-      </nav>
-      <div className="order-2 flex flex-row items-center gap-4 pr-5 min-[480px]:order-3">
+    <header className="border-border bg-bg/80 sticky top-0 z-10 flex w-full flex-row flex-wrap items-center justify-between border-b backdrop-blur-md">
+      <div className="mx-auto flex w-full max-w-6xl flex-row flex-wrap items-center justify-between px-5 py-4">
         <Link
-          target="_blank"
-          href="https://cv.julianosirtori.dev/"
-          className="font-semibold text-secondary"
+          href="/"
+          className="text-fg hover:text-accent text-base font-medium tracking-tight transition-colors"
+          aria-label="juliano sirtori, home"
         >
-          CV
+          <span className="hidden sm:inline">juliano sirtori.</span>
+          <span className="sm:hidden">js.</span>
         </Link>
-        <HeaderSelectLang />
-        <HeaderKBar />
+
+        <nav className="order-3 mt-3 w-full sm:order-2 sm:mt-0 sm:w-auto">
+          <ul className="text-fg-muted flex flex-row justify-center gap-1 text-sm sm:gap-2">
+            {links.map((link) => (
+              <HeaderItemWrapper key={link.label} href={link.href}>
+                <Link
+                  href={link.href}
+                  className="hover:text-fg hover:bg-bg-muted inline-block rounded-md px-3 py-2 transition-colors"
+                >
+                  {link.label}
+                </Link>
+              </HeaderItemWrapper>
+            ))}
+          </ul>
+        </nav>
+
+        <div className="order-2 flex flex-row items-center gap-2 sm:order-3">
+          <Link
+            target="_blank"
+            href="https://cv.julianosirtori.dev/"
+            className="text-fg-muted hover:text-fg text-sm transition-colors"
+          >
+            CV
+          </Link>
+          <HeaderSelectLang />
+          <ThemeToggle />
+          <HeaderKBar />
+        </div>
       </div>
     </header>
   );

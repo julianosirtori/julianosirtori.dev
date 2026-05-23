@@ -74,7 +74,7 @@ describe("CodeBlock", () => {
     fireEvent.click(copyButton);
 
     await waitFor(() => {
-      expect(screen.getByTitle("Copied!")).toBeInTheDocument();
+      expect(screen.getByTitle("Copied")).toBeInTheDocument();
     });
   });
 

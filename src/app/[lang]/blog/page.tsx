@@ -18,12 +18,7 @@ export default async function Blog({ params }: BlogProps) {
 
   const postsSorted = allPosts
     .filter((post) => post.language === locale && !post.draft)
-    .sort((a, b) => {
-      if (new Date(a.date) > new Date(b.date)) {
-        return -1;
-      }
-      return 1;
-    })
+    .sort((a, b) => (new Date(a.date) > new Date(b.date) ? -1 : 1))
     .map((post) => ({
       title: post.title,
       slug: post.slug,
@@ -33,15 +28,15 @@ export default async function Blog({ params }: BlogProps) {
     }));
 
   return (
-    <main className="py-nav-height-mobile text-secondary selection:bg-yellow lg:py-nav-height-desktop mx-auto my-5 flex w-full max-w-4xl flex-1 flex-col px-5 text-base leading-8 selection:text-black">
-      <h1 className="text-primary mb-4 text-5xl font-bold">
-        <span className="from-yellow to-pink bg-gradient-to-r bg-clip-text text-transparent">
+    <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col px-5 pt-24 pb-20 lg:pt-32">
+      <header className="mb-12">
+        <h1 className="text-fg mb-3 text-4xl font-medium tracking-tight md:text-5xl">
           {t("title")}
-        </span>
-      </h1>
-      <p className="text-secondary mb-10 text-base leading-8">
-        {t("description")}
-      </p>
+        </h1>
+        <p className="text-fg-muted max-w-prose text-base leading-relaxed">
+          {t("description")}
+        </p>
+      </header>
 
       <BlogSearch
         posts={postsSorted}

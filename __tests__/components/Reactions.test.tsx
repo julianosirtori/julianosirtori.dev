@@ -66,7 +66,7 @@ describe("Reactions", () => {
   it("should show initial message when no reactions", () => {
     render(<Reactions slug="test-post" />);
 
-    expect(screen.getByText("Be the first to react!")).toBeInTheDocument();
+    expect(screen.getByText("Be the first to react")).toBeInTheDocument();
   });
 
   it("should increment reaction count when clicked", () => {
@@ -90,7 +90,7 @@ describe("Reactions", () => {
 
     // Second click - remove reaction
     fireEvent.click(likeButton);
-    expect(screen.getByText("Be the first to react!")).toBeInTheDocument();
+    expect(screen.getByText("Be the first to react")).toBeInTheDocument();
   });
 
   it("should persist reactions to localStorage", () => {

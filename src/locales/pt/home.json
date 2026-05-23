@@ -1,6 +1,6 @@
 {
-  "title": "Juliano é um <span>desenvolvedor web front-end</span>",
-  "subtitle": "Sou especializado em projetar e implementar interações perfeitas para o usuário na web, utilizando JavaScript, React e HTML para criar experiências digitais cativantes e dinâmicas.",
+  "title": "Juliano é um <span>engenheiro front-end</span>.",
+  "subtitle": "Construo interfaces pra web e escrevo sobre como elas são feitas. Quase sempre com TypeScript, React e Next.js.",
   "buttonCurriculum": "Currículo",
   "linkCurriculum": "Portuguese -Juliano Sirtori - Resume.pdf",
   "currentlyWork": "Atualmente trabalhando em ",
@@ -15,6 +15,6 @@
   "techStack": "Tech Stack",
   "readTime": "min de leitura",
   "getInTouch": "Entre em Contato",
-  "contactDescription": "Tem um projeto em mente ou só quer conversar? Adoraria ouvir de você.",
+  "contactDescription": "Tem um projeto em mente ou quer trocar ideia sobre código? Manda.",
   "contactButton": "Diga Olá"
 }

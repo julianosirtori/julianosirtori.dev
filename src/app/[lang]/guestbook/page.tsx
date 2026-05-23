@@ -33,17 +33,15 @@ export default async function GuestbookPage({ params }: GuestbookPageProps) {
   const t = await getTranslations("guestbook");
 
   return (
-    <main className="py-nav-height-mobile selection:bg-cyan lg:py-nav-height-desktop mx-auto my-5 flex w-full max-w-4xl flex-1 flex-col px-5 selection:text-black">
-      <div className="mb-12">
-        <h1 className="text-primary mb-4 text-5xl font-bold">
-          <span className="from-cyan to-green bg-gradient-to-r bg-clip-text text-transparent">
-            {t("title")}
-          </span>
+    <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col px-5 pt-24 pb-20 lg:pt-32">
+      <header className="mb-10">
+        <h1 className="text-fg mb-3 text-4xl font-medium tracking-tight md:text-5xl">
+          {t("title")}
         </h1>
-        <p className="text-secondary text-lg leading-relaxed">
+        <p className="text-fg-muted text-base leading-relaxed">
           {t("description")}
         </p>
-      </div>
+      </header>
 
       <Guestbook
         placeholder={{

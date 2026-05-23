@@ -1,1 +1,2 @@
-export * from "./CommandBar";
+export { CommandBar } from "./CommandBar";
+export { useCommandBar } from "./useCommandBar";

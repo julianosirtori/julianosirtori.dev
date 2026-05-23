@@ -6,12 +6,13 @@ import { getLocale, getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { GoogleAnalytics } from "@next/third-parties/google";
 
-import { biotifFont } from "@/app/fonts";
+import { GeistSans, GeistMono } from "@/app/fonts";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { BackToTop } from "@/components/BackToTop";
 import { importLocale } from "@/locales";
 import { CommandBar } from "@/components/CommandBar";
+import { ThemeProvider } from "@/components/ThemeProvider";
 import { routing } from "@/locales/config";
 
 interface BlogRootLayoutProps {
@@ -62,22 +63,26 @@ export default async function BlogRootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale}>
-      <body
-        className={`bg-background relative ${biotifFont.variable} font-sans`}
-      >
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <SpeedInsights />
-          <CommandBar>
-            <div className="flex min-h-screen flex-col">
-              <Header />
-              {children}
-              <Footer />
-            </div>
-            <BackToTop />
-            <Analytics />
-          </CommandBar>
-        </NextIntlClientProvider>
+    <html
+      lang={locale}
+      suppressHydrationWarning
+      className={`${GeistSans.variable} ${GeistMono.variable}`}
+    >
+      <body className="bg-bg text-fg relative font-sans antialiased">
+        <ThemeProvider>
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            <SpeedInsights />
+            <CommandBar>
+              <div className="flex min-h-screen flex-col">
+                <Header />
+                {children}
+                <Footer />
+              </div>
+              <BackToTop />
+              <Analytics />
+            </CommandBar>
+          </NextIntlClientProvider>
+        </ThemeProvider>
       </body>
       <GoogleAnalytics gaId="G-VNFLVEVSCC" />
     </html>

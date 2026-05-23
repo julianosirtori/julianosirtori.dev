@@ -43,13 +43,9 @@ export function generateStaticParams() {
   const params: { lang: string; slug: string }[] = [];
   allPosts.forEach((post) => {
     if (post.slug && routing.locales.includes(post.language as "en" | "pt")) {
-      params.push({
-        lang: post.language,
-        slug: post.slug,
-      });
+      params.push({ lang: post.language, slug: post.slug });
     }
   });
-
   return params;
 }
 
@@ -63,29 +59,40 @@ export default async function Post({ params }: IPostProps) {
     (post) => post.slug === slug && post.language === locale,
   );
 
-  const dayjs = dateTool(locale);
+  if (!post) notFound();
 
-  if (!post) {
-    notFound();
-  }
+  const dayjs = dateTool(locale);
 
   return (
     <>
       <ReadingProgress />
-      <main className="py-nav-height-mobile text-secondary lg:py-nav-height-desktop mx-auto my-5 flex w-full max-w-4xl flex-1 flex-col px-5 text-base leading-8 selection:bg-white selection:text-black">
-        <div className="flex w-full flex-col items-center justify-center">
-          <h1 className="text-primary mt-20 text-center text-4xl leading-[42px] font-semibold lg:text-5xl lg:leading-[60px]">
+      <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col px-5 pt-24 pb-20 lg:pt-32">
+        <header className="mb-10">
+          <div className="text-fg-muted mb-4 flex items-center gap-2 text-sm">
+            <time dateTime={post.date}>
+              {dayjs(post.date).format("MMM DD, YYYY")}
+            </time>
+            <span aria-hidden>·</span>
+            <span>
+              {post.readTime} {t("readTime")}
+            </span>
+          </div>
+          <h1 className="text-fg text-3xl leading-tight font-medium tracking-tight md:text-4xl">
             {post.title}
           </h1>
-          <h2 className="text-secondary mb-4 text-base font-medium">
-            {dayjs(post.date).format("MMM DD, YYYY")} •{" "}
-            {`${post.readTime} ${t("readTime")}`}
-          </h2>
+        </header>
+
+        <article className="prose">
+          <Mdx code={post.body.code} />
+        </article>
+
+        <div className="border-border mt-16 border-t pt-10">
+          <Reactions slug={post.slug} />
         </div>
 
-        <Mdx code={post.body.code} />
-        <Reactions slug={post.slug} />
-        <Comments locale={locale} />
+        <div className="mt-10">
+          <Comments locale={locale} />
+        </div>
       </main>
     </>
   );

@@ -11,42 +11,37 @@ export const Footer = () => {
   const t = useTranslations("global");
 
   const links = [
-    {
-      label: "LinkedIn",
-      href: t("social.linkedin"),
-      icon: <LinkedInLogoIcon className="h-6 w-6 text-primary" />,
-    },
-    {
-      label: "Github",
-      href: t("social.github"),
-      icon: <GitHubLogoIcon className="h-6 w-6 text-primary" />,
-    },
-    {
-      label: "Discord",
-      href: t("social.discord"),
-      icon: <DiscordLogoIcon className="h-6 w-6 text-primary" />,
-    },
-    {
-      label: "Twitter",
-      href: t("social.twitter"),
-      icon: <TwitterLogoIcon className="h-6 w-6 text-primary" />,
-    },
+    { label: "LinkedIn", href: t("social.linkedin"), icon: LinkedInLogoIcon },
+    { label: "GitHub", href: t("social.github"), icon: GitHubLogoIcon },
+    { label: "Discord", href: t("social.discord"), icon: DiscordLogoIcon },
+    { label: "Twitter", href: t("social.twitter"), icon: TwitterLogoIcon },
   ];
 
   return (
-    <footer className=" flex w-full justify-center px-5 text-sm font-medium text-secondary ">
-      {links.map((link) => (
-        <Link
-          href={link.href}
-          key={link.href}
-          aria-label={link.label}
-          target="_blank"
-          className="flex flex-row  items-center gap-2 p-5 text-secondary hover:text-primary sm:w-[130px] sm:[&>i]:hidden sm:[&>i]:hover:block"
-        >
-          <span className="hidden h-6 sm:block">{link.label}</span>
-          <i>{link.icon}</i>
-        </Link>
-      ))}
+    <footer className="border-border text-fg-muted mt-auto w-full border-t">
+      <div className="mx-auto flex w-full max-w-6xl flex-row flex-wrap items-center justify-between gap-3 px-5 py-8 text-sm">
+        <p className="text-fg-subtle">
+          © {new Date().getFullYear()} juliano sirtori
+        </p>
+        <ul className="flex flex-row items-center gap-1">
+          {links.map((link) => {
+            const Icon = link.icon;
+            return (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  aria-label={link.label}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-fg hover:bg-bg-muted inline-flex h-8 w-8 items-center justify-center rounded-md transition-colors"
+                >
+                  <Icon className="h-4 w-4" />
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     </footer>
   );
 };

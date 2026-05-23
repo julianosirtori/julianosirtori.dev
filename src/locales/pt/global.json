@@ -1,9 +1,9 @@
 {
   "myName": "Juliano",
   "myFullName": "Juliano Sirtori",
-  "role": "Desenvolvedor Front-end",
-  "slogan": "Eu crio interações entre usuários e tecnologia!",
-  "tapToStart": "Toque <firstKey>⌘</firstKey> <secondKey>k</secondKey> para começar",
+  "role": "Engenheiro Front-end",
+  "slogan": "Engenheiro front-end escrevendo sobre o ofício.",
+  "tapToStart": "Aperte <firstKey>⌘</firstKey> <secondKey>k</secondKey> para navegar",
   "header": {
     "about": "sobre",
     "blog": "blog",

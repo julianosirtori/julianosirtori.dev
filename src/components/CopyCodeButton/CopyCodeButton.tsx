@@ -22,15 +22,16 @@ export function CopyCodeButton({ code }: CopyCodeButtonProps) {
 
   return (
     <button
+      type="button"
       onClick={handleCopy}
-      className="border-hover bg-background/80 text-secondary hover:border-cyan hover:bg-hover hover:text-cyan absolute top-3 right-3 flex h-8 w-8 items-center justify-center rounded-md border backdrop-blur-sm transition-all duration-200"
-      aria-label={copied ? "Copied!" : "Copy code"}
-      title={copied ? "Copied!" : "Copy code"}
+      className="border-border bg-bg-muted text-fg-muted hover:text-fg hover:border-fg-muted absolute top-3 right-3 inline-flex h-7 w-7 items-center justify-center rounded-md border transition-colors"
+      aria-label={copied ? "Copied" : "Copy code"}
+      title={copied ? "Copied" : "Copy code"}
     >
       {copied ? (
-        <CheckIcon className="text-green h-4 w-4" />
+        <CheckIcon className="text-success h-3.5 w-3.5" />
       ) : (
-        <CopyIcon className="h-4 w-4" />
+        <CopyIcon className="h-3.5 w-3.5" />
       )}
     </button>
   );
