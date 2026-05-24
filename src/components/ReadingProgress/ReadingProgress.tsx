@@ -13,10 +13,7 @@ export function ReadingProgress() {
   });
 
   useEffect(() => {
-    const toggleVisibility = () => {
-      setIsVisible(window.scrollY > 200);
-    };
-
+    const toggleVisibility = () => setIsVisible(window.scrollY > 200);
     window.addEventListener("scroll", toggleVisibility);
     return () => window.removeEventListener("scroll", toggleVisibility);
   }, []);
@@ -25,7 +22,7 @@ export function ReadingProgress() {
 
   return (
     <motion.div
-      className="from-cyan via-green to-pink fixed top-0 right-0 left-0 z-50 h-1 origin-left bg-gradient-to-r"
+      className="bg-accent fixed top-0 right-0 left-0 z-50 h-0.5 origin-left"
       style={{ scaleX }}
     />
   );

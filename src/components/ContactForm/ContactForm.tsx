@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Toast } from "../Toast/Toast";
@@ -17,9 +18,7 @@ export const ContactForm = () => {
       const target = e.currentTarget;
       await fetch(`/api/email`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: target.nameContact.value,
           email: target.email.value,
@@ -38,51 +37,31 @@ export const ContactForm = () => {
 
   return (
     <>
-      <form className="w-full max-w-md" onSubmit={onSendEmail}>
-        <div className="mb-2 flex flex-col">
-          <label
-            htmlFor="nameContact"
-            className="text-[12px] uppercase leading-8 text-secondary"
-          >
-            {t("labelName")}
-          </label>
-          <input
-            id="nameContact"
-            name="nameContact"
-            className="rounded-lg border border-secondary bg-background px-3 py-2 text-sm text-primary focus:border-cyan focus:outline-none "
-            type="text"
-            placeholder={t("placeholderName")}
-            required
-          />
-        </div>
-        <div className="mb-2 flex flex-col">
-          <label
-            htmlFor="email"
-            className="text-[12px] uppercase leading-8 text-secondary"
-          >
-            {t("labelEmail")}
-          </label>
-          <input
-            id="email"
-            name="email"
-            className="rounded-lg border border-secondary bg-background px-3 py-2 text-sm text-primary focus:border-cyan focus:outline-none "
-            type="email"
-            placeholder={t("placeholderEmail")}
-            required
-          />
-        </div>
-        <div className="mb-2 flex flex-col">
+      <form className="flex w-full flex-col gap-4" onSubmit={onSendEmail}>
+        <Field
+          id="nameContact"
+          label={t("labelName")}
+          placeholder={t("placeholderName")}
+          type="text"
+        />
+        <Field
+          id="email"
+          label={t("labelEmail")}
+          placeholder={t("placeholderEmail")}
+          type="email"
+        />
+        <div className="flex flex-col gap-1.5">
           <label
             htmlFor="message"
-            className="text-[12px] uppercase leading-8 text-secondary"
+            className="text-fg-muted text-xs font-medium"
           >
             {t("labelMessage")}
           </label>
           <textarea
             id="message"
             name="message"
-            rows={4}
-            className="rounded-lg border border-secondary bg-background px-3 py-2 text-sm text-primary focus:border-cyan focus:outline-none"
+            rows={5}
+            className="border-border bg-bg text-fg placeholder:text-fg-subtle focus:border-accent rounded-md border px-3 py-2 text-sm transition-colors focus:outline-none"
             placeholder={t("placeholderMessage")}
             required
           />
@@ -90,17 +69,17 @@ export const ContactForm = () => {
         <button
           disabled={isLoading || isEmailSent}
           type="submit"
-          className="focus:text-cyan-500  mt-4 w-full cursor-pointer rounded-lg border bg-primary bg-white p-1 text-[12px] text-background outline-none duration-200 ease-in-out hover:border-cyan hover:bg-transparent hover:text-cyan focus:border-cyan focus:bg-transparent disabled:cursor-auto disabled:opacity-50"
+          className="bg-fg text-bg hover:bg-fg/90 mt-2 inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-50"
         >
           {isLoading ? t("buttonLoading") : t("button")}
         </button>
       </form>
       <Toast
-        title={isEmailSent ? "Email sent :D" : "Error :("}
+        title={isEmailSent ? "Email sent" : "Error"}
         description={
           isEmailSent
             ? "Thanks for taking the time to write it."
-            : "Something wrong happened. Try again later."
+            : "Something went wrong. Try again later."
         }
         isSuccess={isEmailSent}
         showToast={showToast}
@@ -109,3 +88,31 @@ export const ContactForm = () => {
     </>
   );
 };
+
+function Field({
+  id,
+  label,
+  placeholder,
+  type,
+}: {
+  id: string;
+  label: string;
+  placeholder: string;
+  type: "text" | "email";
+}) {
+  return (
+    <div className="flex flex-col gap-1.5">
+      <label htmlFor={id} className="text-fg-muted text-xs font-medium">
+        {label}
+      </label>
+      <input
+        id={id}
+        name={id}
+        type={type}
+        placeholder={placeholder}
+        required
+        className="border-border bg-bg text-fg placeholder:text-fg-subtle focus:border-accent rounded-md border px-3 py-2 text-sm transition-colors focus:outline-none"
+      />
+    </div>
+  );
+}

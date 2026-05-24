@@ -5,13 +5,13 @@ test.describe("Blog Page", () => {
     await page.goto("/en/blog");
 
     await expect(page.locator("h1")).toContainText("Teaching is learning");
-    await expect(page.locator("ul li").first()).toBeVisible();
+    await expect(page.locator('a[href*="/blog/"]').first()).toBeVisible();
   });
 
   test("should navigate to a blog post", async ({ page }) => {
     await page.goto("/en/blog");
 
-    const firstPost = page.locator("ul li a").first();
+    const firstPost = page.locator('a[href*="/blog/"]').first();
     await firstPost.click();
 
     await expect(page.locator("article, main")).toBeVisible();
@@ -22,6 +22,6 @@ test.describe("Blog Page", () => {
     await page.goto("/pt/blog");
 
     await expect(page.locator("h1")).toContainText("Ensinar é aprender");
-    await expect(page.locator("ul li").first()).toBeVisible();
+    await expect(page.locator('a[href*="/blog/"]').first()).toBeVisible();
   });
 });

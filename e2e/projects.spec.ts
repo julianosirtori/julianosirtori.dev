@@ -4,8 +4,10 @@ test.describe("Projects Page", () => {
   test("should display the projects page", async ({ page }) => {
     await page.goto("/en/projects");
 
-    await expect(page.locator("h1")).toContainText("Projects and Side Projects");
-    await expect(page.locator("ul li").first()).toBeVisible();
+    await expect(page.locator("h1")).toContainText(
+      "Projects and Side Projects",
+    );
+    await expect(page.locator('a[target="_blank"]').first()).toBeVisible();
   });
 
   test("should display projects grouped by year", async ({ page }) => {

@@ -1,0 +1,10 @@
+{
+  "title": "playground",
+  "description": "Um terminal interativo. Digite um comando, aperte Enter. Tenta 'help' se estiver perdido.",
+  "hint": {
+    "tab": "TAB pra autocompletar",
+    "history": "↑/↓ pro histórico",
+    "clear": "Ctrl+L pra limpar",
+    "help": "digite 'help' pra começar"
+  }
+}

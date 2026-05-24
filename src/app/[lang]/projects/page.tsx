@@ -21,7 +21,7 @@ export async function generateMetadata({
   const description = messages.projects.description;
 
   return {
-    title: title,
+    title,
     description,
     openGraph: {
       title,
@@ -41,30 +41,26 @@ export default async function Projects({ params }: ProjectsProps) {
     projects[currentLocale as keyof typeof projects];
   const years = Object.keys(projectsGroupedByYear).reverse();
 
-  // Flatten all projects with their year for indexing
   let globalIndex = 0;
 
   return (
-    <main className="py-nav-height-mobile text-secondary selection:bg-cyan lg:py-nav-height-desktop mx-auto my-5 flex w-full max-w-4xl flex-1 flex-col px-5 text-base leading-8 selection:text-black">
-      <h1 className="text-primary mb-4 text-5xl font-bold">
-        <span className="from-purple to-cyan bg-gradient-to-r bg-clip-text text-transparent">
+    <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col px-5 pt-24 pb-20 lg:pt-32">
+      <header className="mb-12">
+        <h1 className="text-fg mb-3 text-4xl font-medium tracking-tight md:text-5xl">
           {t("title")}
-        </span>
-      </h1>
-      <p className="text-secondary mb-10 text-base leading-8">
-        {t("description")}
-      </p>
+        </h1>
+        <p className="text-fg-muted max-w-prose text-base leading-relaxed">
+          {t("description")}
+        </p>
+      </header>
 
-      <div className="space-y-10">
+      <div className="flex flex-col gap-12">
         {years.map((year) => (
           <section key={year}>
-            <h2 className="text-primary mb-4 flex items-center gap-3 text-xl font-bold">
-              <span className="from-cyan to-green text-background flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br text-sm font-bold">
-                {year.slice(-2)}
-              </span>
+            <h2 className="text-fg-subtle mb-4 font-mono text-sm tracking-wide uppercase">
               {year}
             </h2>
-            <div className="grid gap-3 sm:grid-cols-2">
+            <div className="grid gap-2 sm:grid-cols-2">
               {projectsGroupedByYear[
                 year as keyof typeof projectsGroupedByYear
               ].map((project) => {

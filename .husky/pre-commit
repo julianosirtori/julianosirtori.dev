@@ -1,1 +1,8 @@
+# Ensure node/pnpm are findable on Windows (git hooks run with a sanitized PATH).
+for dir in "/c/nvm4w/nodejs" "/c/Program Files/nodejs" "$HOME/.local/share/pnpm" "$HOME/AppData/Local/pnpm"; do
+  if [ -d "$dir" ] && [[ ":$PATH:" != *":$dir:"* ]]; then
+    export PATH="$dir:$PATH"
+  fi
+done
+
 pnpm exec lint-staged && pnpm test run

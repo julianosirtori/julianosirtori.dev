@@ -21,7 +21,7 @@ test.describe("Navigation", () => {
   test("should have CV link", async ({ page }) => {
     await page.goto("/en");
 
-    const cvLink = page.locator('a[href="https://cv.julianosirtori.dev/"]');
+    const cvLink = page.locator('a[href$="Juliano_Sirtori_Resume.pdf"]');
     await expect(cvLink).toBeVisible();
   });
 

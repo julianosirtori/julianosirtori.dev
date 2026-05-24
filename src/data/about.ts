@@ -1,31 +1,32 @@
 export const experiences = [
   {
-    jobTitle: "Front-End Web Developer",
+    jobTitle: "Senior Front-End Engineer",
     company: "Avenue Code",
     companyUrl: "https://www.avenuecode.com",
-    startDate: "2022-02-15",
-    location: "Remote",
-    skills: "E2E · vue · vuex · javascript · Jira · TypeScript · Scrum",
+    startDate: "2024-04-01",
+    location: "Remote · Stellantis (Fiat, Ram)",
+    skills:
+      "Vue.js · Microfrontends · AEM · CI/CD · Code Review · TypeScript · JavaScript · Scrum",
   },
   {
-    jobTitle: "Front-End Web Developer",
+    jobTitle: "Senior Front-End Web Developer",
     company: "CI&T",
     companyUrl: "https://ciandt.com",
     startDate: "2022-02-11",
     endDate: "2024-04-11",
-    location: "Remote",
+    location: "Remote · B2B SaaS · 2.7M+ MAU · 18+ Countries",
     skills:
-      "E2E · styled-components · Continuous Integration (CI) · Solução de problemas técnicos · Sistemas distribuídos · Jira · Inglês · TypeScript · Migration Projects · Storybooks · Scrum · Next.js · Web Development · JavaScript · React.js",
+      "React.js · Next.js · TypeScript · Redux · styled-components · Microfrontends · i18n · Storybooks · CI/CD · Code Review · Scrum",
   },
   {
-    jobTitle: "Frontend Web Developer",
+    jobTitle: "Frontend Developer / Tech Lead",
     company: "aiqfome",
     companyUrl: "https://aiqfome.com/",
     startDate: "2020-02-19",
     endDate: "2022-02-10",
-    location: "Maringá, Brazil",
+    location: "Maringá, Brazil · Acquired by Magazine Luiza",
     skills:
-      "styled-components · Continuous Integration (CI) · Solução de problemas técnicos · Sistemas distribuídos · Jira · TypeScript · Design System · Vue.js · Web Applications · Storybooks · Code Refactoring · Scrum · Next.js · React.js · Laravel · GitHub",
+      "React.js · Next.js · TypeScript · Cypress (E2E) · PostgreSQL · AWS · Design System · Storybooks · styled-components · Code Refactoring · Scrum",
   },
   {
     jobTitle: "Full Stack Developer",

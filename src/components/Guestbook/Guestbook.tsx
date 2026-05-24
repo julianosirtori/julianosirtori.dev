@@ -4,12 +4,13 @@ import { useState, useEffect, FormEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { PaperPlaneIcon, PersonIcon } from "@radix-ui/react-icons";
 
+import { createStorage } from "@/utils/storage";
+
 interface GuestbookEntry {
   id: string;
   name: string;
   message: string;
   timestamp: number;
-  color: string;
 }
 
 interface GuestbookProps {
@@ -21,38 +22,38 @@ interface GuestbookProps {
   emptyText: string;
 }
 
-const COLORS = [
-  "from-cyan to-green",
-  "from-pink to-purple",
-  "from-yellow to-orange",
-  "from-green to-cyan",
-  "from-purple to-pink",
-  "from-orange to-red",
-];
+const storage = createStorage("guestbook");
 
-function getRandomColor() {
-  return COLORS[Math.floor(Math.random() * COLORS.length)];
+function isValidEntry(value: unknown): value is GuestbookEntry {
+  if (!value || typeof value !== "object") return false;
+  const e = value as Record<string, unknown>;
+  return (
+    typeof e.id === "string" &&
+    typeof e.name === "string" &&
+    typeof e.message === "string" &&
+    typeof e.timestamp === "number"
+  );
 }
 
 function formatTimestamp(timestamp: number, locale: string): string {
   const date = new Date(timestamp);
-  const now = new Date();
-  const diffInHours = (now.getTime() - date.getTime()) / (1000 * 60 * 60);
+  const diffInHours = (Date.now() - date.getTime()) / (1000 * 60 * 60);
 
   if (diffInHours < 1) {
     return locale === "pt" ? "agora mesmo" : "just now";
-  } else if (diffInHours < 24) {
+  }
+  if (diffInHours < 24) {
     const hours = Math.floor(diffInHours);
     return locale === "pt" ? `${hours}h atrás` : `${hours}h ago`;
-  } else if (diffInHours < 24 * 7) {
+  }
+  if (diffInHours < 24 * 7) {
     const days = Math.floor(diffInHours / 24);
     return locale === "pt" ? `${days}d atrás` : `${days}d ago`;
-  } else {
-    return date.toLocaleDateString(locale === "pt" ? "pt-BR" : "en-US", {
-      month: "short",
-      day: "numeric",
-    });
   }
+  return date.toLocaleDateString(locale === "pt" ? "pt-BR" : "en-US", {
+    month: "short",
+    day: "numeric",
+  });
 }
 
 export function Guestbook({
@@ -67,33 +68,23 @@ export function Guestbook({
   const [locale, setLocale] = useState("en");
 
   useEffect(() => {
-    // Detect locale from URL
     const path = window.location.pathname;
-    if (path.startsWith("/pt")) {
-      setLocale("pt");
+    if (path.startsWith("/pt")) setLocale("pt");
+
+    const stored = storage.get<unknown[]>("entries", []);
+    if (Array.isArray(stored)) {
+      setEntries(stored.filter(isValidEntry));
     }
 
-    // Load entries from localStorage
-    const stored = localStorage.getItem("guestbook-entries");
-    if (stored) {
-      setEntries(JSON.parse(stored));
-    }
-
-    // Load saved name
-    const savedName = localStorage.getItem("guestbook-name");
-    if (savedName) {
-      setName(savedName);
-    }
+    const savedName = storage.get<string>("name", "");
+    if (typeof savedName === "string") setName(savedName);
   }, []);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-
     if (!name.trim() || !message.trim()) return;
 
     setIsSubmitting(true);
-
-    // Simulate network delay for better UX
     await new Promise((resolve) => setTimeout(resolve, 300));
 
     const newEntry: GuestbookEntry = {
@@ -101,15 +92,12 @@ export function Guestbook({
       name: name.trim(),
       message: message.trim(),
       timestamp: Date.now(),
-      color: getRandomColor(),
     };
 
     const updatedEntries = [newEntry, ...entries];
     setEntries(updatedEntries);
-
-    // Save to localStorage
-    localStorage.setItem("guestbook-entries", JSON.stringify(updatedEntries));
-    localStorage.setItem("guestbook-name", name.trim());
+    storage.set("entries", updatedEntries);
+    storage.set("name", name.trim());
 
     setMessage("");
     setIsSubmitting(false);
@@ -117,23 +105,22 @@ export function Guestbook({
 
   return (
     <div className="w-full">
-      {/* Form */}
-      <form onSubmit={handleSubmit} className="mb-12">
-        <div className="border-hover bg-hover/30 rounded-xl border p-6">
-          <div className="mb-4 flex flex-col gap-4 sm:flex-row">
+      <form onSubmit={handleSubmit} className="mb-10">
+        <div className="border-border rounded-xl border p-5">
+          <div className="mb-3 flex flex-col gap-3 sm:flex-row">
             <div className="flex-1">
               <label htmlFor="name" className="sr-only">
                 {placeholder.name}
               </label>
               <div className="relative">
-                <PersonIcon className="text-secondary absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2" />
+                <PersonIcon className="text-fg-subtle absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
                 <input
                   type="text"
                   id="name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder={placeholder.name}
-                  className="border-hover bg-background text-primary placeholder:text-secondary/50 focus:border-cyan w-full rounded-lg border py-3 pr-4 pl-10 focus:outline-none"
+                  className="border-border bg-bg text-fg placeholder:text-fg-subtle focus:border-accent w-full rounded-md border py-2 pr-3 pl-9 text-sm transition-colors focus:outline-none"
                   required
                   maxLength={50}
                 />
@@ -146,26 +133,26 @@ export function Guestbook({
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               placeholder={placeholder.message}
-              className="border-hover bg-background text-primary placeholder:text-secondary/50 focus:border-cyan w-full resize-none rounded-lg border p-4 focus:outline-none"
+              className="border-border bg-bg text-fg placeholder:text-fg-subtle focus:border-accent w-full resize-none rounded-md border p-3 text-sm transition-colors focus:outline-none"
               rows={3}
               required
               maxLength={500}
             />
-            <div className="text-secondary absolute right-3 bottom-3 text-xs">
+            <div className="text-fg-subtle absolute right-3 bottom-2 text-xs">
               {message.length}/500
             </div>
           </div>
 
-          <div className="mt-4 flex justify-end">
+          <div className="mt-3 flex justify-end">
             <button
               type="submit"
               disabled={isSubmitting || !name.trim() || !message.trim()}
-              className="from-cyan to-green text-background flex items-center gap-2 rounded-lg bg-gradient-to-r px-6 py-2.5 font-medium transition-all duration-300 hover:shadow-[0_0_20px_-5px_rgba(128,255,234,0.5)] disabled:cursor-not-allowed disabled:opacity-50"
+              className="bg-fg text-bg hover:bg-fg/90 inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-50"
             >
               {isSubmitting ? (
-                <span className="border-background h-4 w-4 animate-spin rounded-full border-2 border-t-transparent" />
+                <span className="border-bg h-3 w-3 animate-spin rounded-full border-2 border-t-transparent" />
               ) : (
-                <PaperPlaneIcon className="h-4 w-4" />
+                <PaperPlaneIcon className="h-3.5 w-3.5" />
               )}
               {submitText}
             </button>
@@ -173,14 +160,13 @@ export function Guestbook({
         </div>
       </form>
 
-      {/* Entries */}
-      <div className="space-y-4">
+      <div className="flex flex-col gap-3">
         <AnimatePresence mode="popLayout">
           {entries.length === 0 ? (
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="text-secondary text-center"
+              className="text-fg-muted text-center text-sm"
             >
               {emptyText}
             </motion.p>
@@ -188,28 +174,24 @@ export function Guestbook({
             entries.map((entry, index) => (
               <motion.div
                 key={entry.id}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ delay: index * 0.05 }}
-                className="group border-hover bg-hover/20 hover:border-hover hover:bg-hover/40 rounded-xl border p-5 transition-all duration-300"
+                exit={{ opacity: 0, scale: 0.97 }}
+                transition={{ delay: index * 0.03, duration: 0.2 }}
+                className="border-border hover:border-fg-muted rounded-lg border p-4 transition-colors"
               >
-                <div className="mb-3 flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div
-                      className={`flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br ${entry.color} text-background text-lg font-bold`}
-                    >
-                      {entry.name.charAt(0).toUpperCase()}
-                    </div>
-                    <div>
-                      <p className="text-primary font-medium">{entry.name}</p>
-                      <p className="text-secondary text-xs">
-                        {formatTimestamp(entry.timestamp, locale)}
-                      </p>
-                    </div>
+                <div className="mb-2 flex items-center gap-3">
+                  <div className="bg-bg-muted text-fg-muted flex h-8 w-8 items-center justify-center rounded-full text-sm font-medium">
+                    {entry.name.charAt(0).toUpperCase()}
+                  </div>
+                  <div>
+                    <p className="text-fg text-sm font-medium">{entry.name}</p>
+                    <p className="text-fg-subtle text-xs">
+                      {formatTimestamp(entry.timestamp, locale)}
+                    </p>
                   </div>
                 </div>
-                <p className="text-secondary whitespace-pre-wrap">
+                <p className="text-fg-muted text-sm whitespace-pre-wrap">
                   {entry.message}
                 </p>
               </motion.div>

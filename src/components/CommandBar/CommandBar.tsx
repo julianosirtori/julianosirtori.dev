@@ -1,194 +1,235 @@
 "use client";
 
-import {
-  KBarProvider,
-  KBarPortal,
-  KBarPositioner,
-  KBarAnimator,
-  KBarSearch,
-  KBarResults,
-  useMatches,
-} from "kbar";
-import { TCommandBarProps } from "./CommandBar.types";
-import { useRouter } from "@/locales/navigation";
-import { LegacyRef, forwardRef } from "react";
-import clsx from "clsx";
+import { Command } from "cmdk";
+import * as Dialog from "@radix-ui/react-dialog";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import {
   BackpackIcon,
+  ChatBubbleIcon,
+  ClockIcon,
   CodeIcon,
+  CommitIcon,
   EnvelopeClosedIcon,
   FileTextIcon,
   HomeIcon,
   PersonIcon,
-  ChatBubbleIcon,
-  ClockIcon,
 } from "@radix-ui/react-icons";
+
+import { useRouter } from "@/locales/navigation";
+import { CommandBarContext } from "./useCommandBar";
+import { TCommandBarProps } from "./CommandBar.types";
+
+interface Action {
+  id: string;
+  label: string;
+  section: "general" | "navigate";
+  keywords: string;
+  perform: () => void;
+  icon: React.ReactNode;
+  shortcut?: string;
+}
 
 export function CommandBar({ children }: TCommandBarProps) {
   const router = useRouter();
   const t = useTranslations("global.kbar");
+  const tSections = useTranslations("global");
+  const [open, setOpen] = useState(false);
 
-  const actions = [
-    {
-      id: "email",
-      name: t("email"),
-      shortcut: ["e"],
-      keywords: "send-email",
-      section: "General",
-      perform: () => router.push("/contact"),
-      icon: <EnvelopeClosedIcon />,
-    },
-    {
-      id: "source",
-      name: t("source"),
-      shortcut: ["s"],
-      keywords: "view-source",
-      section: "General",
-      perform: () =>
-        window.open(
-          "https://github.com/julianosirtori/julianosirtori.dev",
-          "_blank",
-        ),
-      icon: <CodeIcon />,
-    },
-    {
-      id: "home",
-      name: t("home"),
-      shortcut: ["g", "h"],
-      keywords: "go-home",
-      section: "Go To",
-      perform: () => router.push("/"),
-      icon: <HomeIcon />,
-    },
-    {
-      id: "about",
-      name: t("about"),
-      shortcut: ["g", "a"],
-      keywords: "go-about",
-      section: "Go To",
-      perform: () => router.push("/about"),
-      icon: <PersonIcon />,
-    },
-    {
-      id: "articles",
-      name: t("blog"),
-      shortcut: ["g", "b"],
-      keywords: "go-blog",
-      section: "Go To",
-      perform: () => router.push("/blog"),
-      icon: <FileTextIcon />,
-    },
-    {
-      id: "projects",
-      name: t("project"),
-      shortcut: ["g", "p"],
-      keywords: "go-projects",
-      section: "Go To",
-      perform: () => router.push("/projects"),
-      icon: <BackpackIcon />,
-    },
-    {
-      id: "guestbook",
-      name: t("guestbook"),
-      shortcut: ["g", "g"],
-      keywords: "go-guestbook",
-      section: "Go To",
-      perform: () => router.push("/guestbook"),
-      icon: <ChatBubbleIcon />,
-    },
-    {
-      id: "now",
-      name: t("now"),
-      shortcut: ["g", "n"],
-      keywords: "go-now",
-      section: "Go To",
-      perform: () => router.push("/now"),
-      icon: <ClockIcon />,
-    },
-  ];
+  const close = useCallback(() => setOpen(false), []);
+  const toggle = useCallback(() => setOpen((o) => !o), []);
 
-  return (
-    <KBarProvider
-      actions={actions}
-      options={{
-        disableScrollbarManagement: true,
-      }}
-    >
-      <KBarPortal>
-        <KBarPositioner className="fixed inset-0 z-20 box-border flex w-full items-start justify-center bg-[#000000cc] px-4 pt-[14vh]">
-          <KBarAnimator className="[&>div>div]:no-scrollbar bg-command text-primary w-full max-w-2xl overflow-hidden rounded-lg backdrop-blur-3xl backdrop-saturate-200">
-            <KBarSearch
-              defaultPlaceholder={t("defaultSearch")}
-              className="bg-command text-primary m-0 box-border w-full px-4 py-3 text-base outline-none"
-            />
-            <RenderResults />
-          </KBarAnimator>
-        </KBarPositioner>
-      </KBarPortal>
-      {children}
-    </KBarProvider>
-  );
-}
-
-function RenderResults() {
-  const { results } = useMatches();
-
-  return (
-    <KBarResults
-      maxHeight={300}
-      items={results}
-      onRender={({ item, active }) =>
-        typeof item === "string" ? (
-          <div className="bg-command text-secondary px-4 py-2 text-[10px] uppercase">
-            {item}
-          </div>
-        ) : (
-          <ResultItem action={item} active={active} />
-        )
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.key === "k" || e.key === "K") && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        toggle();
       }
-    />
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [toggle]);
+
+  const actions: Action[] = useMemo(
+    () => [
+      {
+        id: "email",
+        label: t("email"),
+        section: "general",
+        keywords: "email contact send mail",
+        perform: () => router.push("/contact"),
+        icon: <EnvelopeClosedIcon />,
+      },
+      {
+        id: "source",
+        label: t("source"),
+        section: "general",
+        keywords: "github source repo code",
+        perform: () =>
+          window.open(
+            "https://github.com/julianosirtori/julianosirtori.dev",
+            "_blank",
+            "noopener,noreferrer",
+          ),
+        icon: <CodeIcon />,
+      },
+      {
+        id: "home",
+        label: t("home"),
+        section: "navigate",
+        keywords: "home start",
+        perform: () => router.push("/"),
+        icon: <HomeIcon />,
+      },
+      {
+        id: "about",
+        label: t("about"),
+        section: "navigate",
+        keywords: "about bio",
+        perform: () => router.push("/about"),
+        icon: <PersonIcon />,
+      },
+      {
+        id: "blog",
+        label: t("blog"),
+        section: "navigate",
+        keywords: "blog articles posts writing",
+        perform: () => router.push("/blog"),
+        icon: <FileTextIcon />,
+      },
+      {
+        id: "projects",
+        label: t("project"),
+        section: "navigate",
+        keywords: "projects work portfolio",
+        perform: () => router.push("/projects"),
+        icon: <BackpackIcon />,
+      },
+      {
+        id: "guestbook",
+        label: t("guestbook"),
+        section: "navigate",
+        keywords: "guestbook visitors comments",
+        perform: () => router.push("/guestbook"),
+        icon: <ChatBubbleIcon />,
+      },
+      {
+        id: "now",
+        label: t("now"),
+        section: "navigate",
+        keywords: "now current status",
+        perform: () => router.push("/now"),
+        icon: <ClockIcon />,
+      },
+      {
+        id: "playground",
+        label: t("playground"),
+        section: "navigate",
+        keywords: "playground terminal shell konami",
+        perform: () => router.push("/playground"),
+        icon: <CommitIcon />,
+      },
+    ],
+    [router, t],
   );
-}
 
-interface KBarAction {
-  icon?: React.ReactNode;
-  name: string;
-  shortcut?: string[];
-}
+  const runAction = useCallback(
+    (action: Action) => {
+      action.perform();
+      close();
+    },
+    [close],
+  );
 
-const ResultItem = forwardRef(function ResultItem(
-  { action, active }: { action: KBarAction; active: boolean },
-  ref?: LegacyRef<HTMLDivElement>,
-) {
+  const general = actions.filter((a) => a.section === "general");
+  const navigate = actions.filter((a) => a.section === "navigate");
+
   return (
-    <div
-      className={clsx({
-        "m-0 flex w-full cursor-pointer items-center justify-between px-4 py-3": true,
-        "bg-[#1a1c1e)] text-primary": active,
-        "bg-command text-secondary": !active,
-      })}
-      ref={ref}
-    >
-      <div className="flex items-center gap-4">
-        <div className="text-primary">{action.icon && action.icon}</div>
+    <CommandBarContext.Provider value={{ open, setOpen, toggle }}>
+      {children}
+      <Command.Dialog
+        open={open}
+        onOpenChange={setOpen}
+        shouldFilter
+        label={t("defaultSearch")}
+        className="flex w-full flex-col"
+        overlayClassName="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm"
+        contentClassName="border-border bg-bg-elevated fixed top-[10vh] left-1/2 z-50 flex w-[calc(100vw-2rem)] max-w-2xl -translate-x-1/2 flex-col overflow-hidden rounded-xl border shadow-2xl"
+      >
+        <VisuallyHidden>
+          <Dialog.Title>{t("defaultSearch")}</Dialog.Title>
+          <Dialog.Description>{t("defaultSearch")}</Dialog.Description>
+        </VisuallyHidden>
+        <Command.Input
+          placeholder={t("defaultSearch")}
+          className="placeholder:text-fg-subtle text-fg border-border w-full border-b bg-transparent px-4 py-3.5 text-sm outline-none"
+        />
+        <Command.List className="[&::-webkit-scrollbar-thumb]:bg-bg-muted [&_[cmdk-group-heading]]:text-fg-subtle max-h-[60vh] overflow-y-auto p-2 [&_[cmdk-group-heading]]:px-3 [&_[cmdk-group-heading]]:pt-3 [&_[cmdk-group-heading]]:pb-1.5 [&_[cmdk-group-heading]]:text-[11px] [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:tracking-wider [&_[cmdk-group-heading]]:uppercase [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent">
+          <Command.Empty className="text-fg-muted px-3 py-6 text-center text-sm">
+            No results.
+          </Command.Empty>
 
-        <div className="flex flex-col">
-          <span>{action.name}</span>
+          {general.length > 0 && (
+            <Command.Group heading={tSections("general")}>
+              {general.map((action) => (
+                <CommandRow key={action.id} action={action} onRun={runAction} />
+              ))}
+            </Command.Group>
+          )}
+
+          {navigate.length > 0 && (
+            <Command.Group heading={tSections("goTo")}>
+              {navigate.map((action) => (
+                <CommandRow key={action.id} action={action} onRun={runAction} />
+              ))}
+            </Command.Group>
+          )}
+        </Command.List>
+        <div className="border-border text-fg-subtle flex items-center justify-between border-t px-3 py-2 text-xs">
+          <span>
+            <Kbd>↑</Kbd>
+            <Kbd>↓</Kbd>
+            <span className="ml-2">navigate</span>
+          </span>
+          <span>
+            <Kbd>↵</Kbd>
+            <span className="ml-1">open</span>
+            <span className="mx-2">·</span>
+            <Kbd>esc</Kbd>
+            <span className="ml-1">close</span>
+          </span>
         </div>
-      </div>
-      {action.shortcut && (
-        <div className="grid grid-flow-col gap-1">
-          {action.shortcut.map((shortcut: string) => (
-            <kbd
-              className="bg-hover text-secondary rounded-md px-2 py-1 uppercase"
-              key={shortcut}
-            >
-              {shortcut}
-            </kbd>
-          ))}
-        </div>
-      )}
-    </div>
+      </Command.Dialog>
+    </CommandBarContext.Provider>
   );
-});
+}
+
+function CommandRow({
+  action,
+  onRun,
+}: {
+  action: Action;
+  onRun: (a: Action) => void;
+}) {
+  return (
+    <Command.Item
+      value={`${action.label} ${action.keywords}`}
+      onSelect={() => onRun(action)}
+      className="text-fg-muted data-[selected=true]:bg-bg-muted data-[selected=true]:text-fg flex cursor-pointer items-center gap-3 rounded-md px-3 py-2.5 text-sm"
+    >
+      <span className="text-fg-subtle flex h-4 w-4 items-center justify-center">
+        {action.icon}
+      </span>
+      <span>{action.label}</span>
+    </Command.Item>
+  );
+}
+
+function Kbd({ children }: { children: React.ReactNode }) {
+  return (
+    <kbd className="border-border bg-bg text-fg-muted ml-1 inline-flex h-5 min-w-5 items-center justify-center rounded border px-1.5 font-mono text-[10px]">
+      {children}
+    </kbd>
+  );
+}

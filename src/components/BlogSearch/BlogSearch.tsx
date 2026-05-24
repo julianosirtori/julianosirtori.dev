@@ -28,7 +28,6 @@ export function BlogSearch({ posts, locale, translations }: BlogSearchProps) {
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
-  // Get all unique categories
   const categories = useMemo(() => {
     const cats = new Set<string>();
     posts.forEach((post) => {
@@ -37,7 +36,6 @@ export function BlogSearch({ posts, locale, translations }: BlogSearchProps) {
     return Array.from(cats).sort();
   }, [posts]);
 
-  // Filter posts based on search and category
   const filteredPosts = useMemo(() => {
     return posts.filter((post) => {
       const matchesSearch =
@@ -49,90 +47,77 @@ export function BlogSearch({ posts, locale, translations }: BlogSearchProps) {
     });
   }, [posts, search, selectedCategory]);
 
-  const formatDate = (dateStr: string) => {
-    const date = new Date(dateStr);
-    return date.toLocaleDateString(locale === "pt" ? "pt-BR" : "en-US", {
+  const formatDate = (dateStr: string) =>
+    new Date(dateStr).toLocaleDateString(locale === "pt" ? "pt-BR" : "en-US", {
       month: "short",
       day: "numeric",
       year: "numeric",
     });
-  };
 
   return (
     <div className="w-full">
-      {/* Search and Filter Bar */}
-      <div className="mb-8 flex flex-col gap-4">
-        {/* Search Input */}
+      <div className="mb-8 flex flex-col gap-3">
         <div className="relative">
-          <MagnifyingGlassIcon className="text-secondary absolute top-1/2 left-4 h-5 w-5 -translate-y-1/2" />
+          <MagnifyingGlassIcon className="text-fg-subtle absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder={translations.searchPlaceholder}
-            className="border-hover bg-hover/30 text-primary placeholder:text-secondary/50 focus:border-cyan w-full rounded-xl border py-3 pr-10 pl-12 focus:outline-none"
+            className="border-border bg-bg text-fg placeholder:text-fg-subtle focus:border-accent w-full rounded-md border py-2 pr-9 pl-9 text-sm transition-colors focus:outline-none"
           />
           {search && (
             <button
+              type="button"
               onClick={() => setSearch("")}
-              className="text-secondary hover:text-primary absolute top-1/2 right-4 -translate-y-1/2"
+              className="text-fg-subtle hover:text-fg absolute top-1/2 right-3 -translate-y-1/2 transition-colors"
+              aria-label="Clear search"
             >
-              <Cross2Icon className="h-5 w-5" />
+              <Cross2Icon className="h-4 w-4" />
             </button>
           )}
         </div>
 
-        {/* Category Pills */}
         {categories.length > 0 && (
-          <div className="flex flex-wrap gap-2">
-            <button
+          <div className="flex flex-wrap gap-1.5">
+            <CategoryPill
+              active={!selectedCategory}
               onClick={() => setSelectedCategory(null)}
-              className={`rounded-full px-4 py-1.5 text-sm font-medium transition-all duration-200 ${
-                !selectedCategory
-                  ? "bg-cyan text-background"
-                  : "bg-hover/50 text-secondary hover:bg-hover hover:text-primary"
-              }`}
             >
               {translations.allCategories}
-            </button>
+            </CategoryPill>
             {categories.map((category) => (
-              <button
+              <CategoryPill
                 key={category}
+                active={selectedCategory === category}
                 onClick={() =>
                   setSelectedCategory(
                     selectedCategory === category ? null : category,
                   )
                 }
-                className={`rounded-full px-4 py-1.5 text-sm font-medium transition-all duration-200 ${
-                  selectedCategory === category
-                    ? "bg-cyan text-background"
-                    : "bg-hover/50 text-secondary hover:bg-hover hover:text-primary"
-                }`}
               >
                 {category}
-              </button>
+              </CategoryPill>
             ))}
           </div>
         )}
       </div>
 
-      {/* Results Count */}
-      <div className="text-secondary mb-4 text-sm">
+      <div className="text-fg-subtle mb-4 text-xs">
         {filteredPosts.length}{" "}
         {filteredPosts.length === 1 ? "article" : "articles"}
-        {search && ` for "${search}"`}
+        {search && ` matching "${search}"`}
         {selectedCategory && ` in ${selectedCategory}`}
       </div>
 
-      {/* Posts List */}
-      <div className="space-y-2">
+      <div className="flex flex-col gap-1">
         <AnimatePresence mode="popLayout">
           {filteredPosts.length === 0 ? (
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="text-secondary py-12 text-center"
+              className="text-fg-muted py-12 text-center"
             >
               {translations.noResults}
             </motion.p>
@@ -140,35 +125,31 @@ export function BlogSearch({ posts, locale, translations }: BlogSearchProps) {
             filteredPosts.map((post, index) => (
               <motion.div
                 key={post.slug}
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ delay: index * 0.03 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ delay: index * 0.02, duration: 0.2 }}
                 layout
               >
                 <Link
                   href={`/blog/${post.slug}`}
-                  className="group hover:border-hover hover:bg-hover/30 flex flex-col gap-2 rounded-xl border border-transparent p-4 transition-all duration-300"
+                  className="group hover:bg-bg-muted -mx-3 flex flex-col gap-1 rounded-lg px-3 py-3 transition-colors"
                 >
-                  <div className="flex flex-wrap items-center gap-2">
-                    {post.categories?.map((cat) => (
-                      <span
-                        key={cat}
-                        className="bg-cyan/10 text-cyan rounded-md px-2 py-0.5 text-xs font-medium"
-                      >
-                        {cat}
-                      </span>
-                    ))}
-                  </div>
-                  <h3 className="text-primary group-hover:text-cyan text-lg font-semibold transition-colors">
+                  <h3 className="text-fg group-hover:text-accent text-base font-medium transition-colors">
                     {post.title}
                   </h3>
-                  <div className="text-secondary flex items-center gap-3 text-sm">
-                    <span>{formatDate(post.date)}</span>
-                    <span className="bg-secondary h-1 w-1 rounded-full" />
+                  <div className="text-fg-subtle flex flex-wrap items-center gap-2 text-xs">
+                    <time>{formatDate(post.date)}</time>
+                    <span aria-hidden>·</span>
                     <span>
                       {post.readTime} {translations.readTime}
                     </span>
+                    {post.categories && post.categories.length > 0 && (
+                      <>
+                        <span aria-hidden>·</span>
+                        <span>{post.categories.join(", ")}</span>
+                      </>
+                    )}
                   </div>
                 </Link>
               </motion.div>
@@ -177,5 +158,29 @@ export function BlogSearch({ posts, locale, translations }: BlogSearchProps) {
         </AnimatePresence>
       </div>
     </div>
+  );
+}
+
+function CategoryPill({
+  active,
+  onClick,
+  children,
+}: {
+  active: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={
+        active
+          ? "bg-fg text-bg rounded-full px-3 py-1 text-xs font-medium transition-colors"
+          : "border-border text-fg-muted hover:bg-bg-muted hover:text-fg rounded-full border px-3 py-1 text-xs transition-colors"
+      }
+    >
+      {children}
+    </button>
   );
 }

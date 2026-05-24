@@ -6,7 +6,7 @@ test.describe("Home Page", () => {
 
     await expect(page).toHaveTitle(/Juliano Sirtori/);
     await expect(page.locator("h1")).toContainText("Juliano Sirtori");
-    await expect(page.locator("h2").first()).toContainText("Front-end");
+    await expect(page.getByText(/Front-end engineer/i)).toBeVisible();
   });
 
   test("should display the home page in Portuguese", async ({ page }) => {

@@ -12,13 +12,14 @@ export function HeaderItemWrapper({
   children: React.ReactNode;
 }) {
   const pathname: string = usePathname();
+  const isActive = pathname.includes(href);
 
   return (
     <li
       {...props}
-      className={clsx({
-        "after:content[''] relative text-primary after:absolute after:left-0 after:right-0 after:top-5 after:m-auto after:h-[1px] after:w-6  after:bg-primary":
-          pathname.includes(href),
+      className={clsx("relative", {
+        "after:bg-accent after:absolute after:right-3 after:bottom-1 after:left-3 after:h-px after:content-['']":
+          isActive,
       })}
     >
       {children}

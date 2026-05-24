@@ -1,9 +1,9 @@
 {
   "myName": "Juliano",
   "myFullName": "Juliano Sirtori",
-  "role": "Desenvolvedor Front-end",
-  "slogan": "Eu crio interações entre usuários e tecnologia!",
-  "tapToStart": "Toque <firstKey>⌘</firstKey> <secondKey>k</secondKey> para começar",
+  "role": "Engenheiro Front-end Sênior",
+  "slogan": "Engenheiro front-end sênior, escrevendo sobre o ofício.",
+  "tapToStart": "Aperte <firstKey>⌘</firstKey> <secondKey>k</secondKey> para navegar",
   "header": {
     "about": "sobre",
     "blog": "blog",
@@ -19,6 +19,7 @@
     "project": "Projetos",
     "guestbook": "Livro de Visitas",
     "now": "Agora",
+    "playground": "Playground",
     "defaultSearch": "Pesquisar"
   },
   "goTo": "Ir Para",

@@ -1,11 +1,11 @@
 {
-  "title": "Juliano é um <span>desenvolvedor web front-end</span>",
-  "subtitle": "Sou especializado em projetar e implementar interações perfeitas para o usuário na web, utilizando JavaScript, React e HTML para criar experiências digitais cativantes e dinâmicas.",
+  "title": "Juliano é um <span>engenheiro front-end</span>.",
+  "subtitle": "Há mais de 9 anos construindo aplicações web complexas, escaláveis e performáticas. Trabalho com React, Next.js e TypeScript no dia a dia, e me importo principalmente com arquitetura de componentes, design systems, acessibilidade e performance no cliente.",
   "buttonCurriculum": "Currículo",
-  "linkCurriculum": "Portuguese -Juliano Sirtori - Resume.pdf",
+  "linkCurriculum": "/Juliano_Sirtori_Resume.pdf",
   "currentlyWork": "Atualmente trabalhando em ",
-  "currentlyCompany": "CI&T",
-  "currentlyCompanyLink": "https://ciandt.com",
+  "currentlyCompany": "Avenue Code",
+  "currentlyCompanyLink": "https://www.avenuecode.com",
   "quote": "A única maneira de fazer um ótimo trabalho é amar o que você faz.",
   "quoteAuthor": "Steve Jobs",
   "featuredProjects": "Projetos em Destaque",
@@ -15,6 +15,6 @@
   "techStack": "Tech Stack",
   "readTime": "min de leitura",
   "getInTouch": "Entre em Contato",
-  "contactDescription": "Tem um projeto em mente ou só quer conversar? Adoraria ouvir de você.",
+  "contactDescription": "Tem um projeto em mente ou quer trocar ideia sobre código? Manda.",
   "contactButton": "Diga Olá"
 }

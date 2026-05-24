@@ -13,16 +13,22 @@ export default async function Contacts({ params }: ContactsProps) {
   setRequestLocale(lang);
 
   const t = await getTranslations("contacts");
+
   return (
-    <main className="mx-auto my-5 flex w-full max-w-4xl flex-1 flex-col	 px-5 py-nav-height-mobile text-base  leading-8 text-secondary selection:bg-green selection:text-black lg:py-nav-height-desktop">
-      <h1 className="mb-4 text-5xl font-bold text-primary">
-        <span className="bg-gradient-to-r from-cyan to-green bg-clip-text text-transparent">
+    <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col px-5 pt-24 pb-20 lg:pt-32">
+      <header className="mb-10">
+        <h1 className="text-fg mb-3 text-4xl font-medium tracking-tight md:text-5xl">
           {t("title")}
-        </span>
-      </h1>
-      <p className="text-base leading-8 text-secondary ">{t("description")}</p>
+        </h1>
+        <p className="text-fg-muted max-w-prose text-base leading-relaxed">
+          {t("description")}
+        </p>
+      </header>
+
       <section>
-        <h2 className="mb-2 mt-12 text-2xl text-primary">{t("email.title")}</h2>
+        <h2 className="text-fg mt-6 mb-3 text-lg font-medium">
+          {t("email.title")}
+        </h2>
         <ContactForm />
       </section>
     </main>

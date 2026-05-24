@@ -9,12 +9,9 @@ import { languages } from "@/locales/languages";
 export const HeaderSelectLang = () => {
   const pathname = usePathname();
   const router = useRouter();
-
   const currentLocale = useLocale();
 
-  const langs = useMemo(() => {
-    return Object.keys(languages);
-  }, []);
+  const langs = useMemo(() => Object.keys(languages), []);
 
   const handleSelect = (locale: string) => {
     router.push(pathname, { locale });
@@ -24,27 +21,26 @@ export const HeaderSelectLang = () => {
     <Select.Root onValueChange={handleSelect} defaultValue={currentLocale}>
       <Select.Trigger
         aria-label="change language"
-        className="flex flex-row items-center gap-1 p-1 font-semibold text-secondary"
+        className="text-fg-muted hover:text-fg hover:bg-bg-muted focus-visible:ring-accent inline-flex h-8 items-center gap-1 rounded-md px-2 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none"
       >
         <Select.Value>{currentLocale.toUpperCase()}</Select.Value>
-
         <Select.Icon>
-          <ChevronDownIcon width={16} height={16} className="mb-1" />
+          <ChevronDownIcon className="h-3 w-3" />
         </Select.Icon>
       </Select.Trigger>
       <Select.Portal>
         <Select.SelectContent className="z-20">
-          <Select.SelectViewport className=" absolute top-10 flex flex-col gap-2 border border-primary bg-background p-1 px-2">
+          <Select.SelectViewport className="border-border bg-bg-elevated mt-1 flex flex-col rounded-md border p-1 shadow-lg">
             {langs.map((lang) => (
               <Select.Item
                 key={lang}
                 value={lang}
                 aria-label={lang}
-                className="flex flex-row gap-1 p-1 text-secondary hover:cursor-pointer"
+                className="text-fg-muted hover:bg-bg-muted hover:text-fg flex cursor-pointer flex-row items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none"
               >
                 <Select.ItemText>{lang.toUpperCase()}</Select.ItemText>
                 <Select.ItemIndicator>
-                  <CheckIcon />
+                  <CheckIcon className="h-3 w-3" />
                 </Select.ItemIndicator>
               </Select.Item>
             ))}
