@@ -10,11 +10,15 @@ const technologies = [
   { name: "React", icon: "⚛️" },
   { name: "TypeScript", icon: "📘" },
   { name: "Next.js", icon: "▲" },
-  { name: "JavaScript", icon: "🟨" },
-  { name: "Node.js", icon: "🟢" },
+  { name: "Vue.js", icon: "💚" },
+  { name: "Astro", icon: "🚀" },
   { name: "Tailwind", icon: "🎨" },
-  { name: "GraphQL", icon: "◈" },
-  { name: "Git", icon: "🔀" },
+  { name: "Node.js", icon: "🟢" },
+  { name: "NestJS", icon: "🐈" },
+  { name: "PostgreSQL", icon: "🐘" },
+  { name: "Drizzle ORM", icon: "💧" },
+  { name: "Docker", icon: "🐳" },
+  { name: "Vitest", icon: "⚡" },
 ];
 
 export function TechStack({ title }: TechStackProps) {

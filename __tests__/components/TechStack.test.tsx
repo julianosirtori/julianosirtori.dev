@@ -28,11 +28,15 @@ describe("TechStack", () => {
     expect(screen.getByText("React")).toBeInTheDocument();
     expect(screen.getByText("TypeScript")).toBeInTheDocument();
     expect(screen.getByText("Next.js")).toBeInTheDocument();
-    expect(screen.getByText("JavaScript")).toBeInTheDocument();
-    expect(screen.getByText("Node.js")).toBeInTheDocument();
+    expect(screen.getByText("Vue.js")).toBeInTheDocument();
+    expect(screen.getByText("Astro")).toBeInTheDocument();
     expect(screen.getByText("Tailwind")).toBeInTheDocument();
-    expect(screen.getByText("GraphQL")).toBeInTheDocument();
-    expect(screen.getByText("Git")).toBeInTheDocument();
+    expect(screen.getByText("Node.js")).toBeInTheDocument();
+    expect(screen.getByText("NestJS")).toBeInTheDocument();
+    expect(screen.getByText("PostgreSQL")).toBeInTheDocument();
+    expect(screen.getByText("Drizzle ORM")).toBeInTheDocument();
+    expect(screen.getByText("Docker")).toBeInTheDocument();
+    expect(screen.getByText("Vitest")).toBeInTheDocument();
   });
 
   it("should render technology icons", () => {
@@ -47,10 +51,10 @@ describe("TechStack", () => {
   it("should render correct number of technology items", () => {
     render(<TechStack title="Tech Stack" />);
 
-    // There are 8 technologies
+    // There are 12 technologies
     const techItems = screen.getAllByText(
-      /React|TypeScript|Next.js|JavaScript|Node.js|Tailwind|GraphQL|Git/,
+      /React|TypeScript|Next\.js|Vue\.js|Astro|Tailwind|Node\.js|NestJS|PostgreSQL|Drizzle ORM|Docker|Vitest/,
     );
-    expect(techItems).toHaveLength(8);
+    expect(techItems).toHaveLength(12);
   });
 });
