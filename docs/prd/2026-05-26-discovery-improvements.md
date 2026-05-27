@@ -21,6 +21,20 @@ A casa foi reformada nos últimos 30 dias. Os móveis chegaram. Falta o morador.
 
 A motivação imediata vem da própria evolução do site. O PRD anterior (editorial refresh) deixou newsletter, busca full-text e backend out-of-scope. Foi a chamada certa naquele momento. Agora cabe revisitar com cabeça fria.
 
+## Positioning Shift
+
+Decisão de carreira recente que muda o eixo desta discovery: o Juliano está se reposicionando de **front-end engineer** pra **engenheiro de software full-stack**, e tem **engenharia de IA como direção de estudo** pro próximo capítulo. Hoje trabalha React/Next.js no front e NestJS no back, em TypeScript ponta a ponta. Estuda IA, mas ainda não tem entrega de IA no portfólio.
+
+Isso afeta praticamente todas as superfícies do site, que hoje ainda comunicam "front-end" como identidade:
+
+- Hero da home declara front-end ("engenheiro front-end")
+- Subtítulo da home enumera só React/Next/TS
+- Tech Stack section mostra só stack de front
+- About page descreve carreira como front-end
+- CV carrega o mesmo posicionamento antigo
+
+Princípio que vai guiar a comunicação: **o hero é o que se é hoje, não o que se quer ser**. Full-stack pode entrar no slogan porque já existe na prática. IA não entra como competência, entra como direção declarada de estudo, em camada secundária (subtítulo, `/now`, `/about`). Quando houver entrega de IA shippada, a comunicação migra. Antes disso, vale honestidade sobre estar estudando, sem inflar bio.
+
 ## Competitive Landscape
 
 Devs sêniores que estão alguns passos à frente, e o que cada um faz que o `julianosirtori.dev` ainda não faz:
@@ -44,14 +58,14 @@ Padrão recorrente nos melhores: **eles existem fora do site também e o site é
 
 Pontuei dor por dor, com franqueza:
 
-### 1. Hero genérico
+### 1. Hero genérico e desatualizado
 
 Copy atual:
 
 > "Juliano é um engenheiro front-end."
 > "Há mais de 9 anos construindo aplicações web complexas, escaláveis e performáticas. Trabalho com React, Next.js e TypeScript..."
 
-Isso descreve metade da timeline do LinkedIn brasileiro. Falta tese. O que diferencia o Juliano de outro sênior React com 9 anos? Quais problemas ele resolve melhor? Por que um time deveria querer ele especificamente?
+Dois problemas se somam. Primeiro, é genérico. Descreve metade da timeline do LinkedIn brasileiro. Falta tese. Segundo, e mais grave depois da decisão recente, está desatualizado: diz "front-end" quando o Juliano já trabalha full-stack e estuda IA. O hero precisa declarar tese **E** refletir o novo eixo (full-stack hoje, IA como direção de estudo, sem inflar competência).
 
 ### 2. Página de projetos é um cemitério de links
 
@@ -97,6 +111,10 @@ Os 29 artigos são tecnicamente sólidos. Mas o voice guide (que existe) ainda n
 
 O terminal tem soft keyboard pra mobile, mas a real é que terminal em telinha de celular não é a melhor experiência. Vale considerar uma versão "mobile-aware" do playground (lista de comandos clicáveis em vez de input livre).
 
+### 13. Incongruência de posicionamento em todo o site
+
+Não é só o hero. Tech Stack section da home, página About, `/now`, OG metadata e o próprio CV declaram "front-end engineer". Pra reposicionar com coerência, a mudança precisa varrer essas superfícies juntas. Senão visitante recebe sinais conflitantes: hero novo dizendo full-stack, mas about velho ainda contando história de front-end puro.
+
 ## Requirements
 
 Organizei em **três fases**. Cada fase tem entrega isolada e visível. Fases podem ser executadas fora de ordem se necessário, mas a ordem proposta segue de "mais barato e mais impacto" pra "mais ambicioso".
@@ -105,13 +123,15 @@ Organizei em **três fases**. Cada fase tem entrega isolada e visível. Fases po
 
 Custo baixo, retorno alto. Quase tudo é conteúdo, não código.
 
-- **Reescrever o hero da home.** Saída: substituir "Juliano é um engenheiro front-end" por uma frase com tese. Estrutura sugerida: o que faço + por quem + qual é a forma. Exemplo de direção (não copy final): "Construo interfaces que aguentam escala. React, Next.js e design systems pra times que não podem se dar ao luxo de re-fazer no ano que vem." Voice guide aplicado em pt e en.
+- **Reescrever o hero da home.** Saída: substituir "Juliano é um engenheiro front-end" por slogan + subtítulo refletindo o novo posicionamento. Slogan declara identidade full-stack com tese (estrutura: o que faço + qual é a forma + diferencial). Subtítulo expande stack (React/Next no front, NestJS no back, TS ponta a ponta) e cita IA como **estudo declarado**, não competência. Exemplo de direção (não copy final): slogan "Construo aplicações web ponta a ponta, e me importo principalmente com o que sobra do projeto depois que o hype passa." + subtítulo "9 anos no desenvolvimento web. React e Next.js no front, NestJS no back, sempre em TypeScript. Atualmente estudando engenharia de IA." Voice guide aplicado em pt e en (rewrite, não tradução literal).
+- **Atualizar Tech Stack section da home.** Saída: agrupar logos em três faixas visíveis: **Front** (React, Next.js, TypeScript), **Back** (NestJS, Node, banco de dados que usa) e **Estudando** (ferramentas/conceitos de IA conforme o Juliano definir: LLMs, RAG, agents, evals). Faixa "Estudando" tem rótulo explícito pra deixar claro que não é stack de entrega.
+- **Reescrever About page pra refletir transição.** Saída: parágrafo declarando posicionamento full-stack atual + parágrafo declarando estudo de IA como próximo capítulo, com lista do que está estudando especificamente. Honesto sobre estar estudando, não entregando. Mantém timeline de experiências (não reescreve história), atualiza só o framing do "quem sou hoje".
 - **Estudos de caso para 3 projetos featured.** Saída: cada projeto featured ganha página própria com hero, contexto (qual era o problema), decisões técnicas (stack, trade-offs, alternativas descartadas), resultado (métrica ou aprendizado), e 1 print ou GIF curto. Mínimo 3 case studies, máximo 5. Os outros 7 ficam como lista compacta. Critério de escolha: variedade (1 produto a serviço de cliente real, 1 experimento técnico, 1 colaboração open source ou ferramenta).
-- **Página `/uses`.** Saída: rota nova `/[lang]/uses` listando hardware (notebook, monitor, teclado, mouse, fone, cadeira), software (editor, terminal, browser, extensions, dotfiles), e configs (font, theme, key bindings). Cada item com 1 frase de "por que esse". Inspiração: `uses.tech` agregator + `wesbos.com/uses`.
-- **Página `/hire-me` (ou `/work-with-me`).** Saída: rota nova com 3 blocos. Disponibilidade atual (full-time, freelance, mentoria, palestra). Tipo de trabalho que aceita e não aceita. Como contratar (link pro form + email + LinkedIn, com tempo de resposta esperado). O comando hidden do playground `hire-me` já navega pra essa rota.
+- **Página `/uses`.** Saída: rota nova `/[lang]/uses` listando hardware (notebook, monitor, teclado, mouse, fone, cadeira), software (editor, terminal, browser, extensions, dotfiles), ferramentas de back (DB client, API client, container runtime), ferramentas de IA usadas no dia a dia (Claude, Cursor, ChatGPT, etc.) e configs (font, theme, key bindings). Cada item com 1 frase de "por que esse". Inspiração: `uses.tech` agregator + `wesbos.com/uses`.
+- **Página `/hire-me` (ou `/work-with-me`).** Saída: rota nova com 3 blocos. Disponibilidade atual (full-time, freelance, mentoria, palestra). Tipo de trabalho que aceita (front-end, full-stack) e o que **ainda** não aceita (projetos puros de IA, porque está em fase de estudo). Como contratar (link pro form + email + LinkedIn, com tempo de resposta esperado). O comando hidden do playground `hire-me` já navega pra essa rota.
 - **Reorganizar recommendations.** Saída: mover bloco de testimonials da `/about` pra home (acima da seção "get in touch") em formato compacto (carrossel ou 2-3 visíveis com link "ver mais"). Adicionar foto pequena de quem recomendou se houver permissão, com link pro LinkedIn da pessoa.
 - **Now page com timestamp grande.** Saída: data de última edição em destaque no topo. Cadência declarada ("atualizo no início de cada mês"). Histórico das últimas 3 versões linkável (opcional, low-priority).
-- **Voice no blog: 1 série + 1 artigo opinativo.** Saída: definir 1 série com 3-5 artigos (ex: "Refatorando interfaces que escalaram errado"), publicar o primeiro com hook de série visível no header do post. Publicar 1 artigo declaradamente opinativo (formato "manifesto pessoal" ou "o que eu mudei de ideia"). Voice guide aplicado de ponta a ponta.
+- **Voice no blog: 1 série + 1 artigo opinativo.** Saída: definir 1 série com 3-5 artigos relacionada à transição atual (ex: "Migrando da fronteira: front-end pra full-stack sem virar generalista raso", ou "Primeiros passos honestos em engenharia de IA"), publicar o primeiro com hook de série visível no header do post. Publicar 1 artigo declaradamente opinativo (formato "manifesto pessoal" ou "o que eu mudei de ideia"). Voice guide aplicado de ponta a ponta.
 
 ### Fase 2, Captura e prova social (Must Have)
 
@@ -147,6 +167,7 @@ Apostas mais arriscadas. Cada uma é um spike, pode ser feita ou cortada.
 - **"Last shipped" no footer.** Data do último deploy visível em todas as páginas como prova de movimento. Pode puxar da env de build.
 - **Snippets/recipes section.** Pasta de utilitários TS/React curtos com tag e explicação. Pra gente que cai do Google buscando "react usePrevious typescript", encontra, e leva o site na cabeça depois.
 - **Open source contributions visíveis.** Bloco em `/about` ou home listando PRs notáveis em projetos famosos (Next.js, Radix, etc.) se houver. Prova social técnica gratuita.
+- **Open AI learning log.** Rota `/[lang]/learning-ai` (ou similar) com devlog público do estudo de IA: o que tentou, o que funcionou, o que falhou, links pra repos e notebooks. Bilíngue. Vira diferencial enorme porque a maioria dos devs entrando em IA esconde a jornada e só aparece "pronto". Mostrar processo é raro e marca posição.
 
 ### Out of Scope
 
@@ -157,6 +178,7 @@ Apostas mais arriscadas. Cada uma é um spike, pode ser feita ou cortada.
 - **Migrar Contentlayer.** Continua.
 - **Trocar Vercel ou Resend.** Sem mudança de infra.
 - **Monetização direta.** Sem cursos pagos, sem "buy me a coffee" agressivo, sem ads. Foco é audiência e oportunidades, não receita direta de site.
+- **Reivindicar título de AI Engineer sem entrega.** Sem "AI Engineer in transition" no hero, sem stack list com "AI/ML" enfileirado junto com React, sem badge no LinkedIn antes de ter código de IA público. IA fica em camada de estudo até virar prática.
 
 ## Constraints
 
@@ -168,14 +190,22 @@ Apostas mais arriscadas. Cada uma é um spike, pode ser feita ou cortada.
 - **SSR-friendly.** Qualquer dado vivo (GitHub, Spotify) tem fallback estático, não quebra build.
 - **Privacy-first em analytics.** Sem Google Analytics. Plausible ou Umami self-hosted. Sem cookies de tracking sem consentimento.
 - **Custo mensal teto.** Newsletter + backend leve juntos não passam de USD 20/mês até atingir 500 assinantes ou métrica equivalente. Acima disso, reavaliar.
+- **Honest framing em IA.** IA aparece no site só como **estudo declarado**, nunca como expertise ou serviço entregável, até existir produto/PR/artigo de IA shippado. Vale pro hero, about, `/work-with-me`, CV, OG metadata e newsletter.
 
 ## Acceptance Criteria
 
-### Hero com voz
+### Hero com voz e posicionamento atualizado
 
 - Dado um visitante novo na home, quando lê o hero, então identifica em 1 frase qual é a tese profissional do Juliano (não "engenheiro front-end" genérico).
+- Dado o hero atualizado, quando lido, então declara identidade full-stack (não front-end) e menciona IA apenas em camada de estudo, nunca como competência atual ou serviço.
 - Dado um leitor em pt vs en, quando compara os heros, então as duas versões expressam a mesma tese mas não são tradução literal uma da outra.
 - Dado o voice guide aplicado, quando revisado por outra pessoa, então passa o checklist (sem em dash, sem exclamação, sem "soluções incríveis", sem "create interactions").
+
+### Tech Stack e About coerentes com posicionamento
+
+- Dado a Tech Stack section da home, quando renderizada, então mostra logos agrupados em **Front**, **Back** e **Estudando**, com rótulo "Estudando" explícito (não enfileira tudo no mesmo nível).
+- Dado a página `/about`, quando lida, então declara posicionamento full-stack atual no primeiro parágrafo e cita estudo de IA como direção, sem inflar como competência.
+- Dado qualquer superfície do site (hero, about, /now, OG, CV link), quando comparadas lado a lado, então comunicam o mesmo eixo de posicionamento (full-stack hoje, IA como estudo).
 
 ### Profundidade em projetos
 
@@ -200,6 +230,12 @@ Apostas mais arriscadas. Cada uma é um spike, pode ser feita ou cortada.
 
 - Dado a página `/work-with-me`, quando aberta, então diz em até 3 segundos de leitura: o Juliano está disponível? pra quê?
 - Dado um visitante quer contratar, quando lê a página, então sabe o tempo médio de resposta declarado e qual canal usar (form, email, LinkedIn).
+- Dado a página `/work-with-me`, quando aberta, então lista explicitamente o que **aceita** (front-end, full-stack) e o que **ainda não aceita** (projetos puros de IA), sem esconder a fase de estudo.
+
+### Página /uses
+
+- Dado a página `/uses`, quando aberta, então lista pelo menos 1 ferramenta de back-end e 1 ferramenta de IA usadas no dia a dia, além das ferramentas de front.
+- Dado cada item listado em `/uses`, quando lido, então traz 1 frase de "por que esse" (não só nome + logo).
 
 ### Playground exposto sem quebrar minimalismo
 
@@ -220,6 +256,7 @@ Apostas mais arriscadas. Cada uma é um spike, pode ser feita ou cortada.
 
 - Dado a página `/now`, quando aberta, então mostra data da última edição no topo com destaque tipográfico.
 - Dado a página `/now`, quando aberta, então declara cadência ("atualizo no início de cada mês" ou similar) explícita.
+- Dado a página `/now`, quando aberta, então lista 2-4 itens específicos sob "estudando IA" (ex: LLM apps, RAG, agents, evals), não bullet genérico "estudando IA".
 
 ### Performance e acessibilidade
 
