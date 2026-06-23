@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "baseUrl": "..",
+    "paths": {
+      "contentlayer/generated": [".contentlayer/generated/index.mjs"],
+      "next/navigation": [".design-sync/stubs/next-navigation.ts"],
+      "framer-motion": [".design-sync/stubs/framer-motion.ts"],
+      "fs": [".design-sync/stubs/empty.ts"],
+      "stream": [".design-sync/stubs/empty.ts"],
+      "zlib": [".design-sync/stubs/empty.ts"]
+    }
+  }
+}

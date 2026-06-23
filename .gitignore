@@ -38,3 +38,13 @@ next-env.d.ts
 .contentlayer
 
 .scannerwork
+
+# design-sync (claude.ai/design) — staged scripts, build output, machine state.
+# The durable inputs under .design-sync/ (config.json, NOTES.md, conventions.md,
+# ds-entry.tsx, tw-input.css, stubs/, previews/, overrides/) ARE committed.
+.ds-sync/
+/ds-bundle/
+.design-sync/.cache/
+.design-sync/learnings/
+.design-sync/node_modules
+.design-sync/compiled.css

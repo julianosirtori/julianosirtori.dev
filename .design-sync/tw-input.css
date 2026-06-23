@@ -1,0 +1,22 @@
+/*
+ * Tailwind v4 compile input for design-sync. The app generates utility CSS on
+ * demand via @tailwindcss/postcss during `next build`, so no static stylesheet
+ * exists for the bundle to ship. This file recompiles globals.css (theme tokens
+ * + base layer) plus every utility class used by the components into a single
+ * static stylesheet, which cfg.cssEntry points at.
+ *
+ * Regenerate (run from repo root) before each build:
+ *   .ds-sync/node_modules/.bin/tailwindcss -i .design-sync/tw-input.css -o .design-sync/compiled.css
+ */
+@import "../src/app/globals.css";
+@source "../src";
+@source "../.design-sync/previews";
+
+/* Map the next/font CSS vars to the @font-face families shipped via
+   cfg.extraFonts (.design-sync/fonts.css). globals.css references
+   var(--font-geist-sans)/var(--font-geist-mono); the app sets these at runtime,
+   so the bundle must define them itself. */
+:root {
+  --font-geist-sans: "Geist";
+  --font-geist-mono: "Geist Mono";
+}

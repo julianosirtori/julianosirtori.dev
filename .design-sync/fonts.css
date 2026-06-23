@@ -1,0 +1,22 @@
+/*
+ * Brand fonts for the bundle. The app loads Geist via next/font (geist/font/*),
+ * which injects @font-face + the --font-geist-* CSS vars at runtime, so no
+ * static stylesheet ships them. design-sync copies the woff2 referenced here
+ * into fonts/ and wires this into the styles.css import closure (cfg.extraFonts).
+ * The --font-geist-* variable mapping lives in tw-input.css (compiled into
+ * cfg.cssEntry), since extraFonts keeps only @font-face rules.
+ */
+@font-face {
+  font-family: "Geist";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../node_modules/geist/dist/fonts/geist-sans/Geist-Variable.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Geist Mono";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../node_modules/geist/dist/fonts/geist-mono/GeistMono-Variable.woff2") format("woff2");
+}
