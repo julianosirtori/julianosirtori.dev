@@ -2,29 +2,6 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
 import { BlogSearch } from "@/components/BlogSearch";
 
-// Mock framer-motion
-vi.mock("framer-motion", () => ({
-  motion: {
-    div: ({
-      children,
-      className,
-    }: {
-      children: React.ReactNode;
-      className?: string;
-    }) => <div className={className}>{children}</div>,
-    p: ({
-      children,
-      className,
-    }: {
-      children: React.ReactNode;
-      className?: string;
-    }) => <p className={className}>{children}</p>,
-  },
-  AnimatePresence: ({ children }: { children: React.ReactNode }) => (
-    <>{children}</>
-  ),
-}));
-
 // Mock next-intl navigation
 vi.mock("@/locales/navigation", () => ({
   Link: ({
@@ -48,21 +25,24 @@ const mockPosts = [
     slug: "react-hooks",
     date: "2024-01-15",
     readTime: 5,
-    categories: ["React", "JavaScript"],
+    excerpt: "A gentle intro to hooks.",
+    tags: ["React", "JavaScript"],
   },
   {
     title: "TypeScript Best Practices",
     slug: "typescript-best",
     date: "2024-02-10",
     readTime: 8,
-    categories: ["TypeScript"],
+    excerpt: "Patterns that hold up.",
+    tags: ["TypeScript"],
   },
   {
     title: "CSS Grid Layout",
     slug: "css-grid",
-    date: "2024-03-05",
+    date: "2023-03-05",
     readTime: 4,
-    categories: ["CSS"],
+    excerpt: "Two-dimensional layout.",
+    tags: ["CSS"],
   },
 ];
 
@@ -70,7 +50,12 @@ const mockTranslations = {
   searchPlaceholder: "Search articles...",
   allCategories: "All",
   noResults: "No articles found",
+  clearFilters: "Clear filters",
   readTime: "min read",
+  article: "article",
+  articles: "articles",
+  post: "post",
+  posts: "posts",
 };
 
 describe("BlogSearch", () => {
@@ -88,7 +73,20 @@ describe("BlogSearch", () => {
     expect(screen.getByText("CSS Grid Layout")).toBeInTheDocument();
   });
 
-  it("should filter posts by search query", () => {
+  it("should group posts by year with a divider", () => {
+    render(
+      <BlogSearch
+        posts={mockPosts}
+        locale="en"
+        translations={mockTranslations}
+      />,
+    );
+
+    expect(screen.getByText("2024")).toBeInTheDocument();
+    expect(screen.getByText("2023")).toBeInTheDocument();
+  });
+
+  it("should filter posts by search query (title, excerpt or tag)", () => {
     render(
       <BlogSearch
         posts={mockPosts}
@@ -107,7 +105,7 @@ describe("BlogSearch", () => {
     expect(screen.queryByText("CSS Grid Layout")).not.toBeInTheDocument();
   });
 
-  it("should filter posts by category", () => {
+  it("should filter posts by tag", () => {
     render(
       <BlogSearch
         posts={mockPosts}
@@ -116,7 +114,6 @@ describe("BlogSearch", () => {
       />,
     );
 
-    // Get the category button (not the tag in post card)
     const buttons = screen.getAllByRole("button");
     const typescriptButton = buttons.find(
       (btn) => btn.textContent === "TypeScript",
@@ -140,10 +137,10 @@ describe("BlogSearch", () => {
     const searchInput = screen.getByPlaceholderText("Search articles...");
     fireEvent.change(searchInput, { target: { value: "xyz123" } });
 
-    expect(screen.getByText("No articles found")).toBeInTheDocument();
+    expect(screen.getByText(/No articles found/)).toBeInTheDocument();
   });
 
-  it("should render category pills", () => {
+  it("should render tag pills", () => {
     render(
       <BlogSearch
         posts={mockPosts}
@@ -152,7 +149,6 @@ describe("BlogSearch", () => {
       />,
     );
 
-    // Get all buttons (category pills)
     const buttons = screen.getAllByRole("button");
     const buttonTexts = buttons.map((btn) => btn.textContent);
 
@@ -163,7 +159,7 @@ describe("BlogSearch", () => {
     expect(buttonTexts).toContain("CSS");
   });
 
-  it("should clear category filter when clicking All", () => {
+  it("should clear the tag filter when clicking All", () => {
     render(
       <BlogSearch
         posts={mockPosts}
@@ -172,7 +168,6 @@ describe("BlogSearch", () => {
       />,
     );
 
-    // First filter by category
     const buttons = screen.getAllByRole("button");
     const typescriptButton = buttons.find(
       (btn) => btn.textContent === "TypeScript",
@@ -180,7 +175,6 @@ describe("BlogSearch", () => {
     fireEvent.click(typescriptButton!);
     expect(screen.queryByText("React Hooks Tutorial")).not.toBeInTheDocument();
 
-    // Then click All
     const allButton = buttons.find((btn) => btn.textContent === "All");
     fireEvent.click(allButton!);
     expect(screen.getByText("React Hooks Tutorial")).toBeInTheDocument();
