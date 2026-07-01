@@ -1,12 +1,12 @@
 import { ImageResponse } from "next/og";
 import { IPostProps } from "./page";
 import { allPosts } from "contentlayer/generated";
+import { OgCard } from "@/app/og-card";
 
 export const runtime = "edge";
 
 export const contentType = "image/png";
-export const alt =
-  "Juliano Sirtori — Front-end engineer writing about the craft.";
+export const alt = "Juliano Sirtori — Full-stack software engineer.";
 
 export const size = {
   width: 1200,
@@ -15,46 +15,20 @@ export const size = {
 
 export default async function GET({ params }: IPostProps) {
   try {
-    const { slug } = await params;
+    const { lang, slug } = await params;
     const post = allPosts.find((post) => post.slug === slug);
 
+    const readLabel = lang === "pt" ? "min de leitura" : "min read";
+    const meta = post
+      ? `${post.readTime} ${readLabel}`
+      : "Full-stack software engineer";
+
     return new ImageResponse(
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          padding: "80px",
-          backgroundColor: "#0a0a0a",
-          color: "#fafafa",
-          fontFamily: "system-ui, sans-serif",
-        }}
-      >
-        <h1
-          style={{
-            fontSize: "72px",
-            fontWeight: 500,
-            letterSpacing: "-0.02em",
-            margin: 0,
-            lineHeight: 1.1,
-          }}
-        >
-          {post?.title}
-        </h1>
-        <p
-          style={{
-            fontSize: "24px",
-            color: "#a3a3a3",
-            margin: 0,
-            fontFamily:
-              "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
-          }}
-        >
-          juliano sirtori.
-        </p>
-      </div>,
+      <OgCard
+        category={post?.categories?.[0]}
+        title={post?.title ?? "Juliano Sirtori"}
+        meta={meta}
+      />,
       { ...size },
     );
   } catch (e: unknown) {

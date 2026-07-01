@@ -1,10 +1,28 @@
 {
   "title": "playground",
   "description": "Um terminal interativo. Digite um comando, aperte Enter. Tenta 'help' se estiver perdido.",
+  "kicker": "Playground",
+  "heroTitle": "Um terminal de verdade, escondido à vista",
+  "heroLede": "Trinta comandos, jogos, easter eggs e pipes que funcionam. Digite <code>help</code> para começar, ou <code>tour</code> para um passeio guiado pelo site.",
   "hint": {
     "tab": "TAB pra autocompletar",
     "history": "↑/↓ pro histórico",
     "clear": "Ctrl+L pra limpar",
     "help": "digite 'help' pra começar"
-  }
+  },
+  "commandsTitle": "No celular, é só tocar",
+  "commandsSub": "terminal em tela pequena é ruim, então aqui os comandos viram botão",
+  "commandsHint": "Uma referência rápida do que cada comando faz, sem precisar digitar.",
+  "commands": [
+    { "cmd": "help", "desc": "Lista todos os comandos disponíveis." },
+    { "cmd": "tour", "desc": "Passeio guiado pelo site em 7 passos." },
+    { "cmd": "about", "desc": "Quem é o Juliano, em uma linha." },
+    { "cmd": "projects", "desc": "Os projetos, com link para os cases." },
+    { "cmd": "theme", "desc": "Troca o tema do site." },
+    { "cmd": "whoami", "desc": "Um easter egg honesto." },
+    { "cmd": "hire-me", "desc": "Atalho para trabalhar comigo." },
+    { "cmd": "snake", "desc": "O clássico, dentro do terminal." },
+    { "cmd": "clear", "desc": "Limpa a tela." }
+  ],
+  "footer": "Cada comando executado entra nos analytics privacy-first, sem identificar você."
 }
