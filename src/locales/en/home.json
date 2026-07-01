@@ -1,20 +1,38 @@
 {
-  "title": "Juliano is a <span>front-end engineer</span>.",
-  "subtitle": "9+ years building complex, scalable, high-performance web apps. I work mostly with React, Next.js, and TypeScript, and care the most about component architecture, design systems, accessibility, and client-side performance.",
-  "buttonCurriculum": "Curriculum",
-  "linkCurriculum": "/Juliano_Sirtori_Resume.pdf",
-  "currentlyWork": "Currently working at ",
-  "currentlyCompany": "Avenue Code",
-  "currentlyCompanyLink": "https://www.avenuecode.com",
-  "quote": "\"The only way to do great work is to love what you do.\"",
-  "quoteAuthor": "Steve Jobs",
-  "featuredProjects": "Featured Projects",
-  "viewAllProjects": "View all",
-  "latestPosts": "Latest Posts",
-  "viewAllPosts": "View all",
-  "techStack": "Tech Stack",
+  "greeting": "Hi, I'm",
+  "role": "Full-stack software engineer",
+  "bio": "I build web apps end to end and look after what's left of a project once the hype fades.",
+  "status": "Building products for the web · Brazil, UTC−3",
+  "nav": {
+    "about": "About",
+    "work": "Work",
+    "writing": "Writing",
+    "contact": "Contact"
+  },
+  "about": {
+    "label": "About",
+    "p1": "That's <strong>9 years of web development</strong>. I started on the front end, picked up the back because the projects needed it, and today I introduce myself by what I actually do: <strong>full-stack in TypeScript</strong>, from the database to the interface.",
+    "p2": "React and Next.js on the front, NestJS and PostgreSQL on the back. I like code that keeps explaining itself after I leave the project, and products that solve the user's problem, not my urge to try the new tool.",
+    "p3": "Right now I'm <accent>studying AI engineering</accent>: LLM apps, RAG, agents and evals. Nothing shipped to the portfolio yet, so I treat it as what it is, study, not a service.",
+    "signalsLabel": "Live signals",
+    "lastArticleLabel": "Last article"
+  },
+  "work": {
+    "label": "Selected work",
+    "viewAll": "View all projects"
+  },
+  "writing": {
+    "label": "Writing",
+    "featuredKicker": "Latest article"
+  },
+  "latestPosts": "Most recent",
+  "viewAllPosts": "All articles",
   "readTime": "min read",
-  "getInTouch": "Get in Touch",
-  "contactDescription": "Got a project in mind or just want to talk shop? Drop a line.",
-  "contactButton": "Say Hello"
+  "contact": {
+    "label": "Contact",
+    "title": "Got a project, or just want to talk code?",
+    "description": "I take freelance, consulting and mentoring. Pure AI projects not yet, I'm studying and I don't charge for what I can't deliver. I reply within two business days.",
+    "linkedin": "LinkedIn"
+  },
+  "footer": "Built with Next.js and TypeScript"
 }

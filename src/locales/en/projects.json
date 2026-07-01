@@ -1,5 +1,16 @@
 {
-  "title": "Projects and Side Projects",
-  "description": "In addition to studying, I really enjoy programming and putting into practice what I've learned. Here, you will find a list of projects I've been involved in, personal projects from my GitHub, and some other information.",
-  "allProjects": "All Projects"
+  "kicker": "Portfolio",
+  "title": "Case studies",
+  "description": "The projects I've built, told through the decisions behind them, not just the final result.",
+  "featured": {
+    "kicker": "Featured case",
+    "tag": "Real client",
+    "summary": "A management SaaS for physiotherapy clinics. From the database to the drag-and-drop agenda, designed and built solo, focused on keeping the operation simple.",
+    "cta": "Read the full study →",
+    "imageAlt": "ClinicaALL preview"
+  },
+  "otherLabel": "Other projects",
+  "otherSub": "Experiments and open source.",
+  "allProjects": "All Projects",
+  "footer": "Built with Next.js and TypeScript"
 }

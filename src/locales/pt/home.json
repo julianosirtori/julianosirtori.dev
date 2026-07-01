@@ -1,20 +1,38 @@
 {
-  "title": "Juliano é um <span>engenheiro front-end</span>.",
-  "subtitle": "Há mais de 9 anos construindo aplicações web complexas, escaláveis e performáticas. Trabalho com React, Next.js e TypeScript no dia a dia, e me importo principalmente com arquitetura de componentes, design systems, acessibilidade e performance no cliente.",
-  "buttonCurriculum": "Currículo",
-  "linkCurriculum": "/Juliano_Sirtori_Resume.pdf",
-  "currentlyWork": "Atualmente trabalhando em ",
-  "currentlyCompany": "Avenue Code",
-  "currentlyCompanyLink": "https://www.avenuecode.com",
-  "quote": "A única maneira de fazer um ótimo trabalho é amar o que você faz.",
-  "quoteAuthor": "Steve Jobs",
-  "featuredProjects": "Projetos em Destaque",
-  "viewAllProjects": "Ver todos",
-  "latestPosts": "Últimos Posts",
-  "viewAllPosts": "Ver todos",
-  "techStack": "Tech Stack",
+  "greeting": "Olá, eu sou",
+  "role": "Engenheiro de software full-stack",
+  "bio": "Construo aplicações web de ponta a ponta e cuido do que sobra do projeto depois que o hype passa.",
+  "status": "Construindo produtos para a web · Brasil, UTC−3",
+  "nav": {
+    "about": "Sobre",
+    "work": "Trabalho",
+    "writing": "Blog",
+    "contact": "Contato"
+  },
+  "about": {
+    "label": "Sobre",
+    "p1": "São <strong>9 anos de desenvolvimento web</strong>. Comecei no front, fui pegando o back porque os projetos precisavam, e hoje me apresento pelo que de fato faço: <strong>full-stack em TypeScript</strong>, do banco de dados à interface.",
+    "p2": "React e Next.js no front, NestJS e PostgreSQL no back. Gosto de código que continua se explicando depois que eu saio do projeto, e de produto que resolve o problema de quem usa, não o meu desejo de usar a ferramenta nova.",
+    "p3": "Agora estou <accent>estudando engenharia de IA</accent>: apps com LLM, RAG, agents e evals. Sem entrega no portfólio ainda, então trato como o que é, estudo, não serviço.",
+    "signalsLabel": "Sinais vivos",
+    "lastArticleLabel": "Último artigo"
+  },
+  "work": {
+    "label": "Trabalho selecionado",
+    "viewAll": "Ver todos os projetos"
+  },
+  "writing": {
+    "label": "Blog",
+    "featuredKicker": "Último artigo"
+  },
+  "latestPosts": "Mais recentes",
+  "viewAllPosts": "Todos os artigos",
   "readTime": "min de leitura",
-  "getInTouch": "Entre em Contato",
-  "contactDescription": "Tem um projeto em mente ou quer trocar ideia sobre código? Manda.",
-  "contactButton": "Diga Olá"
+  "contact": {
+    "label": "Contato",
+    "title": "Tem um projeto, ou só quer falar de código?",
+    "description": "Aceito freelance, consultoria e mentoria. Projetos puros de IA ainda não, estou estudando e não cobro pelo que não entrego. Respondo em até dois dias úteis.",
+    "linkedin": "LinkedIn"
+  },
+  "footer": "Construído com Next.js e TypeScript"
 }
