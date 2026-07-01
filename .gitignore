@@ -38,3 +38,8 @@ next-env.d.ts
 .contentlayer
 
 .scannerwork
+
+# design-sync tool artifacts
+.design-sync/
+.ds-sync/
+ds-bundle/

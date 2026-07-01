@@ -11,6 +11,10 @@ const eslintConfig = [
       "next-env.d.ts",
       "*.config.js",
       "*.config.mjs",
+      // design-sync tool artifacts (generated, not project source)
+      ".design-sync/**",
+      ".ds-sync/**",
+      "ds-bundle/**",
     ],
   },
   ...nextCoreWebVitals,
