@@ -28,6 +28,11 @@ export async function generateMetadata({
   params,
 }: BlogRootLayoutProps): Promise<Metadata> {
   const { lang } = await params;
+
+  if (!routing.locales.includes(lang as "en" | "pt")) {
+    notFound();
+  }
+
   const { messages } = await importLocale(lang);
 
   const title = "Juliano Sirtori";
