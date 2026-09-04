@@ -3,7 +3,13 @@
 import { useEffect, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 
-const SECTIONS = ["about", "work", "writing", "contact"] as const;
+const SECTIONS = [
+  "about",
+  "stack",
+  "writing",
+  "recommendations",
+  "contact",
+] as const;
 type SectionId = (typeof SECTIONS)[number];
 
 export function HomeRail() {
@@ -61,6 +67,7 @@ export function HomeRail() {
           {firstName}
           {lastName && (
             <>
+              {" "}
               <br />
               {lastName}
             </>

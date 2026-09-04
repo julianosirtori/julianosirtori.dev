@@ -13,14 +13,11 @@ export const FS: Record<Cwd, FsEntry[]> = {
     { name: "blog", kind: "dir", path: "/blog" },
     { name: "skills", kind: "dir", path: "/skills" },
     { name: "experience", kind: "dir", path: "/experience" },
-    { name: "contact", kind: "dir", path: "/contact" },
+    { name: "work-with-me", kind: "dir", path: "/work-with-me" },
     { name: "README.md", kind: "file" },
     { name: ".secrets", kind: "file" },
   ],
-  "/about": [
-    { name: "me.md", kind: "file" },
-    { name: "now.md", kind: "file" },
-  ],
+  "/about": [{ name: "me.md", kind: "file" }],
   "/projects": [
     { name: "list.txt", kind: "file" },
     { name: "featured.md", kind: "file" },
@@ -28,7 +25,7 @@ export const FS: Record<Cwd, FsEntry[]> = {
   "/blog": [{ name: "recent.md", kind: "file" }],
   "/skills": [{ name: "stack.txt", kind: "file" }],
   "/experience": [{ name: "career.md", kind: "file" }],
-  "/contact": [
+  "/work-with-me": [
     { name: "email.txt", kind: "file" },
     { name: "social.md", kind: "file" },
   ],

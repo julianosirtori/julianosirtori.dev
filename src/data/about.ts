@@ -53,26 +53,26 @@ export const experiences = [
 export const recommendations = [
   {
     name: "Ivander Salvador Ruiz",
-    role: "Analista Desenvolvedor",
+    role: "Full-stack developer · aiqfome",
     linkedIn: "https://www.linkedin.com/in/ivandersr/",
     date: "2023-09-20",
     content: [
-      "Trabalhei diretamente com o Juliano em alguns projetos e sem dúvidas é um ótimo desenvolvedor.",
-      "Sempre entregando soluções de qualidade,  buscando atender as necessidades dos clientes, empenhado em seu plano de aprendizagem técnica, com seu perfil colaborativo e motivado, consegue garantir ótimas entregas.",
+      "O Juliano foi meu colega de trabalho por aproximadamente um ano, e posso garantir que ele é um desenvolvedor flexível e atento aos detalhes. Além da qualidade nas entregas, posso destacar a facilidade de trabalhar com ele, estando sempre animado e receptivo para discussões e novas ideias.",
     ],
   },
   {
     name: "Daniel Gazzaneo Denardo",
-    role: "Senior Front-end Developer",
+    role: "Frontend developer · aiqfome",
     linkedIn: "https://www.linkedin.com/in/dangazzaneo/",
     date: "2023-03-16",
     content: [
       "I had the pleasure of working with Juliano in two different companies over the course of two years and I can say that he is an exceptional colleague. He is capable of developing highly efficient and scalable solutions, always demonstrating great attention to detail and a high level of understanding of business rules abstractions.",
+      "In addition, Juliano is an excellent team collaborator, with strong interpersonal skills and clear communication abilities. He has a collaborative approach, always seeking to work together to achieve the best possible results. Without a doubt, he is a professional who adds a lot to any project.",
     ],
   },
   {
     name: "Emerson Santana Cunha",
-    role: "Feature Owner",
+    role: "Product Owner · aiqfome",
     linkedIn: "https://www.linkedin.com/in/emerson-santana-cunha-007b0873/",
     date: "2021-09-20",
     content: [

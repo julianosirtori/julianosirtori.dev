@@ -1,38 +1,40 @@
 {
   "greeting": "Olá, eu sou",
-  "role": "Engenheiro de software full-stack",
-  "bio": "Construo aplicações web de ponta a ponta e cuido do que sobra do projeto depois que o hype passa.",
-  "status": "Construindo produtos para a web · Brasil, UTC−3",
+  "role": "Building Things",
+  "bio": "10 anos desenvolvendo sistemas. Já construí apps Android, relatórios que simplificam milhões de linhas de dados, aplicações web que recebem milhões de pedidos e participei de migrações de sistemas para diferentes países. E a lista continua crescendo...",
+  "status": "Engenheiro full-stack · Brasil, UTC−3",
   "nav": {
     "about": "Sobre",
-    "work": "Trabalho",
-    "writing": "Blog",
+    "stack": "Stack",
+    "writing": "Escrita",
+    "recommendations": "Recomendações",
     "contact": "Contato"
   },
   "about": {
     "label": "Sobre",
-    "p1": "São <strong>9 anos de desenvolvimento web</strong>. Comecei no front, fui pegando o back porque os projetos precisavam, e hoje me apresento pelo que de fato faço: <strong>full-stack em TypeScript</strong>, do banco de dados à interface.",
-    "p2": "React e Next.js no front, NestJS e PostgreSQL no back. Gosto de código que continua se explicando depois que eu saio do projeto, e de produto que resolve o problema de quem usa, não o meu desejo de usar a ferramenta nova.",
-    "p3": "Agora estou <accent>estudando engenharia de IA</accent>: apps com LLM, RAG, agents e evals. Sem entrega no portfólio ainda, então trato como o que é, estudo, não serviço.",
-    "signalsLabel": "Sinais vivos",
-    "lastArticleLabel": "Último artigo"
+    "p1": "Trabalho com tecnologia há mais de dez anos e com desenvolvimento de software desde 2017. Hoje atuo como <strong>engenheiro full-stack</strong>, com uma base forte em front-end e experiência também em back-end, mobile, bancos de dados e arquitetura de aplicações.",
+    "p2": "Ao longo dessa trajetória, criei um sistema de RH que passou a gerenciar mais de 10 mil perfis e reduziu de três dias para menos de uma hora o tempo de resolução de alguns problemas. Também contribuí para uma plataforma B2B com mais de 2,7 milhões de usuários ativos por mês em 18 países e atuei em sites automotivos com milhões de visitas mensais.",
+    "p3": "Também trabalho com <accent>produtos e soluções que usam IA</accent>, enquanto aprofundo aplicações com LLMs, arquiteturas RAG e agents em projetos práticos. É uma frente em evolução, e procuro deixar claro o que já consigo entregar e o que ainda estou estudando."
   },
-  "work": {
-    "label": "Trabalho selecionado",
-    "viewAll": "Ver todos os projetos"
+  "stack": {
+    "label": "Tech Stack",
+    "studyingLabel": "Estudando",
+    "studyingDescription": "Assuntos que estou aprofundando, não uma stack de entrega."
   },
   "writing": {
-    "label": "Blog",
-    "featuredKicker": "Último artigo"
+    "label": "Escrita"
   },
-  "latestPosts": "Mais recentes",
-  "viewAllPosts": "Todos os artigos",
+  "latestPosts": "Últimos artigos",
+  "viewAllPosts": "Ver todos os artigos",
   "readTime": "min de leitura",
+  "recommendations": {
+    "label": "Recomendações"
+  },
   "contact": {
     "label": "Contato",
-    "title": "Tem um projeto, ou só quer falar de código?",
-    "description": "Aceito freelance, consultoria e mentoria. Projetos puros de IA ainda não, estou estudando e não cobro pelo que não entrego. Respondo em até dois dias úteis.",
-    "linkedin": "LinkedIn"
+    "title": "Vamos trabalhar juntos?",
+    "description": "Se você tem um projeto, uma colaboração em mente ou quer conversar sobre mentoria e palestras, me conte um pouco do contexto.",
+    "cta": "Ver formas de colaboração"
   },
   "footer": "Construído com Next.js e TypeScript"
 }

@@ -7,8 +7,6 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import {
   BackpackIcon,
-  ChatBubbleIcon,
-  ClockIcon,
   CodeIcon,
   CommitIcon,
   EnvelopeClosedIcon,
@@ -58,7 +56,7 @@ export function CommandBar({ children }: TCommandBarProps) {
         label: t("email"),
         section: "general",
         keywords: "email contact send mail",
-        perform: () => router.push("/contact"),
+        perform: () => router.push("/work-with-me"),
         icon: <EnvelopeClosedIcon />,
       },
       {
@@ -105,22 +103,6 @@ export function CommandBar({ children }: TCommandBarProps) {
         keywords: "projects work portfolio",
         perform: () => router.push("/projects"),
         icon: <BackpackIcon />,
-      },
-      {
-        id: "guestbook",
-        label: t("guestbook"),
-        section: "navigate",
-        keywords: "guestbook visitors comments",
-        perform: () => router.push("/guestbook"),
-        icon: <ChatBubbleIcon />,
-      },
-      {
-        id: "now",
-        label: t("now"),
-        section: "navigate",
-        keywords: "now current status",
-        perform: () => router.push("/now"),
-        icon: <ClockIcon />,
       },
       {
         id: "playground",

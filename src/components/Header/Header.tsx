@@ -13,8 +13,9 @@ export const Header = () => {
   const links = useMemo(() => {
     return [
       { label: t("about"), href: "/about" },
-      { label: t("blog"), href: "/blog" },
       { label: t("projects"), href: "/projects" },
+      { label: t("blog"), href: "/blog" },
+      { label: t("workWithMe"), href: "/work-with-me" },
     ];
   }, [t]);
 
@@ -42,6 +43,15 @@ export const Header = () => {
                 </Link>
               </HeaderItemWrapper>
             ))}
+            <HeaderItemWrapper href="/playground">
+              <Link
+                href="/playground"
+                className="text-accent hover:bg-accent-muted inline-flex items-center gap-1.5 rounded-md px-3 py-2 font-mono transition-colors"
+              >
+                <span aria-hidden>{">_"}</span>
+                {t("playground")}
+              </Link>
+            </HeaderItemWrapper>
           </ul>
         </nav>
 

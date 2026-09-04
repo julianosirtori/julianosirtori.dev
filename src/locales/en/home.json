@@ -1,38 +1,40 @@
 {
   "greeting": "Hi, I'm",
-  "role": "Full-stack software engineer",
-  "bio": "I build web apps end to end and look after what's left of a project once the hype fades.",
-  "status": "Building products for the web · Brazil, UTC−3",
+  "role": "Building Things",
+  "bio": "10 years building software. I’ve developed Android apps, reports that simplify millions of rows of data, web applications that handle millions of orders, and participated in system migrations across multiple countries. And the list keeps growing...",
+  "status": "Full-stack engineer · Brazil, UTC−3",
   "nav": {
     "about": "About",
-    "work": "Work",
+    "stack": "Stack",
     "writing": "Writing",
+    "recommendations": "Recommendations",
     "contact": "Contact"
   },
   "about": {
     "label": "About",
-    "p1": "That's <strong>9 years of web development</strong>. I started on the front end, picked up the back because the projects needed it, and today I introduce myself by what I actually do: <strong>full-stack in TypeScript</strong>, from the database to the interface.",
-    "p2": "React and Next.js on the front, NestJS and PostgreSQL on the back. I like code that keeps explaining itself after I leave the project, and products that solve the user's problem, not my urge to try the new tool.",
-    "p3": "Right now I'm <accent>studying AI engineering</accent>: LLM apps, RAG, agents and evals. Nothing shipped to the portfolio yet, so I treat it as what it is, study, not a service.",
-    "signalsLabel": "Live signals",
-    "lastArticleLabel": "Last article"
+    "p1": "I've worked in tech for over ten years and have been building software professionally since 2017. Today I work as a <strong>full-stack engineer</strong>, with a strong frontend foundation and hands-on experience across backend development, mobile applications, databases, and application architecture.",
+    "p2": "Along the way, I built an HR platform that managed more than 10,000 candidate profiles and helped reduce some issue resolution times from three days to under one hour. I also contributed to a B2B platform serving more than 2.7 million monthly active users across 18 countries and worked on automotive websites with millions of monthly visitors.",
+    "p3": "I also work on <accent>products and solutions that use AI</accent>, while going deeper into LLM applications, RAG architectures, and agents through practical projects. It is an evolving part of my work, and I am clear about what I can deliver today and what I am still learning."
   },
-  "work": {
-    "label": "Selected work",
-    "viewAll": "View all projects"
+  "stack": {
+    "label": "Tech Stack",
+    "studyingLabel": "Studying",
+    "studyingDescription": "Subjects I am actively learning, not a delivery stack."
   },
   "writing": {
-    "label": "Writing",
-    "featuredKicker": "Latest article"
+    "label": "Writing"
   },
-  "latestPosts": "Most recent",
-  "viewAllPosts": "All articles",
+  "latestPosts": "Latest posts",
+  "viewAllPosts": "View all posts",
   "readTime": "min read",
+  "recommendations": {
+    "label": "Recommendations"
+  },
   "contact": {
     "label": "Contact",
-    "title": "Got a project, or just want to talk code?",
-    "description": "I take freelance, consulting and mentoring. Pure AI projects not yet, I'm studying and I don't charge for what I can't deliver. I reply within two business days.",
-    "linkedin": "LinkedIn"
+    "title": "Let's work together",
+    "description": "If you have a project, a collaboration in mind, or want to talk about mentoring or speaking, tell me a little about the context.",
+    "cta": "See ways we can work together"
   },
   "footer": "Built with Next.js and TypeScript"
 }

@@ -6,7 +6,16 @@ test.describe("Home Page", () => {
 
     await expect(page).toHaveTitle(/Juliano Sirtori/);
     await expect(page.locator("h1")).toContainText("Juliano Sirtori");
-    await expect(page.getByText(/Front-end engineer/i)).toBeVisible();
+    await expect(page.getByText("Building Things")).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Front" })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "Recommendations" }),
+    ).toBeVisible();
+    await expect(page.getByText("Use cases", { exact: true })).toHaveCount(0);
+    const latestPosts = page.locator('#writing a[href^="/en/blog/"]');
+    await expect(latestPosts).toHaveCount(2);
+    await expect(latestPosts.first()).toBeVisible();
+    await expect(latestPosts.last()).toBeVisible();
   });
 
   test("should display the home page in Portuguese", async ({ page }) => {
@@ -14,6 +23,10 @@ test.describe("Home Page", () => {
 
     await expect(page).toHaveTitle(/Juliano Sirtori/);
     await expect(page.locator("h1")).toContainText("Juliano Sirtori");
+    await expect(page.getByText("Building Things")).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "Recomendações" }),
+    ).toBeVisible();
   });
 
   test("should navigate to blog page", async ({ page }) => {
@@ -35,5 +48,12 @@ test.describe("Home Page", () => {
 
     await page.click('a[href="/en/projects"]');
     await expect(page).toHaveURL(/.*\/projects/);
+  });
+
+  test("should navigate to work-with-me", async ({ page }) => {
+    await page.goto("/en");
+
+    await page.click('a[href="/en/work-with-me"]');
+    await expect(page).toHaveURL(/.*\/work-with-me/);
   });
 });

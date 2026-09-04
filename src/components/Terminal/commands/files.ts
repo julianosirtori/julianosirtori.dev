@@ -30,8 +30,8 @@ const FILES: Record<string, (lang: "en" | "pt") => OutputLine[]> = {
           blank(),
           line("nome:    juliano sirtori"),
           line("local:   curitiba, pr"),
-          line("foco:    front-end, dx, design de interface"),
-          line("anos:    8+ na indústria"),
+          line("foco:    full-stack, produtos digitais, ia"),
+          line("anos:    10+ em tecnologia"),
           line("hoje:    avenue code"),
         ]
       : [
@@ -39,19 +39,10 @@ const FILES: Record<string, (lang: "en" | "pt") => OutputLine[]> = {
           blank(),
           line("name:    juliano sirtori"),
           line("from:    curitiba, brazil"),
-          line("focus:   front-end, dx, interface design"),
-          line("years:   8+ in the industry"),
+          line("focus:   full-stack, digital products, ai"),
+          line("years:   10+ in tech"),
           line("now:     avenue code"),
         ],
-  "/about/now.md": (lang) => [
-    line(lang === "pt" ? "# agora" : "# now"),
-    blank(),
-    line(
-      lang === "pt"
-        ? "leia /now no menu — atualizado direto."
-        : "read /now in the menu — kept up to date.",
-    ),
-  ],
   "/projects/list.txt": (lang) => [
     line(
       lang === "pt"
@@ -84,8 +75,8 @@ const FILES: Record<string, (lang: "en" | "pt") => OutputLine[]> = {
         : "use 'experience' for the timeline.",
     ),
   ],
-  "/contact/email.txt": () => [line("julianosirtori@gmail.com")],
-  "/contact/social.md": (lang) => [
+  "/work-with-me/email.txt": () => [line("julianosirtori@gmail.com")],
+  "/work-with-me/social.md": (lang) => [
     line(lang === "pt" ? "use 'social' pra listar." : "use 'social' to list."),
   ],
 };

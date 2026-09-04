@@ -1,11 +1,9 @@
-import { setRequestLocale, getTranslations } from "next-intl/server";
-import Image from "next/image";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import Image from "next/image";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
-import { experiences, recommendations } from "@/data/about";
-import { LinkedInLogoIcon } from "@radix-ui/react-icons";
-import Link from "next/link";
+import { experiences } from "@/data/about";
 
 dayjs.extend(relativeTime);
 
@@ -14,6 +12,16 @@ export interface AboutProps {
     lang: string;
   }>;
 }
+
+const bioKeys = [
+  "bio.phrase1",
+  "bio.phrase2",
+  "bio.phrase3",
+  "bio.phrase4",
+  "bio.phrase5",
+  "bio.phrase6",
+  "bio.phrase7",
+] as const;
 
 export default async function About({ params }: AboutProps) {
   const { lang } = await params;
@@ -30,40 +38,29 @@ export default async function About({ params }: AboutProps) {
       </header>
 
       <section className="flex w-full flex-col gap-8 md:flex-row md:items-start">
-        <div className="relative h-[320px] w-full shrink-0 md:h-[360px] md:w-[40%]">
+        <div className="relative h-[320px] w-full shrink-0 md:sticky md:top-28 md:h-[360px] md:w-[40%]">
           <Image
             fill
             placeholder="blur"
             blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAP0lEQVQImQE0AMv/AFBQUJKSkqmpqaOjowCurq7v7+/Jycm5ubkA////jIyMn5+fg4ODADAwMD09PWlpaQAAAApRGnEHblMWAAAAAElFTkSuQmCC"
             priority
+            sizes="(min-width: 768px) 300px, calc(100vw - 40px)"
             className="rounded-lg object-cover"
             src="/images/juliano2.jpg"
-            alt="juliano"
+            alt="Juliano Sirtori"
           />
         </div>
 
-        <div className="text-fg-muted flex flex-col gap-4 leading-relaxed">
-          <p>
-            {t.rich("bio.phrase1", {
-              important: (chunks) => (
-                <strong className="text-fg font-medium">{chunks}</strong>
-              ),
-            })}
-          </p>
-          <p>
-            {t.rich("bio.phrase2", {
-              important: (chunks) => (
-                <strong className="text-fg font-medium">{chunks}</strong>
-              ),
-            })}
-          </p>
-          <p>
-            {t.rich("bio.phrase3", {
-              important: (chunks) => (
-                <strong className="text-fg font-medium">{chunks}</strong>
-              ),
-            })}
-          </p>
+        <div className="text-fg-muted flex flex-col gap-5 leading-relaxed">
+          {bioKeys.map((key) => (
+            <p key={key}>
+              {t.rich(key, {
+                important: (chunks) => (
+                  <strong className="text-fg font-medium">{chunks}</strong>
+                ),
+              })}
+            </p>
+          ))}
         </div>
       </section>
 
@@ -72,8 +69,11 @@ export default async function About({ params }: AboutProps) {
           {t("career")}
         </h2>
         <ul className="flex flex-col gap-8">
-          {experiences.map((item, index) => (
-            <li key={index} className="border-border border-l-2 pl-5">
+          {experiences.map((item) => (
+            <li
+              key={`${item.company}-${item.startDate}`}
+              className="border-border border-l-2 pl-5"
+            >
               <h3 className="text-fg text-base font-medium">{item.jobTitle}</h3>
               <p className="text-fg-muted text-sm">
                 <a
@@ -98,36 +98,6 @@ export default async function About({ params }: AboutProps) {
               <p className="text-fg-muted mt-2 text-sm leading-relaxed">
                 {item.skills}
               </p>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <section>
-        <h2 className="text-fg mb-6 text-2xl font-medium tracking-tight">
-          {t("recommendations")}
-        </h2>
-        <ul className="flex flex-col gap-8">
-          {recommendations.map((item, index) => (
-            <li key={index} className="border-border border-l-2 pl-5">
-              <h3 className="text-fg flex flex-row items-center gap-1 text-base">
-                <Link
-                  href={item.linkedIn}
-                  className="flex flex-row items-center gap-2"
-                >
-                  <span className="font-medium">{item.name}</span>
-                  <span className="text-fg-subtle text-sm">· {item.role}</span>
-                  <LinkedInLogoIcon className="text-fg-muted" />
-                </Link>
-              </h3>
-              {item.content.map((paragraph, index) => (
-                <p
-                  key={index}
-                  className="text-fg-muted mt-2 text-sm leading-relaxed"
-                >
-                  {paragraph}
-                </p>
-              ))}
             </li>
           ))}
         </ul>

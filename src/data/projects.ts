@@ -2,10 +2,6 @@ export const projects = {
   en: {
     "2024": [
       {
-        title: "Space Invaders in Vanilla JS",
-        href: "https://julianosirtori.github.io/space-invaders-js/",
-      },
-      {
         title: "CLI: cowsay-pragmatic-programmer",
         href: "https://www.npmjs.com/package/cowsay-pragmatic-programmer",
       },
@@ -51,10 +47,6 @@ export const projects = {
   },
   pt: {
     "2024": [
-      {
-        title: "Space Invaders in Vanilla JS",
-        href: "https://julianosirtori.github.io/space-invaders-js/",
-      },
       {
         title: "CLI: cowsay-pragmatic-programmer",
         href: "https://www.npmjs.com/package/cowsay-pragmatic-programmer",

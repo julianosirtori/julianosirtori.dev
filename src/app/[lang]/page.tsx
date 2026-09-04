@@ -1,11 +1,10 @@
-import { getLocale, getTranslations, setRequestLocale } from "next-intl/server";
 import { allPosts } from "contentlayer/generated";
+import { getLocale, getTranslations, setRequestLocale } from "next-intl/server";
 
 import { HomeRail } from "@/components/HomeRail";
 import { LatestPosts } from "@/components/LatestPosts";
-import { ContactForm } from "@/components/ContactForm";
-import { liveSignals } from "@/data/live-signals";
-import { selectedWork } from "@/data/selected-work";
+import { TechStack } from "@/components/TechStack";
+import { recommendations } from "@/data/about";
 import { Link } from "@/locales/navigation";
 
 export interface HomeProps {
@@ -25,29 +24,18 @@ export default async function Home({ params }: HomeProps) {
   setRequestLocale(lang);
 
   const t = await getTranslations("home");
-  const tGlobal = await getTranslations("global");
   const locale = await getLocale();
 
-  const posts = allPosts
+  const latestPosts = allPosts
     .filter((post) => post.language === locale && !post.draft)
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-
-  const featured = posts[0];
-  const latestPosts = posts.slice(1, 5).map((post) => ({
-    title: post.title,
-    slug: post.slug,
-    date: post.date,
-    readTime: post.readTime,
-  }));
-
-  const formatDate = (dateStr: string) =>
-    new Date(dateStr).toLocaleDateString(locale === "pt" ? "pt-BR" : "en-US", {
-      day: "numeric",
-      month: "long",
-    });
-
-  const work = selectedWork[locale as keyof typeof selectedWork];
-  const signals = liveSignals[locale as keyof typeof liveSignals];
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, 2)
+    .map((post) => ({
+      title: post.title,
+      slug: post.slug,
+      date: post.date,
+      readTime: post.readTime,
+    }));
 
   const rich = {
     strong: (chunks: React.ReactNode) => (
@@ -65,143 +53,25 @@ export default async function Home({ params }: HomeProps) {
       </div>
 
       <div className="flex min-w-0 flex-1 flex-col gap-24">
-        {/* ABOUT */}
         <section id="about" className="scroll-mt-24">
           <SectionLabel>{t("about.label")}</SectionLabel>
-          <div className="text-fg-muted flex max-w-[60ch] flex-col gap-4 text-base leading-relaxed">
+          <div className="text-fg-muted flex max-w-[64ch] flex-col gap-4 text-base leading-relaxed">
             <p>{t.rich("about.p1", rich)}</p>
             <p>{t.rich("about.p2", rich)}</p>
             <p>{t.rich("about.p3", rich)}</p>
           </div>
-
-          <div className="mt-9">
-            <p className="text-fg-subtle mb-4 flex items-center gap-2 font-mono text-[11px] tracking-[0.1em] uppercase">
-              <span className="bg-success h-1.5 w-1.5 animate-pulse rounded-full" />
-              {t("about.signalsLabel")}
-            </p>
-            <div className="grid grid-cols-2 gap-2.5">
-              {featured && (
-                <Link
-                  href={`/blog/${featured.slug}`}
-                  className="border-border bg-bg-elevated hover:border-fg-muted rounded-xl border p-3.5 transition-colors"
-                >
-                  <p className="text-fg-subtle mb-1.5 font-mono text-[10px] tracking-wide uppercase">
-                    {t("about.lastArticleLabel")}
-                  </p>
-                  <p className="text-fg text-[13px] font-medium">
-                    {featured.title}
-                  </p>
-                  <p className="text-fg-subtle mt-1 text-xs">
-                    {formatDate(featured.date)}
-                  </p>
-                </Link>
-              )}
-              {signals.map((signal) => (
-                <div
-                  key={signal.label}
-                  className="border-border bg-bg-elevated rounded-xl border p-3.5"
-                >
-                  <p className="text-fg-subtle mb-1.5 font-mono text-[10px] tracking-wide uppercase">
-                    {signal.label}
-                  </p>
-                  <p className="text-fg text-[13px] font-medium">
-                    {signal.value}
-                  </p>
-                  {signal.meta && (
-                    <p className="text-fg-subtle mt-1 text-xs">{signal.meta}</p>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
         </section>
 
-        {/* WORK */}
-        <section id="work" className="scroll-mt-24">
-          <SectionLabel>{t("work.label")}</SectionLabel>
-          <div className="flex flex-col">
-            {work.map((item) => {
-              const internal = item.href.startsWith("/");
-              const content = (
-                <>
-                  <div>
-                    <span className="text-fg-subtle font-mono text-xs">
-                      {item.year}
-                    </span>
-                    <br />
-                    <span className="text-accent mt-2 inline-block font-mono text-[10px] tracking-wide uppercase">
-                      {item.tag}
-                    </span>
-                  </div>
-                  <div>
-                    <h3 className="text-fg mb-2 inline-flex items-center gap-1.5 text-lg font-semibold">
-                      {item.title}
-                      <span className="text-accent" aria-hidden>
-                        ↗
-                      </span>
-                    </h3>
-                    <p className="text-fg-muted mb-3 text-sm leading-relaxed">
-                      {item.summary}
-                    </p>
-                    <div className="flex flex-wrap gap-1.5">
-                      {item.techs.map((tech) => (
-                        <span
-                          key={tech}
-                          className="bg-accent-muted text-accent rounded-full px-2.5 py-1 font-mono text-[11px]"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </>
-              );
-              const className =
-                "group hover:bg-bg-elevated hover:border-border grid grid-cols-[100px_1fr] gap-5 rounded-2xl border border-transparent p-5 transition-colors";
-              return internal ? (
-                <Link key={item.title} href={item.href} className={className}>
-                  {content}
-                </Link>
-              ) : (
-                <a
-                  key={item.title}
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={className}
-                >
-                  {content}
-                </a>
-              );
-            })}
-          </div>
-          <Link
-            href="/projects"
-            className="text-fg mt-4 ml-5 inline-flex items-center gap-2 text-sm font-medium"
-          >
-            {t("work.viewAll")} <span className="text-accent">→</span>
-          </Link>
+        <section id="stack" className="scroll-mt-24">
+          <TechStack
+            title={t("stack.label")}
+            studyingLabel={t("stack.studyingLabel")}
+            studyingDescription={t("stack.studyingDescription")}
+          />
         </section>
 
-        {/* WRITING */}
         <section id="writing" className="scroll-mt-24">
           <SectionLabel>{t("writing.label")}</SectionLabel>
-          {featured && (
-            <Link
-              href={`/blog/${featured.slug}`}
-              className="bg-accent-muted mb-6 block rounded-2xl p-5"
-            >
-              <span className="text-accent font-mono text-[11px] tracking-wide uppercase">
-                {t("writing.featuredKicker")}
-              </span>
-              <h3 className="text-fg mt-2.5 mb-1.5 text-lg font-semibold">
-                {featured.title}
-              </h3>
-              <p className="text-fg-muted max-w-[52ch] text-sm leading-relaxed">
-                {featured.description}
-              </p>
-            </Link>
-          )}
           <LatestPosts
             posts={latestPosts}
             locale={locale}
@@ -211,34 +81,51 @@ export default async function Home({ params }: HomeProps) {
           />
         </section>
 
-        {/* CONTACT */}
+        <section id="recommendations" className="scroll-mt-24">
+          <h2 className="text-fg mb-7 text-2xl font-semibold tracking-tight">
+            {t("recommendations.label")}
+          </h2>
+          <div className="divide-border border-border divide-y border-y">
+            {recommendations.map((recommendation) => (
+              <figure key={recommendation.name} className="py-6">
+                <blockquote className="text-fg-muted flex flex-col gap-3 text-[15px] leading-relaxed">
+                  {recommendation.content.map((paragraph) => (
+                    <p key={paragraph.slice(0, 32)}>{paragraph}</p>
+                  ))}
+                </blockquote>
+                <figcaption className="mt-4 text-sm">
+                  <a
+                    href={recommendation.linkedIn}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-fg hover:text-accent font-medium transition-colors"
+                  >
+                    {recommendation.name}
+                  </a>
+                  <span className="text-fg-subtle">
+                    {" "}
+                    · {recommendation.role}
+                  </span>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </section>
+
         <section id="contact" className="scroll-mt-24">
           <SectionLabel>{t("contact.label")}</SectionLabel>
-          <h2 className="text-fg mb-2.5 max-w-[18ch] text-2xl font-semibold tracking-tight text-balance">
+          <h2 className="text-fg mb-3 max-w-[18ch] text-3xl font-semibold tracking-tight text-balance">
             {t("contact.title")}
           </h2>
-          <p className="text-fg-muted mb-3 max-w-[50ch] text-[15px] leading-relaxed">
+          <p className="text-fg-muted mb-7 max-w-[54ch] text-base leading-relaxed">
             {t("contact.description")}
           </p>
-          <div className="mb-7 flex flex-wrap gap-2.5">
-            <a
-              href={`mailto:${tGlobal("email")}`}
-              className="border-border text-fg hover:bg-bg-muted inline-flex items-center gap-2 rounded-md border px-4 py-2.5 text-sm font-medium transition-colors"
-            >
-              {tGlobal("email")}
-            </a>
-            <a
-              href={tGlobal("social.linkedin")}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="border-border text-fg hover:bg-bg-muted inline-flex items-center gap-2 rounded-md border px-4 py-2.5 text-sm font-medium transition-colors"
-            >
-              {t("contact.linkedin")}
-            </a>
-          </div>
-          <div className="max-w-[480px]">
-            <ContactForm />
-          </div>
+          <Link
+            href="/work-with-me"
+            className="bg-fg text-bg hover:bg-fg/90 inline-flex w-fit rounded-md px-4 py-2.5 text-sm font-medium transition-colors"
+          >
+            {t("contact.cta")}
+          </Link>
         </section>
 
         <p className="text-fg-subtle font-mono text-xs">{t("footer")}</p>

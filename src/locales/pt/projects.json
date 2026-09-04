@@ -1,16 +1,6 @@
 {
   "kicker": "Portfólio",
-  "title": "Estudos de caso",
-  "description": "Os projetos que desenvolvi, contados pelas decisões por trás, não só o resultado final.",
-  "featured": {
-    "kicker": "Caso em destaque",
-    "tag": "Cliente real",
-    "summary": "SaaS de gestão para clínicas de fisioterapia. Do banco de dados à agenda drag-and-drop, desenhado e construído sozinho, com foco em manter a operação simples.",
-    "cta": "Ler o estudo completo →",
-    "imageAlt": "Prévia do ClinicaALL"
-  },
-  "otherLabel": "Outros projetos",
-  "otherSub": "Experimentos e código aberto.",
-  "allProjects": "Todos os Projetos",
+  "title": "Projetos e side projects",
+  "description": "Uma seleção de trabalhos, experimentos e projetos de código aberto.",
   "footer": "Construído com Next.js e TypeScript"
 }

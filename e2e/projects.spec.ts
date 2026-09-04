@@ -5,9 +5,11 @@ test.describe("Projects Page", () => {
     await page.goto("/en/projects");
 
     await expect(page.locator("h1")).toContainText(
-      "Projects and Side Projects",
+      "Projects and side projects",
     );
     await expect(page.locator('a[target="_blank"]').first()).toBeVisible();
+    await expect(page.getByText("ClinicaALL")).toHaveCount(0);
+    await expect(page.getByText(/case stud/i)).toHaveCount(0);
   });
 
   test("should display projects grouped by year", async ({ page }) => {
@@ -19,6 +21,6 @@ test.describe("Projects Page", () => {
   test("should display projects page in Portuguese", async ({ page }) => {
     await page.goto("/pt/projects");
 
-    await expect(page.locator("h1")).toContainText("Trabalho e Side Projects");
+    await expect(page.locator("h1")).toContainText("Projetos e side projects");
   });
 });

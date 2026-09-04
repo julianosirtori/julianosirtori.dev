@@ -1,16 +1,6 @@
 {
   "kicker": "Portfolio",
-  "title": "Case studies",
-  "description": "The projects I've built, told through the decisions behind them, not just the final result.",
-  "featured": {
-    "kicker": "Featured case",
-    "tag": "Real client",
-    "summary": "A management SaaS for physiotherapy clinics. From the database to the drag-and-drop agenda, designed and built solo, focused on keeping the operation simple.",
-    "cta": "Read the full study →",
-    "imageAlt": "ClinicaALL preview"
-  },
-  "otherLabel": "Other projects",
-  "otherSub": "Experiments and open source.",
-  "allProjects": "All Projects",
+  "title": "Projects and side projects",
+  "description": "A selection of client work, experiments, and open-source projects.",
   "footer": "Built with Next.js and TypeScript"
 }

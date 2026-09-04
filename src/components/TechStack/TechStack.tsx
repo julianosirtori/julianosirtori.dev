@@ -1,49 +1,85 @@
-"use client";
-
-import { motion } from "framer-motion";
-
 interface TechStackProps {
   title: string;
+  studyingLabel: string;
+  studyingDescription: string;
 }
 
-const technologies = [
-  { name: "React", icon: "⚛️" },
-  { name: "TypeScript", icon: "📘" },
-  { name: "Next.js", icon: "▲" },
-  { name: "Vue.js", icon: "💚" },
-  { name: "Astro", icon: "🚀" },
-  { name: "Tailwind", icon: "🎨" },
-  { name: "Node.js", icon: "🟢" },
-  { name: "NestJS", icon: "🐈" },
-  { name: "PostgreSQL", icon: "🐘" },
-  { name: "Drizzle ORM", icon: "💧" },
-  { name: "Docker", icon: "🐳" },
-  { name: "Vitest", icon: "⚡" },
+const groups = [
+  {
+    name: "Front",
+    technologies: [
+      "Vue",
+      "React",
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "Vite",
+    ],
+  },
+  {
+    name: "Back",
+    technologies: ["Node.js", "NestJS", "PostgreSQL", "AWS"],
+  },
+  {
+    name: "Mobile",
+    technologies: ["React Native", "Expo", "Android nativo"],
+  },
+  { name: "Desktop", technologies: ["Tauri", "Rust"] },
+  {
+    name: "Cloud & Tooling",
+    technologies: [
+      "Cloudflare Workers",
+      "Workers KV",
+      "Cloudflare Tunnel",
+      "Model Context Protocol (MCP)",
+      "OAuth 2.1 + PKCE",
+      "GitHub Actions",
+      "Vitest",
+      "Playwright",
+    ],
+  },
 ];
 
-export function TechStack({ title }: TechStackProps) {
+const studying = ["LLM apps", "RAG", "Agents"];
+
+export function TechStack({
+  title,
+  studyingLabel,
+  studyingDescription,
+}: TechStackProps) {
   return (
-    <section className="w-full">
-      <h2 className="text-fg mb-6 text-xl font-medium tracking-tight">
+    <div>
+      <h2 className="text-fg mb-8 text-2xl font-semibold tracking-tight">
         {title}
       </h2>
 
-      <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-        {technologies.map((tech, index) => (
-          <motion.div
-            key={tech.name}
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.03, duration: 0.25 }}
-            className="border-border hover:border-fg-muted text-fg flex items-center gap-3 rounded-lg border px-3 py-2.5 transition-colors"
+      <div className="divide-border border-border divide-y border-y">
+        {groups.map((group) => (
+          <div
+            key={group.name}
+            className="grid gap-3 py-5 sm:grid-cols-[140px_1fr] sm:gap-6"
           >
-            <span className="font-mono text-base" aria-hidden>
-              {tech.icon}
-            </span>
-            <span className="text-sm font-medium">{tech.name}</span>
-          </motion.div>
+            <h3 className="text-fg text-sm font-semibold">{group.name}</h3>
+            <ul className="text-fg-muted flex flex-wrap gap-x-4 gap-y-2 text-sm">
+              {group.technologies.map((technology) => (
+                <li key={technology}>{technology}</li>
+              ))}
+            </ul>
+          </div>
         ))}
       </div>
-    </section>
+
+      <div className="border-accent mt-7 border-l-2 pl-5">
+        <h3 className="text-fg text-sm font-semibold">{studyingLabel}</h3>
+        <p className="text-fg-subtle mt-1 text-sm leading-relaxed">
+          {studyingDescription}
+        </p>
+        <ul className="text-accent mt-3 flex flex-wrap gap-x-4 gap-y-2 font-mono text-xs">
+          {studying.map((subject) => (
+            <li key={subject}>{subject}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
   );
 }
