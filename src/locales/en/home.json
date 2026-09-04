@@ -1,20 +1,40 @@
 {
-  "title": "Juliano is a <span>front-end engineer</span>.",
-  "subtitle": "9+ years building complex, scalable, high-performance web apps. I work mostly with React, Next.js, and TypeScript, and care the most about component architecture, design systems, accessibility, and client-side performance.",
-  "buttonCurriculum": "Curriculum",
-  "linkCurriculum": "/Juliano_Sirtori_Resume.pdf",
-  "currentlyWork": "Currently working at ",
-  "currentlyCompany": "Avenue Code",
-  "currentlyCompanyLink": "https://www.avenuecode.com",
-  "quote": "\"The only way to do great work is to love what you do.\"",
-  "quoteAuthor": "Steve Jobs",
-  "featuredProjects": "Featured Projects",
-  "viewAllProjects": "View all",
-  "latestPosts": "Latest Posts",
-  "viewAllPosts": "View all",
-  "techStack": "Tech Stack",
+  "greeting": "Hi, I'm",
+  "role": "Building Things",
+  "bio": "10 years building software. I’ve developed Android apps, reports that simplify millions of rows of data, web applications that handle millions of orders, and participated in system migrations across multiple countries. And the list keeps growing...",
+  "status": "Full-stack engineer · Brazil, UTC−3",
+  "nav": {
+    "about": "About",
+    "stack": "Stack",
+    "writing": "Writing",
+    "recommendations": "Recommendations",
+    "contact": "Contact"
+  },
+  "about": {
+    "label": "About",
+    "p1": "I've worked in tech for over ten years and have been building software professionally since 2017. Today I work as a <strong>full-stack engineer</strong>, with a strong frontend foundation and hands-on experience across backend development, mobile applications, databases, and application architecture.",
+    "p2": "Along the way, I built an HR platform that managed more than 10,000 candidate profiles and helped reduce some issue resolution times from three days to under one hour. I also contributed to a B2B platform serving more than 2.7 million monthly active users across 18 countries and worked on automotive websites with millions of monthly visitors.",
+    "p3": "I also work on <accent>products and solutions that use AI</accent>, while going deeper into LLM applications, RAG architectures, and agents through practical projects. It is an evolving part of my work, and I am clear about what I can deliver today and what I am still learning."
+  },
+  "stack": {
+    "label": "Tech Stack",
+    "studyingLabel": "Studying",
+    "studyingDescription": "Subjects I am actively learning, not a delivery stack."
+  },
+  "writing": {
+    "label": "Writing"
+  },
+  "latestPosts": "Latest posts",
+  "viewAllPosts": "View all posts",
   "readTime": "min read",
-  "getInTouch": "Get in Touch",
-  "contactDescription": "Got a project in mind or just want to talk shop? Drop a line.",
-  "contactButton": "Say Hello"
+  "recommendations": {
+    "label": "Recommendations"
+  },
+  "contact": {
+    "label": "Contact",
+    "title": "Let's work together",
+    "description": "If you have a project, a collaboration in mind, or want to talk about mentoring or speaking, tell me a little about the context.",
+    "cta": "See ways we can work together"
+  },
+  "footer": "Built with Next.js and TypeScript"
 }

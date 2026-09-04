@@ -4,7 +4,7 @@ import { languages } from "@/locales/languages";
 
 export default async function sitemap() {
   const langs = Object.keys(languages);
-  const pages = ["about", "blog", "contact", "project"];
+  const pages = ["about", "blog", "projects", "work-with-me"];
   const host = process.env.NEXT_PUBLIC_LOCAL_DOMAIN;
 
   const routes: MetadataRoute.Sitemap = [];

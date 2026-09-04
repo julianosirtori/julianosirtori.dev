@@ -12,13 +12,13 @@ export const whoami: CommandDef = {
     line("juliano sirtori", "success"),
     line(
       lang === "pt"
-        ? "front-end engineer, curitiba — brasil"
-        : "front-end engineer, curitiba — brazil",
+        ? "engenheiro de software full-stack, curitiba, brasil"
+        : "full-stack software engineer, curitiba, brazil",
     ),
     line(
       lang === "pt"
-        ? "construindo interfaces que pessoas usam todo dia"
-        : "building interfaces people use every day",
+        ? "construindo produtos digitais de ponta a ponta"
+        : "building digital products end to end",
       "muted",
     ),
   ],
@@ -34,10 +34,10 @@ export const about: CommandDef = {
         line("sobre", "success"),
         blank(),
         line(
-          "dev front-end há +8 anos. passei por aiqfome, ci&t e avenue code.",
+          "trabalho com tecnologia há mais de 10 anos e com software desde 2017.",
         ),
-        line("foco em react, next.js, typescript e qualidade de interface."),
-        line("também escrevo no blog — 'posts' lista os artigos recentes."),
+        line("atuo como full-stack, com uma base forte em front-end."),
+        line("também escrevo no blog. 'posts' lista os artigos recentes."),
         blank(),
         dim("dica: 'cd about && ls' tem mais coisa."),
       ];
@@ -45,9 +45,9 @@ export const about: CommandDef = {
     return [
       line("about", "success"),
       blank(),
-      line("front-end dev for 8+ years. worked at aiqfome, ci&t, avenue code."),
-      line("focus on react, next.js, typescript and interface quality."),
-      line("i also write on the blog — try 'posts' to list recent articles."),
+      line("working in tech for over 10 years and in software since 2017."),
+      line("full-stack today, with a strong frontend foundation."),
+      line("i also write on the blog. try 'posts' to list recent articles."),
       blank(),
       dim("hint: 'cd about && ls' has more."),
     ];
@@ -59,21 +59,16 @@ export const skills: CommandDef = {
   aliases: ["stack"],
   description: { en: "tech stack", pt: "stack de tecnologias" },
   run: () => {
-    const items = [
-      { tech: "TypeScript", level: "★★★★★" },
-      { tech: "React", level: "★★★★★" },
-      { tech: "Next.js", level: "★★★★★" },
-      { tech: "Node.js", level: "★★★★☆" },
-      { tech: "Tailwind", level: "★★★★★" },
-      { tech: "GraphQL", level: "★★★★☆" },
-      { tech: "Vue.js", level: "★★★★☆" },
-      { tech: "Testing", level: "★★★★☆" },
-    ];
-    const widest = Math.max(...items.map((i) => i.tech.length));
     return [
       line("tech stack", "success"),
       blank(),
-      ...items.map((i) => line(`  ${i.tech.padEnd(widest + 2)} ${i.level}`)),
+      line("  front      vue, react, next.js, typescript, tailwind, vite"),
+      line("  back       node.js, nestjs, postgresql, aws"),
+      line("  mobile     react native, expo, android"),
+      line("  desktop    tauri, rust"),
+      line("  tooling    cloudflare, mcp, github actions, vitest, playwright"),
+      blank(),
+      dim("  studying   llm apps, rag, agents"),
     ];
   },
 };
@@ -108,7 +103,7 @@ export const contact: CommandDef = {
   run: ({ args, env, lang }) => {
     const out = [line("email: julianosirtori@gmail.com")];
     if (args.includes("--open")) {
-      env.router.push("/contact");
+      env.router.push("/work-with-me");
       out.push(
         dim(
           lang === "pt"

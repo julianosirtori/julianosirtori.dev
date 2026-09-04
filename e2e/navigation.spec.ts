@@ -4,11 +4,12 @@ test.describe("Navigation", () => {
   test("should have working header navigation", async ({ page }) => {
     await page.goto("/en");
 
-    // Check that all main navigation links are present (About, Blog, Projects)
-    // Scope selectors to header to avoid matching "View all" links in the page body
     await expect(page.locator('header a[href="/en/blog"]')).toBeVisible();
     await expect(page.locator('header a[href="/en/about"]')).toBeVisible();
     await expect(page.locator('header a[href="/en/projects"]')).toBeVisible();
+    await expect(
+      page.locator('header a[href="/en/work-with-me"]'),
+    ).toBeVisible();
   });
 
   test("should have working footer", async ({ page }) => {

@@ -1,24 +1,24 @@
 {
   "myName": "Juliano",
   "myFullName": "Juliano Sirtori",
-  "role": "Engenheiro Front-end Sênior",
-  "slogan": "Engenheiro front-end sênior, escrevendo sobre o ofício.",
+  "role": "Engenheiro de software full-stack",
+  "slogan": "Engenheiro de software full-stack, construindo produtos digitais de ponta a ponta.",
   "tapToStart": "Aperte <firstKey>⌘</firstKey> <secondKey>k</secondKey> para navegar",
   "header": {
     "about": "sobre",
+    "projects": "projetos",
     "blog": "blog",
-    "projects": "projetos"
+    "workWithMe": "trabalhe comigo",
+    "playground": "playground"
   },
   "kbar": {
-    "email": "Enviar Email",
+    "email": "Trabalhe comigo",
     "source": "Ver Código Fonte",
     "home": "Início",
     "about": "Sobre",
     "contact": "Contato",
     "blog": "Blog",
     "project": "Projetos",
-    "guestbook": "Livro de Visitas",
-    "now": "Agora",
     "playground": "Playground",
     "defaultSearch": "Pesquisar"
   },

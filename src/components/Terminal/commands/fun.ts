@@ -135,7 +135,7 @@ export const hireMe: CommandDef = {
   description: { en: "let's talk", pt: "vamos conversar" },
   hidden: true,
   run: ({ env, lang }) => {
-    env.router.push("/contact");
+    env.router.push("/work-with-me");
     return [
       ok(lang === "pt" ? "boa escolha." : "good choice."),
       line(

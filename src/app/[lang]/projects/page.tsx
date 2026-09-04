@@ -1,8 +1,8 @@
+import type { Metadata } from "next";
 import { getLocale, getTranslations, setRequestLocale } from "next-intl/server";
 
-import { projects } from "@/data/projects";
 import { ProjectCard } from "@/components/ProjectCard";
-import { Metadata } from "next";
+import { projects } from "@/data/projects";
 import { importLocale } from "@/locales";
 
 interface ProjectsProps {
@@ -16,8 +16,7 @@ export async function generateMetadata({
 }: ProjectsProps): Promise<Metadata> {
   const { lang } = await params;
   const { messages } = await importLocale(lang);
-
-  const title = "Juliano Sirtori | Projects";
+  const title = `${messages.projects.title} | Juliano Sirtori`;
   const description = messages.projects.description;
 
   return {
@@ -26,7 +25,7 @@ export async function generateMetadata({
     openGraph: {
       title,
       description,
-      url: "https://julianosirtori.dev/projects",
+      url: `https://julianosirtori.dev/${lang}/projects`,
     },
   };
 }
@@ -36,49 +35,53 @@ export default async function Projects({ params }: ProjectsProps) {
   setRequestLocale(lang);
 
   const t = await getTranslations("projects");
-  const currentLocale = await getLocale();
-  const projectsGroupedByYear =
-    projects[currentLocale as keyof typeof projects];
-  const years = Object.keys(projectsGroupedByYear).reverse();
-
-  let globalIndex = 0;
+  const locale = await getLocale();
+  const groupedProjects = projects[locale as keyof typeof projects];
+  const projectGroups = Object.entries(groupedProjects).sort(
+    ([firstYear], [secondYear]) => secondYear.localeCompare(firstYear),
+  );
 
   return (
-    <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col px-5 pt-24 pb-20 lg:pt-32">
-      <header className="mb-12">
-        <h1 className="text-fg mb-3 text-4xl font-medium tracking-tight md:text-5xl">
+    <main className="mx-auto flex w-full max-w-4xl flex-1 flex-col px-5 pt-20 pb-20 lg:pt-28">
+      <header className="pb-14">
+        <p className="text-accent mb-5 font-mono text-xs tracking-[0.16em] uppercase">
+          {t("kicker")}
+        </p>
+        <h1 className="text-fg mb-6 text-5xl font-semibold tracking-tight md:text-6xl">
           {t("title")}
         </h1>
-        <p className="text-fg-muted max-w-prose text-base leading-relaxed">
+        <p className="text-fg-muted max-w-[58ch] text-lg leading-relaxed text-pretty">
           {t("description")}
         </p>
       </header>
 
       <div className="flex flex-col gap-12">
-        {years.map((year) => (
-          <section key={year}>
-            <h2 className="text-fg-subtle mb-4 font-mono text-sm tracking-wide uppercase">
+        {projectGroups.map(([year, items]) => (
+          <section key={year} aria-labelledby={`projects-${year}`}>
+            <h2
+              id={`projects-${year}`}
+              className="text-fg-subtle border-border mb-3 border-b pb-3 font-mono text-sm"
+            >
               {year}
             </h2>
-            <div className="grid gap-2 sm:grid-cols-2">
-              {projectsGroupedByYear[
-                year as keyof typeof projectsGroupedByYear
-              ].map((project) => {
-                const currentIndex = globalIndex++;
-                return (
-                  <ProjectCard
-                    key={project.title}
-                    title={project.title}
-                    href={project.href}
-                    year={year}
-                    index={currentIndex}
-                  />
-                );
-              })}
+            <div className="flex flex-col gap-2">
+              {items.map((project, index) => (
+                <ProjectCard
+                  key={project.title}
+                  title={project.title}
+                  href={project.href}
+                  year={year}
+                  index={index}
+                />
+              ))}
             </div>
           </section>
         ))}
       </div>
+
+      <p className="border-border text-fg-subtle mt-16 border-t pt-6 font-mono text-xs">
+        {t("footer")}
+      </p>
     </main>
   );
 }

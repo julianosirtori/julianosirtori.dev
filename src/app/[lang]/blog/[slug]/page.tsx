@@ -81,6 +81,7 @@ export default async function PostPage({ params }: IPostProps) {
   setRequestLocale(lang);
 
   const t = await getTranslations("blog");
+  const tGlobal = await getTranslations("global");
   const locale = await getLocale();
 
   const localePosts = allPosts
@@ -107,17 +108,39 @@ export default async function PostPage({ params }: IPostProps) {
         <div className="grid gap-12 xl:grid-cols-[1fr_220px]">
           <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col">
             <header className="mb-10">
-              <div className="text-fg-muted mb-4 flex flex-wrap items-center gap-2 text-sm">
+              {post.categories && post.categories.length > 0 && (
+                <div className="mb-5 flex flex-wrap items-center gap-2.5 font-mono text-xs">
+                  <span className="bg-accent-muted text-accent rounded-full px-2.5 py-1 tracking-wide uppercase">
+                    {post.categories[0]}
+                  </span>
+                  {post.categories.slice(1).length > 0 && (
+                    <span className="text-fg-subtle">
+                      {post.categories.slice(1).join(" · ")}
+                    </span>
+                  )}
+                </div>
+              )}
+              <h1 className="text-fg mb-5 text-4xl leading-[1.08] font-semibold tracking-tight text-balance md:text-5xl">
+                {post.title}
+              </h1>
+              <p className="text-fg-muted mb-7 text-lg leading-relaxed text-pretty">
+                {post.description}
+              </p>
+              <div className="border-border text-fg-subtle flex flex-wrap items-center gap-3.5 border-y py-4 font-mono text-[13px]">
+                <span className="text-fg font-medium">
+                  {tGlobal("myFullName")}
+                </span>
+                <span className="opacity-50">·</span>
                 <time dateTime={post.date}>
                   {dayjs(post.date).format("MMM DD, YYYY")}
                 </time>
-                <span aria-hidden>·</span>
+                <span className="opacity-50">·</span>
                 <span>
                   {post.readTime} {t("readTime")}
                 </span>
                 {post.updated && (
                   <>
-                    <span aria-hidden>·</span>
+                    <span className="opacity-50">·</span>
                     <span>
                       {t("updated")}{" "}
                       {dayjs(post.updated).format("MMM DD, YYYY")}
@@ -125,9 +148,6 @@ export default async function PostPage({ params }: IPostProps) {
                   </>
                 )}
               </div>
-              <h1 className="text-fg text-3xl leading-tight font-medium tracking-tight md:text-4xl">
-                {post.title}
-              </h1>
             </header>
 
             <article className="prose">
@@ -153,7 +173,10 @@ export default async function PostPage({ params }: IPostProps) {
                 locale={locale}
               />
 
-              <div className="border-border border-t pt-8">
+              <div className="border-border flex flex-col gap-4 border-t pt-8">
+                <p className="text-fg-subtle font-mono text-xs tracking-[0.1em] uppercase">
+                  {t("reactionsPrompt")}
+                </p>
                 <Reactions slug={post.slug} />
               </div>
 

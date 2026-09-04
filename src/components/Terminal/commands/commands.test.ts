@@ -166,7 +166,17 @@ describe("contact", () => {
     const ctx = mockCtx({ args: ["--open"] });
     await run(registry.contact, ctx);
     expect((ctx.env as unknown as MockEnv).router.push).toHaveBeenCalledWith(
-      "/contact",
+      "/work-with-me",
+    );
+  });
+});
+
+describe("hire-me", () => {
+  it("opens the work-with-me page", async () => {
+    const ctx = mockCtx();
+    await run(registry["hire-me"], ctx);
+    expect((ctx.env as unknown as MockEnv).router.push).toHaveBeenCalledWith(
+      "/work-with-me",
     );
   });
 });

@@ -1,5 +1,6 @@
 {
-  "title": "Projects and Side Projects",
-  "description": "In addition to studying, I really enjoy programming and putting into practice what I've learned. Here, you will find a list of projects I've been involved in, personal projects from my GitHub, and some other information.",
-  "allProjects": "All Projects"
+  "kicker": "Portfolio",
+  "title": "Projects and side projects",
+  "description": "A selection of client work, experiments, and open-source projects.",
+  "footer": "Built with Next.js and TypeScript"
 }

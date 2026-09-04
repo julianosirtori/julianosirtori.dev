@@ -125,10 +125,11 @@
   .prose h2 {
     margin: 2.5em 0 0.5em;
     color: var(--fg);
-    font-size: 1.5rem;
-    line-height: 1.3;
+    font-size: 1.6rem;
+    line-height: 1.25;
     font-weight: 600;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
+    scroll-margin-top: 6rem;
   }
 
   .prose h3 {
@@ -138,6 +139,7 @@
     line-height: 1.4;
     font-weight: 600;
     letter-spacing: -0.005em;
+    scroll-margin-top: 6rem;
   }
 
   .prose h4 {
@@ -185,13 +187,14 @@
     font-style: italic;
   }
 
-  [data-rehype-pretty-code-fragment] code {
+  [data-rehype-pretty-code-figure] code {
     display: grid;
     min-width: 100%;
     overflow-wrap: break-word;
     border-radius: 0;
     border-width: 0;
     background-color: transparent;
+    color: inherit;
     padding: 0;
     font-size: 0.875rem;
     line-height: 1.6;
@@ -199,11 +202,11 @@
     box-decoration-break: clone;
   }
 
-  [data-rehype-pretty-code-fragment] pre {
+  [data-rehype-pretty-code-figure] pre {
     overflow-x: auto;
   }
 
-  [data-rehype-pretty-code-fragment] [data-line-numbers] > .line::before {
+  [data-rehype-pretty-code-figure] [data-line-numbers] > .line::before {
     counter-increment: line;
     content: counter(line);
     display: inline-block;
@@ -213,15 +216,15 @@
     color: var(--fg-subtle);
   }
 
-  [data-rehype-pretty-code-fragment] .line {
+  [data-rehype-pretty-code-figure] .line {
     padding: 0.15rem 0;
   }
 
-  [data-rehype-pretty-code-fragment] .line--highlighted {
+  [data-rehype-pretty-code-figure] .line--highlighted {
     background-color: color-mix(in oklch, var(--accent) 12%, transparent);
   }
 
-  [data-rehype-pretty-code-fragment] .word--highlighted {
+  [data-rehype-pretty-code-figure] .word--highlighted {
     border-radius: 0.25rem;
     background-color: color-mix(in oklch, var(--accent) 14%, transparent);
     padding: 0.15rem 0.3rem;

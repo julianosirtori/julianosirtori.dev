@@ -1,0 +1,55 @@
+{
+  "kicker": "Work with me",
+  "title": "Let's work together",
+  "description": "I build digital products end to end and can work wherever the problem calls for it, across frontend, backend, mobile applications, or solutions that use AI.",
+  "availability": {
+    "title": "Current availability",
+    "intro": "I do not keep a public availability calendar. I prefer to understand the context, the stage of the project, and where my experience can be useful first.",
+    "longTerm": "Long-term collaborations: open to a conversation",
+    "freelance": "Freelance projects: considered based on context, scope, and timeline",
+    "mentoring": "Mentoring: available on request",
+    "speaking": "Speaking: available on request"
+  },
+  "contributions": {
+    "title": "Where I can contribute",
+    "web": "Frontend, backend, and full-stack applications",
+    "mobile": "Mobile products and experiences",
+    "ai": "Products and solutions that use AI",
+    "architecture": "Product architecture, evolution, and technical quality",
+    "mentoring": "Technical mentoring and speaking",
+    "description": "I have a generalist profile and can adapt to different technologies and forms of collaboration. The starting point is usually the problem that needs to be solved."
+  },
+  "start": {
+    "title": "How to start",
+    "description": "Send a message with your details, the kind of collaboration you are looking for, and a short summary of the context.",
+    "alternative": "If you prefer, reach me directly by email or LinkedIn.",
+    "responseTime": "I reply within 24 hours.",
+    "email": "Email",
+    "linkedin": "LinkedIn"
+  },
+  "form": {
+    "labelName": "Name",
+    "placeholderName": "Your name",
+    "labelEmail": "Email",
+    "placeholderEmail": "you@company.com",
+    "labelCompanyOrProject": "Company or project",
+    "placeholderCompanyOrProject": "Company or project name",
+    "labelCollaborationType": "Collaboration type",
+    "placeholderCollaborationType": "Select an option",
+    "collaborationTypes": {
+      "long-term": "Long-term collaboration",
+      "freelance": "Freelance project",
+      "mentoring": "Mentoring",
+      "speaking": "Speaking",
+      "other": "Other"
+    },
+    "labelMessage": "Context",
+    "placeholderMessage": "Tell me about the problem, the stage of the project, and how you think I could contribute.",
+    "button": "Send message",
+    "buttonLoading": "Sending...",
+    "successTitle": "Message sent",
+    "successDescription": "I received the context and will reply within 24 hours.",
+    "errorTitle": "Message not sent",
+    "errorDescription": "Try again or contact me directly by email."
+  }
+}

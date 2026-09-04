@@ -4,33 +4,65 @@ import { Resend } from "resend";
 
 const MAX_NAME = 100;
 const MAX_EMAIL = 254;
+const MAX_CONTEXT = 200;
 const MAX_MESSAGE = 5000;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const COLLABORATION_TYPES = [
+  "long-term",
+  "freelance",
+  "mentoring",
+  "speaking",
+  "other",
+] as const;
 
-interface ContactPayload {
+export interface ContactPayload {
   name: string;
   email: string;
+  companyOrProject: string;
+  collaborationType: (typeof COLLABORATION_TYPES)[number];
   message: string;
 }
 
-function validate(raw: unknown): ContactPayload | null {
+export function validateContactPayload(raw: unknown): ContactPayload | null {
   if (!raw || typeof raw !== "object") return null;
   const data = raw as Record<string, unknown>;
 
   const name = typeof data.name === "string" ? data.name.trim() : "";
   const email = typeof data.email === "string" ? data.email.trim() : "";
+  const companyOrProject =
+    typeof data.companyOrProject === "string"
+      ? data.companyOrProject.trim()
+      : "";
+  const collaborationType =
+    typeof data.collaborationType === "string"
+      ? data.collaborationType.trim()
+      : "";
   const message = typeof data.message === "string" ? data.message.trim() : "";
 
   if (!name || name.length > MAX_NAME) return null;
   if (!email || email.length > MAX_EMAIL || !EMAIL_RE.test(email)) return null;
+  if (!companyOrProject || companyOrProject.length > MAX_CONTEXT) return null;
+  if (
+    !COLLABORATION_TYPES.includes(
+      collaborationType as ContactPayload["collaborationType"],
+    )
+  ) {
+    return null;
+  }
   if (!message || message.length > MAX_MESSAGE) return null;
 
-  return { name, email, message };
+  return {
+    name,
+    email,
+    companyOrProject,
+    collaborationType: collaborationType as ContactPayload["collaborationType"],
+    message,
+  };
 }
 
 export async function POST(req: NextRequest) {
   const raw = await req.json().catch(() => null);
-  const payload = validate(raw);
+  const payload = validateContactPayload(raw);
 
   if (!payload) {
     return NextResponse.json({ message: "Invalid request" }, { status: 400 });

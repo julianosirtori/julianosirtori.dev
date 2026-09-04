@@ -17,7 +17,7 @@ export type Cwd =
   | "/about"
   | "/skills"
   | "/experience"
-  | "/contact";
+  | "/work-with-me";
 
 export type ThemeName = "dracula" | "matrix" | "mono" | "solar";
 

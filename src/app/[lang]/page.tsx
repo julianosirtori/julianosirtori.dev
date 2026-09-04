@@ -1,11 +1,10 @@
-import { setRequestLocale } from "next-intl/server";
-import { getTranslations, getLocale } from "next-intl/server";
-import { ArrowRightIcon } from "@radix-ui/react-icons";
 import { allPosts } from "contentlayer/generated";
+import { getLocale, getTranslations, setRequestLocale } from "next-intl/server";
 
-import { FeaturedProjects } from "@/components/FeaturedProjects";
+import { HomeRail } from "@/components/HomeRail";
 import { LatestPosts } from "@/components/LatestPosts";
 import { TechStack } from "@/components/TechStack";
+import { recommendations } from "@/data/about";
 import { Link } from "@/locales/navigation";
 
 export interface HomeProps {
@@ -14,18 +13,23 @@ export interface HomeProps {
   }>;
 }
 
+const SectionLabel = ({ children }: { children: React.ReactNode }) => (
+  <p className="text-fg-subtle mb-6 font-mono text-xs tracking-[0.14em] uppercase">
+    {children}
+  </p>
+);
+
 export default async function Home({ params }: HomeProps) {
   const { lang } = await params;
   setRequestLocale(lang);
 
-  const t = await getTranslations("global");
-  const tHome = await getTranslations("home");
+  const t = await getTranslations("home");
   const locale = await getLocale();
 
   const latestPosts = allPosts
     .filter((post) => post.language === locale && !post.draft)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-    .slice(0, 4)
+    .slice(0, 2)
     .map((post) => ({
       title: post.title,
       slug: post.slug,
@@ -33,85 +37,99 @@ export default async function Home({ params }: HomeProps) {
       readTime: post.readTime,
     }));
 
+  const rich = {
+    strong: (chunks: React.ReactNode) => (
+      <span className="text-fg font-medium">{chunks}</span>
+    ),
+    accent: (chunks: React.ReactNode) => (
+      <span className="text-accent font-medium">{chunks}</span>
+    ),
+  };
+
   return (
-    <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-24 px-5 pt-24 pb-20 lg:pt-32">
-      <section className="flex min-h-[50vh] flex-col justify-center">
-        <div className="border-border text-fg-muted mb-8 inline-flex w-fit items-center gap-2 rounded-full border px-3 py-1 text-xs">
-          <span className="relative flex h-1.5 w-1.5">
-            <span className="bg-success absolute inline-flex h-full w-full animate-ping rounded-full opacity-60" />
-            <span className="bg-success relative inline-flex h-1.5 w-1.5 rounded-full" />
-          </span>
-          {tHome("currentlyWork")}
-          <a
-            href={tHome("currentlyCompanyLink")}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-fg hover:text-accent font-medium"
-          >
-            {tHome("currentlyCompany")}
-          </a>
-        </div>
+    <main className="mx-auto flex w-full max-w-6xl flex-col gap-14 px-5 pt-20 pb-20 lg:flex-row lg:gap-16 lg:pt-28">
+      <div className="lg:w-[36%] lg:shrink-0">
+        <HomeRail />
+      </div>
 
-        <h1 className="text-fg mb-6 text-5xl leading-[1.05] font-medium tracking-tight md:text-6xl">
-          {t("myFullName")}
-        </h1>
+      <div className="flex min-w-0 flex-1 flex-col gap-24">
+        <section id="about" className="scroll-mt-24">
+          <SectionLabel>{t("about.label")}</SectionLabel>
+          <div className="text-fg-muted flex max-w-[64ch] flex-col gap-4 text-base leading-relaxed">
+            <p>{t.rich("about.p1", rich)}</p>
+            <p>{t.rich("about.p2", rich)}</p>
+            <p>{t.rich("about.p3", rich)}</p>
+          </div>
+        </section>
 
-        <p className="text-fg-muted mb-10 max-w-xl text-lg leading-relaxed">
-          {t("slogan")}
-        </p>
+        <section id="stack" className="scroll-mt-24">
+          <TechStack
+            title={t("stack.label")}
+            studyingLabel={t("stack.studyingLabel")}
+            studyingDescription={t("stack.studyingDescription")}
+          />
+        </section>
 
-        <p className="text-fg-muted mb-10 max-w-xl text-base leading-relaxed">
-          {tHome("subtitle")}
-        </p>
+        <section id="writing" className="scroll-mt-24">
+          <SectionLabel>{t("writing.label")}</SectionLabel>
+          <LatestPosts
+            posts={latestPosts}
+            locale={locale}
+            title={t("latestPosts")}
+            viewAll={t("viewAllPosts")}
+            readTime={t("readTime")}
+          />
+        </section>
 
-        <div className="flex flex-wrap items-center gap-3">
+        <section id="recommendations" className="scroll-mt-24">
+          <h2 className="text-fg mb-7 text-2xl font-semibold tracking-tight">
+            {t("recommendations.label")}
+          </h2>
+          <div className="divide-border border-border divide-y border-y">
+            {recommendations.map((recommendation) => (
+              <figure key={recommendation.name} className="py-6">
+                <blockquote className="text-fg-muted flex flex-col gap-3 text-[15px] leading-relaxed">
+                  {recommendation.content.map((paragraph) => (
+                    <p key={paragraph.slice(0, 32)}>{paragraph}</p>
+                  ))}
+                </blockquote>
+                <figcaption className="mt-4 text-sm">
+                  <a
+                    href={recommendation.linkedIn}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-fg hover:text-accent font-medium transition-colors"
+                  >
+                    {recommendation.name}
+                  </a>
+                  <span className="text-fg-subtle">
+                    {" "}
+                    · {recommendation.role}
+                  </span>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </section>
+
+        <section id="contact" className="scroll-mt-24">
+          <SectionLabel>{t("contact.label")}</SectionLabel>
+          <h2 className="text-fg mb-3 max-w-[18ch] text-3xl font-semibold tracking-tight text-balance">
+            {t("contact.title")}
+          </h2>
+          <p className="text-fg-muted mb-7 max-w-[54ch] text-base leading-relaxed">
+            {t("contact.description")}
+          </p>
           <Link
-            href="/blog"
-            className="bg-fg text-bg hover:bg-fg/90 inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors"
+            href="/work-with-me"
+            className="bg-fg text-bg hover:bg-fg/90 inline-flex w-fit rounded-md px-4 py-2.5 text-sm font-medium transition-colors"
           >
-            {tHome("latestPosts")}
-            <ArrowRightIcon className="h-3.5 w-3.5" />
+            {t("contact.cta")}
           </Link>
-          <Link
-            href="/contact"
-            className="border-border text-fg hover:bg-bg-muted inline-flex items-center gap-2 rounded-md border px-4 py-2 text-sm font-medium transition-colors"
-          >
-            {tHome("contactButton")}
-          </Link>
-        </div>
-      </section>
+        </section>
 
-      <FeaturedProjects
-        locale={locale}
-        title={tHome("featuredProjects")}
-        viewAll={tHome("viewAllProjects")}
-      />
-
-      <LatestPosts
-        posts={latestPosts}
-        locale={locale}
-        title={tHome("latestPosts")}
-        viewAll={tHome("viewAllPosts")}
-        readTime={tHome("readTime")}
-      />
-
-      <TechStack title={tHome("techStack")} />
-
-      <section className="border-border rounded-xl border p-8 md:p-12">
-        <h2 className="text-fg mb-3 text-2xl font-medium tracking-tight md:text-3xl">
-          {tHome("getInTouch")}
-        </h2>
-        <p className="text-fg-muted mb-6 max-w-md">
-          {tHome("contactDescription")}
-        </p>
-        <Link
-          href="/contact"
-          className="bg-fg text-bg hover:bg-fg/90 inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors"
-        >
-          {tHome("contactButton")}
-          <ArrowRightIcon className="h-3.5 w-3.5" />
-        </Link>
-      </section>
+        <p className="text-fg-subtle font-mono text-xs">{t("footer")}</p>
+      </div>
     </main>
   );
 }
