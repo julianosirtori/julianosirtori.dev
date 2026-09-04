@@ -4,6 +4,11 @@
   "role": "Engenheiro de software full-stack",
   "slogan": "Engenheiro de software full-stack, construindo produtos digitais de ponta a ponta.",
   "tapToStart": "Aperte <firstKey>⌘</firstKey> <secondKey>k</secondKey> para navegar",
+  "notFound": {
+    "title": "Esta página não foi encontrada.",
+    "description": "O endereço pode estar incorreto, ou a página pode ter mudado.",
+    "backHome": "Voltar ao início"
+  },
   "header": {
     "about": "sobre",
     "projects": "projetos",
