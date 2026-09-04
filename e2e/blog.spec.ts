@@ -28,4 +28,18 @@ test.describe("Blog Page", () => {
     ).toBeVisible();
     await expect(page.locator('a[href*="/blog/"]').first()).toBeVisible();
   });
+
+  test("should render code blocks without the legacy frame", async ({
+    page,
+  }) => {
+    await page.goto("/pt/blog/sse");
+
+    const codeBlock = page.locator("[data-rehype-pretty-code-figure]").first();
+
+    await expect(codeBlock.locator("pre")).toHaveCSS("border-top-width", "0px");
+    await expect(codeBlock.locator("code")).toHaveCSS(
+      "background-color",
+      "rgba(0, 0, 0, 0)",
+    );
+  });
 });

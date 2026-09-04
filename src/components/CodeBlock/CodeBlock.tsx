@@ -31,14 +31,14 @@ export function CodeBlock({ children, className, ...props }: CodeBlockProps) {
   return (
     <div className="group relative my-6">
       {language && (
-        <div className="bg-bg-muted text-fg-subtle border-border absolute top-3 right-12 z-10 rounded-md border px-2 py-0.5 font-mono text-[10px] tracking-wide uppercase">
+        <div className="absolute top-4 right-12 z-10 font-mono text-[10px] tracking-wide text-white/50">
           {language}
         </div>
       )}
       <button
         type="button"
         onClick={handleCopy}
-        className="bg-bg-muted text-fg-muted hover:text-fg border-border hover:border-fg-muted absolute top-3 right-3 z-10 inline-flex h-7 w-7 items-center justify-center rounded-md border transition-colors"
+        className="absolute top-3 right-3 z-10 inline-flex h-7 w-7 items-center justify-center rounded-md text-white/60 transition-colors hover:bg-white/10 hover:text-white focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:outline-none"
         aria-label={copied ? "Copied" : "Copy code"}
         title={copied ? "Copied" : "Copy code"}
       >
@@ -50,7 +50,7 @@ export function CodeBlock({ children, className, ...props }: CodeBlockProps) {
       </button>
       <pre
         ref={preRef}
-        className={`border-border bg-bg-muted overflow-x-auto rounded-lg border p-4 text-sm ${className || ""}`}
+        className={`bg-bg-muted overflow-x-auto rounded-xl p-4 text-sm sm:p-5 ${className || ""}`}
         {...props}
       >
         {children}
