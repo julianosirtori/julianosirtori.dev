@@ -4,6 +4,11 @@
   "role": "Full-stack software engineer",
   "slogan": "Full-stack software engineer building digital products end to end.",
   "tapToStart": "Press <firstKey>⌘</firstKey> <secondKey>k</secondKey> to navigate",
+  "notFound": {
+    "title": "This page was not found.",
+    "description": "The address may be incorrect, or the page may have moved.",
+    "backHome": "Return home"
+  },
   "header": {
     "about": "about",
     "projects": "projects",

@@ -5,6 +5,9 @@ const withNextIntl = createNextIntlPlugin("./src/locales/index.ts");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    globalNotFound: true,
+  },
   images: {
     remotePatterns: [
       {
