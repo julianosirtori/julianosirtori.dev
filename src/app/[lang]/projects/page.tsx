@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import { ArrowRightIcon } from "@radix-ui/react-icons";
 import { getLocale, getTranslations, setRequestLocale } from "next-intl/server";
 
-import { ProjectCard } from "@/components/ProjectCard";
+import { ProjectArchive } from "@/components/ProjectArchive";
 import { projects } from "@/data/projects";
 import { importLocale } from "@/locales";
+import { Link } from "@/locales/navigation";
 
 interface ProjectsProps {
   params: Promise<{
@@ -37,51 +39,30 @@ export default async function Projects({ params }: ProjectsProps) {
   const t = await getTranslations("projects");
   const locale = await getLocale();
   const groupedProjects = projects[locale as keyof typeof projects];
-  const projectGroups = Object.entries(groupedProjects).sort(
-    ([firstYear], [secondYear]) => secondYear.localeCompare(firstYear),
-  );
 
   return (
-    <main className="mx-auto flex w-full max-w-4xl flex-1 flex-col px-5 pt-20 pb-20 lg:pt-28">
-      <header className="pb-14">
-        <p className="text-accent mb-5 font-mono text-xs tracking-[0.16em] uppercase">
-          {t("kicker")}
-        </p>
-        <h1 className="text-fg mb-6 text-5xl font-semibold tracking-tight md:text-6xl">
+    <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col px-5 pt-12 pb-20 lg:pt-24">
+      <header className="pb-10 sm:pb-12">
+        <h1 className="text-fg mb-6 text-3xl leading-tight font-medium tracking-tight sm:text-4xl lg:text-5xl">
           {t("title")}
         </h1>
-        <p className="text-fg-muted max-w-[58ch] text-lg leading-relaxed text-pretty">
+        <p className="text-fg-muted max-w-[64ch] text-base leading-relaxed text-pretty sm:text-lg">
           {t("description")}
         </p>
       </header>
 
-      <div className="flex flex-col gap-12">
-        {projectGroups.map(([year, items]) => (
-          <section key={year} aria-labelledby={`projects-${year}`}>
-            <h2
-              id={`projects-${year}`}
-              className="text-fg-subtle border-border mb-3 border-b pb-3 font-mono text-sm"
-            >
-              {year}
-            </h2>
-            <div className="flex flex-col gap-2">
-              {items.map((project, index) => (
-                <ProjectCard
-                  key={project.title}
-                  title={project.title}
-                  href={project.href}
-                  year={year}
-                  index={index}
-                />
-              ))}
-            </div>
-          </section>
-        ))}
-      </div>
+      <ProjectArchive projects={groupedProjects} />
 
-      <p className="border-border text-fg-subtle mt-16 border-t pt-6 font-mono text-xs">
-        {t("footer")}
-      </p>
+      <footer className="border-border text-fg-muted mt-8 flex flex-wrap items-baseline gap-x-1.5 gap-y-2 border-t pt-6 text-sm leading-relaxed">
+        <p>{t("experience.prompt")}</p>
+        <Link
+          href="/about#experience"
+          className="group text-fg hover:text-accent focus-visible:ring-accent inline-flex items-center gap-1.5 rounded-sm py-1 transition-colors focus-visible:ring-2 focus-visible:outline-none"
+        >
+          {t("experience.link")}
+          <ArrowRightIcon aria-hidden="true" className="h-3.5 w-3.5" />
+        </Link>
+      </footer>
     </main>
   );
 }

@@ -1,20 +1,70 @@
 {
   "greeting": "Hi, I'm",
   "role": "Building Things",
-  "bio": "10 years building software. I’ve developed Android apps, reports that simplify millions of rows of data, web applications that handle millions of orders, and participated in system migrations across multiple countries. And the list keeps growing...",
+  "bio": "10 years building software. I’ve built <highlight>Android apps</highlight>, reports that make sense of millions of rows of data, and <highlight>web applications</highlight> that handle millions of orders. I’ve helped migrate systems across countries, and today I also build <highlight>products with AI</highlight>. I enjoy turning complex problems into tools that are simple to use.",
   "status": "Full-stack engineer · Brazil, UTC−3",
   "nav": {
-    "about": "About",
+    "craft": "In practice",
     "stack": "Stack",
     "writing": "Writing",
     "recommendations": "Recommendations",
     "contact": "Contact"
   },
-  "about": {
-    "label": "About",
-    "p1": "I've worked in tech for over ten years and have been building software professionally since 2017. Today I work as a <strong>full-stack engineer</strong>, with a strong frontend foundation and hands-on experience across backend development, mobile applications, databases, and application architecture.",
-    "p2": "Along the way, I built an HR platform that managed more than 10,000 candidate profiles and helped reduce some issue resolution times from three days to under one hour. I also contributed to a B2B platform serving more than 2.7 million monthly active users across 18 countries and worked on automotive websites with millions of monthly visitors.",
-    "p3": "I also work on <accent>products and solutions that use AI</accent>, while going deeper into LLM applications, RAG architectures, and agents through practical projects. It is an evolving part of my work, and I am clear about what I can deliver today and what I am still learning."
+  "workbench": {
+    "label": "In practice",
+    "title": "What I build.",
+    "controlsLabel": "Explore development areas",
+    "cta": "View experience",
+    "preview": {
+      "today": "Today",
+      "orders": {
+        "window": "order manager",
+        "title": "Orders",
+        "order": "Order",
+        "status": "Status",
+        "twoItems": "2 items",
+        "fourItems": "4 items",
+        "oneItem": "1 item",
+        "new": "New",
+        "preparing": "Preparing",
+        "ready": "Ready",
+        "updated": "Updated just now"
+      },
+      "tasks": {
+        "title": "Tasks",
+        "stock": "Check stock",
+        "delivery": "Receive delivery",
+        "prices": "Review prices",
+        "synced": "Synced"
+      },
+      "data": {
+        "file": "orders.csv",
+        "day": "Day"
+      },
+      "days": {
+        "mon": "Mon",
+        "tue": "Tue",
+        "wed": "Wed",
+        "thu": "Thu",
+        "fri": "Fri",
+        "sat": "Sat",
+        "sun": "Sun"
+      }
+    },
+    "views": {
+      "web": {
+        "label": "Web",
+        "description": "Order managers, e-commerce and B2B platforms."
+      },
+      "mobile": {
+        "label": "Mobile",
+        "description": "Android apps and tools for people working in operations."
+      },
+      "data": {
+        "label": "Data",
+        "description": "Reports, SQL queries and BI dashboards for everyday work."
+      }
+    }
   },
   "stack": {
     "label": "Tech Stack",

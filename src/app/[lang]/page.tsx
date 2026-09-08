@@ -4,6 +4,7 @@ import { getLocale, getTranslations, setRequestLocale } from "next-intl/server";
 import { HomeRail } from "@/components/HomeRail";
 import { LatestPosts } from "@/components/LatestPosts";
 import { TechStack } from "@/components/TechStack";
+import { Workbench } from "@/components/Workbench";
 import { recommendations } from "@/data/about";
 import { Link } from "@/locales/navigation";
 
@@ -37,30 +38,14 @@ export default async function Home({ params }: HomeProps) {
       readTime: post.readTime,
     }));
 
-  const rich = {
-    strong: (chunks: React.ReactNode) => (
-      <span className="text-fg font-medium">{chunks}</span>
-    ),
-    accent: (chunks: React.ReactNode) => (
-      <span className="text-accent font-medium">{chunks}</span>
-    ),
-  };
-
   return (
-    <main className="mx-auto flex w-full max-w-6xl flex-col gap-14 px-5 pt-20 pb-20 lg:flex-row lg:gap-16 lg:pt-28">
+    <main className="mx-auto flex w-full max-w-6xl flex-col gap-14 px-5 pt-12 pb-20 lg:flex-row lg:gap-16 lg:pt-28">
       <div className="lg:w-[36%] lg:shrink-0">
         <HomeRail />
       </div>
 
       <div className="flex min-w-0 flex-1 flex-col gap-24">
-        <section id="about" className="scroll-mt-24">
-          <SectionLabel>{t("about.label")}</SectionLabel>
-          <div className="text-fg-muted flex max-w-[64ch] flex-col gap-4 text-base leading-relaxed">
-            <p>{t.rich("about.p1", rich)}</p>
-            <p>{t.rich("about.p2", rich)}</p>
-            <p>{t.rich("about.p3", rich)}</p>
-          </div>
-        </section>
+        <Workbench />
 
         <section id="stack" className="scroll-mt-24">
           <TechStack

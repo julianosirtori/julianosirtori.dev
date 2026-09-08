@@ -29,6 +29,30 @@ test.describe("Home Page", () => {
     ).toBeVisible();
   });
 
+  for (const locale of [
+    {
+      lang: "pt",
+      highlights: ["apps Android", "aplicações web", "produtos com IA"],
+    },
+    {
+      lang: "en",
+      highlights: ["Android apps", "web applications", "products with AI"],
+    },
+  ]) {
+    test(`should highlight key areas in the ${locale.lang} introduction`, async ({
+      page,
+    }) => {
+      await page.goto(`/${locale.lang}`);
+      const highlights = page.locator("main aside strong");
+      await expect(highlights).toHaveText(locale.highlights);
+      for (const highlight of await highlights.all()) {
+        await expect(highlight).toHaveCSS("font-weight", "700");
+        await expect(highlight).toHaveClass(/text-accent/);
+      }
+      await expect(page.locator("main aside")).not.toContainText("<highlight>");
+    });
+  }
+
   test("should navigate to blog page", async ({ page }) => {
     await page.goto("/en");
 

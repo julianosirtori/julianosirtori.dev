@@ -1,5 +1,6 @@
 export const experiences = [
   {
+    id: "avenue-code",
     jobTitle: "Senior Front-End Engineer",
     company: "Avenue Code",
     companyUrl: "https://www.avenuecode.com",
@@ -9,6 +10,7 @@ export const experiences = [
       "Vue.js · Microfrontends · AEM · CI/CD · Code Review · TypeScript · JavaScript · Scrum",
   },
   {
+    id: "ciandt",
     jobTitle: "Senior Front-End Web Developer",
     company: "CI&T",
     companyUrl: "https://ciandt.com",
@@ -19,6 +21,7 @@ export const experiences = [
       "React.js · Next.js · TypeScript · Redux · styled-components · Microfrontends · i18n · Storybooks · CI/CD · Code Review · Scrum",
   },
   {
+    id: "aiqfome",
     jobTitle: "Frontend Developer / Tech Lead",
     company: "aiqfome",
     companyUrl: "https://aiqfome.com/",
@@ -29,6 +32,7 @@ export const experiences = [
       "React.js · Next.js · TypeScript · Cypress (E2E) · PostgreSQL · AWS · Design System · Storybooks · styled-components · Code Refactoring · Scrum",
   },
   {
+    id: "superpao",
     jobTitle: "Full Stack Developer",
     company: "Grupo Superpão",
     companyUrl: "https://loja.superpao.com.br/",
@@ -39,6 +43,7 @@ export const experiences = [
       "styled-components · Android Development · TypeScript · QlikView · PostgreSQL · React.js · Desenvolvimento de software · Laravel · HTML · CSS",
   },
   {
+    id: "rp-info",
     jobTitle: "Full Stack Developer",
     company: "RP Info Sistemas",
     companyUrl: "https://www.rpinfo.com.br/",
