@@ -27,11 +27,12 @@ export function RelatedPosts({
       month: "short",
       day: "numeric",
       year: "numeric",
+      timeZone: "UTC",
     });
 
   return (
     <section aria-label={label} className="border-border border-t pt-8">
-      <h2 className="text-fg-subtle mb-4 font-mono text-xs tracking-wide uppercase">
+      <h2 className="text-fg mb-4 text-lg font-medium tracking-tight">
         {label}
       </h2>
       <ul className="flex flex-col gap-1">
@@ -39,13 +40,13 @@ export function RelatedPosts({
           <li key={post.slug}>
             <Link
               href={`/blog/${post.slug}`}
-              className="group hover:bg-bg-muted -mx-3 flex flex-col gap-1 rounded-lg px-3 py-2 transition-colors"
+              className="group hover:bg-bg-muted focus-visible:ring-accent -mx-3 flex flex-col gap-2 rounded-sm px-3 py-4 transition-colors focus-visible:ring-2 focus-visible:outline-none"
             >
-              <h3 className="text-fg group-hover:text-accent text-sm font-medium transition-colors">
+              <h3 className="text-fg group-hover:text-accent text-base leading-relaxed font-medium transition-colors">
                 {post.title}
               </h3>
-              <div className="text-fg-subtle flex items-center gap-2 text-xs">
-                <time>{formatDate(post.date)}</time>
+              <div className="text-fg-muted flex flex-wrap items-center gap-x-2 gap-y-1 text-xs">
+                <time dateTime={post.date}>{formatDate(post.date)}</time>
                 <span aria-hidden>·</span>
                 <span>
                   {post.readTime} {readTime}

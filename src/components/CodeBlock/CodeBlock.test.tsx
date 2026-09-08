@@ -1,6 +1,11 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { CodeBlock } from "@/components/CodeBlock";
+import messages from "@/locales/en/blog.json";
+
+vi.mock("next-intl", () => ({
+  useTranslations: () => (key: keyof typeof messages) => messages[key],
+}));
 
 // Mock clipboard API
 const mockClipboard = {
@@ -75,6 +80,7 @@ describe("CodeBlock", () => {
 
     await waitFor(() => {
       expect(screen.getByTitle("Copied")).toBeInTheDocument();
+      expect(screen.getByRole("status")).toHaveTextContent("Copied");
     });
   });
 
@@ -87,5 +93,22 @@ describe("CodeBlock", () => {
 
     const pre = container.querySelector("pre");
     expect(pre).toHaveClass("custom-class");
+    expect(pre).toHaveAttribute("tabindex", "0");
+  });
+
+  it("shows a helpful error if clipboard access fails", async () => {
+    mockClipboard.writeText.mockRejectedValueOnce(
+      new Error("Permission denied"),
+    );
+    render(
+      <CodeBlock>
+        <code>const x = 1;</code>
+      </CodeBlock>,
+    );
+    fireEvent.click(screen.getByRole("button", { name: "Copy code" }));
+    expect(await screen.findByRole("alert")).toHaveTextContent(
+      messages.copyFailed,
+    );
+    expect(screen.getByRole("button", { name: "Copy code" })).toBeEnabled();
   });
 });

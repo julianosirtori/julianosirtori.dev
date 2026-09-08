@@ -1,11 +1,13 @@
 {
-  "kicker": "Blog",
   "title": "Todos os artigos",
   "description": "Notas sobre construir software, front-end, back-end e o que aprendo no meio do caminho. Sem calendário fixo, só quando tenho algo que vale escrever.",
   "allArticles": "Todos os artigos",
   "readTime": "min de leitura",
-  "searchPlaceholder": "Buscar por título, tema ou tag…",
-  "allCategories": "Todos",
+  "searchPlaceholder": "Título, assunto ou palavra-chave…",
+  "searchLabel": "Buscar artigos",
+  "clearSearch": "Limpar busca",
+  "topicLabel": "Tema",
+  "allCategories": "Todos os temas",
   "noResults": "Nenhum artigo encontrado.",
   "clearFilters": "Limpar filtros",
   "article": "artigo",
@@ -18,5 +20,17 @@
   "next": "Próximo",
   "related": "Leia em seguida",
   "reactionsPrompt": "Curtiu? Deixa uma reação",
-  "updated": "Atualizado"
+  "updated": "Atualizado em",
+  "backToBlog": "Voltar ao blog",
+  "postNavigation": "Navegação entre artigos",
+  "copyCode": "Copiar código",
+  "copiedCode": "Copiado",
+  "copyFailed": "Não foi possível copiar. Tente novamente.",
+  "codeLabel": "Código",
+  "comments": {
+    "title": "Vamos conversar?",
+    "description": "Dúvidas, sugestões ou outra forma de resolver? Deixe nos comentários.",
+    "load": "Carregar comentários",
+    "hint": "Comentários via GitHub. Carregados só quando você abrir."
+  }
 }

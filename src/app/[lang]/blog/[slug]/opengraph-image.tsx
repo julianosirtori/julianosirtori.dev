@@ -16,7 +16,11 @@ export const size = {
 export default async function GET({ params }: IPostProps) {
   try {
     const { lang, slug } = await params;
-    const post = allPosts.find((post) => post.slug === slug);
+    const post = allPosts.find(
+      (post) => post.slug === slug && post.language === lang && !post.draft,
+    );
+
+    if (!post) return new Response("Not found", { status: 404 });
 
     const readLabel = lang === "pt" ? "min de leitura" : "min read";
     const meta = post

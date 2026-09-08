@@ -143,7 +143,9 @@ export default makeSource({
       [
         rehypePrettyCode,
         {
-          theme: "dracula-soft",
+          theme: { light: "github-light", dark: "github-dark" },
+          keepBackground: false,
+          defaultLang: { block: "plaintext" },
           onVisitLine(node) {
             if (node.children.length === 0) {
               node.children = [{ type: "text", value: " " }];
@@ -152,7 +154,7 @@ export default makeSource({
           onVisitHighlightedLine(node) {
             node.properties.className.push("line--highlighted");
           },
-          onVisitHighlightedWord(node) {
+          onVisitHighlightedChars(node) {
             node.properties.className = ["word--highlighted"];
           },
         },
@@ -160,6 +162,7 @@ export default makeSource({
       [
         rehypeAutolinkHeadings,
         {
+          behavior: "wrap",
           properties: {
             className: ["anchor"],
           },
