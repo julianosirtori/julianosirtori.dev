@@ -32,12 +32,12 @@ export const Header = () => {
         </Link>
 
         <nav className="order-3 mt-3 w-full sm:order-2 sm:mt-0 sm:w-auto">
-          <ul className="text-fg-muted flex flex-row justify-center gap-1 text-sm sm:gap-2">
+          <ul className="text-fg-muted flex flex-row flex-wrap justify-center gap-1 text-xs sm:gap-2 sm:text-sm">
             {links.map((link) => (
               <HeaderItemWrapper key={link.label} href={link.href}>
                 <Link
                   href={link.href}
-                  className="hover:text-fg hover:bg-bg-muted inline-block rounded-md px-3 py-2 transition-colors"
+                  className="hover:text-fg hover:bg-bg-muted inline-block rounded-md px-2 py-2 transition-colors sm:px-3"
                 >
                   {link.label}
                 </Link>
@@ -46,7 +46,7 @@ export const Header = () => {
             <HeaderItemWrapper href="/playground">
               <Link
                 href="/playground"
-                className="text-accent hover:bg-accent-muted inline-flex items-center gap-1.5 rounded-md px-3 py-2 font-mono transition-colors"
+                className="text-accent hover:bg-accent-muted inline-flex items-center gap-1.5 rounded-md px-2 py-2 font-mono transition-colors sm:px-3"
               >
                 <span aria-hidden>{">_"}</span>
                 {t("playground")}

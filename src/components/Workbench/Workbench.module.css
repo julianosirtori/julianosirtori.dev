@@ -1,0 +1,467 @@
+.stage {
+  position: relative;
+  isolation: isolate;
+  height: clamp(300px, 55vw, 380px);
+  overflow: hidden;
+}
+
+.window {
+  --window-dim: 0;
+
+  position: absolute;
+  overflow: hidden;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-elevated);
+  color: var(--fg);
+  box-shadow:
+    0 2px 3px rgb(0 0 0 / 3%),
+    0 12px 24px -16px rgb(0 0 0 / 25%);
+  transition:
+    transform 400ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    filter 300ms,
+    box-shadow 300ms;
+}
+
+/* Soften inactive content while keeping overlapping windows opaque. */
+.window::after {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: var(--bg);
+  opacity: var(--window-dim);
+  pointer-events: none;
+  content: "";
+  transition: opacity 300ms;
+}
+
+.windowBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 7px;
+  height: 29px;
+  padding: 0 10px;
+  border-bottom: 1px solid var(--border);
+  color: var(--fg-muted);
+  font-family: var(--font-mono);
+  font-size: 8px;
+}
+
+.dots {
+  display: flex;
+  gap: 4px;
+}
+.dots i {
+  width: 5px;
+  height: 5px;
+  border: 1px solid var(--border-strong);
+  border-radius: 50%;
+}
+
+.browser {
+  z-index: 1;
+  top: 10%;
+  left: 5%;
+  width: 68%;
+  height: 64%;
+  border-radius: 7px;
+  transform: rotate(-3deg) scale(0.96);
+}
+
+.browserBody {
+  height: calc(100% - 29px);
+}
+.browserContent {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  padding: 15px;
+}
+.ordersHeading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.ordersHeading strong {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+.ordersHeading > span {
+  color: var(--fg-muted);
+  font-size: 9px;
+}
+.orderColumns {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+  color: var(--fg-muted);
+  font-size: 8px;
+}
+.orderRow {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid var(--border);
+  font-size: 10px;
+}
+.orderNumber {
+  font-family: var(--font-mono);
+}
+.orderItems {
+  color: var(--fg-muted);
+  font-size: 9px;
+}
+.orderStatus {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: auto;
+  white-space: nowrap;
+  font-size: 9px;
+}
+.orderStatus i {
+  width: 5px;
+  height: 5px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+}
+.orderStatus[data-status="new"] {
+  color: var(--accent);
+}
+.orderStatus[data-status="new"] i {
+  background: currentColor;
+}
+.orderStatus[data-status="ready"] {
+  color: var(--fg-muted);
+}
+.browserFooter {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding-top: 10px;
+  color: var(--fg-muted);
+  font-size: 8px;
+}
+
+.phone {
+  z-index: 2;
+  top: 17%;
+  right: 5%;
+  width: 25%;
+  height: 74%;
+  border: 3px solid var(--border-strong);
+  border-radius: 23px;
+  transform: rotate(5deg) scale(0.97);
+}
+
+.phoneCamera {
+  position: absolute;
+  top: 7px;
+  left: 36%;
+  width: 28%;
+  height: 6px;
+  border-radius: 8px;
+  background: var(--fg);
+}
+.phoneBody {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  padding: 24px 12px 21px;
+}
+.phoneTime {
+  font-family: var(--font-mono);
+  font-size: 8px;
+}
+.phoneHeading {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin: 16px 0 12px;
+}
+.phoneHeading > span {
+  color: var(--fg-muted);
+  font-size: 8px;
+}
+.phoneHeading strong {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+.progress {
+  height: 2px;
+  flex-shrink: 0;
+  margin-bottom: 12px;
+  background: var(--border);
+}
+.progress span {
+  display: block;
+  width: 66.67%;
+  height: 100%;
+  background: var(--accent);
+}
+.task {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 9px;
+  line-height: 1.4;
+}
+.task[data-done="true"] > span + span {
+  color: var(--fg-muted);
+  text-decoration: line-through;
+  text-decoration-color: var(--border-strong);
+}
+.checkbox {
+  display: flex;
+  width: 11px;
+  height: 11px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-strong);
+  border-radius: 3px;
+  color: var(--fg-muted);
+}
+.phoneFooter {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  margin-top: auto;
+  padding-top: 9px;
+  color: var(--fg-muted);
+  font-size: 7px;
+}
+.phoneHome {
+  position: absolute;
+  bottom: 6px;
+  left: 33%;
+  width: 34%;
+  height: 3px;
+  border-radius: 3px;
+  background: var(--fg);
+}
+
+.data {
+  z-index: 3;
+  bottom: 7%;
+  left: 3%;
+  width: 54%;
+  height: 37%;
+  border-radius: 6px;
+  transform: rotate(-4deg) scale(0.96);
+}
+
+.dataBody {
+  display: flex;
+  height: calc(100% - 29px);
+  gap: 16px;
+  padding: 12px;
+}
+.dataRows {
+  display: flex;
+  width: 40%;
+  flex-direction: column;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 8px;
+}
+.dataRows > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 7px;
+  padding-bottom: 3px;
+  border-bottom: 1px solid var(--border);
+}
+.dataHeader {
+  color: var(--fg-muted);
+  font-size: 7px;
+}
+.bars {
+  display: flex;
+  flex: 1;
+  gap: 5px;
+}
+.barColumn {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 5px;
+  color: var(--fg-muted);
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 7px;
+}
+.barTrack {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  align-items: flex-end;
+  border-bottom: 1px solid var(--border);
+}
+.barTrack i {
+  width: 100%;
+  border-radius: 1px 1px 0 0;
+  background: var(--border-strong);
+}
+.barColumn:nth-child(5) .barTrack i {
+  background: var(--accent);
+}
+
+.stage[data-view="web"] .browser {
+  z-index: 4;
+  transform: translate(0, -3px) rotate(-1deg);
+}
+.stage[data-view="mobile"] .phone {
+  z-index: 4;
+  transform: translate(-16px, -6px) rotate(0deg) scale(1.04);
+}
+.stage[data-view="data"] .data {
+  z-index: 4;
+  transform: translate(18px, -32px) rotate(-1deg) scale(1.04);
+}
+.stage[data-view="web"] .browser,
+.stage[data-view="mobile"] .phone,
+.stage[data-view="data"] .data {
+  box-shadow:
+    0 3px 7px rgb(0 0 0 / 8%),
+    0 18px 32px -16px rgb(0 0 0 / 30%);
+}
+.stage[data-view="web"] .phone,
+.stage[data-view="web"] .data,
+.stage[data-view="mobile"] .browser,
+.stage[data-view="mobile"] .data,
+.stage[data-view="data"] .browser,
+.stage[data-view="data"] .phone {
+  --window-dim: 0.5;
+
+  filter: grayscale(1);
+}
+
+@media (max-width: 480px) {
+  .windowBar {
+    height: 24px;
+    padding: 0 7px;
+    gap: 4px;
+    font-size: 6px;
+  }
+  .dots {
+    gap: 2px;
+  }
+  .dots i {
+    width: 3px;
+    height: 3px;
+  }
+  .browser {
+    left: 2%;
+    width: 73%;
+    height: 62%;
+  }
+  .browserBody {
+    height: calc(100% - 24px);
+  }
+  .browserContent {
+    padding: 10px 8px;
+  }
+  .ordersHeading {
+    margin-bottom: 10px;
+  }
+  .ordersHeading strong {
+    font-size: 12px;
+  }
+  .ordersHeading > span {
+    font-size: 8px;
+  }
+  .orderColumns,
+  .orderItems,
+  .orderStatus {
+    font-size: 7px;
+  }
+  .orderRow {
+    gap: 5px;
+    font-size: 8px;
+  }
+  .orderStatus {
+    gap: 3px;
+  }
+  .orderStatus i {
+    width: 4px;
+    height: 4px;
+  }
+  .browserFooter {
+    padding-top: 8px;
+    font-size: 6px;
+  }
+  .phone {
+    right: 3%;
+    width: 31%;
+    border-width: 2px;
+    border-radius: 18px;
+  }
+  .phoneBody {
+    padding: 21px 7px 16px;
+  }
+  .phoneHeading {
+    margin: 8px 0;
+  }
+  .phoneHeading strong {
+    font-size: 13px;
+  }
+  .progress {
+    margin-bottom: 4px;
+  }
+  .task {
+    gap: 4px;
+    padding: 7px 0;
+    font-size: 7px;
+  }
+  .checkbox {
+    width: 9px;
+    height: 9px;
+  }
+  .phoneFooter {
+    font-size: 6px;
+  }
+  .data {
+    left: 1%;
+    width: 61%;
+  }
+  .dataBody {
+    height: calc(100% - 24px);
+    gap: 9px;
+    padding: 10px 8px;
+  }
+  .dataRows {
+    font-size: 7px;
+  }
+  .dataHeader {
+    font-size: 6px;
+  }
+  .bars {
+    gap: 3px;
+  }
+  .barColumn {
+    font-size: 6px;
+  }
+  .stage[data-view="mobile"] .phone {
+    transform: translate(-8px, -6px) rotate(0deg) scale(1.04);
+  }
+  .stage[data-view="data"] .data {
+    transform: translate(10px, -22px) rotate(-1deg) scale(1.04);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .window,
+  .window::after {
+    transition: none;
+  }
+}

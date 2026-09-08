@@ -1,6 +1,28 @@
 {
-  "kicker": "Portfolio",
   "title": "Projects and side projects",
-  "description": "A selection of client work, experiments, and open-source projects.",
-  "footer": "Built with Next.js and TypeScript"
+  "description": "Personal projects, client work, and products I helped build at the companies I've worked for.",
+  "filters": {
+    "label": "Filter projects",
+    "all": "All",
+    "personal": "Personal",
+    "client": "Clients",
+    "company": "Teamwork"
+  },
+  "categories": {
+    "personal": "Personal",
+    "client": "Client",
+    "company": "Teamwork"
+  },
+  "destinations": {
+    "website": "Visit site",
+    "package": "View on npm",
+    "video": "Watch video",
+    "product": "View product"
+  },
+  "newTab": "Opens in a new tab",
+  "results": "{count, plural, one {# project in this selection} other {# projects in this selection}}",
+  "experience": {
+    "prompt": "For more about my work at these companies,",
+    "link": "see my experience"
+  }
 }

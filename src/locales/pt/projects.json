@@ -1,6 +1,28 @@
 {
-  "kicker": "Portfólio",
   "title": "Projetos e side projects",
-  "description": "Uma seleção de trabalhos, experimentos e projetos de código aberto.",
-  "footer": "Construído com Next.js e TypeScript"
+  "description": "Projetos pessoais, trabalhos para clientes e produtos que ajudei a construir nas empresas por onde passei.",
+  "filters": {
+    "label": "Filtrar projetos",
+    "all": "Todos",
+    "personal": "Pessoais",
+    "client": "Clientes",
+    "company": "Em equipe"
+  },
+  "categories": {
+    "personal": "Pessoal",
+    "client": "Cliente",
+    "company": "Em equipe"
+  },
+  "destinations": {
+    "website": "Abrir site",
+    "package": "Ver no npm",
+    "video": "Ver vídeo",
+    "product": "Ver produto"
+  },
+  "newTab": "Abre em uma nova aba",
+  "results": "{count, plural, one {# projeto nesta seleção} other {# projetos nesta seleção}}",
+  "experience": {
+    "prompt": "Para conhecer melhor minha atuação nas empresas,",
+    "link": "veja minha experiência"
+  }
 }

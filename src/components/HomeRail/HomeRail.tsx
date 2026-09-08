@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 
 const SECTIONS = [
-  "about",
+  "craft",
   "stack",
   "writing",
   "recommendations",
@@ -15,7 +15,7 @@ type SectionId = (typeof SECTIONS)[number];
 export function HomeRail() {
   const t = useTranslations("home");
   const tGlobal = useTranslations("global");
-  const [active, setActive] = useState<SectionId>("about");
+  const [active, setActive] = useState<SectionId>("craft");
 
   const [firstName, ...rest] = tGlobal("myFullName").split(" ");
   const lastName = rest.join(" ");
@@ -51,14 +51,18 @@ export function HomeRail() {
   const scrollTo = (id: SectionId) => {
     const el = document.getElementById(id);
     if (!el) return;
+    const headerHeight =
+      document.querySelector("header")?.getBoundingClientRect().height ?? 72;
     window.scrollTo({
-      top: el.getBoundingClientRect().top + window.scrollY - 96,
-      behavior: "smooth",
+      top: el.getBoundingClientRect().top + window.scrollY - headerHeight - 24,
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "instant"
+        : "smooth",
     });
   };
 
   return (
-    <aside className="flex flex-col gap-12 lg:sticky lg:top-24 lg:h-fit">
+    <aside className="flex flex-col gap-8 lg:sticky lg:top-24 lg:h-fit lg:gap-12">
       <div>
         <p className="text-accent mb-4 font-mono text-xs tracking-[0.16em] uppercase">
           {t("greeting")}
@@ -75,10 +79,14 @@ export function HomeRail() {
         </h1>
         <p className="text-fg mb-4 text-lg font-medium">{t("role")}</p>
         <p className="text-fg-muted max-w-[34ch] text-sm leading-relaxed">
-          {t("bio")}
+          {t.rich("bio", {
+            highlight: (chunks) => (
+              <strong className="text-accent font-bold">{chunks}</strong>
+            ),
+          })}
         </p>
 
-        <nav className="mt-11 flex flex-col gap-4">
+        <nav className="mt-7 flex flex-wrap gap-x-5 gap-y-1 lg:mt-11 lg:flex-col lg:gap-4">
           {nav.map(({ id, label }) => {
             const on = id === active;
             return (
@@ -86,13 +94,14 @@ export function HomeRail() {
                 key={id}
                 type="button"
                 onClick={() => scrollTo(id)}
-                className="group flex items-center gap-4 text-left"
+                aria-current={on ? "location" : undefined}
+                className="group focus-visible:ring-accent flex min-h-8 items-center gap-4 rounded-sm text-left focus-visible:ring-2 focus-visible:outline-none lg:min-h-0"
               >
                 <span
                   className={
                     on
-                      ? "bg-fg h-px w-16 transition-all"
-                      : "bg-border-strong group-hover:bg-fg-muted h-px w-8 transition-all"
+                      ? "bg-fg hidden h-px w-16 transition-all motion-reduce:transition-none lg:block"
+                      : "bg-border-strong group-hover:bg-fg-muted hidden h-px w-8 transition-all motion-reduce:transition-none lg:block"
                   }
                 />
                 <span
@@ -167,7 +176,7 @@ export function HomeRail() {
           </a>
         </div>
         <p className="text-fg-subtle flex items-center gap-2 font-mono text-xs">
-          <span className="bg-success h-1.5 w-1.5 animate-pulse rounded-full" />
+          <span className="bg-success h-1.5 w-1.5 animate-pulse rounded-full motion-reduce:animate-none" />
           {t("status")}
         </p>
       </div>
