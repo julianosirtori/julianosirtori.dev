@@ -10,7 +10,7 @@ export interface PostNavItem {
 interface PostNavigationProps {
   prev?: PostNavItem | null;
   next?: PostNavItem | null;
-  labels: { prev: string; next: string };
+  labels: { prev: string; next: string; navigation: string };
 }
 
 export function PostNavigation({ prev, next, labels }: PostNavigationProps) {
@@ -18,41 +18,37 @@ export function PostNavigation({ prev, next, labels }: PostNavigationProps) {
 
   return (
     <nav
-      aria-label="post navigation"
-      className="border-border grid gap-3 border-t pt-8 sm:grid-cols-2"
+      aria-label={labels.navigation}
+      className="border-border grid gap-6 border-t pt-6 sm:grid-cols-2 sm:gap-10"
     >
-      {prev ? (
+      {prev && (
         <Link
           href={`/blog/${prev.slug}`}
-          className="border-border hover:border-fg-muted group flex flex-col gap-1 rounded-lg border p-4 transition-colors"
+          className="group hover:bg-bg-muted focus-visible:ring-accent -mx-3 flex flex-col gap-3 rounded-sm px-3 py-3 transition-colors focus-visible:ring-2 focus-visible:outline-none"
         >
-          <span className="text-fg-subtle inline-flex items-center gap-1 text-xs">
-            <ArrowLeftIcon className="h-3 w-3" />
+          <span className="text-fg-muted inline-flex items-center gap-2 text-xs">
+            <ArrowLeftIcon aria-hidden="true" className="h-3.5 w-3.5" />
             {labels.prev}
           </span>
-          <span className="text-fg group-hover:text-accent text-sm font-medium transition-colors">
+          <span className="text-fg group-hover:text-accent text-base leading-relaxed font-medium transition-colors">
             {prev.title}
           </span>
         </Link>
-      ) : (
-        <span />
       )}
 
-      {next ? (
+      {next && (
         <Link
           href={`/blog/${next.slug}`}
-          className="border-border hover:border-fg-muted group flex flex-col items-end gap-1 rounded-lg border p-4 text-right transition-colors"
+          className="group hover:bg-bg-muted focus-visible:ring-accent -mx-3 flex flex-col gap-3 rounded-sm px-3 py-3 transition-colors focus-visible:ring-2 focus-visible:outline-none sm:col-start-2 sm:items-end sm:text-right"
         >
-          <span className="text-fg-subtle inline-flex items-center gap-1 text-xs">
+          <span className="text-fg-muted inline-flex items-center gap-2 text-xs">
             {labels.next}
-            <ArrowRightIcon className="h-3 w-3" />
+            <ArrowRightIcon aria-hidden="true" className="h-3.5 w-3.5" />
           </span>
-          <span className="text-fg group-hover:text-accent text-sm font-medium transition-colors">
+          <span className="text-fg group-hover:text-accent text-base leading-relaxed font-medium transition-colors">
             {next.title}
           </span>
         </Link>
-      ) : (
-        <span />
       )}
     </nav>
   );

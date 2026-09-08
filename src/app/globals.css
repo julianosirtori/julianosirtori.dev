@@ -5,8 +5,9 @@
 @theme {
   /* Typography */
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", Menlo,
-    Monaco, Consolas, monospace;
+  --font-mono:
+    var(--font-geist-mono), ui-monospace, "SFMono-Regular", Menlo, Monaco,
+    Consolas, monospace;
 
   /* Semantic colors (light defaults, overridden by .dark in @layer base) */
   --color-bg: var(--bg);
@@ -112,14 +113,26 @@
   }
 
   .prose {
-    overflow: hidden;
+    min-width: 0;
+    color: var(--fg);
+    font-size: 1.125rem;
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+  }
+
+  .prose > :first-child {
+    margin-top: 0;
+  }
+
+  .prose > :last-child {
+    margin-bottom: 0;
   }
 
   .prose p {
     margin: 1.25em 0;
     color: var(--fg);
     font-size: 1.125rem;
-    line-height: 1.75;
+    line-height: 1.8;
   }
 
   .prose h2 {
@@ -129,7 +142,7 @@
     line-height: 1.25;
     font-weight: 600;
     letter-spacing: -0.02em;
-    scroll-margin-top: 6rem;
+    scroll-margin-top: 12rem;
   }
 
   .prose h3 {
@@ -139,7 +152,7 @@
     line-height: 1.4;
     font-weight: 600;
     letter-spacing: -0.005em;
-    scroll-margin-top: 6rem;
+    scroll-margin-top: 12rem;
   }
 
   .prose h4 {
@@ -147,6 +160,7 @@
     color: var(--fg);
     font-size: 1.125rem;
     font-weight: 600;
+    scroll-margin-top: 12rem;
   }
 
   .prose a {
@@ -159,6 +173,42 @@
   .prose a:hover {
     border-bottom-color: var(--accent);
     color: var(--accent);
+  }
+
+  .prose :is(h2, h3, h4) a.anchor {
+    border: 0;
+    color: inherit;
+  }
+
+  .prose :is(h2, h3, h4) a.anchor:hover {
+    color: var(--accent);
+  }
+
+  .prose a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+    border-radius: 2px;
+  }
+
+  .prose :is(ul, ol) {
+    margin: 1.25em 0;
+    padding-left: 1.4em;
+  }
+
+  .prose ul {
+    list-style-type: disc;
+  }
+
+  .prose ol {
+    list-style-type: decimal;
+  }
+
+  .prose li::marker {
+    color: var(--fg-muted);
+  }
+
+  .prose li :is(ul, ol) {
+    margin: 0.6em 0;
   }
 
   .prose li {
@@ -187,10 +237,60 @@
     font-style: italic;
   }
 
+  .prose :is(img, video) {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+  }
+
+  .prose iframe {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    height: auto;
+    border-radius: 0.5rem;
+  }
+
+  .prose hr {
+    margin: 2.5rem 0;
+    border-color: var(--border);
+  }
+
+  .prose table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    margin: 1.5em 0;
+    border-collapse: collapse;
+    font-size: 1rem;
+  }
+
+  .prose :is(th, td) {
+    border-bottom: 1px solid var(--border);
+    padding: 0.75em 1em;
+    text-align: left;
+  }
+
+  .prose th {
+    background: var(--bg-muted);
+    font-weight: 600;
+  }
+
+  .prose pre {
+    overflow-wrap: normal;
+    tab-size: 2;
+    scrollbar-color: var(--border-strong) transparent;
+  }
+
+  [data-rehype-pretty-code-figure] {
+    min-width: 0;
+    margin: 2rem 0;
+  }
+
   [data-rehype-pretty-code-figure] code {
     display: grid;
+    width: max-content;
     min-width: 100%;
-    overflow-wrap: break-word;
+    overflow-wrap: normal;
     border-radius: 0;
     border-width: 0;
     background-color: transparent;
@@ -206,14 +306,12 @@
     overflow-x: auto;
   }
 
-  [data-rehype-pretty-code-figure] [data-line-numbers] > .line::before {
-    counter-increment: line;
-    content: counter(line);
-    display: inline-block;
-    width: 1rem;
-    margin-right: 1rem;
-    text-align: right;
-    color: var(--fg-subtle);
+  code[data-theme*=" "] span {
+    color: var(--shiki-light);
+  }
+
+  .dark code[data-theme*=" "] span {
+    color: var(--shiki-dark);
   }
 
   [data-rehype-pretty-code-figure] .line {
@@ -244,7 +342,7 @@
     background-color: var(--bg-muted);
   }
 
-  [data-rehype-pretty-code-title] + pre {
+  [data-rehype-pretty-code-title] + [data-code-block] {
     margin-top: 0;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
@@ -255,14 +353,14 @@
     counter-reset: line;
   }
 
-  code > [data-line]::before {
+  code[data-line-numbers] > [data-line]::before {
     counter-increment: line;
     content: counter(line);
     display: inline-block;
     width: 1rem;
-    margin-right: 2rem;
+    margin-right: 1.5rem;
     text-align: right;
-    color: var(--fg-subtle);
+    color: var(--fg-muted);
   }
 
   code[data-line-numbers-max-digits="2"] > [data-line]::before {
@@ -271,6 +369,19 @@
 
   code[data-line-numbers-max-digits="3"] > [data-line]::before {
     width: 3rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html,
+  body {
+    scroll-behavior: auto !important;
+  }
+}
+
+@media (min-width: 640px) {
+  .prose :is(h2, h3, h4) {
+    scroll-margin-top: 8rem;
   }
 }
 

@@ -1,12 +1,32 @@
+import type { Metadata } from "next";
 import { getLocale, getTranslations, setRequestLocale } from "next-intl/server";
 
 import { allPosts } from "contentlayer/generated";
 import { BlogSearch } from "@/components/BlogSearch";
+import { importLocale } from "@/locales";
 
 interface BlogProps {
   params: Promise<{
     lang: string;
   }>;
+}
+
+export async function generateMetadata({
+  params,
+}: BlogProps): Promise<Metadata> {
+  const { lang } = await params;
+  const { messages } = await importLocale(lang);
+  const title = `${messages.blog.title} | Juliano Sirtori`;
+  const description = messages.blog.description;
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: `https://julianosirtori.dev/${lang}/blog`,
+    },
+  };
 }
 
 export default async function Blog({ params }: BlogProps) {
@@ -25,19 +45,22 @@ export default async function Blog({ params }: BlogProps) {
       date: post.date,
       readTime: post.readTime,
       excerpt: post.description,
-      tags: post.tags?.length ? post.tags : (post.categories ?? []),
+      tags: Array.from(
+        new Set([
+          ...(post.tags ?? []),
+          ...(post.categories ?? []),
+          ...(post.meta?.keywords ?? []),
+        ]),
+      ),
     }));
 
   return (
-    <main className="mx-auto flex w-full max-w-[920px] flex-1 flex-col px-5 pt-20 pb-20 lg:pt-28">
-      <header className="pb-9">
-        <p className="text-accent mb-5 font-mono text-xs tracking-[0.16em] uppercase">
-          {t("kicker")}
-        </p>
-        <h1 className="text-fg mb-6 text-5xl font-semibold tracking-tight md:text-6xl">
+    <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col px-5 pt-12 pb-20 lg:pt-24">
+      <header className="pb-10 sm:pb-12">
+        <h1 className="text-fg mb-6 text-3xl leading-tight font-medium tracking-tight sm:text-4xl lg:text-5xl">
           {t("title")}
         </h1>
-        <p className="text-fg-muted max-w-[54ch] text-lg leading-relaxed text-pretty">
+        <p className="text-fg-muted max-w-[64ch] text-base leading-relaxed text-pretty sm:text-lg">
           {t("description")}
         </p>
       </header>
@@ -47,6 +70,9 @@ export default async function Blog({ params }: BlogProps) {
         locale={locale}
         translations={{
           searchPlaceholder: t("searchPlaceholder"),
+          searchLabel: t("searchLabel"),
+          clearSearch: t("clearSearch"),
+          topicLabel: t("topicLabel"),
           allCategories: t("allCategories"),
           noResults: t("noResults"),
           clearFilters: t("clearFilters"),

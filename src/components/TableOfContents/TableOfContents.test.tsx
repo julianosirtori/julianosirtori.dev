@@ -1,33 +1,6 @@
-import { render, screen, fireEvent } from "@testing-library/react";
-import { describe, it, expect, vi, beforeEach } from "vitest";
-
+import { render, screen, fireEvent, act } from "@testing-library/react";
+import { describe, it, expect, vi, afterEach } from "vitest";
 import { TableOfContents } from "@/components/TableOfContents";
-
-const observe = vi.fn();
-const disconnect = vi.fn();
-const observerInstances: Array<{
-  callback: IntersectionObserverCallback;
-}> = [];
-
-beforeEach(() => {
-  observe.mockClear();
-  disconnect.mockClear();
-  observerInstances.length = 0;
-
-  class MockObserver {
-    constructor(cb: IntersectionObserverCallback) {
-      observerInstances.push({ callback: cb });
-    }
-    observe = observe;
-    disconnect = disconnect;
-    unobserve = vi.fn();
-    takeRecords = vi.fn(() => []);
-    root = null;
-    rootMargin = "";
-    thresholds = [];
-  }
-  vi.stubGlobal("IntersectionObserver", MockObserver);
-});
 
 const items = [
   { level: 2, text: "Intro", slug: "intro" },
@@ -35,46 +8,90 @@ const items = [
   { level: 2, text: "Outro", slug: "outro" },
 ];
 
+afterEach(() => vi.restoreAllMocks());
+
 describe("TableOfContents", () => {
-  it("renders nothing when items array is empty", () => {
+  it("renders nothing without headings", () => {
     const { container } = render(
       <TableOfContents items={[]} label="On this page" />,
     );
     expect(container).toBeEmptyDOMElement();
   });
 
-  it("renders every item label in the sidebar", () => {
+  it("renders native heading links in desktop and mobile navigation", () => {
     render(<TableOfContents items={items} label="On this page" />);
-    expect(screen.getAllByText("Intro").length).toBeGreaterThan(0);
-    expect(screen.getAllByText("Why").length).toBeGreaterThan(0);
-    expect(screen.getAllByText("Outro").length).toBeGreaterThan(0);
+    for (const item of items) {
+      for (const link of screen.getAllByText(item.text))
+        expect(link).toHaveAttribute("href", `#${item.slug}`);
+    }
   });
 
-  it("observes heading elements once mounted", () => {
-    document.body.innerHTML = `
-      <h2 id="intro">Intro</h2>
-      <h3 id="why">Why</h3>
-      <h2 id="outro">Outro</h2>
-    `;
-    render(<TableOfContents items={items} label="On this page" />);
-    expect(observe).toHaveBeenCalledTimes(3);
+  it("uses a native disclosure and closes it when a heading is selected", () => {
+    const { container } = render(
+      <>
+        <h2 id="intro">Article heading</h2>
+        <TableOfContents items={items} label="On this page" />
+      </>,
+    );
+    const details = container.querySelector("details")!;
+    details.open = true;
+    fireEvent.click(details.querySelector('a[href="#intro"]')!);
+    expect(details.open).toBe(false);
+    expect(screen.getByText("Article heading")).toHaveFocus();
   });
 
-  it("disconnects the observer on unmount", () => {
-    document.body.innerHTML = `<h2 id="intro">Intro</h2>`;
+  it("tracks the last heading passed, including when scrolling backwards", () => {
+    let top = 300;
+    let callback: FrameRequestCallback = () => {};
+    vi.spyOn(window, "requestAnimationFrame").mockImplementation((fn) => {
+      callback = fn;
+      return 1;
+    });
+    vi.spyOn(HTMLElement.prototype, "getBoundingClientRect").mockImplementation(
+      function (this: HTMLElement) {
+        return {
+          top: this.id === "why" ? top : this.id === "intro" ? 0 : 1000,
+        } as DOMRect;
+      },
+    );
+    const { container } = render(
+      <>
+        <h2 id="intro">Heading</h2>
+        <h3 id="why">Subheading</h3>
+        <h2 id="outro">End</h2>
+        <TableOfContents items={items} label="On this page" />
+      </>,
+    );
+    expect(container.querySelector('a[href="#intro"]')).toHaveAttribute(
+      "aria-current",
+      "location",
+    );
+    top = 20;
+    fireEvent.scroll(window);
+    act(() => callback(0));
+    expect(container.querySelector('a[href="#why"]')).toHaveAttribute(
+      "aria-current",
+      "location",
+    );
+    top = 300;
+    fireEvent.scroll(window);
+    act(() => callback(1));
+    expect(container.querySelector('a[href="#intro"]')).toHaveAttribute(
+      "aria-current",
+      "location",
+    );
+    expect(container.querySelector('a[href="#why"]')).not.toHaveAttribute(
+      "aria-current",
+    );
+  });
+
+  it("removes scroll and resize listeners on unmount", () => {
+    const remove = vi.spyOn(window, "removeEventListener");
     const { unmount } = render(
       <TableOfContents items={items} label="On this page" />,
     );
     unmount();
-    expect(disconnect).toHaveBeenCalled();
-  });
-
-  it("opens and closes the mobile drawer", () => {
-    render(<TableOfContents items={items} label="On this page" />);
-    const trigger = screen.getByLabelText("On this page");
-    fireEvent.click(trigger);
-    expect(screen.getByRole("dialog")).toBeInTheDocument();
-    fireEvent.click(screen.getByLabelText("Close"));
-    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    expect(remove).toHaveBeenCalledWith("scroll", expect.any(Function));
+    expect(remove).toHaveBeenCalledWith("resize", expect.any(Function));
   });
 });

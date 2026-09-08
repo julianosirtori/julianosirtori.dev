@@ -1,11 +1,13 @@
 {
-  "kicker": "Blog",
   "title": "All articles",
   "description": "Notes on building software, front-end, back-end and what I learn along the way. No fixed schedule, just when I have something worth writing.",
   "allArticles": "All articles",
   "readTime": "min read",
-  "searchPlaceholder": "Search by title, topic or tag…",
-  "allCategories": "All",
+  "searchPlaceholder": "Title, topic or keyword…",
+  "searchLabel": "Search articles",
+  "clearSearch": "Clear search",
+  "topicLabel": "Topic",
+  "allCategories": "All topics",
   "noResults": "No articles found.",
   "clearFilters": "Clear filters",
   "article": "article",
@@ -18,5 +20,17 @@
   "next": "Next",
   "related": "Read next",
   "reactionsPrompt": "Liked it? Leave a reaction",
-  "updated": "Updated"
+  "updated": "Updated on",
+  "backToBlog": "Back to the blog",
+  "postNavigation": "Article navigation",
+  "copyCode": "Copy code",
+  "copiedCode": "Copied",
+  "copyFailed": "Could not copy. Please try again.",
+  "codeLabel": "Code",
+  "comments": {
+    "title": "Let's talk?",
+    "description": "Questions, suggestions or a different approach? Leave a comment.",
+    "load": "Load comments",
+    "hint": "Comments via GitHub. Loaded only when you open them."
+  }
 }

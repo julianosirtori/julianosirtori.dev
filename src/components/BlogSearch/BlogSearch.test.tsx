@@ -48,6 +48,9 @@ const mockPosts = [
 
 const mockTranslations = {
   searchPlaceholder: "Search articles...",
+  searchLabel: "Search articles",
+  clearSearch: "Clear search",
+  topicLabel: "Topic",
   allCategories: "All",
   noResults: "No articles found",
   clearFilters: "Clear filters",
@@ -114,11 +117,9 @@ describe("BlogSearch", () => {
       />,
     );
 
-    const buttons = screen.getAllByRole("button");
-    const typescriptButton = buttons.find(
-      (btn) => btn.textContent === "TypeScript",
-    );
-    fireEvent.click(typescriptButton!);
+    fireEvent.change(screen.getByRole("combobox", { name: "Topic" }), {
+      target: { value: "TypeScript" },
+    });
 
     expect(screen.queryByText("React Hooks Tutorial")).not.toBeInTheDocument();
     expect(screen.getByText("TypeScript Best Practices")).toBeInTheDocument();
@@ -140,7 +141,7 @@ describe("BlogSearch", () => {
     expect(screen.getByText(/No articles found/)).toBeInTheDocument();
   });
 
-  it("should render tag pills", () => {
+  it("should render topics as native select options", () => {
     render(
       <BlogSearch
         posts={mockPosts}
@@ -149,8 +150,8 @@ describe("BlogSearch", () => {
       />,
     );
 
-    const buttons = screen.getAllByRole("button");
-    const buttonTexts = buttons.map((btn) => btn.textContent);
+    const options = screen.getAllByRole("option");
+    const buttonTexts = options.map((option) => option.textContent);
 
     expect(buttonTexts).toContain("All");
     expect(buttonTexts).toContain("React");
@@ -159,7 +160,7 @@ describe("BlogSearch", () => {
     expect(buttonTexts).toContain("CSS");
   });
 
-  it("should clear the tag filter when clicking All", () => {
+  it("should clear the topic filter when selecting All", () => {
     render(
       <BlogSearch
         posts={mockPosts}
@@ -168,17 +169,68 @@ describe("BlogSearch", () => {
       />,
     );
 
-    const buttons = screen.getAllByRole("button");
-    const typescriptButton = buttons.find(
-      (btn) => btn.textContent === "TypeScript",
-    );
-    fireEvent.click(typescriptButton!);
+    const select = screen.getByRole("combobox", { name: "Topic" });
+    fireEvent.change(select, { target: { value: "TypeScript" } });
     expect(screen.queryByText("React Hooks Tutorial")).not.toBeInTheDocument();
 
-    const allButton = buttons.find((btn) => btn.textContent === "All");
-    fireEvent.click(allButton!);
+    fireEvent.change(select, { target: { value: "" } });
     expect(screen.getByText("React Hooks Tutorial")).toBeInTheDocument();
     expect(screen.getByText("TypeScript Best Practices")).toBeInTheDocument();
     expect(screen.getByText("CSS Grid Layout")).toBeInTheDocument();
+  });
+
+  it("combines filters, announces counts and clears both with focus restored", () => {
+    render(
+      <BlogSearch
+        posts={mockPosts}
+        locale="en"
+        translations={mockTranslations}
+      />,
+    );
+    const input = screen.getByRole("searchbox", { name: "Search articles" });
+    fireEvent.change(screen.getByRole("combobox"), {
+      target: { value: "React" },
+    });
+    fireEvent.change(input, { target: { value: "CSS" } });
+    expect(screen.getByRole("status")).toHaveTextContent("0 articles");
+    fireEvent.click(screen.getByRole("button", { name: "Clear filters" }));
+    expect(screen.getByRole("status")).toHaveTextContent("3 articles");
+    expect(input).toHaveFocus();
+    expect(input).toHaveValue("");
+    expect(screen.getByRole("combobox")).toHaveValue("");
+  });
+
+  it("finds accented titles without requiring accents", () => {
+    render(
+      <BlogSearch
+        posts={[{ ...mockPosts[0], title: "Introdução à programação" }]}
+        locale="pt"
+        translations={mockTranslations}
+      />,
+    );
+    fireEvent.change(screen.getByRole("searchbox"), {
+      target: { value: "introducao" },
+    });
+    expect(screen.getByRole("status")).toHaveTextContent("1 article");
+  });
+
+  it("clears just the search without resetting the topic", () => {
+    render(
+      <BlogSearch
+        posts={mockPosts}
+        locale="en"
+        translations={mockTranslations}
+      />,
+    );
+    fireEvent.change(screen.getByRole("combobox"), {
+      target: { value: "React" },
+    });
+    fireEvent.change(screen.getByRole("searchbox"), {
+      target: { value: "missing" },
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Clear search" }));
+    expect(screen.getByRole("combobox")).toHaveValue("React");
+    expect(screen.getByRole("status")).toHaveTextContent("1 article");
+    expect(screen.getByRole("searchbox")).toHaveFocus();
   });
 });

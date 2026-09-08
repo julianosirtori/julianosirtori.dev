@@ -1,7 +1,11 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { MagnifyingGlassIcon, Cross2Icon } from "@radix-ui/react-icons";
+import { useMemo, useRef, useState } from "react";
+import {
+  ArrowRightIcon,
+  MagnifyingGlassIcon,
+  Cross2Icon,
+} from "@radix-ui/react-icons";
 import { Link } from "@/locales/navigation";
 
 interface Post {
@@ -18,6 +22,9 @@ interface BlogSearchProps {
   locale: string;
   translations: {
     searchPlaceholder: string;
+    searchLabel: string;
+    clearSearch: string;
+    topicLabel: string;
     allCategories: string;
     noResults: string;
     clearFilters: string;
@@ -29,25 +36,34 @@ interface BlogSearchProps {
   };
 }
 
+const normalize = (text: string) =>
+  text
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .trim();
+
 export function BlogSearch({ posts, locale, translations }: BlogSearchProps) {
   const [search, setSearch] = useState("");
-  const [activeTag, setActiveTag] = useState<string | null>(null);
+  const [activeTag, setActiveTag] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const tags = useMemo(() => {
     const set = new Set<string>();
     posts.forEach((post) => post.tags?.forEach((tag) => set.add(tag)));
-    return Array.from(set).sort();
-  }, [posts]);
+    return Array.from(set).sort((a, b) => a.localeCompare(b, locale));
+  }, [posts, locale]);
 
   const filteredPosts = useMemo(() => {
-    const query = search.toLowerCase().trim();
+    const query = normalize(search);
     return posts.filter((post) => {
       if (activeTag && !post.tags?.includes(activeTag)) return false;
-      if (!query) return true;
-      const haystack = [post.title, post.excerpt ?? "", ...(post.tags ?? [])]
-        .join(" ")
-        .toLowerCase();
-      return haystack.includes(query);
+      const haystack = [
+        post.title,
+        post.excerpt ?? "",
+        ...(post.tags ?? []),
+      ].join(" ");
+      return !query || normalize(haystack).includes(query);
     });
   }, [posts, search, activeTag]);
 
@@ -62,155 +78,172 @@ export function BlogSearch({ posts, locale, translations }: BlogSearchProps) {
     return Array.from(groups.entries()).sort(([a], [b]) => b.localeCompare(a));
   }, [filteredPosts]);
 
-  const formatDate = (dateStr: string) =>
-    new Date(dateStr).toLocaleDateString(locale === "pt" ? "pt-BR" : "en-US", {
+  const formatDate = (date: string) =>
+    new Intl.DateTimeFormat(locale === "pt" ? "pt-BR" : "en-US", {
       day: "numeric",
       month: "short",
-      year: "numeric",
-    });
+      timeZone: "UTC",
+    }).format(new Date(date));
 
   const clearAll = () => {
     setSearch("");
-    setActiveTag(null);
+    setActiveTag("");
+    inputRef.current?.focus();
   };
 
+  const hasFilters = Boolean(search || activeTag);
   const countLabel = `${filteredPosts.length} ${
     filteredPosts.length === 1 ? translations.article : translations.articles
   }`;
 
   return (
     <div className="w-full">
-      <div className="relative mb-3">
-        <MagnifyingGlassIcon className="text-fg-subtle absolute top-1/2 left-4 h-4 w-4 -translate-y-1/2" />
-        <input
-          type="text"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          placeholder={translations.searchPlaceholder}
-          className="border-border bg-bg-elevated text-fg placeholder:text-fg-subtle focus:border-accent h-12 w-full rounded-[10px] border pr-10 pl-11 text-sm transition-colors focus:outline-none"
-        />
-        {search && (
+      <div
+        role="search"
+        aria-label={translations.searchLabel}
+        className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_220px] sm:gap-5"
+      >
+        <div>
+          <label
+            htmlFor="blog-search"
+            className="text-fg-muted mb-2 block text-sm"
+          >
+            {translations.searchLabel}
+          </label>
+          <div className="relative">
+            <MagnifyingGlassIcon
+              aria-hidden="true"
+              className="text-fg-muted pointer-events-none absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2"
+            />
+            <input
+              ref={inputRef}
+              id="blog-search"
+              type="search"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder={translations.searchPlaceholder}
+              aria-controls="blog-results"
+              className="border-border bg-bg-elevated text-fg placeholder:text-fg-muted focus:border-accent focus:ring-accent h-12 w-full rounded-md border pr-12 pl-10 text-base transition-colors focus:ring-1 focus:outline-none [&::-webkit-search-cancel-button]:appearance-none"
+            />
+            {search && (
+              <button
+                type="button"
+                onClick={() => {
+                  setSearch("");
+                  inputRef.current?.focus();
+                }}
+                className="text-fg-muted hover:text-fg focus-visible:ring-accent absolute top-0.5 right-0.5 inline-flex h-11 w-11 items-center justify-center rounded-sm focus-visible:ring-2 focus-visible:outline-none"
+                aria-label={translations.clearSearch}
+              >
+                <Cross2Icon aria-hidden="true" className="h-4 w-4" />
+              </button>
+            )}
+          </div>
+        </div>
+        {tags.length > 0 && (
+          <div>
+            <label
+              htmlFor="blog-topic"
+              className="text-fg-muted mb-2 block text-sm"
+            >
+              {translations.topicLabel}
+            </label>
+            <select
+              id="blog-topic"
+              value={activeTag}
+              onChange={(event) => setActiveTag(event.target.value)}
+              aria-controls="blog-results"
+              className="border-border bg-bg-elevated text-fg focus:border-accent focus:ring-accent h-12 w-full rounded-md border px-3 text-base focus:ring-1 focus:outline-none"
+            >
+              <option value="">{translations.allCategories}</option>
+              {tags.map((tag) => (
+                <option key={tag} value={tag}>
+                  {tag}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+      </div>
+
+      <div className="text-fg-muted flex min-h-16 items-center justify-between gap-4 text-xs">
+        <p role="status" aria-atomic="true" className="font-mono">
+          {countLabel}
+        </p>
+        {hasFilters && (
           <button
             type="button"
-            onClick={() => setSearch("")}
-            className="text-fg-subtle hover:text-fg absolute top-1/2 right-4 -translate-y-1/2 transition-colors"
-            aria-label="Clear search"
+            onClick={clearAll}
+            className="hover:text-accent focus-visible:ring-accent decoration-border-strong min-h-11 rounded-sm text-sm underline underline-offset-4 focus-visible:ring-2 focus-visible:outline-none"
           >
-            <Cross2Icon className="h-4 w-4" />
+            {translations.clearFilters}
           </button>
         )}
       </div>
 
-      {tags.length > 0 && (
-        <div className="mb-2 flex flex-wrap gap-2">
-          <TagPill active={!activeTag} onClick={() => setActiveTag(null)}>
-            {translations.allCategories}
-          </TagPill>
-          {tags.map((tag) => (
-            <TagPill
-              key={tag}
-              active={activeTag === tag}
-              onClick={() => setActiveTag(activeTag === tag ? null : tag)}
+      <div id="blog-results" className="border-border border-t">
+        {filteredPosts.length === 0 ? (
+          <p className="text-fg-muted py-16 text-center text-base">
+            {translations.noResults}
+          </p>
+        ) : (
+          postsByYear.map(([year, yearPosts]) => (
+            <section
+              key={year}
+              aria-labelledby={`blog-year-${year}`}
+              className="border-border grid border-b py-6 sm:grid-cols-[64px_minmax(0,1fr)] sm:gap-8 sm:py-8"
             >
-              {tag}
-            </TagPill>
-          ))}
-        </div>
-      )}
-
-      <p className="text-fg-subtle mb-7 font-mono text-xs">{countLabel}</p>
-
-      {filteredPosts.length === 0 ? (
-        <p className="text-fg-subtle py-12 text-center text-sm">
-          {translations.noResults}{" "}
-          <button
-            type="button"
-            onClick={clearAll}
-            className="text-accent cursor-pointer"
-          >
-            {translations.clearFilters}
-          </button>
-        </p>
-      ) : (
-        postsByYear.map(([year, yearPosts]) => (
-          <section key={year} className="mb-3">
-            <div className="flex items-center gap-4 py-4">
-              <span className="text-fg-subtle font-mono text-[13px] font-medium">
-                {year}
-              </span>
-              <span className="bg-border h-px flex-1" />
-              <span className="text-fg-subtle font-mono text-[11px]">
-                {yearPosts.length}{" "}
-                {yearPosts.length === 1
-                  ? translations.post
-                  : translations.posts}
-              </span>
-            </div>
-            {yearPosts.map((post) => (
-              <Link
-                key={post.slug}
-                href={`/blog/${post.slug}`}
-                className="group hover:border-border-strong hover:bg-bg-elevated -mx-5 grid grid-cols-[110px_1fr] items-start gap-6 rounded-2xl border border-transparent px-5 py-5 transition-colors"
+              <h2
+                id={`blog-year-${year}`}
+                className="text-fg-muted mb-2 font-mono text-sm sm:pt-4"
               >
-                <div className="pt-0.5">
-                  <p className="text-fg-subtle font-mono text-xs">
-                    {formatDate(post.date)}
-                  </p>
-                  <p className="text-fg-subtle mt-1 font-mono text-[11px] opacity-75">
-                    {post.readTime} {translations.readTime}
-                  </p>
-                </div>
-                <div className="min-w-0">
-                  <h2 className="text-fg group-hover:text-accent mb-2 text-xl font-semibold tracking-tight transition-colors">
-                    {post.title}
-                  </h2>
-                  {post.excerpt && (
-                    <p className="text-fg-muted mb-3.5 max-w-[60ch] text-[15px] leading-relaxed">
-                      {post.excerpt}
-                    </p>
-                  )}
-                  {post.tags && post.tags.length > 0 && (
-                    <div className="flex flex-wrap gap-1.5">
-                      {post.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="bg-accent-muted text-accent rounded-full px-2.5 py-1 font-mono text-[11px]"
+                {year}
+              </h2>
+              <ul className="min-w-0">
+                {yearPosts.map((post) => (
+                  <li
+                    key={post.slug}
+                    className="border-border border-b last:border-0"
+                  >
+                    <Link
+                      href={`/blog/${post.slug}`}
+                      aria-labelledby={`post-${post.slug}`}
+                      className="group hover:bg-bg-muted focus-visible:ring-accent -mx-3 grid grid-cols-[minmax(0,1fr)_16px] gap-4 rounded-sm px-3 py-5 transition-colors focus-visible:ring-2 focus-visible:outline-none sm:py-6"
+                    >
+                      <div className="min-w-0">
+                        <div className="text-fg-muted mb-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs">
+                          <time dateTime={post.date}>
+                            {formatDate(post.date)}
+                          </time>
+                          <span aria-hidden="true">·</span>
+                          <span>
+                            {post.readTime} {translations.readTime}
+                          </span>
+                        </div>
+                        <h3
+                          id={`post-${post.slug}`}
+                          className="text-fg group-hover:text-accent text-lg leading-snug font-medium tracking-tight text-pretty transition-colors sm:text-xl"
                         >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </Link>
-            ))}
-          </section>
-        ))
-      )}
+                          {post.title}
+                        </h3>
+                        {post.excerpt && (
+                          <p className="text-fg-muted mt-2 max-w-[72ch] text-sm leading-relaxed text-pretty">
+                            {post.excerpt}
+                          </p>
+                        )}
+                      </div>
+                      <ArrowRightIcon
+                        aria-hidden="true"
+                        className="text-fg-muted group-hover:text-accent mt-7 h-4 w-4 transition-transform motion-safe:group-hover:translate-x-1"
+                      />
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))
+        )}
+      </div>
     </div>
-  );
-}
-
-function TagPill({
-  active,
-  onClick,
-  children,
-}: {
-  active: boolean;
-  onClick: () => void;
-  children: React.ReactNode;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={
-        active
-          ? "bg-accent text-accent-fg border-accent rounded-full border px-3 py-1.5 font-mono text-xs transition-colors"
-          : "border-border text-fg-muted hover:text-fg rounded-full border px-3 py-1.5 font-mono text-xs transition-colors"
-      }
-    >
-      {children}
-    </button>
   );
 }

@@ -1,57 +1,81 @@
 "use client";
 
-import { useState, useRef, ReactNode } from "react";
+import { useState, useRef, useEffect, type ComponentProps } from "react";
 import { CheckIcon, CopyIcon } from "@radix-ui/react-icons";
+import { useTranslations } from "next-intl";
 
-interface CodeBlockProps {
-  children?: ReactNode;
-  className?: string;
+interface CodeBlockProps extends ComponentProps<"pre"> {
   "data-language"?: string;
   "data-theme"?: string;
 }
 
 export function CodeBlock({ children, className, ...props }: CodeBlockProps) {
-  const [copied, setCopied] = useState(false);
+  const t = useTranslations("blog");
+  const [status, setStatus] = useState<"idle" | "copied" | "error">("idle");
   const preRef = useRef<HTMLPreElement>(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(
+    () => () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    },
+    [],
+  );
 
   const handleCopy = async () => {
     if (!preRef.current) return;
     const code = preRef.current.textContent || "";
     try {
       await navigator.clipboard.writeText(code);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      setStatus("copied");
+      if (timerRef.current) clearTimeout(timerRef.current);
+      timerRef.current = setTimeout(() => setStatus("idle"), 2000);
     } catch {
-      console.error("Failed to copy code");
+      setStatus("error");
     }
   };
 
   const language = props["data-language"];
+  const copyLabel = status === "copied" ? t("copiedCode") : t("copyCode");
 
   return (
-    <div className="group relative my-6">
-      {language && (
-        <div className="absolute top-4 right-12 z-10 font-mono text-[10px] tracking-wide text-white/50">
-          {language}
-        </div>
+    <div
+      data-code-block
+      className="bg-bg-muted my-6 overflow-hidden rounded-lg"
+    >
+      <div className="border-border text-fg-muted flex min-h-12 items-center justify-between gap-4 border-b px-4">
+        <span className="font-mono text-xs">
+          {language && language !== "plaintext" ? language : t("codeLabel")}
+        </span>
+        <button
+          type="button"
+          onClick={handleCopy}
+          className="hover:text-accent focus-visible:ring-accent -mr-2 inline-flex min-h-11 items-center justify-center gap-2 rounded-sm px-2 text-xs transition-colors focus-visible:ring-2 focus-visible:outline-none"
+          aria-label={copyLabel}
+          title={copyLabel}
+        >
+          {status === "copied" ? (
+            <CheckIcon aria-hidden="true" className="h-3.5 w-3.5" />
+          ) : (
+            <CopyIcon aria-hidden="true" className="h-3.5 w-3.5" />
+          )}
+          {copyLabel}
+        </button>
+      </div>
+      <span role="status" className="sr-only">
+        {status === "copied" ? t("copiedCode") : ""}
+      </span>
+      {status === "error" && (
+        <p role="alert" className="px-4 text-sm">
+          {t("copyFailed")}
+        </p>
       )}
-      <button
-        type="button"
-        onClick={handleCopy}
-        className="absolute top-3 right-3 z-10 inline-flex h-7 w-7 items-center justify-center rounded-md text-white/60 transition-colors hover:bg-white/10 hover:text-white focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:outline-none"
-        aria-label={copied ? "Copied" : "Copy code"}
-        title={copied ? "Copied" : "Copy code"}
-      >
-        {copied ? (
-          <CheckIcon className="text-success h-3.5 w-3.5" />
-        ) : (
-          <CopyIcon className="h-3.5 w-3.5" />
-        )}
-      </button>
       <pre
-        ref={preRef}
-        className={`bg-bg-muted overflow-x-auto rounded-xl p-4 text-sm sm:p-5 ${className || ""}`}
         {...props}
+        ref={preRef}
+        tabIndex={0}
+        aria-label={language || t("codeLabel")}
+        className={`focus-visible:ring-accent overflow-x-auto p-4 text-sm focus-visible:ring-2 focus-visible:outline-none focus-visible:ring-inset sm:p-5 ${className || ""}`}
       >
         {children}
       </pre>
