@@ -7,6 +7,8 @@ const withNextIntl = createNextIntlPlugin("./src/locales/index.ts");
 const nextConfig = {
   experimental: {
     globalNotFound: true,
+    // Avoid restoring stale dev route entries that send existing pages to 404.
+    turbopackFileSystemCacheForDev: false,
   },
   images: {
     remotePatterns: [

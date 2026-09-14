@@ -43,3 +43,11 @@ next-env.d.ts
 .design-sync/
 .ds-sync/
 ds-bundle/
+# Local persistence and generated design context
+*.db
+*.db-*
+.superdesign/init/
+!.env.example
+
+/playwright-report/
+/test-results/

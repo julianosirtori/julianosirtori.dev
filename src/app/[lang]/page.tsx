@@ -1,3 +1,5 @@
+import { ReactionSummary } from "@/components/Reactions/Reactions";
+import { copyFor } from "@/components/Audience/copy";
 import { allPosts } from "contentlayer/generated";
 import { getLocale, getTranslations, setRequestLocale } from "next-intl/server";
 
@@ -64,6 +66,7 @@ export default async function Home({ params }: HomeProps) {
             viewAll={t("viewAllPosts")}
             readTime={t("readTime")}
           />
+          <ReactionSummary />
         </section>
 
         <section id="recommendations" className="scroll-mt-24">
@@ -71,7 +74,7 @@ export default async function Home({ params }: HomeProps) {
             {t("recommendations.label")}
           </h2>
           <div className="divide-border border-border divide-y border-y">
-            {recommendations.map((recommendation) => (
+            {recommendations.slice(0, 3).map((recommendation) => (
               <figure key={recommendation.name} className="py-6">
                 <blockquote className="text-fg-muted flex flex-col gap-3 text-[15px] leading-relaxed">
                   {recommendation.content.map((paragraph) => (
@@ -95,6 +98,12 @@ export default async function Home({ params }: HomeProps) {
               </figure>
             ))}
           </div>
+          <Link
+            href="/work-with-me#recommendations"
+            className="text-accent mt-5 inline-flex min-h-11 items-center text-sm"
+          >
+            {copyFor(lang).allRecommendations}
+          </Link>
         </section>
 
         <section id="contact" className="scroll-mt-24">

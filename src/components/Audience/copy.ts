@@ -1,0 +1,108 @@
+export const audienceCopy = {
+  pt: {
+    title: "Notas do Juliano",
+    intro:
+      "Uma edição a cada duas semanas sobre código, decisões de projeto e o que aprendi construindo.",
+    email: "Seu e-mail",
+    subscribe: "Quero receber",
+    sending: "Enviando…",
+    check:
+      "Confira sua caixa de entrada. Abra o link para confirmar sua inscrição.",
+    hint: "Em português, a cada duas semanas. Confirme seu e-mail para começar. Cancele quando quiser.",
+    error: "Não foi possível concluir agora. Tente novamente.",
+    confirm: "Confirmar minha inscrição",
+    confirmed: "Inscrição confirmada. Boas-vindas às Notas do Juliano!",
+    expired: "Este link expirou ou não é mais válido. Solicite um novo link.",
+    sample: "O que vou mandar por aqui",
+    readTime: "Cerca de 5 minutos de leitura",
+    sampleText:
+      "A ideia é escrever sobre os projetos em que estou mexendo: uma escolha que precisei fazer, algo que testei ou um problema que deu mais trabalho do que eu esperava.",
+    sampleLinks:
+      "Também quero compartilhar até três links que eu mandaria para um colega, com um comentário meu sobre cada um.",
+    guestbook: "Deixe um recado",
+    guestIntro:
+      "Passou por aqui? Conte de onde veio ou o que achou. Português e inglês dividem o mesmo mural.",
+    login: "Entrar com GitHub",
+    logout: "Sair",
+    message: "Seu recado",
+    moderation: "Até 500 caracteres. Os recados são públicos após revisão.",
+    send: "Enviar recado",
+    received: "Recebi seu recado. Ele aparece aqui depois da revisão.",
+    empty: "Nenhum recado publicado ainda. Você pode deixar o primeiro.",
+    unavailable: "O mural está indisponível no momento. Tente novamente.",
+    retry: "Tentar novamente",
+    drafts: "Rascunhos salvos neste navegador",
+    recover: "Usar este rascunho",
+    recommendations: "Recomendações",
+    allRecommendations: "Ver todas as recomendações",
+    original: "Texto original",
+    source: "Origem: LinkedIn",
+    admin: "Moderação do guestbook",
+    pending: "Pendentes",
+    approved: "Publicadas",
+    rejected: "Rejeitadas",
+    approve: "Aprovar",
+    reject: "Rejeitar",
+    unpublish: "Retirar da publicação",
+    more: "Carregar mais",
+    unsubscribe: "Cancelar inscrição",
+    unsubscribed: "Inscrição cancelada. Você não receberá novas edições.",
+    unsubscribeHint:
+      "Confirme abaixo para parar de receber as Notas do Juliano.",
+  },
+  en: {
+    title: "Notas do Juliano",
+    intro:
+      "Every two weeks: code, project decisions and lessons from building things.",
+    email: "Your email",
+    subscribe: "Subscribe",
+    sending: "Sending…",
+    check: "Check your inbox. Open the link to confirm your subscription.",
+    hint: "In English, every two weeks. Confirm your email to get started. Unsubscribe anytime.",
+    error: "We could not complete this right now. Please try again.",
+    confirm: "Confirm my subscription",
+    confirmed: "You're subscribed. Welcome to Notas do Juliano!",
+    expired: "This link has expired or is no longer valid. Request a new link.",
+    sample: "What I'll send you",
+    readTime: "About a 5-minute read",
+    sampleText:
+      "I want to write about the projects I'm working on: a choice I had to make, something I tried, or a problem that took longer than I expected.",
+    sampleLinks:
+      "I'll also share up to three links I'd send to a colleague, with a few words about each one.",
+    guestbook: "Leave a note",
+    guestIntro:
+      "Stopped by? Share where you came from or what you thought. Portuguese and English share the same wall.",
+    login: "Sign in with GitHub",
+    logout: "Sign out",
+    message: "Your note",
+    moderation: "Up to 500 characters. Notes become public after review.",
+    send: "Send note",
+    received: "I received your note. It will appear here after review.",
+    empty: "No published notes yet. You can leave the first one.",
+    unavailable: "The guestbook is unavailable right now. Please try again.",
+    retry: "Try again",
+    drafts: "Drafts saved in this browser",
+    recover: "Use this draft",
+    recommendations: "Recommendations",
+    allRecommendations: "View all recommendations",
+    original: "Original text",
+    source: "Source: LinkedIn",
+    admin: "Guestbook moderation",
+    pending: "Pending",
+    approved: "Published",
+    rejected: "Rejected",
+    approve: "Approve",
+    reject: "Reject",
+    unpublish: "Unpublish",
+    more: "Load more",
+    unsubscribe: "Unsubscribe",
+    unsubscribed: "You are unsubscribed. You will not receive new issues.",
+    unsubscribeHint: "Confirm below to stop receiving Notas do Juliano.",
+  },
+};
+export const copyFor = (lang: string) =>
+  audienceCopy[lang === "pt" ? "pt" : "en"];
+export const buttonClass =
+  "bg-accent text-accent-fg hover:opacity-90 focus-visible:ring-accent min-h-11 rounded-md px-4 py-2 text-sm font-medium focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50";
+export const inputClass =
+  "border-border bg-bg-elevated text-fg focus:border-accent focus:ring-accent min-h-11 w-full rounded-md border px-3 py-2 text-base focus:ring-1 focus:outline-none";

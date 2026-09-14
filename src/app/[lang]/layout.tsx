@@ -1,10 +1,9 @@
-import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Telemetry } from "@/components/Audience/Telemetry";
 import { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { GoogleAnalytics } from "@next/third-parties/google";
+import { SiteAnalytics } from "@/components/Audience/Analytics";
 
 import { GeistSans, GeistMono } from "@/app/fonts";
 import { Header } from "@/components/Header";
@@ -78,8 +77,8 @@ export default async function BlogRootLayout({
       <body className="bg-bg text-fg relative font-sans antialiased">
         <ThemeProvider>
           <NextIntlClientProvider locale={locale} messages={messages}>
-            <SpeedInsights />
             <CommandBar>
+              <SiteAnalytics />
               <div className="flex min-h-screen flex-col">
                 <Header />
                 {children}
@@ -88,12 +87,11 @@ export default async function BlogRootLayout({
               <BackToTop />
               <KonamiEgg />
               <ConsoleGreeting />
-              <Analytics />
+              <Telemetry />
             </CommandBar>
           </NextIntlClientProvider>
         </ThemeProvider>
       </body>
-      <GoogleAnalytics gaId="G-VNFLVEVSCC" />
     </html>
   );
 }

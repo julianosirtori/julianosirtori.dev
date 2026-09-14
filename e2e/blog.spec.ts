@@ -1,6 +1,22 @@
 import { test, expect } from "@playwright/test";
 
 test.describe("Blog Page", () => {
+  test("keeps published articles reachable after a missing route", async ({
+    page,
+  }) => {
+    for (const locale of ["pt", "en"]) {
+      const missing = await page.goto(`/${locale}/missing/route`);
+      expect(missing?.status()).toBe(404);
+
+      const article = await page.goto(`/${locale}/blog/sse`);
+      expect(article?.status()).toBe(200);
+      await expect(page.locator("#post-content")).toContainText(
+        "Server-Sent Events",
+      );
+      await expect(page).toHaveTitle(/Juliano Sirtori - .*SSE/);
+    }
+  });
+
   test("should display the blog page with articles", async ({ page }) => {
     await page.goto("/en/blog");
 
@@ -66,7 +82,7 @@ test.describe("Blog Page", () => {
       await expect(results.getByRole("link")).toHaveCount(2);
       await search.fill("SSE");
       await expect(results.getByRole("link")).toHaveCount(1);
-      await expect(page.getByRole("status")).toHaveText(
+      await expect(page.locator("main").getByRole("status")).toHaveText(
         locale === "pt" ? "1 artigo" : "1 article",
       );
       await search.fill("zz-no-match");

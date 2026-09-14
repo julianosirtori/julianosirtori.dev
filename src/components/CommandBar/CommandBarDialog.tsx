@@ -1,0 +1,227 @@
+"use client";
+
+import { Command } from "cmdk";
+import * as Dialog from "@radix-ui/react-dialog";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { useCallback, useMemo } from "react";
+import { useLocale, useTranslations } from "next-intl";
+import {
+  BackpackIcon,
+  CodeIcon,
+  CommitIcon,
+  EnvelopeClosedIcon,
+  FileTextIcon,
+  HomeIcon,
+  PersonIcon,
+} from "@radix-ui/react-icons";
+
+import { useRouter } from "@/locales/navigation";
+
+import { track } from "@/lib/analytics";
+
+interface Action {
+  id: string;
+  label: string;
+  section: "general" | "navigate";
+  keywords: string;
+  perform: () => void;
+  icon: React.ReactNode;
+  shortcut?: string;
+}
+
+export default function CommandBarDialog({
+  open,
+  setOpen,
+}: {
+  open: boolean;
+  setOpen: (open: boolean) => void;
+}) {
+  const router = useRouter();
+  const lang = useLocale();
+  const t = useTranslations("global.kbar");
+  const tSections = useTranslations("global");
+  const close = useCallback(() => setOpen(false), [setOpen]);
+
+  const actions: Action[] = useMemo(
+    () => [
+      {
+        id: "newsletter",
+        label: "Newsletter",
+        section: "navigate",
+        keywords: "newsletter notas subscribe inscrição",
+        perform: () => router.push("/newsletter"),
+        icon: <EnvelopeClosedIcon />,
+      },
+      {
+        id: "guestbook",
+        label: lang === "pt" ? "Deixe um recado" : "Leave a note",
+        section: "navigate",
+        keywords: "guestbook mural recados notes",
+        perform: () => router.push("/guestbook"),
+        icon: <PersonIcon />,
+      },
+      {
+        id: "email",
+        label: t("email"),
+        section: "general",
+        keywords: "email contact send mail",
+        perform: () => router.push("/work-with-me"),
+        icon: <EnvelopeClosedIcon />,
+      },
+      {
+        id: "source",
+        label: t("source"),
+        section: "general",
+        keywords: "github source repo code",
+        perform: () =>
+          window.open(
+            "https://github.com/julianosirtori/julianosirtori.dev",
+            "_blank",
+            "noopener,noreferrer",
+          ),
+        icon: <CodeIcon />,
+      },
+      {
+        id: "home",
+        label: t("home"),
+        section: "navigate",
+        keywords: "home start",
+        perform: () => router.push("/"),
+        icon: <HomeIcon />,
+      },
+      {
+        id: "about",
+        label: t("about"),
+        section: "navigate",
+        keywords: "about bio",
+        perform: () => router.push("/about"),
+        icon: <PersonIcon />,
+      },
+      {
+        id: "blog",
+        label: t("blog"),
+        section: "navigate",
+        keywords: "blog articles posts writing",
+        perform: () => router.push("/blog"),
+        icon: <FileTextIcon />,
+      },
+      {
+        id: "projects",
+        label: t("project"),
+        section: "navigate",
+        keywords: "projects work portfolio",
+        perform: () => router.push("/projects"),
+        icon: <BackpackIcon />,
+      },
+      {
+        id: "playground",
+        label: t("playground"),
+        section: "navigate",
+        keywords: "playground terminal shell konami",
+        perform: () => router.push("/playground"),
+        icon: <CommitIcon />,
+      },
+    ],
+    [router, t, lang],
+  );
+
+  const runAction = useCallback(
+    (action: Action) => {
+      track("command_palette_select", {
+        location: "command",
+        action_id: action.id,
+      });
+      action.perform();
+      close();
+    },
+    [close],
+  );
+
+  const general = actions.filter((a) => a.section === "general");
+  const navigate = actions.filter((a) => a.section === "navigate");
+
+  return (
+    <Command.Dialog
+      open={open}
+      onOpenChange={setOpen}
+      shouldFilter
+      label={t("defaultSearch")}
+      className="flex w-full flex-col"
+      overlayClassName="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm"
+      contentClassName="border-border bg-bg-elevated fixed top-[10vh] left-1/2 z-50 flex w-[calc(100vw-2rem)] max-w-2xl -translate-x-1/2 flex-col overflow-hidden rounded-xl border shadow-2xl"
+    >
+      <VisuallyHidden>
+        <Dialog.Title>{t("defaultSearch")}</Dialog.Title>
+        <Dialog.Description>{t("defaultSearch")}</Dialog.Description>
+      </VisuallyHidden>
+      <Command.Input
+        placeholder={t("defaultSearch")}
+        className="placeholder:text-fg-subtle text-fg border-border w-full border-b bg-transparent px-4 py-3.5 text-sm outline-none"
+      />
+      <Command.List className="[&::-webkit-scrollbar-thumb]:bg-bg-muted [&_[cmdk-group-heading]]:text-fg-subtle max-h-[60vh] overflow-y-auto p-2 [&_[cmdk-group-heading]]:px-3 [&_[cmdk-group-heading]]:pt-3 [&_[cmdk-group-heading]]:pb-1.5 [&_[cmdk-group-heading]]:text-[11px] [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:tracking-wider [&_[cmdk-group-heading]]:uppercase [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent">
+        <Command.Empty className="text-fg-muted px-3 py-6 text-center text-sm">
+          No results.
+        </Command.Empty>
+
+        {general.length > 0 && (
+          <Command.Group heading={tSections("general")}>
+            {general.map((action) => (
+              <CommandRow key={action.id} action={action} onRun={runAction} />
+            ))}
+          </Command.Group>
+        )}
+
+        {navigate.length > 0 && (
+          <Command.Group heading={tSections("goTo")}>
+            {navigate.map((action) => (
+              <CommandRow key={action.id} action={action} onRun={runAction} />
+            ))}
+          </Command.Group>
+        )}
+      </Command.List>
+      <div className="border-border text-fg-subtle flex items-center justify-between border-t px-3 py-2 text-xs">
+        <span>
+          <Kbd>↑</Kbd>
+          <Kbd>↓</Kbd>
+          <span className="ml-2">navigate</span>
+        </span>
+        <span>
+          <Kbd>↵</Kbd>
+          <span className="ml-1">open</span>
+          <span className="mx-2">·</span>
+          <Kbd>esc</Kbd>
+          <span className="ml-1">close</span>
+        </span>
+      </div>
+    </Command.Dialog>
+  );
+}
+
+function CommandRow({
+  action,
+  onRun,
+}: {
+  action: Action;
+  onRun: (a: Action) => void;
+}) {
+  return (
+    <Command.Item
+      value={`${action.label} ${action.keywords}`}
+      onSelect={() => onRun(action)}
+      className="text-fg-muted data-[selected=true]:bg-bg-muted data-[selected=true]:text-fg flex cursor-pointer items-center gap-3 rounded-md px-3 py-2.5 text-sm"
+    >
+      <span className="text-fg-subtle flex h-4 w-4 items-center justify-center">
+        {action.icon}
+      </span>
+      <span>{action.label}</span>
+    </Command.Item>
+  );
+}
+
+function Kbd({ children }: { children: React.ReactNode }) {
+  return (
+    <kbd className="border-border bg-bg text-fg-muted ml-1 inline-flex h-5 min-w-5 items-center justify-center rounded border px-1.5 font-mono text-[10px]">
+      {children}
+    </kbd>
+  );
+}

@@ -25,7 +25,7 @@ export const Header = () => {
         <Link
           href="/"
           className="text-fg hover:text-accent text-base font-medium tracking-tight transition-colors"
-          aria-label="juliano sirtori, home"
+          aria-label="juliano sirtori. / js. — home"
         >
           <span className="hidden sm:inline">juliano sirtori.</span>
           <span className="sm:hidden">js.</span>
@@ -46,6 +46,7 @@ export const Header = () => {
             <HeaderItemWrapper href="/playground">
               <Link
                 href="/playground"
+                prefetch={false}
                 className="text-accent hover:bg-accent-muted inline-flex items-center gap-1.5 rounded-md px-2 py-2 font-mono transition-colors sm:px-3"
               >
                 <span aria-hidden>{">_"}</span>
@@ -60,6 +61,7 @@ export const Header = () => {
             target="_blank"
             rel="noopener noreferrer"
             href="/Juliano_Sirtori_Resume.pdf"
+            download
             className="text-fg-muted hover:text-fg text-sm transition-colors"
           >
             CV

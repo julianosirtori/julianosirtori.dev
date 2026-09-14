@@ -36,6 +36,7 @@ export function FeaturedProjects({
           <motion.a
             key={project.id}
             href={project.href}
+            data-project={project.id}
             target="_blank"
             rel="noopener noreferrer"
             initial={{ opacity: 0, y: 6 }}

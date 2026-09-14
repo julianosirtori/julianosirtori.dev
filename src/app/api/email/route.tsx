@@ -70,7 +70,7 @@ export async function POST(req: NextRequest) {
 
   try {
     const resend = new Resend(process.env.RESEND_API_KEY);
-    await resend.emails.send({
+    const result = await resend.emails.send({
       from: "julianosirtori.dev <website@julianosirtori.dev>",
       to: "julianosirtori@gmail.com",
       replyTo: payload.email,
@@ -78,9 +78,10 @@ export async function POST(req: NextRequest) {
       react: <EmailTemplate {...payload} />,
     });
 
+    if (result.error) throw new Error("Provider rejected email");
     return NextResponse.json({ message: "Email sent" });
-  } catch (error) {
-    console.error("[email] send failed", error);
+  } catch {
+    console.error("[email] send failed");
     return NextResponse.json(
       { message: "Failed to send email" },
       { status: 500 },

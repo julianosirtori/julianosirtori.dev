@@ -1,7 +1,6 @@
 "use client";
 
 import { ArrowTopRightIcon } from "@radix-ui/react-icons";
-import { motion } from "framer-motion";
 import { Link } from "@/locales/navigation";
 
 interface Post {
@@ -47,11 +46,10 @@ export function LatestPosts({
 
       <div className="flex flex-col">
         {posts.map((post, index) => (
-          <motion.div
+          <div
             key={post.slug}
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.05, duration: 0.3 }}
+            className="motion-safe:animate-[post-reveal_.3s_ease-out_both]"
+            style={{ animationDelay: `${index * 50}ms` }}
           >
             <Link
               href={`/blog/${post.slug}`}
@@ -71,7 +69,7 @@ export function LatestPosts({
               </div>
               <ArrowTopRightIcon className="text-fg-subtle group-hover:text-fg h-4 w-4 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </Link>
-          </motion.div>
+          </div>
         ))}
       </div>
     </section>

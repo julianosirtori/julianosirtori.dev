@@ -6,7 +6,9 @@ test.describe("Work With Me Page", () => {
 
     await expect(page.locator("h1")).toContainText("Let's work together");
     await expect(page.locator('input[name="name"]')).toBeVisible();
-    await expect(page.locator('input[name="email"]')).toBeVisible();
+    await expect(
+      page.getByRole("textbox", { name: "Email", exact: true }),
+    ).toBeVisible();
     await expect(page.locator('input[name="companyOrProject"]')).toBeVisible();
     await expect(
       page.locator('select[name="collaborationType"]'),

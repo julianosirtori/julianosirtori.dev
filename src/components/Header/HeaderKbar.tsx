@@ -9,7 +9,7 @@ export function HeaderKBar() {
     <button
       type="button"
       onClick={toggle}
-      aria-label="Open command palette"
+      aria-label="Open command palette (⌘K)"
       title="Command palette (⌘K)"
       className="text-fg-muted hover:text-fg hover:bg-bg-muted focus-visible:ring-accent inline-flex h-8 items-center gap-1.5 rounded-md px-2 text-xs transition-colors focus-visible:ring-2 focus-visible:outline-none"
     >

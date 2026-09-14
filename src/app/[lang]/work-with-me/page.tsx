@@ -1,3 +1,4 @@
+import { TestimonialWall } from "@/components/Audience/Testimonials";
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
@@ -96,6 +97,8 @@ export default async function WorkWithMe({ params }: WorkWithMeProps) {
           </p>
         </section>
       </div>
+
+      <TestimonialWall lang={lang} />
 
       <section className="grid gap-10 pt-14 md:grid-cols-[0.8fr_1.2fr] md:gap-16">
         <div>

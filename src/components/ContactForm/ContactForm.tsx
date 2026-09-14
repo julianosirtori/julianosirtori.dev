@@ -1,9 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useTranslations } from "next-intl";
 
 import { Toast } from "../Toast/Toast";
+
+import { track } from "@/lib/analytics";
 
 const collaborationTypes = [
   "long-term",
@@ -15,6 +17,7 @@ const collaborationTypes = [
 
 export const ContactForm = () => {
   const t = useTranslations("workWithMe.form");
+  const started = useRef(false);
   const [isLoading, setIsLoading] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [isEmailSent, setIsEmailSent] = useState(false);
@@ -42,10 +45,11 @@ export const ContactForm = () => {
         throw new Error(`Email request failed: ${response.status}`);
 
       setIsEmailSent(true);
+      track("generate_lead", { location: "contact" });
       form.reset();
-    } catch (error) {
+    } catch {
       setIsEmailSent(false);
-      console.error(error);
+      track("contact_form_error", { location: "contact" });
     } finally {
       setIsLoading(false);
       setShowToast(true);
@@ -54,7 +58,16 @@ export const ContactForm = () => {
 
   return (
     <>
-      <form className="flex w-full flex-col gap-4" onSubmit={onSendEmail}>
+      <form
+        onFocusCapture={() => {
+          if (!started.current) {
+            started.current = true;
+            track("contact_form_start", { location: "contact" });
+          }
+        }}
+        className="flex w-full flex-col gap-4"
+        onSubmit={onSendEmail}
+      >
         <div className="grid gap-4 sm:grid-cols-2">
           <Field
             id="name"

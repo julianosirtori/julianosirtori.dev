@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import { MoonIcon, SunIcon, DesktopIcon } from "@radix-ui/react-icons";
 
+import { track } from "@/lib/analytics";
+
 const ORDER = ["system", "light", "dark"] as const;
 
 export function ThemeToggle() {
@@ -24,7 +26,10 @@ export function ThemeToggle() {
   return (
     <button
       type="button"
-      onClick={() => setTheme(next)}
+      onClick={() => {
+        setTheme(next);
+        track("theme_change", { location: "header", theme: next });
+      }}
       aria-label={`Switch theme (current: ${current})`}
       title={`Theme: ${current} (click for ${next})`}
       className="text-fg-muted hover:text-fg hover:bg-bg-muted focus-visible:ring-accent inline-flex h-8 w-8 items-center justify-center rounded-md transition-colors focus-visible:ring-2 focus-visible:outline-none"

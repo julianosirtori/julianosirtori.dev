@@ -6,7 +6,9 @@ test.describe("Home Page", () => {
 
     await expect(page).toHaveTitle(/Juliano Sirtori/);
     await expect(page.locator("h1")).toContainText("Juliano Sirtori");
-    await expect(page.getByText("Building Things")).toBeVisible();
+    await expect(
+      page.getByText("Building Things", { exact: true }),
+    ).toBeVisible();
     await expect(page.getByRole("heading", { name: "Front" })).toBeVisible();
     await expect(
       page.getByRole("heading", { name: "Recommendations" }),
@@ -23,7 +25,9 @@ test.describe("Home Page", () => {
 
     await expect(page).toHaveTitle(/Juliano Sirtori/);
     await expect(page.locator("h1")).toContainText("Juliano Sirtori");
-    await expect(page.getByText("Building Things")).toBeVisible();
+    await expect(
+      page.getByText("Building Things", { exact: true }),
+    ).toBeVisible();
     await expect(
       page.getByRole("heading", { name: "Recomendações" }),
     ).toBeVisible();

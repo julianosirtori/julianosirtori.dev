@@ -1,12 +1,14 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState, useEffect } from "react";
 import {
   ArrowRightIcon,
   MagnifyingGlassIcon,
   Cross2Icon,
 } from "@radix-ui/react-icons";
 import { Link } from "@/locales/navigation";
+
+import { track } from "@/lib/analytics";
 
 interface Post {
   title: string;
@@ -66,6 +68,19 @@ export function BlogSearch({ posts, locale, translations }: BlogSearchProps) {
       return !query || normalize(haystack).includes(query);
     });
   }, [posts, search, activeTag]);
+
+  useEffect(() => {
+    if (!search.trim()) return;
+    const timer = setTimeout(
+      () =>
+        track("blog_search", {
+          location: "content",
+          result_count: filteredPosts.length,
+        }),
+      800,
+    );
+    return () => clearTimeout(timer);
+  }, [search, filteredPosts.length]);
 
   const postsByYear = useMemo(() => {
     const groups = new Map<string, Post[]>();
@@ -151,7 +166,14 @@ export function BlogSearch({ posts, locale, translations }: BlogSearchProps) {
             <select
               id="blog-topic"
               value={activeTag}
-              onChange={(event) => setActiveTag(event.target.value)}
+              onChange={(event) => {
+                setActiveTag(event.target.value);
+                track("blog_filter_change", {
+                  location: "content",
+                  action_id:
+                    event.target.value.replace(/[^a-zA-Z0-9_-]/g, "_") || "all",
+                });
+              }}
               aria-controls="blog-results"
               className="border-border bg-bg-elevated text-fg focus:border-accent focus:ring-accent h-12 w-full rounded-md border px-3 text-base focus:ring-1 focus:outline-none"
             >

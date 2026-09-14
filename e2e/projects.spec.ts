@@ -94,7 +94,9 @@ test.describe("Projects Page", () => {
       await expect(results.getByRole("heading", { level: 3 })).toHaveText([
         "Fisio Milena Aranha",
       ]);
-      await expect(page.getByRole("status")).toHaveText(locale.singleResult);
+      await expect(page.locator("main").getByRole("status")).toHaveText(
+        locale.singleResult,
+      );
       await expect(filters.locator('[aria-pressed="true"]')).toHaveCount(1);
 
       await filters

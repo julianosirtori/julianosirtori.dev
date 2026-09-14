@@ -1,144 +1,200 @@
 "use client";
-
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-
-import { createStorage } from "@/utils/storage";
-
-interface ReactionsProps {
-  slug: string;
-}
-
-type ReactionData = Record<string, number>;
-
-const REACTIONS = [
-  { emoji: "👍", label: "Like", key: "like" },
-  { emoji: "🔥", label: "Fire", key: "fire" },
-  { emoji: "💡", label: "Insightful", key: "insightful" },
-  { emoji: "🎉", label: "Celebrate", key: "celebrate" },
-  { emoji: "❤️", label: "Love", key: "love" },
-];
-
-const VALID_KEYS = new Set(REACTIONS.map((r) => r.key));
-const storage = createStorage("reactions");
-
-function sanitizeCounts(value: unknown): ReactionData {
-  if (!value || typeof value !== "object" || Array.isArray(value)) return {};
-  const out: ReactionData = {};
-  for (const [key, count] of Object.entries(value as Record<string, unknown>)) {
-    if (VALID_KEYS.has(key) && typeof count === "number" && count >= 0) {
-      out[key] = Math.floor(count);
-    }
-  }
-  return out;
-}
-
-function sanitizeUserKeys(value: unknown): string[] {
-  if (!Array.isArray(value)) return [];
-  return value.filter(
-    (k): k is string => typeof k === "string" && VALID_KEYS.has(k),
+import { useState, useEffect, useRef } from "react";
+import { useLocale } from "next-intl";
+import {
+  reactionTypes,
+  type ReactionSnapshot,
+  type ReactionType,
+} from "@/lib/reactions";
+import { track } from "@/lib/analytics";
+const emoji = ["👍", "🔥", "💡", "🎉", "❤️"];
+const labels = {
+  pt: ["Gostei", "Fogo", "Inspirador", "Comemorar", "Amei"],
+  en: ["Like", "Fire", "Insightful", "Celebrate", "Love"],
+};
+async function request(
+  slug: string,
+  type?: ReactionType,
+  active?: boolean,
+): Promise<ReactionSnapshot> {
+  const response = await fetch(
+    `/api/reactions/${encodeURIComponent(slug)}`,
+    type
+      ? {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ type, active }),
+        }
+      : undefined,
   );
+  if (!response.ok) throw new Error("unavailable");
+  return response.json();
 }
-
-export function Reactions({ slug }: ReactionsProps) {
-  const [reactions, setReactions] = useState<ReactionData>({});
-  const [userReactions, setUserReactions] = useState<string[]>([]);
-  const [showBurst, setShowBurst] = useState<string | null>(null);
-
-  useEffect(() => {
-    setReactions(sanitizeCounts(storage.get(`counts-${slug}`, {})));
-    setUserReactions(sanitizeUserKeys(storage.get(`user-${slug}`, [])));
-  }, [slug]);
-
-  const handleReaction = (key: string) => {
-    const hasReacted = userReactions.includes(key);
-    const newUserReactions = hasReacted
-      ? userReactions.filter((r) => r !== key)
-      : [...userReactions, key];
-    const newReactions = {
-      ...reactions,
-      [key]: hasReacted
-        ? Math.max((reactions[key] || 1) - 1, 0)
-        : (reactions[key] || 0) + 1,
-    };
-
-    if (!hasReacted) {
-      setShowBurst(key);
-      setTimeout(() => setShowBurst(null), 600);
+const migrations = new Map<string, Promise<ReactionSnapshot>>();
+async function loadReactions(slug: string) {
+  // Single flight also covers React strict-mode remounts, avoiding competing first-cookie writes.
+  const existing = migrations.get(slug);
+  if (existing) return existing;
+  const pending = (async () => {
+    let snapshot = await request(slug);
+    try {
+      const marker = `reactions:migrated-${slug}`;
+      if (!localStorage.getItem(marker)) {
+        const value: unknown = JSON.parse(
+          localStorage.getItem(`reactions:user-${slug}`) || "[]",
+        );
+        const keys = Array.isArray(value)
+          ? reactionTypes.filter((k) => value.includes(k))
+          : [];
+        for (const key of keys)
+          if (!snapshot.selected.includes(key))
+            snapshot = await request(slug, key, true);
+        localStorage.setItem(marker, "1");
+      }
+    } catch {
+      /* Keep the migration unmarked on failure; the next visit retries idempotently. */
     }
-
-    setUserReactions(newUserReactions);
-    setReactions(newReactions);
-
-    storage.set(`counts-${slug}`, newReactions);
-    storage.set(`user-${slug}`, newUserReactions);
-  };
-
-  const totalReactions = Object.values(reactions).reduce(
-    (sum, count) => sum + count,
+    return snapshot;
+  })();
+  migrations.set(slug, pending);
+  try {
+    return await pending;
+  } finally {
+    migrations.delete(slug);
+  }
+}
+export function Reactions({ slug }: { slug: string }) {
+  const lang = useLocale() === "pt" ? "pt" : "en";
+  const [snapshot, setSnapshot] = useState<ReactionSnapshot>({
+    counts: {},
+    selected: [],
+  });
+  const [ready, setReady] = useState(false);
+  const [error, setError] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [retry, setRetry] = useState(0);
+  const lock = useRef(false);
+  useEffect(() => {
+    let cancelled = false;
+    setReady(false);
+    setError(false);
+    loadReactions(slug)
+      .then((data) => {
+        if (!cancelled) {
+          setSnapshot(data);
+          setReady(true);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) setError(true);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [slug, retry]);
+  const total = Object.values(snapshot.counts).reduce(
+    (a, b) => a + (b || 0),
     0,
   );
-
   return (
     <div className="flex flex-col items-center gap-3">
-      <p className="text-fg-subtle text-xs">
-        {totalReactions > 0
-          ? `${totalReactions} reaction${totalReactions > 1 ? "s" : ""}`
-          : "Be the first to react"}
+      <p className="text-fg-muted text-xs">
+        {total
+          ? `${total} ${lang === "pt" ? "reações" : "reactions"}`
+          : lang === "pt"
+            ? "Seja o primeiro a reagir"
+            : "Be the first to react"}
       </p>
-
-      <div className="flex flex-wrap justify-center gap-1.5">
-        {REACTIONS.map((reaction) => {
-          const isActive = userReactions.includes(reaction.key);
-          const count = reactions[reaction.key] || 0;
-
-          return (
-            <motion.button
-              type="button"
-              key={reaction.key}
-              onClick={() => handleReaction(reaction.key)}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className={
-                isActive
-                  ? "border-accent bg-accent-muted text-fg relative inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 transition-colors"
-                  : "border-border text-fg-muted hover:border-fg-muted hover:text-fg relative inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 transition-colors"
+      <div className="flex flex-wrap justify-center gap-2">
+        {reactionTypes.map((type, index) => (
+          <button
+            key={type}
+            type="button"
+            aria-label={labels[lang][index]}
+            aria-pressed={snapshot.selected.includes(type)}
+            disabled={!ready || busy}
+            className={`min-h-11 min-w-11 rounded-full border px-3 py-2 text-sm transition-colors disabled:opacity-50 ${snapshot.selected.includes(type) ? "border-accent bg-accent-muted text-fg" : "border-border text-fg-muted hover:border-accent"}`}
+            onClick={async () => {
+              if (lock.current) return;
+              lock.current = true;
+              setBusy(true);
+              setError(false);
+              const before = snapshot;
+              const active = !snapshot.selected.includes(type);
+              setSnapshot({
+                counts: {
+                  ...snapshot.counts,
+                  [type]: Math.max(
+                    0,
+                    (snapshot.counts[type] || 0) + (active ? 1 : -1),
+                  ),
+                },
+                selected: active
+                  ? [...snapshot.selected, type]
+                  : snapshot.selected.filter((k) => k !== type),
+              });
+              try {
+                setSnapshot(await request(slug, type, active));
+                track("reaction_change", {
+                  location: "article",
+                  content_id: slug,
+                  action_id: type,
+                  active,
+                });
+              } catch {
+                setSnapshot(before);
+                setError(true);
+              } finally {
+                lock.current = false;
+                setBusy(false);
               }
-              aria-label={reaction.label}
-              title={reaction.label}
-            >
-              <span className="text-base leading-none">{reaction.emoji}</span>
-              {count > 0 && (
-                <span className="min-w-3 text-xs font-medium">{count}</span>
-              )}
-
-              <AnimatePresence>
-                {showBurst === reaction.key && (
-                  <>
-                    {[...Array(6)].map((_, i) => (
-                      <motion.span
-                        key={i}
-                        initial={{ opacity: 1, scale: 0 }}
-                        animate={{
-                          opacity: 0,
-                          scale: 1,
-                          x: Math.cos((i / 6) * Math.PI * 2) * 24,
-                          y: Math.sin((i / 6) * Math.PI * 2) * 24,
-                        }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.5 }}
-                        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-sm"
-                      >
-                        {reaction.emoji}
-                      </motion.span>
-                    ))}
-                  </>
-                )}
-              </AnimatePresence>
-            </motion.button>
-          );
-        })}
+            }}
+          >
+            <span aria-hidden="true">{emoji[index]}</span>
+            {snapshot.counts[type] ? (
+              <span className="ml-1.5">{snapshot.counts[type]}</span>
+            ) : null}
+          </button>
+        ))}
       </div>
+      {error && (
+        <div role="status" className="text-fg-muted text-center text-xs">
+          <p>
+            {lang === "pt"
+              ? "Reações indisponíveis. Tente novamente."
+              : "Reactions unavailable. Please try again."}
+          </p>
+          {!ready && (
+            <button
+              className="text-accent min-h-11"
+              onClick={() => setRetry((n) => n + 1)}
+            >
+              {lang === "pt" ? "Tentar novamente" : "Try again"}
+            </button>
+          )}
+        </div>
+      )}
     </div>
+  );
+}
+export function ReactionSummary() {
+  const lang = useLocale();
+  const [data, setData] = useState<{
+    reactions: number;
+    articles: number;
+  } | null>(null);
+  useEffect(() => {
+    fetch("/api/reactions/summary")
+      .then(async (response) => {
+        if (response.ok) setData(await response.json());
+      })
+      .catch(() => undefined);
+  }, []);
+  if (!data || !data.reactions) return null;
+  return (
+    <p className="text-fg-muted mt-6 text-sm">
+      {data.reactions} {lang === "pt" ? "reações em" : "reactions across"}{" "}
+      {data.articles} {lang === "pt" ? "artigos" : "articles"}
+    </p>
   );
 }

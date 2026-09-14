@@ -1,3 +1,5 @@
+import { NewsletterBlock } from "@/components/Audience/Newsletter";
+import { ArticleAnalytics } from "@/components/Audience/Analytics";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getLocale, getTranslations, setRequestLocale } from "next-intl/server";
@@ -126,6 +128,7 @@ export default async function PostPage({ params }: IPostProps) {
   return (
     <>
       <ReadingProgress />
+      <ArticleAnalytics slug={slug} />
       <main
         className={`mx-auto w-full max-w-[760px] px-5 pt-10 pb-20 lg:pt-16 ${toc.length ? "lg:max-w-[1040px]" : ""}`}
       >
@@ -194,6 +197,14 @@ export default async function PostPage({ params }: IPostProps) {
             </article>
 
             <div className="mt-16 flex flex-col gap-10">
+              <NewsletterBlock source="article" article={post.slug} />
+              <div className="border-border flex flex-col gap-4 border-t pt-8">
+                <p className="text-fg-muted text-center text-sm">
+                  {t("reactionsPrompt")}
+                </p>
+                <Reactions slug={post.slug} />
+              </div>
+
               <PostNavigation
                 prev={prev ? { title: prev.title, slug: prev.slug } : null}
                 next={next ? { title: next.title, slug: next.slug } : null}
@@ -215,13 +226,6 @@ export default async function PostPage({ params }: IPostProps) {
                 readTime={t("readTime")}
                 locale={locale}
               />
-
-              <div className="border-border flex flex-col gap-4 border-t pt-8">
-                <p className="text-fg-muted text-center text-sm">
-                  {t("reactionsPrompt")}
-                </p>
-                <Reactions slug={post.slug} />
-              </div>
 
               <Comments locale={locale} />
             </div>

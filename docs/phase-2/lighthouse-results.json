@@ -1,0 +1,118 @@
+{
+  "date": "2026-09-14",
+  "lighthouse": "13.4.1",
+  "profile": "mobile simulated throttling",
+  "runs": [
+    {
+      "route": "/pt",
+      "baseline": {
+        "performance": [
+          80,
+          82,
+          85
+        ],
+        "accessibility": [
+          96,
+          96,
+          96
+        ]
+      },
+      "final": {
+        "performance": [
+          93,
+          94,
+          94
+        ],
+        "accessibility": [
+          100,
+          100,
+          100
+        ]
+      }
+    },
+    {
+      "route": "/pt/blog/hello-world",
+      "baseline": {
+        "performance": [
+          80,
+          84,
+          78
+        ],
+        "accessibility": [
+          96,
+          96,
+          96
+        ]
+      },
+      "final": {
+        "performance": [
+          92,
+          94,
+          91
+        ],
+        "accessibility": [
+          100,
+          100,
+          100
+        ]
+      }
+    },
+    {
+      "route": "/pt/work-with-me",
+      "baseline": {
+        "performance": [
+          86,
+          74,
+          75
+        ],
+        "accessibility": [
+          96,
+          96,
+          96
+        ]
+      },
+      "final": {
+        "performance": [
+          93,
+          92,
+          93
+        ],
+        "accessibility": [
+          100,
+          100,
+          100
+        ]
+      }
+    },
+    {
+      "route": "/pt/newsletter",
+      "final": {
+        "performance": [
+          90,
+          94,
+          94
+        ],
+        "accessibility": [
+          100,
+          100,
+          100
+        ]
+      }
+    },
+    {
+      "route": "/pt/guestbook",
+      "final": {
+        "performance": [
+          86,
+          92,
+          93
+        ],
+        "accessibility": [
+          100,
+          100,
+          100
+        ]
+      }
+    }
+  ]
+}
