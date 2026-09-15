@@ -25,9 +25,7 @@ export function sameOrigin(request: Request) {
   if (request.headers.get("origin") !== siteUrl())
     throw new HttpError(403, "origin");
 }
-export async function body(request: Request) {
-  if (!request.headers.get("content-type")?.startsWith("application/json"))
-    throw new HttpError(415, "content_type");
+export async function boundedText(request: Request, maxBytes: number) {
   // Bound streaming bodies too; Content-Length is not trustworthy.
   const reader = request.body?.getReader();
   if (!reader) throw new HttpError(400, "invalid");
@@ -38,14 +36,25 @@ export async function body(request: Request) {
     const chunk = await reader.read();
     if (chunk.done) break;
     bytes += chunk.value.length;
-    if (bytes > 8192) {
+    if (bytes > maxBytes) {
       await reader.cancel();
       throw new HttpError(413, "too_large");
     }
     value += decoder.decode(chunk.value, { stream: true });
   }
+  return value + decoder.decode();
+}
+export async function body(request: Request, maxBytes = 8192) {
+  const mediaType = request.headers
+    .get("content-type")
+    ?.split(";")[0]
+    .trim()
+    .toLowerCase();
+  if (mediaType !== "application/json")
+    throw new HttpError(415, "content_type");
+  const value = await boundedText(request, maxBytes);
   try {
-    const data = JSON.parse(value + decoder.decode());
+    const data = JSON.parse(value);
     if (!data || typeof data !== "object" || Array.isArray(data))
       throw new Error();
     return data as Record<string, unknown>;
@@ -124,16 +133,22 @@ export function unseal(value: string) {
     cipher.final(),
   ]).toString("utf8");
 }
-export async function reserveMailQuota() {
-  await limit(
-    "newsletter:daily",
-    Number(process.env.NEWSLETTER_DAILY_LIMIT || 80),
-    86_400_000,
-  );
+export async function reserveMailQuota(
+  channel: "newsletter" | "contact" = "newsletter",
+) {
+  const daily =
+    channel === "newsletter"
+      ? process.env.NEWSLETTER_DAILY_LIMIT || 80
+      : process.env.CONTACT_DAILY_LIMIT || 20;
+  const monthly =
+    channel === "newsletter"
+      ? process.env.NEWSLETTER_MONTHLY_LIMIT || 2400
+      : process.env.CONTACT_MONTHLY_LIMIT || 600;
+  await limit(`${channel}:daily`, Number(daily), 86_400_000);
   const now = new Date();
   await incrementLimit(
-    `newsletter:month:${now.toISOString().slice(0, 7)}`,
-    Number(process.env.NEWSLETTER_MONTHLY_LIMIT || 2400),
+    `${channel}:month:${now.toISOString().slice(0, 7)}`,
+    Number(monthly),
     Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 1),
   );
 }

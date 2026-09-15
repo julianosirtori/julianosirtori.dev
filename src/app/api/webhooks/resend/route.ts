@@ -1,13 +1,12 @@
 import { resendClient } from "@/lib/server/newsletter-provider";
 import { syncUnsubscribe } from "@/lib/server/newsletter";
-import { endpoint, HttpError, json } from "@/lib/server/security";
+import { boundedText, endpoint, HttpError, json } from "@/lib/server/security";
 export const runtime = "nodejs";
 export async function POST(request: Request) {
   return endpoint(async () => {
     if (!process.env.RESEND_WEBHOOK_SECRET)
       throw new Error("Webhook unavailable");
-    const payload = await request.text();
-    if (payload.length > 65536) throw new HttpError(413, "too_large");
+    const payload = await boundedText(request, 65536);
     let event;
     try {
       event = resendClient().webhooks.verify({

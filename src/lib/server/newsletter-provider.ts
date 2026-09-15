@@ -1,3 +1,4 @@
+import "server-only";
 import { Resend } from "resend";
 export function resendClient() {
   if (!process.env.RESEND_API_KEY) throw new Error("Email unavailable");

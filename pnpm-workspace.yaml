@@ -1,8 +1,15 @@
 allowBuilds:
-  '@parcel/watcher': true
-  '@swc/core': true
+  "@parcel/watcher": true
+  "@swc/core": true
   contentlayer2: true
   esbuild: true
   protobufjs: true
   sharp: true
   unrs-resolver: true
+
+# Security fixes for build tools whose parent packages still request old majors.
+# Keep the overrides scoped; validate MDX compilation and Drizzle CLI on updates.
+overrides:
+  "@esbuild-kit/core-utils>esbuild": ^0.28.2
+  "mdx-bundler>uuid": ^11.1.1
+  "remark-mdx-frontmatter>toml": ^4.2.0

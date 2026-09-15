@@ -38,4 +38,25 @@ describe("signed Resend webhook", () => {
       expect.any(Number),
     );
   });
+  it("cancels an oversized stream by byte count even with a forged Content-Length", async () => {
+    syncUnsubscribe.mockClear();
+    const cancel = vi.fn();
+    const stream = new ReadableStream<Uint8Array>({
+      pull(controller) {
+        controller.enqueue(new TextEncoder().encode("漢".repeat(12000)));
+      },
+      cancel,
+    });
+    const response = await POST(
+      new Request("http://localhost/api/webhooks/resend", {
+        method: "POST",
+        headers: { "Content-Length": "1" },
+        body: stream,
+        ...{ duplex: "half" },
+      }),
+    );
+    expect(response.status).toBe(413);
+    expect(cancel).toHaveBeenCalledOnce();
+    expect(syncUnsubscribe).not.toHaveBeenCalled();
+  });
 });

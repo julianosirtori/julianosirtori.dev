@@ -1,5 +1,15 @@
 import EmailTemplate from "@/components/TemplateEmail/TemplateEmail";
-import { NextRequest, NextResponse } from "next/server";
+import {
+  body,
+  endpoint,
+  hash,
+  HttpError,
+  json,
+  limit,
+  requestKey,
+  reserveMailQuota,
+  sameOrigin,
+} from "@/lib/server/security";
 import { Resend } from "resend";
 
 const MAX_NAME = 100;
@@ -60,31 +70,39 @@ export function validateContactPayload(raw: unknown): ContactPayload | null {
   };
 }
 
-export async function POST(req: NextRequest) {
-  const raw = await req.json().catch(() => null);
-  const payload = validateContactPayload(raw);
+export async function POST(req: Request) {
+  return endpoint(async () => {
+    sameOrigin(req);
+    const raw = await body(req, 32768);
+    const payload = validateContactPayload(raw);
 
-  if (!payload) {
-    return NextResponse.json({ message: "Invalid request" }, { status: 400 });
-  }
+    if (!payload) {
+      throw new HttpError(400, "invalid");
+    }
 
-  try {
-    const resend = new Resend(process.env.RESEND_API_KEY);
-    const result = await resend.emails.send({
-      from: "julianosirtori.dev <website@julianosirtori.dev>",
-      to: "julianosirtori@gmail.com",
-      replyTo: payload.email,
-      subject: `${payload.name} - via julianosirtori.dev`,
-      react: <EmailTemplate {...payload} />,
-    });
-
-    if (result.error) throw new Error("Provider rejected email");
-    return NextResponse.json({ message: "Email sent" });
-  } catch {
-    console.error("[email] send failed");
-    return NextResponse.json(
-      { message: "Failed to send email" },
-      { status: 500 },
+    await limit(`contact:ip:${requestKey(req)}`, 3, 3_600_000);
+    await limit(
+      `contact:email:${hash(payload.email.toLowerCase())}`,
+      3,
+      3_600_000,
     );
-  }
+    await reserveMailQuota("contact");
+
+    try {
+      const resend = new Resend(process.env.RESEND_API_KEY);
+      const result = await resend.emails.send({
+        from: "julianosirtori.dev <website@julianosirtori.dev>",
+        to: "julianosirtori@gmail.com",
+        replyTo: payload.email,
+        subject: `${payload.name} - via julianosirtori.dev`,
+        react: <EmailTemplate {...payload} />,
+      });
+
+      if (result.error) throw new Error("Provider rejected email");
+      return json({ message: "Email sent" });
+    } catch {
+      console.error("[email] send failed");
+      return json({ message: "Failed to send email" }, 500);
+    }
+  });
 }

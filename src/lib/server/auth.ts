@@ -13,7 +13,8 @@ function createAuth() {
   if (
     !process.env.GITHUB_CLIENT_ID ||
     !process.env.GITHUB_CLIENT_SECRET ||
-    !process.env.BETTER_AUTH_SECRET
+    !process.env.BETTER_AUTH_SECRET ||
+    process.env.BETTER_AUTH_SECRET.length < 32
   )
     throw new Error("Authentication unavailable");
   return betterAuth({
@@ -32,7 +33,10 @@ function createAuth() {
         clientSecret: process.env.GITHUB_CLIENT_SECRET,
       },
     },
-    account: { accountLinking: { enabled: false } },
+    account: {
+      encryptOAuthTokens: true,
+      accountLinking: { enabled: false },
+    },
     rateLimit: {
       enabled: true,
       storage: "database",
