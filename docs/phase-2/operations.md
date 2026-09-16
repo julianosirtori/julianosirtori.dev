@@ -4,7 +4,7 @@
 
 Implementados: newsletter PT/EN, confirmação explícita, fila persistente de envios, cancelamento, webhook assinado, guestbook GitHub moderado, reações persistentes, mural de três recomendações e instrumentação GA4. Home/artigos são estáticos e carregam os dados interativos pelo cliente. Sem configuração, os formulários indicam indisponibilidade e o conteúdo continua acessível.
 
-Não confundir validação local com lançamento: credenciais de Turso, GitHub OAuth, Resend e acesso administrativo ao GA4 não estão disponíveis nesta sessão. Não houve migração remota, envio real de e-mail, criação de segmentos, configuração da propriedade ou publicação/preview Vercel.
+Em 16/09/2026, os bancos Turso de Preview e Production foram criados e migrados, com credenciais distintas cadastradas como Secrets na Vercel. O desenvolvimento usa SQLite local. Nomes, vencimentos, permissões e comandos de migração/renovação estão no [guia Turso](turso.md). A integração ainda exige configurar e validar GitHub OAuth, remetente/segmentos/webhook Resend e GA4. Esta configuração do banco não incluiu deploy ou envio real de e-mail.
 
 O canvas Superdesign foi criado em https://superdesign.dev/teams/8c9c9e2a-b917-4a10-bf51-11c45b8119dc/projects/e1643d9e-b8ca-41bd-87b4-544b55f27777. A geração remota foi bloqueada pela revisão automática por exigir autorização explícita para enviar fontes ao serviço. A interface local segue os layouts já definidos no plano. Os arquivos propostos para envio eram `.superdesign/design-system.md`, `src/app/globals.css` e `src/components/Footer/Footer.tsx`.
 
@@ -19,7 +19,7 @@ O canvas Superdesign foi criado em https://superdesign.dev/teams/8c9c9e2a-b917-4
 
 ## Ativação de preview e produção
 
-- Turso: banco e token por ambiente, aplicar `pnpm db:migrate` **antes** da publicação. O comando é versionado/idempotente. Não roda automaticamente no build estático.
+- Turso: banco e token por ambiente, aplicar `pnpm db:migrate` **antes** da publicação. Nos bancos remotos, use o [token administrativo temporário via CLI](turso.md#migrações-futuras-nos-bancos-remotos); as credenciais da aplicação não podem alterar o schema. O comando é versionado/idempotente e não roda automaticamente no build estático.
 - GitHub OAuth: aplicação separada para desenvolvimento/preview/produção, callback `<BETTER_AUTH_URL>/api/auth/callback/github`. Configure um domínio de preview estável; não aceite origens arbitrárias. Use apenas o ID numérico da conta do proprietário em `ADMIN_GITHUB_ID`, nunca login, nome ou e-mail. Sessão independente do Giscus. Entre pelo guestbook e acesse `/<lang>/admin/guestbook`.
 - Resend: domínio de envio verificado, remetente autorizado em `NEWSLETTER_FROM`, API key com acesso a Contacts/Segments e envio. Crie dois segmentos exclusivos e configure `RESEND_SEGMENT_PT` / `RESEND_SEGMENT_EN`. O contato só é ativado após confirmação; a troca de idioma exige confirmação e remove o segmento anterior.
 - Webhook: `<origem>/api/webhooks/resend`, eventos `contact.updated` e `contact.deleted`, segredo de assinatura em `RESEND_WEBHOOK_SECRET`. Eventos atrasados anteriores à confirmação e repetições não anulam consentimento mais recente. Desativar um contato manualmente no Resend também sincroniza pelo webhook.
