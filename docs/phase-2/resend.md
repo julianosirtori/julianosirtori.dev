@@ -39,15 +39,15 @@ Os Secrets da Vercel não podem ser lidos de volta por `env pull` ou `env run`. 
 
 A conta permite **3 segmentos**. O segmento preexistente `General` e os dois novos segmentos de produção ocupam essa cota. A criação de segmentos exclusivos para Preview foi rejeitada pelo Resend. Nenhum segmento existente foi apagado.
 
-Até resolver essa limitação, a newsletter de Preview permanece pendente. Uma equipe Resend separada oferece isolamento real dos contatos; usar a mesma conta exige endereços exclusivos de teste, pois `unsubscribed` pertence ao contato global e pode afetar outras aplicações. Nunca reutilize endereços reais de assinantes em testes de cancelamento ou reinscrição.
+O proprietário optou por manter o plano atual e deixar a newsletter de Preview pendente. Uma equipe Resend separada oferece isolamento real dos contatos; usar a mesma conta exige endereços exclusivos de teste, pois `unsubscribed` pertence ao contato global e pode afetar outras aplicações. Nunca reutilize endereços reais de assinantes em testes de cancelamento ou reinscrição.
 
 O formulário de contato do Preview tem uma chave própria com `sending_access`, restrita a `julianosirtori.dev`, e cotas `CONTACT_DAILY_LIMIT=2` / `CONTACT_MONTHLY_LIMIT=20`. A chave antiga compartilhada com Development foi preservada somente em Development. Não foram configurados `NEWSLETTER_SECRET`, segmentos ou webhook em Preview: a newsletter retorna indisponibilidade antes de criar a inscrição. Quando houver capacidade para seus segmentos, configure a integração completa com uma chave `full_access` e segredos próprios.
 
-## 3. Concluir o DNS do Preview
+## 3. DNS do Preview validado
 
-O domínio foi cadastrado na Vercel e vinculado à branch do PR. O DNS autoritativo fica na Cloudflare; a autenticação local disponível está expirada e não inclui edição de DNS.
+O domínio foi cadastrado na Vercel e vinculado à branch do PR. O proprietário criou o registro na Cloudflare; a consulta DNS confirmou o CNAME abaixo, e a Vercel retornou `verified=true`, `configuredBy=CNAME` e `misconfigured=false`, sem conflitos.
 
-Em **Cloudflare → julianosirtori.dev → DNS → Records → Add record**, cadastre:
+Registro cadastrado em **Cloudflare → julianosirtori.dev → DNS → Records**:
 
 | Campo        | Valor                                 |
 | ------------ | ------------------------------------- |
@@ -57,7 +57,7 @@ Em **Cloudflare → julianosirtori.dev → DNS → Records → Add record**, cad
 | Proxy status | DNS only, nuvem cinza                 |
 | TTL          | Auto                                  |
 
-Depois de salvar, confirme o domínio em **Vercel → Project → Settings → Domains**. A verificação de propriedade já passou, mas não substitui o registro DNS e o deploy. [Cadastro de registros Cloudflare](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records/).
+O DNS e a verificação de propriedade estão concluídos. A Vercel ainda não tinha nenhum deployment de Preview na consulta inicial; a disponibilidade da aplicação e do certificado será validada após a publicação. [Cadastro de registros Cloudflare](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records/).
 
 A proteção Vercel foi ajustada para **Standard Protection** (`prod_deployment_urls_and_all_previews`), cobrindo também o domínio personalizado de Preview. Os navegadores de teste precisam autenticar na Vercel. Os domínios públicos de produção continuam públicos. [Proteção dos deployments](https://vercel.com/docs/deployment-protection/methods-to-protect-deployments/vercel-authentication).
 
