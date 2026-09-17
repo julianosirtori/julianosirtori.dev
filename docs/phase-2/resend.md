@@ -2,7 +2,7 @@
 
 ## Estado em 17/09/2026
 
-A configuração de Production está preparada na Vercel para o próximo deploy. O site publicado ainda responde `404` em `/api/webhooks/resend`; por isso o webhook permanece **desativado**. Nenhum e-mail foi enviado durante a configuração.
+A configuração de Production está preparada na Vercel para o próximo deploy. O site publicado ainda responde `404` em `/api/webhooks/resend`; por isso o webhook permanece **desativado**. A validação real da newsletter de Preview está registrada abaixo.
 
 | Recurso                | Configuração                                                                     |
 | ---------------------- | -------------------------------------------------------------------------------- |
@@ -82,7 +82,7 @@ vercel api /v2/deployments/ID_DO_NOVO_PREVIEW/aliases \
 
 [API de aliases Vercel](https://vercel.com/docs/rest-api/aliases/assign-an-alias).
 
-Verificações após o deploy, usando o acesso autenticado do CLI Vercel:
+Verificações da primeira publicação, antes de habilitar a newsletter, usando o acesso autenticado do CLI Vercel:
 
 - Páginas `/pt`, `/en`, `/pt/guestbook` e `/pt/newsletter`: `200`.
 - Consultas de reações e guestbook no Turso: `200`.
@@ -109,8 +109,20 @@ O webhook recebe eventos de contatos da conta; a aplicação só altera assinant
 
 O webhook de Preview foi preparado em `https://preview.julianosirtori.dev/api/webhooks/resend`, ID `f2095e47-95d4-4609-80c2-9bd5e7b0abba`, com assinatura própria e os eventos `contact.updated` e `contact.deleted`. O endpoint salvo no Resend inclui um segredo de **Protection Bypass for Automation** exclusivo dessa integração. A URL completa é privada; não a copie para documentação, prints ou logs. A assinatura Resend continua obrigatória.
 
-Mantenha o webhook desativado até publicar a versão que restringe os destinatários e conferir que um POST sem assinatura recebe `400`. Ative-o após essa verificação. Para um executor externo de reprocessamento do banco de Preview, configure também `VERCEL_ENV=preview` e a mesma lista privada `NEWSLETTER_ALLOWED_EMAILS`. [Bypass para automação](https://vercel.com/docs/deployment-protection/methods-to-bypass-deployment-protection/protection-bypass-automation).
+O webhook de Preview está **ativado**. Sua entrega real recebeu `200` após uma atualização no contato de teste; um POST sem assinatura foi rejeitado com `400`. Para um executor externo de reprocessamento do banco de Preview, configure também `VERCEL_ENV=preview` e a mesma lista privada `NEWSLETTER_ALLOWED_EMAILS`. [Bypass para automação](https://vercel.com/docs/deployment-protection/methods-to-bypass-deployment-protection/protection-bypass-automation).
 
 ## 5. Pendências externas ao Resend
 
 Em Preview, `BETTER_AUTH_SECRET` e `ADMIN_GITHUB_ID` estão cadastrados; faltam as credenciais do OAuth App GitHub e um novo deployment para habilitar o guestbook. Os campos do aplicativo e a validação estão no [guia OAuth](oauth.md). A newsletter usa `BETTER_AUTH_URL` como origem, mas não exige login GitHub. Consulte também [operação e validação antes do lançamento](operations.md) e [Turso](turso.md).
+
+## 6. Validação real em 17/09/2026
+
+Preview atualizado com o commit `407385f`, deployment `dpl_2g19tFUUdWg3FbaLowJZxjpDZhWJ`. Build Vercel, lint, TypeScript e **145 testes** aprovados.
+
+- Inscrição do endereço autorizado: `200`; confirmação pelo link recebido: `200`.
+- O contato ficou ativo somente no segmento PT. Confirmação e boas-vindas foram enviadas ao alias de teste autorizado; os status finais foram conferidos no Resend.
+- Outro endereço foi bloqueado com `403 newsletter_test_recipient`.
+- Webhook real Resend → Vercel: `200`; assinatura ausente: `400`.
+- Inspeção de 14 artefatos públicos da página da newsletter (HTML e scripts): os valores reais dos segredos e o endereço da lista privada não foram encontrados.
+
+Os logs do novo deployment registram os sucessos de inscrição, confirmação e webhook. O erro `503` original pertencia à versão sem a configuração de newsletter. GitHub OAuth é uma configuração independente.
