@@ -57,7 +57,26 @@ Registro cadastrado em **Cloudflare → julianosirtori.dev → DNS → Records**
 | Proxy status | DNS only, nuvem cinza                 |
 | TTL          | Auto                                  |
 
-O DNS e a verificação de propriedade estão concluídos. A Vercel ainda não tinha nenhum deployment de Preview na consulta inicial; a disponibilidade da aplicação e do certificado será validada após a publicação. [Cadastro de registros Cloudflare](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records/).
+O DNS e a verificação de propriedade estão concluídos. O primeiro Preview foi publicado com o commit `c499c43`, deployment `dpl_CKNsCHbBEEmVhgrwPu5NQF2Szg5E`, com build aprovado usando Node 24 e pnpm 11.0.9. O domínio [preview.julianosirtori.dev](https://preview.julianosirtori.dev/pt) atende por HTTPS e exige login Vercel. O build recebeu somente arquivos versionados, com `ENABLE_EXPERIMENTAL_COREPACK=1` e `NEXT_PUBLIC_ANALYTICS_ENABLED=false` em Preview.
+
+Para próximos deployments, mantenha a origem e reaplique o alias se necessário. Neste cadastro, `vercel alias set` falhou na consulta ao domínio da equipe; o vínculo foi concluído pela API oficial usando o domínio já verificado no projeto:
+
+```bash
+vercel api /v2/deployments/ID_DO_NOVO_PREVIEW/aliases \
+  --scope julianosirtoris-projects \
+  --method POST \
+  --raw-field alias=preview.julianosirtori.dev
+```
+
+[API de aliases Vercel](https://vercel.com/docs/rest-api/aliases/assign-an-alias).
+
+Verificações após o deploy, usando o acesso autenticado do CLI Vercel:
+
+- Páginas `/pt`, `/en`, `/pt/guestbook` e `/pt/newsletter`: `200`.
+- Consultas de reações e guestbook no Turso: `200`.
+- Contato: origem inválida rejeitada com `403`; payload inválido rejeitado com `400`, sem envio.
+- Sessão GitHub e inscrição na newsletter: `503 unavailable`, conforme as configurações ainda pendentes.
+- Acesso sem sessão Vercel: redirecionamento para o login. Nenhum segredo de bypass foi publicado.
 
 A proteção Vercel foi ajustada para **Standard Protection** (`prod_deployment_urls_and_all_previews`), cobrindo também o domínio personalizado de Preview. Os navegadores de teste precisam autenticar na Vercel. Os domínios públicos de produção continuam públicos. [Proteção dos deployments](https://vercel.com/docs/deployment-protection/methods-to-protect-deployments/vercel-authentication).
 
