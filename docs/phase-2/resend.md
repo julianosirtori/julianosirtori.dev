@@ -1,22 +1,22 @@
 # Resend — configuração e ativação
 
-## Estado em 16/09/2026
+## Estado em 17/09/2026
 
 A configuração de Production está preparada na Vercel para o próximo deploy. O site publicado ainda responde `404` em `/api/webhooks/resend`; por isso o webhook permanece **desativado**. Nenhum e-mail foi enviado durante a configuração.
 
-| Recurso                | Configuração                                                                                         |
-| ---------------------- | ---------------------------------------------------------------------------------------------------- |
-| Domínio de envio       | `julianosirtori.dev`, verificado, região `sa-east-1`                                                 |
-| Remetente              | `Notas do Juliano <website@julianosirtori.dev>`                                                      |
-| Rastreamento Resend    | Aberturas e cliques desativados                                                                      |
-| Origem Production      | `https://www.julianosirtori.dev`                                                                     |
-| Segmento PT Production | `julianosirtori-dev-production-pt` — `c896072d-f5bb-4dcc-944e-1104b8886c25`                          |
-| Segmento EN Production | `julianosirtori-dev-production-en` — `4e7630d9-885c-423d-9cf6-2c75b529fe48`                          |
-| API key Production     | `julianosirtori-dev-production`, `full_access`, armazenada como Secret                               |
-| Webhook Production     | `09e0b915-de74-4810-9421-981653d867f1`, desativado                                                   |
-| Eventos do webhook     | `contact.updated`, `contact.deleted`                                                                 |
-| Origem Preview         | `https://preview.julianosirtori.dev`, vinculada à branch `feat/phase-2-audience`                     |
-| API key Preview        | `julianosirtori-dev-preview-contact`, somente envio por `julianosirtori.dev`, armazenada como Secret |
+| Recurso                | Configuração                                                                     |
+| ---------------------- | -------------------------------------------------------------------------------- |
+| Domínio de envio       | `julianosirtori.dev`, verificado, região `sa-east-1`                             |
+| Remetente              | `Notas do Juliano <website@julianosirtori.dev>`                                  |
+| Rastreamento Resend    | Aberturas e cliques desativados                                                  |
+| Origem Production      | `https://www.julianosirtori.dev`                                                 |
+| Segmento PT Production | `julianosirtori-dev-production-pt` — `c896072d-f5bb-4dcc-944e-1104b8886c25`      |
+| Segmento EN Production | `julianosirtori-dev-production-en` — `4e7630d9-885c-423d-9cf6-2c75b529fe48`      |
+| API key Production     | `julianosirtori-dev-production`, `full_access`, armazenada como Secret           |
+| Webhook Production     | `09e0b915-de74-4810-9421-981653d867f1`, desativado                               |
+| Eventos do webhook     | `contact.updated`, `contact.deleted`                                             |
+| Origem Preview         | `https://preview.julianosirtori.dev`, vinculada à branch `feat/phase-2-audience` |
+| API key Preview        | `julianosirtori-dev-preview-newsletter`, `full_access`, armazenada como Secret   |
 
 O domínio sem `www` redireciona para `www`. Use a origem final em `BETTER_AUTH_URL`, `NEXT_PUBLIC_LOCAL_DOMAIN`, no callback GitHub e no endpoint de produção do webhook, evitando redirecionamentos e falhas na validação de `Origin`.
 
@@ -35,13 +35,25 @@ As cotas foram reduzidas em relação aos padrões do código para reservar capa
 
 Os Secrets da Vercel não podem ser lidos de volta por `env pull` ou `env run`. Não copie a chave de produção para `.env.local`. Para trocar uma chave, crie a substituta, salve-a por entrada padrão no CLI, faça novo deploy e valide antes de revogar a anterior. [Secrets na Vercel](https://vercel.com/docs/environment-variables/sensitive-environment-variables).
 
-## 2. Resolver a limitação de segmentos do Preview
+## 2. Newsletter de Preview restrita a testes
 
-A conta permite **3 segmentos**. O segmento preexistente `General` e os dois novos segmentos de produção ocupam essa cota. A criação de segmentos exclusivos para Preview foi rejeitada pelo Resend. Nenhum segmento existente foi apagado.
+A conta permite **3 segmentos**: `General` e os dois segmentos PT/EN de Production. O proprietário autorizou usar esses mesmos segmentos no Preview, mantendo o plano atual, com restrição a endereços exclusivos de teste. O banco Turso e os segredos continuam próprios de cada ambiente.
 
-O proprietário optou por manter o plano atual e deixar a newsletter de Preview pendente. Uma equipe Resend separada oferece isolamento real dos contatos; usar a mesma conta exige endereços exclusivos de teste, pois `unsubscribed` pertence ao contato global e pode afetar outras aplicações. Nunca reutilize endereços reais de assinantes em testes de cancelamento ou reinscrição.
+Na Vercel, **Preview**:
 
-O formulário de contato do Preview tem uma chave própria com `sending_access`, restrita a `julianosirtori.dev`, e cotas `CONTACT_DAILY_LIMIT=2` / `CONTACT_MONTHLY_LIMIT=20`. A chave antiga compartilhada com Development foi preservada somente em Development. Não foram configurados `NEWSLETTER_SECRET`, segmentos ou webhook em Preview: a newsletter retorna indisponibilidade antes de criar a inscrição. Quando houver capacidade para seus segmentos, configure a integração completa com uma chave `full_access` e segredos próprios.
+- `RESEND_API_KEY`: chave própria `julianosirtori-dev-preview-newsletter`, com `full_access` para contatos e segmentos.
+- `NEWSLETTER_SECRET` e `RESEND_WEBHOOK_SECRET`: novos Secrets exclusivos do Preview.
+- `NEWSLETTER_ALLOWED_EMAILS`: Secret com a lista de endereços de teste autorizados, separados por vírgula. Não publique a lista; ela fica somente no servidor.
+- `RESEND_SEGMENT_PT` / `RESEND_SEGMENT_EN`: os mesmos IDs de Production, mostrados na tabela acima.
+- Newsletter: `NEWSLETTER_DAILY_LIMIT=6`, `NEWSLETTER_MONTHLY_LIMIT=60`. Contato: `CONTACT_DAILY_LIMIT=2`, `CONTACT_MONTHLY_LIMIT=20`.
+
+O servidor exige a lista em `VERCEL_ENV=preview`. Endereços fora dela recebem `403 newsletter_test_recipient` antes de escrever uma inscrição ou consumir o limitador. A comparação usa o endereço completo, ignorando apenas espaços nas extremidades e maiúsculas/minúsculas; não aceita curingas nem remove aliases `+...`. O provedor também verifica o destinatário antes de enviar, ativar ou cancelar contatos, cobrindo reprocessamentos. O webhook ignora eventos de outros contatos da conta.
+
+A chave anterior `julianosirtori-dev-preview-contact` fica disponível aos deployments antigos. A configuração de Development foi preservada. Em Production, mantenha `NEWSLETTER_ALLOWED_EMAILS` ausente para inscrições públicas.
+
+A falha original de Preview foi confirmada nos logs como `503` em `/api/newsletter/subscribe`: faltavam `NEWSLETTER_SECRET`, os IDs dos segmentos e uma chave capaz de gerenciar contatos. Agora a inscrição verifica a configuração antes de criar a fila. Erros de configuração registram apenas os nomes das variáveis ausentes, sem valores, endereços ou tokens.
+
+Os contatos e o estado `unsubscribed` continuam globais na conta Resend. Nunca use endereços de outros projetos nos testes. Ao preparar broadcasts de produção, exclua os contatos de teste dos destinatários, pois eles pertencem aos segmentos compartilhados. Uma equipe Resend separada oferece isolamento real.
 
 ## 3. DNS do Preview validado
 
@@ -95,8 +107,10 @@ A proteção Vercel foi ajustada para **Standard Protection** (`prod_deployment_
 
 O webhook recebe eventos de contatos da conta; a aplicação só altera assinantes que existem no seu banco. A assinatura Svix permanece obrigatória. Não habilite o webhook enquanto a rota estiver ausente. [Webhooks Resend](https://resend.com/docs/webhooks/introduction).
 
-Quando o Preview tiver seus recursos de newsletter, crie outro webhook em `https://preview.julianosirtori.dev/api/webhooks/resend`, com outro signing secret. Como esse domínio exige login Vercel, configure **Protection Bypass for Automation** para o provedor. Se usar o parâmetro `x-vercel-protection-bypass` na URL do Resend, trate a URL completa como segredo: não a publique em documentação, prints ou logs. A assinatura Resend continua obrigatória. [Bypass para automação](https://vercel.com/docs/deployment-protection/methods-to-bypass-deployment-protection/protection-bypass-automation).
+O webhook de Preview foi preparado em `https://preview.julianosirtori.dev/api/webhooks/resend`, ID `f2095e47-95d4-4609-80c2-9bd5e7b0abba`, com assinatura própria e os eventos `contact.updated` e `contact.deleted`. O endpoint salvo no Resend inclui um segredo de **Protection Bypass for Automation** exclusivo dessa integração. A URL completa é privada; não a copie para documentação, prints ou logs. A assinatura Resend continua obrigatória.
+
+Mantenha o webhook desativado até publicar a versão que restringe os destinatários e conferir que um POST sem assinatura recebe `400`. Ative-o após essa verificação. Para um executor externo de reprocessamento do banco de Preview, configure também `VERCEL_ENV=preview` e a mesma lista privada `NEWSLETTER_ALLOWED_EMAILS`. [Bypass para automação](https://vercel.com/docs/deployment-protection/methods-to-bypass-deployment-protection/protection-bypass-automation).
 
 ## 5. Pendências externas ao Resend
 
-GitHub OAuth e `BETTER_AUTH_SECRET` ainda precisam de configuração para habilitar o guestbook. A newsletter usa `BETTER_AUTH_URL` como origem, mas não exige login GitHub. Consulte também [operação e validação antes do lançamento](operations.md) e [Turso](turso.md).
+Em Preview, `BETTER_AUTH_SECRET` e `ADMIN_GITHUB_ID` estão cadastrados; faltam as credenciais do OAuth App GitHub e um novo deployment para habilitar o guestbook. Os campos do aplicativo e a validação estão no [guia OAuth](oauth.md). A newsletter usa `BETTER_AUTH_URL` como origem, mas não exige login GitHub. Consulte também [operação e validação antes do lançamento](operations.md) e [Turso](turso.md).

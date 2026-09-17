@@ -1,9 +1,10 @@
 // @vitest-environment node
-import { describe, it, expect, vi } from "vitest";
+import { afterEach, describe, it, expect, vi } from "vitest";
 import { POST } from "@/app/api/webhooks/resend/route";
 import { createHmac } from "node:crypto";
 const { syncUnsubscribe } = vi.hoisted(() => ({ syncUnsubscribe: vi.fn() }));
 vi.mock("./newsletter", () => ({ syncUnsubscribe }));
+afterEach(() => vi.unstubAllEnvs());
 describe("signed Resend webhook", () => {
   const key = Buffer.from("test-secret-with-32-characters!!!");
   process.env.RESEND_API_KEY = "re_test";
@@ -58,5 +59,15 @@ describe("signed Resend webhook", () => {
     expect(response.status).toBe(413);
     expect(cancel).toHaveBeenCalledOnce();
     expect(syncUnsubscribe).not.toHaveBeenCalled();
+  });
+  it("ignores signed events for other contacts in Preview", async () => {
+    vi.stubEnv("VERCEL_ENV", "preview");
+    vi.stubEnv("NEWSLETTER_ALLOWED_EMAILS", "owner+preview@example.com");
+    syncUnsubscribe.mockClear();
+    expect((await POST(request(true))).status).toBe(200);
+    expect(syncUnsubscribe).not.toHaveBeenCalled();
+    vi.stubEnv("NEWSLETTER_ALLOWED_EMAILS", "reader@example.com");
+    expect((await POST(request(true))).status).toBe(200);
+    expect(syncUnsubscribe).toHaveBeenCalledOnce();
   });
 });

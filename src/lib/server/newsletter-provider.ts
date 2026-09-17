@@ -1,5 +1,6 @@
 import "server-only";
 import { Resend } from "resend";
+import { assertNewsletterRecipient } from "./newsletter-policy";
 export function resendClient() {
   if (!process.env.RESEND_API_KEY) throw new Error("Email unavailable");
   return new Resend(process.env.RESEND_API_KEY);
@@ -11,6 +12,7 @@ export interface MailPayload {
 }
 export const newsletterProvider = {
   async send(payload: MailPayload, key: string) {
+    assertNewsletterRecipient(payload.to);
     const result = await resendClient().emails.send(
       {
         ...payload,
@@ -24,6 +26,7 @@ export const newsletterProvider = {
     return result.data.id;
   },
   async activate(email: string, language: "pt" | "en") {
+    assertNewsletterRecipient(email);
     const resend = resendClient();
     const segmentId =
       language === "pt"
@@ -53,6 +56,7 @@ export const newsletterProvider = {
     return result.data?.id || existing.data?.id || email;
   },
   async unsubscribe(email: string) {
+    assertNewsletterRecipient(email);
     const result = await resendClient().contacts.update({
       email,
       unsubscribed: true,

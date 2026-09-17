@@ -1,6 +1,7 @@
 import { resendClient } from "@/lib/server/newsletter-provider";
 import { syncUnsubscribe } from "@/lib/server/newsletter";
 import { boundedText, endpoint, HttpError, json } from "@/lib/server/security";
+import { newsletterRecipientAllowed } from "@/lib/server/newsletter-policy";
 export const runtime = "nodejs";
 export async function POST(request: Request) {
   return endpoint(async () => {
@@ -25,6 +26,8 @@ export async function POST(request: Request) {
       (event.type === "contact.updated" && event.data.unsubscribed) ||
       event.type === "contact.deleted"
     ) {
+      if (!newsletterRecipientAllowed(event.data.email))
+        return json({ received: true });
       const date = Date.parse(event.created_at);
       if (!Number.isFinite(date)) throw new HttpError(400, "invalid");
       await syncUnsubscribe(event.data.email, date);

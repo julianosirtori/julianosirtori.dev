@@ -10,6 +10,10 @@ import {
   hash,
 } from "@/lib/server/security";
 import { isPublishedSlug } from "@/lib/server/posts";
+import {
+  assertNewsletterConfigured,
+  assertNewsletterRecipient,
+} from "@/lib/server/newsletter-policy";
 export const runtime = "nodejs";
 export async function POST(request: Request) {
   return endpoint(async () => {
@@ -27,6 +31,8 @@ export async function POST(request: Request) {
       (data.article != null && !isPublishedSlug(data.article))
     )
       throw new HttpError(400, "invalid");
+    assertNewsletterConfigured();
+    assertNewsletterRecipient(email);
     await limit(`subscribe:ip:${requestKey(request)}`, 10, 3_600_000);
     await limit(`subscribe:email:${hash(email)}`, 3, 3_600_000);
     await subscribe(
