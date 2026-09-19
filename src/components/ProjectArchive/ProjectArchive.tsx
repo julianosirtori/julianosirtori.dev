@@ -52,7 +52,7 @@ export function ProjectArchive({ projects }: ProjectArchiveProps) {
               aria-pressed={selectedFilter === filter}
               aria-controls="project-results"
               onClick={() => setSelectedFilter(filter)}
-              className="text-fg-muted hover:text-fg aria-pressed:border-accent aria-pressed:text-fg focus-visible:ring-accent focus-visible:ring-offset-bg flex min-h-11 items-center justify-between gap-2 border-b-2 border-transparent px-0.5 text-sm transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none motion-reduce:transition-none sm:justify-start"
+              className="text-fg-muted hover:text-fg aria-pressed:border-accent aria-pressed:text-fg focus-visible:ring-accent focus-visible:ring-offset-bg flex min-h-11 cursor-pointer items-center justify-between gap-2 border-b-2 border-transparent px-0.5 text-sm transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none motion-reduce:transition-none sm:justify-start"
             >
               {t(`filters.${filter}`)}
               <span

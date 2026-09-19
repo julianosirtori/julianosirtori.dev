@@ -125,6 +125,32 @@ describe("newsletter Preview recipient restrictions", () => {
     expect(mocks.send).toHaveBeenCalledOnce();
   });
 
+  it("renders template metadata as React email without forwarding private fields", async () => {
+    await newsletterProvider.send(
+      {
+        to: allowed,
+        subject: "Confirm",
+        text: "Plain fallback",
+        template: "confirmation",
+        language: "pt",
+        actionUrl:
+          "https://preview.example.com/pt/newsletter/confirm?token=test",
+      },
+      "job",
+    );
+
+    expect(mocks.send).toHaveBeenCalledWith(
+      expect.objectContaining({
+        to: allowed,
+        text: "Plain fallback",
+        react: expect.anything(),
+      }),
+      { idempotencyKey: "job" },
+    );
+    expect(mocks.send.mock.calls[0][0]).not.toHaveProperty("template");
+    expect(mocks.send.mock.calls[0][0]).not.toHaveProperty("actionUrl");
+  });
+
   it("keeps public production subscriptions available without a Preview allowlist", async () => {
     vi.stubEnv("VERCEL_ENV", "production");
     vi.stubEnv("NEWSLETTER_ALLOWED_EMAILS", "");

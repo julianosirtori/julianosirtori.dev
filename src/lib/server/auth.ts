@@ -28,7 +28,14 @@ function createAuth() {
     },
     socialProviders: {
       github: {
-        mapProfileToUser: (profile) => ({ githubUsername: profile.login }),
+        mapProfileToUser: (profile) => ({
+          githubUsername: profile.login,
+          // GitHub identity is sufficient for the guestbook; this is not a contact address.
+          ...(!profile.email && {
+            email: `${profile.id}@github.placeholder.invalid`,
+            emailVerified: false,
+          }),
+        }),
         clientId: process.env.GITHUB_CLIENT_ID,
         clientSecret: process.env.GITHUB_CLIENT_SECRET,
       },

@@ -1,6 +1,6 @@
 # Notas do Juliano — três primeiras pautas
 
-Newsletter quinzenal, edições separadas PT/EN, aproximadamente cinco minutos. Cada edição: uma decisão prática, um aprendizado e até três links comentados. Conteúdo abaixo é pauta, não edição publicada nem relato de resultado já obtido.
+Newsletter quinzenal, edições separadas PT/EN. Assuntos e formato livres: opiniões sobre aplicativos, ferramentas, projetos, memes ou qualquer coisa que Juliano queira compartilhar, sem quantidade fixa de links ou tempo de leitura definido. As pautas abaixo são sugestões opcionais, não um roteiro obrigatório, uma edição publicada ou um relato de resultado já obtido.
 
 1. **Ferramentas internas que economizam tempo / Internal tools that save time**
    - Decisão: quando uma tarefa recorrente merece uma ferramenta; comparar custo de manutenção com execução manual.

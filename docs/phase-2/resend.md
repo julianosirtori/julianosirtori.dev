@@ -49,6 +49,8 @@ Na Vercel, **Preview**:
 
 O servidor exige a lista em `VERCEL_ENV=preview`. Endereços fora dela recebem `403 newsletter_test_recipient` antes de escrever uma inscrição ou consumir o limitador. A comparação usa o endereço completo, ignorando apenas espaços nas extremidades e maiúsculas/minúsculas; não aceita curingas nem remove aliases `+...`. O provedor também verifica o destinatário antes de enviar, ativar ou cancelar contatos, cobrindo reprocessamentos. O webhook ignora eventos de outros contatos da conta.
 
+Em 17/09/2026, a pedido do proprietário, a lista de Preview foi substituída por **um único endereço informado por ele**, mantido somente no Secret `NEWSLETTER_ALLOWED_EMAILS`. Os aliases usados na validação anterior deixaram de estar autorizados. Essa alteração exige um novo deployment para entrar em vigor. O formulário agora explica a restrição de destinatário e o limite de tentativas em PT/EN, em vez de mostrar apenas a mensagem genérica.
+
 A chave anterior `julianosirtori-dev-preview-contact` fica disponível aos deployments antigos. A configuração de Development foi preservada. Em Production, mantenha `NEWSLETTER_ALLOWED_EMAILS` ausente para inscrições públicas.
 
 A falha original de Preview foi confirmada nos logs como `503` em `/api/newsletter/subscribe`: faltavam `NEWSLETTER_SECRET`, os IDs dos segmentos e uma chave capaz de gerenciar contatos. Agora a inscrição verifica a configuração antes de criar a fila. Erros de configuração registram apenas os nomes das variáveis ausentes, sem valores, endereços ou tokens.
@@ -113,7 +115,7 @@ O webhook de Preview está **ativado**. Sua entrega real recebeu `200` após uma
 
 ## 5. Pendências externas ao Resend
 
-Em Preview, `BETTER_AUTH_SECRET` e `ADMIN_GITHUB_ID` estão cadastrados; faltam as credenciais do OAuth App GitHub e um novo deployment para habilitar o guestbook. Os campos do aplicativo e a validação estão no [guia OAuth](oauth.md). A newsletter usa `BETTER_AUTH_URL` como origem, mas não exige login GitHub. Consulte também [operação e validação antes do lançamento](operations.md) e [Turso](turso.md).
+Em Preview, as credenciais GitHub, `BETTER_AUTH_SECRET` e `ADMIN_GITHUB_ID` estão cadastrados e publicados. A sessão sem autenticação responde `200` com `null`, e o início do OAuth usa o callback do domínio fixo. Após a correção de `email_not_found`, o proprietário confirmou o login real e o acesso ao painel administrativo no navegador. Os dados do aplicativo e os testes estão no [guia OAuth](oauth.md). A newsletter usa `BETTER_AUTH_URL` como origem, mas não exige login GitHub. Consulte também [operação e validação antes do lançamento](operations.md) e [Turso](turso.md).
 
 ## 6. Validação real em 17/09/2026
 

@@ -16,16 +16,6 @@ export const projects = {
   en: {
     "2024": [
       {
-        id: "cowsay",
-        title: "cowsay-pragmatic-programmer",
-        description:
-          "Tips from The Pragmatic Programmer, right in the terminal.",
-        href: "https://www.npmjs.com/package/cowsay-pragmatic-programmer",
-        category: "personal",
-        context: "CLI",
-        destination: "package",
-      },
-      {
         id: "fisio-milena-aranha",
         title: "Fisio Milena Aranha",
         description: "A landing page for an independent physiotherapist.",
@@ -53,17 +43,6 @@ export const projects = {
         href: "https://julianosirtori.dev/",
         category: "personal",
         context: "Next.js · TypeScript",
-        destination: "website",
-      },
-    ],
-    "2022": [
-      {
-        id: "pick-up-lines",
-        title: "Pick-up Lines",
-        description: "A small web project dedicated to pick-up lines.",
-        href: "https://cantadas.julianosirtori.dev/",
-        category: "personal",
-        context: "Web",
         destination: "website",
       },
     ],
@@ -107,16 +86,6 @@ export const projects = {
   pt: {
     "2024": [
       {
-        id: "cowsay",
-        title: "cowsay-pragmatic-programmer",
-        description:
-          "Dicas do livro O Programador Pragmático, direto no terminal.",
-        href: "https://www.npmjs.com/package/cowsay-pragmatic-programmer",
-        category: "personal",
-        context: "CLI",
-        destination: "package",
-      },
-      {
         id: "fisio-milena-aranha",
         title: "Fisio Milena Aranha",
         description:
@@ -145,17 +114,6 @@ export const projects = {
         href: "https://julianosirtori.dev/",
         category: "personal",
         context: "Next.js · TypeScript",
-        destination: "website",
-      },
-    ],
-    "2022": [
-      {
-        id: "pick-up-lines",
-        title: "Cantadas",
-        description: "Um pequeno projeto web dedicado às cantadas.",
-        href: "https://cantadas.julianosirtori.dev/",
-        category: "personal",
-        context: "Web",
         destination: "website",
       },
     ],

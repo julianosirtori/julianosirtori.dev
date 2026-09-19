@@ -106,6 +106,9 @@ describe("contact endpoint protection", () => {
       expect.objectContaining({
         to: "julianosirtori@gmail.com",
         replyTo: validPayload.email,
+        subject: "New contact from Juliano — julianosirtori.dev",
+        text: expect.stringContaining("漢".repeat(5000)),
+        react: expect.anything(),
       }),
     );
   });

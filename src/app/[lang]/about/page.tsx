@@ -105,6 +105,18 @@ export default async function About({ params }: AboutProps) {
               open={index === 0}
             >
               <summary className="focus-visible:ring-accent flex cursor-pointer list-none items-start gap-4 rounded-sm py-5 focus-visible:ring-2 focus-visible:outline-none [&::-webkit-details-marker]:hidden">
+                <span
+                  aria-hidden="true"
+                  className={`mt-0.5 flex h-8 w-20 shrink-0 items-center sm:w-28 ${item.id === "rp-info" ? "justify-center" : ""}`}
+                >
+                  <Image
+                    src={item.logo.src}
+                    alt=""
+                    width={item.logo.width}
+                    height={item.logo.height}
+                    className="max-h-8 w-auto max-w-full object-contain object-left opacity-70 brightness-0 transition-opacity group-hover:opacity-100 dark:invert"
+                  />
+                </span>
                 <span className="flex min-w-0 flex-1 flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
                   <span className="min-w-0">
                     <span className="text-fg group-hover:text-accent block text-lg font-medium transition-colors">

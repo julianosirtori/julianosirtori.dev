@@ -18,7 +18,8 @@
     "db:migrate": "node --conditions=react-server --import tsx scripts/migrate.ts",
     "db:encrypt-oauth-tokens": "node --conditions=react-server --import tsx scripts/encrypt-oauth-tokens.ts",
     "newsletter:retry": "node --conditions=react-server --import tsx scripts/retry-newsletter.ts",
-    "audience:status": "node --conditions=react-server --import tsx scripts/audience-status.ts"
+    "audience:status": "node --conditions=react-server --import tsx scripts/audience-status.ts",
+    "ga4:setup": "node --import tsx scripts/ga4-setup.ts"
   },
   "dependencies": {
     "@formatjs/intl-localematcher": "^0.8.8",
@@ -64,6 +65,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.3",
+    "@google-analytics/admin": "^10.1.0",
     "@playwright/test": "^1.60.0",
     "@tailwindcss/postcss": "^4.3.0",
     "@testing-library/jest-dom": "^6.9.1",

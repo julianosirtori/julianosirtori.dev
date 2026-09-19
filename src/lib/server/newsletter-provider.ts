@@ -1,5 +1,7 @@
 import "server-only";
+import { createElement } from "react";
 import { Resend } from "resend";
+import NewsletterEmail from "@/components/TemplateEmail/NewsletterEmail";
 import { assertNewsletterRecipient } from "./newsletter-policy";
 export function resendClient() {
   if (!process.env.RESEND_API_KEY) throw new Error("Email unavailable");
@@ -9,13 +11,28 @@ export interface MailPayload {
   to: string;
   subject: string;
   text: string;
+  template?: "confirmation" | "welcome";
+  language?: "pt" | "en";
+  actionUrl?: string;
+  unsubscribeUrl?: string;
 }
 export const newsletterProvider = {
   async send(payload: MailPayload, key: string) {
     assertNewsletterRecipient(payload.to);
+    const { template, language, actionUrl, unsubscribeUrl, ...mail } = payload;
+    const react =
+      template && language && actionUrl
+        ? createElement(NewsletterEmail, {
+            template,
+            language,
+            actionUrl,
+            unsubscribeUrl,
+          })
+        : undefined;
     const result = await resendClient().emails.send(
       {
-        ...payload,
+        ...mail,
+        ...(react ? { react } : {}),
         from:
           process.env.NEWSLETTER_FROM ||
           "Notas do Juliano <website@julianosirtori.dev>",

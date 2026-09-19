@@ -1,6 +1,7 @@
 import { ReactionSummary } from "@/components/Reactions/Reactions";
 import { copyFor } from "@/components/Audience/copy";
 import { allPosts } from "contentlayer/generated";
+import Image from "next/image";
 import { getLocale, getTranslations, setRequestLocale } from "next-intl/server";
 
 import { HomeRail } from "@/components/HomeRail";
@@ -81,19 +82,30 @@ export default async function Home({ params }: HomeProps) {
                     <p key={paragraph.slice(0, 32)}>{paragraph}</p>
                   ))}
                 </blockquote>
-                <figcaption className="mt-4 text-sm">
-                  <a
-                    href={recommendation.linkedIn}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-fg hover:text-accent font-medium transition-colors"
-                  >
-                    {recommendation.name}
-                  </a>
-                  <span className="text-fg-subtle">
-                    {" "}
-                    · {recommendation.role}
-                  </span>
+                <figcaption className="mt-4 flex items-center gap-3 text-sm">
+                  {recommendation.photo && recommendation.photoAuthorized && (
+                    <Image
+                      src={recommendation.photo}
+                      alt=""
+                      width={40}
+                      height={40}
+                      className="size-10 shrink-0 rounded-full object-cover"
+                    />
+                  )}
+                  <div>
+                    <a
+                      href={recommendation.linkedIn}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-fg hover:text-accent font-medium transition-colors"
+                    >
+                      {recommendation.name}
+                    </a>
+                    <span className="text-fg-subtle">
+                      {" "}
+                      · {recommendation.role}
+                    </span>
+                  </div>
                 </figcaption>
               </figure>
             ))}

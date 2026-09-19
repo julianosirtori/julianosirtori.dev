@@ -42,7 +42,6 @@ export default async function NewsletterPage({ params }: Props) {
             />
             <div>
               <p className="text-fg font-medium">Juliano Sirtori</p>
-              <p className="mt-1 text-xs">{t.readTime}</p>
             </div>
           </div>
           <NewsletterForm source="newsletter" />

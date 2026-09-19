@@ -1,4 +1,6 @@
-import EmailTemplate from "@/components/TemplateEmail/TemplateEmail";
+import EmailTemplate, {
+  contactEmailText,
+} from "@/components/TemplateEmail/TemplateEmail";
 import {
   body,
   endpoint,
@@ -94,7 +96,8 @@ export async function POST(req: Request) {
         from: "julianosirtori.dev <website@julianosirtori.dev>",
         to: "julianosirtori@gmail.com",
         replyTo: payload.email,
-        subject: `${payload.name} - via julianosirtori.dev`,
+        subject: `New contact from ${payload.name} — julianosirtori.dev`,
+        text: contactEmailText(payload),
         react: <EmailTemplate {...payload} />,
       });
 

@@ -26,6 +26,7 @@ function unsubscribeUrl(s: Subscription) {
   return `${siteUrl()}/${s.language}/newsletter/unsubscribe?id=${s.id}&signature=${unsubscribeSignature(s.id)}`;
 }
 function welcome(s: Subscription): MailPayload {
+  const cancelUrl = unsubscribeUrl(s);
   return {
     to: s.email,
     subject:
@@ -34,8 +35,12 @@ function welcome(s: Subscription): MailPayload {
         : "Welcome to Notas do Juliano",
     text:
       s.language === "pt"
-        ? `Inscrição confirmada! A cada duas semanas, em português: uma decisão prática, um aprendizado e até três links comentados. Cerca de cinco minutos de leitura.\n\nCancelar a inscrição: ${unsubscribeUrl(s)}`
-        : `You're subscribed! Every two weeks, in English: one practical decision, one lesson and up to three annotated links. About five minutes of reading.\n\nUnsubscribe: ${unsubscribeUrl(s)}`,
+        ? `Inscrição confirmada! A cada duas semanas, vou compartilhar em português o que estiver me interessando: aplicativos, ferramentas, projetos, memes ou qualquer outra coisa que eu queira dividir com você.\n\nCancelar a inscrição: ${cancelUrl}`
+        : `You're subscribed! Every two weeks, in English, I'll share whatever has caught my interest: apps, tools, projects, memes, or anything else I feel like passing along.\n\nUnsubscribe: ${cancelUrl}`,
+    template: "welcome",
+    language: s.language,
+    actionUrl: `${siteUrl()}/${s.language}/newsletter`,
+    unsubscribeUrl: cancelUrl,
   };
 }
 export async function subscribe(
@@ -59,6 +64,9 @@ export async function subscribe(
         language === "pt"
           ? `Você solicitou a newsletter quinzenal em português. Abra o link e confirme sua inscrição. Válido por 24 horas. Se não foi você, ignore este e-mail.\n\n${url}`
           : `You requested the biweekly newsletter in English. Open the link and confirm your subscription. Valid for 24 hours. If this wasn't you, ignore this email.\n\n${url}`,
+      template: "confirmation",
+      language,
+      actionUrl: url,
     }),
   );
   const db = getDb();

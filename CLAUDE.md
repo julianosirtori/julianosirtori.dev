@@ -103,7 +103,7 @@ The `prebuild` and `pretest` hooks run `contentlayer2 build` so a fresh checkout
 │   │   └── pt/                      # same set
 │   ├── utils/
 │   │   └── storage.ts               # Safe namespaced localStorage wrapper
-│   └── middleware.ts                # next-intl routing
+│   └── proxy.ts                     # next-intl routing
 ├── content/
 │   ├── en/                          # English MDX articles
 │   └── pt/                          # Portuguese MDX articles
@@ -320,7 +320,7 @@ Specs live in `e2e/*.spec.ts`. Use stable selectors (`a[href*="/blog/"]`, `butto
 | `next.config.mjs` | Next + Contentlayer + next-intl wrappers |
 | `contentlayer.config.js` | Post schema + computed fields (toc, readTime, urlImage) |
 | `src/app/globals.css` | Tailwind v4 `@theme` + semantic tokens + light/dark |
-| `src/middleware.ts` | next-intl routing |
+| `src/proxy.ts` | next-intl routing |
 | `src/locales/config.ts` | next-intl routing config |
 | `eslint.config.mjs` | ESLint flat config (eslint-config-next 16 native) |
 
@@ -336,3 +336,13 @@ Specs live in `e2e/*.spec.ts`. Use stable selectors (`a[href*="/blog/"]`, `butto
 8. **Tests**: run `pnpm test` for vitest; CI also runs Playwright + Lighthouse. Don't ship without local lint + test passing.
 9. **Storage**: use `src/utils/storage.ts` (`createStorage(namespace)`) for any new localStorage need — it's SSR-safe and quota-tolerant.
 10. **Terminal commands**: each `CommandDef` carries its own bilingual `description`. Don't duplicate descriptions outside the command file.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->

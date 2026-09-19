@@ -2,8 +2,20 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useLocale } from "next-intl";
 import Image from "next/image";
+import {
+  ExitIcon,
+  GitHubLogoIcon,
+  PaperPlaneIcon,
+  UpdateIcon,
+} from "@radix-ui/react-icons";
 import { track } from "@/lib/analytics";
-import { buttonClass, copyFor, inputClass } from "./copy";
+import {
+  buttonClass,
+  copyFor,
+  inputClass,
+  secondaryButtonClass,
+  textButtonClass,
+} from "./copy";
 export type Entry = {
   id: string;
   name: string;
@@ -128,7 +140,8 @@ export function GuestbookClient() {
           <div className="text-fg-muted mb-5 flex items-center justify-between gap-4 text-sm">
             <span>{name}</span>
             <button
-              className="text-accent min-h-11 px-2"
+              type="button"
+              className={textButtonClass}
               onClick={async () => {
                 const response = await fetch("/api/auth/sign-out", {
                   method: "POST",
@@ -139,13 +152,16 @@ export function GuestbookClient() {
                 else setState("error");
               }}
             >
+              <ExitIcon aria-hidden="true" className="h-4 w-4 shrink-0" />
               {t.logout}
             </button>
           </div>
         ) : (
           <button
-            className={`${buttonClass} mb-6`}
+            type="button"
+            className={`${secondaryButtonClass} mb-6 w-full sm:w-auto`}
             disabled={!sessionReady || state === "sending"}
+            aria-busy={state === "sending"}
             onClick={async () => {
               track("guestbook_login_start", { location: "guestbook" });
               setState("sending");
@@ -172,6 +188,14 @@ export function GuestbookClient() {
               }
             }}
           >
+            {state === "sending" ? (
+              <UpdateIcon
+                aria-hidden="true"
+                className="h-4 w-4 shrink-0 motion-safe:animate-spin"
+              />
+            ) : (
+              <GitHubLogoIcon aria-hidden="true" className="h-4 w-4 shrink-0" />
+            )}
             {t.login}
           </button>
         )}
@@ -217,13 +241,25 @@ export function GuestbookClient() {
           />
           <div className="text-fg-muted flex justify-between gap-3 text-xs">
             <p id="guestbook-hint">{t.moderation}</p>
-            <span>{message.length}/500</span>
+            <span className="shrink-0 font-mono tabular-nums">
+              {message.length}/500
+            </span>
           </div>
           <button
-            className={buttonClass}
+            type="submit"
+            className={`${buttonClass} w-full sm:w-auto`}
             disabled={!name || !message.trim() || state === "sending"}
+            aria-busy={Boolean(name) && state === "sending"}
           >
-            {state === "sending" ? t.sending : t.send}
+            {name && state === "sending" ? (
+              <UpdateIcon
+                aria-hidden="true"
+                className="h-4 w-4 shrink-0 motion-safe:animate-spin"
+              />
+            ) : (
+              <PaperPlaneIcon aria-hidden="true" className="h-4 w-4 shrink-0" />
+            )}
+            {name && state === "sending" ? t.sending : t.send}
           </button>
           <p
             id="guestbook-status"
@@ -243,7 +279,8 @@ export function GuestbookClient() {
                 {draft}
               </p>
               <button
-                className="text-accent mt-2 min-h-11 text-sm"
+                type="button"
+                className={`${textButtonClass} mt-2`}
                 onClick={() => {
                   setMessage(draft);
                   textarea.current?.focus();
@@ -260,8 +297,9 @@ export function GuestbookClient() {
           <div role="status" className="text-fg-muted">
             <p>{t.unavailable}</p>
             <button
+              type="button"
               onClick={() => void load()}
-              className="text-accent mt-2 min-h-11"
+              className={`${secondaryButtonClass} mt-3`}
             >
               {t.retry}
             </button>
@@ -323,11 +361,7 @@ export function GuestbookAdmin() {
             key={tab}
             aria-pressed={tab === status}
             disabled={busy}
-            className={
-              tab === status
-                ? buttonClass
-                : "border-border min-h-11 rounded-md border px-4 text-sm"
-            }
+            className={tab === status ? buttonClass : secondaryButtonClass}
             onClick={() => setStatus(tab)}
           >
             {t[tab]}
@@ -337,7 +371,7 @@ export function GuestbookAdmin() {
       {failed && (
         <div role="alert">
           <p>{t.error}</p>
-          <button className="text-accent min-h-11" onClick={() => void load()}>
+          <button className={textButtonClass} onClick={() => void load()}>
             {t.retry}
           </button>
         </div>

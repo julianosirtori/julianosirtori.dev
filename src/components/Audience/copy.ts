@@ -2,7 +2,7 @@ export const audienceCopy = {
   pt: {
     title: "Notas do Juliano",
     intro:
-      "Uma edição a cada duas semanas sobre código, decisões de projeto e o que aprendi construindo.",
+      "Uma newsletter com o que me der vontade de compartilhar, a cada duas semanas.",
     email: "Seu e-mail",
     subscribe: "Quero receber",
     sending: "Enviando…",
@@ -10,15 +10,19 @@ export const audienceCopy = {
       "Confira sua caixa de entrada. Abra o link para confirmar sua inscrição.",
     hint: "Em português, a cada duas semanas. Confirme seu e-mail para começar. Cancele quando quiser.",
     error: "Não foi possível concluir agora. Tente novamente.",
+    newsletterTestRecipient:
+      "Esta prévia aceita apenas e-mails autorizados para testes. Este endereço ainda não está liberado.",
+    newsletterRateLimited:
+      "O limite de tentativas foi atingido. Aguarde um pouco antes de tentar novamente.",
     confirm: "Confirmar minha inscrição",
+    confirmKicker: "Confirmação de e-mail",
     confirmed: "Inscrição confirmada. Boas-vindas às Notas do Juliano!",
     expired: "Este link expirou ou não é mais válido. Solicite um novo link.",
-    sample: "O que vou mandar por aqui",
-    readTime: "Cerca de 5 minutos de leitura",
+    sample: "O que pode aparecer por aqui",
     sampleText:
-      "A ideia é escrever sobre os projetos em que estou mexendo: uma escolha que precisei fazer, algo que testei ou um problema que deu mais trabalho do que eu esperava.",
+      "Pode aparecer uma opinião sobre um aplicativo, uma ferramenta que testei, um projeto em que estou mexendo ou um meme que me fez rir.",
     sampleLinks:
-      "Também quero compartilhar até três links que eu mandaria para um colega, com um comentário meu sobre cada um.",
+      "Vou mandar o que estiver me interessando e der vontade de dividir com você. O assunto e o formato podem mudar a cada edição.",
     guestbook: "Deixe um recado",
     guestIntro:
       "Passou por aqui? Conte de onde veio ou o que achou. Português e inglês dividem o mesmo mural.",
@@ -46,29 +50,34 @@ export const audienceCopy = {
     unpublish: "Retirar da publicação",
     more: "Carregar mais",
     unsubscribe: "Cancelar inscrição",
+    unsubscribeKicker: "Preferências de e-mail",
     unsubscribed: "Inscrição cancelada. Você não receberá novas edições.",
     unsubscribeHint:
       "Confirme abaixo para parar de receber as Notas do Juliano.",
+    backHome: "Voltar ao início",
   },
   en: {
     title: "Notas do Juliano",
-    intro:
-      "Every two weeks: code, project decisions and lessons from building things.",
+    intro: "A newsletter about whatever I feel like sharing, every two weeks.",
     email: "Your email",
     subscribe: "Subscribe",
     sending: "Sending…",
     check: "Check your inbox. Open the link to confirm your subscription.",
     hint: "In English, every two weeks. Confirm your email to get started. Unsubscribe anytime.",
     error: "We could not complete this right now. Please try again.",
+    newsletterTestRecipient:
+      "This preview only accepts approved test email addresses. This address is not enabled yet.",
+    newsletterRateLimited:
+      "The request limit has been reached. Please wait a while before trying again.",
     confirm: "Confirm my subscription",
+    confirmKicker: "Email confirmation",
     confirmed: "You're subscribed. Welcome to Notas do Juliano!",
     expired: "This link has expired or is no longer valid. Request a new link.",
-    sample: "What I'll send you",
-    readTime: "About a 5-minute read",
+    sample: "What might show up here",
     sampleText:
-      "I want to write about the projects I'm working on: a choice I had to make, something I tried, or a problem that took longer than I expected.",
+      "You might get an app review, a tool I've tried, something from a project I'm working on, or a meme that made me laugh.",
     sampleLinks:
-      "I'll also share up to three links I'd send to a colleague, with a few words about each one.",
+      "I'll send whatever catches my interest and feels worth passing along. The topics and format can change from one issue to the next.",
     guestbook: "Leave a note",
     guestIntro:
       "Stopped by? Share where you came from or what you thought. Portuguese and English share the same wall.",
@@ -96,13 +105,18 @@ export const audienceCopy = {
     unpublish: "Unpublish",
     more: "Load more",
     unsubscribe: "Unsubscribe",
+    unsubscribeKicker: "Email preferences",
     unsubscribed: "You are unsubscribed. You will not receive new issues.",
     unsubscribeHint: "Confirm below to stop receiving Notas do Juliano.",
+    backHome: "Back to home",
   },
 };
 export const copyFor = (lang: string) =>
   audienceCopy[lang === "pt" ? "pt" : "en"];
-export const buttonClass =
-  "bg-accent text-accent-fg hover:opacity-90 focus-visible:ring-accent min-h-11 rounded-md px-4 py-2 text-sm font-medium focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50";
+const buttonBaseClass =
+  "inline-flex min-h-11 min-w-11 cursor-pointer items-center justify-center gap-2 rounded-md px-4 py-2.5 text-sm font-medium outline-accent transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed motion-reduce:transition-none";
+export const buttonClass = `${buttonBaseClass} border border-transparent bg-fg text-bg enabled:hover:bg-fg/90 enabled:active:bg-fg/80 disabled:border-border disabled:bg-bg-muted disabled:text-fg-muted`;
+export const secondaryButtonClass = `${buttonBaseClass} border border-border-strong bg-bg-elevated text-fg enabled:hover:bg-bg-muted enabled:active:border-fg-muted disabled:text-fg-subtle`;
+export const textButtonClass = `${buttonBaseClass} text-fg-muted enabled:hover:bg-bg-muted enabled:hover:text-fg enabled:active:bg-bg-muted disabled:text-fg-subtle`;
 export const inputClass =
-  "border-border bg-bg-elevated text-fg focus:border-accent focus:ring-accent min-h-11 w-full rounded-md border px-3 py-2 text-base focus:ring-1 focus:outline-none";
+  "border-border-strong bg-bg text-fg placeholder:text-fg-subtle focus:border-accent outline-accent min-h-11 min-w-0 w-full rounded-md border px-3 py-2 text-base transition-colors focus:outline-2 focus:outline-offset-2 disabled:cursor-not-allowed disabled:bg-bg-muted disabled:text-fg-muted motion-reduce:transition-none";

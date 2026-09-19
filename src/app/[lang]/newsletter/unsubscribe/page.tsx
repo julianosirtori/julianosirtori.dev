@@ -1,5 +1,5 @@
 import { setRequestLocale } from "next-intl/server";
-import { NewsletterAction } from "@/components/Audience/Newsletter";
+import { NewsletterActionPage } from "@/components/Audience/Newsletter";
 import { copyFor } from "@/components/Audience/copy";
 export const metadata = {
   title: "Newsletter | Juliano Sirtori",
@@ -14,11 +14,9 @@ export default async function Page({
   const { lang } = await params;
   setRequestLocale(lang);
   return (
-    <main className="mx-auto w-full max-w-[760px] flex-1 px-5 py-20">
-      <h1 className="mb-8 text-3xl font-semibold">
-        {copyFor(lang).unsubscribe}
-      </h1>
-      <NewsletterAction mode="unsubscribe" />
-    </main>
+    <NewsletterActionPage
+      mode="unsubscribe"
+      title={copyFor(lang).unsubscribe}
+    />
   );
 }
