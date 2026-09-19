@@ -19,9 +19,12 @@ test.describe("Work With Me Page", () => {
   test("should have submit button", async ({ page }) => {
     await page.goto("/en/work-with-me");
 
-    const submitButton = page.locator('button[type="submit"]');
+    const submitButton = page.getByRole("button", {
+      name: "Send message",
+      exact: true,
+    });
     await expect(submitButton).toBeVisible();
-    await expect(submitButton).toContainText("Send");
+    await expect(submitButton).toHaveAttribute("type", "submit");
   });
 
   test("should display the page in Portuguese", async ({ page }) => {
