@@ -1,8 +1,6 @@
 import { ImageResponse } from "next/og";
 import { OgCard } from "@/app/og-card";
 
-export const runtime = "edge";
-
 export const contentType = "image/png";
 export const alt = "Juliano Sirtori — Full-stack software engineer.";
 

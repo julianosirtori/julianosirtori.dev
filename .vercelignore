@@ -1,0 +1,22 @@
+# Local state, credentials, and generated files are not deployment inputs.
+.git
+.next
+node_modules
+.contentlayer
+*.tsbuildinfo
+.env*
+!.env.example
+*.db
+*.db-*
+*.pem
+
+# Local tooling and verification artifacts.
+.superdesign
+.claude
+.codex
+.agents
+playwright-report
+test-results
+coverage
+.lighthouseci
+.scannerwork

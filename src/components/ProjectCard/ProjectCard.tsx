@@ -18,6 +18,7 @@ export function ProjectCard({
   return (
     <a
       href={project.href}
+      data-project={project.id}
       target="_blank"
       rel="noopener noreferrer"
       aria-labelledby={`project-${project.id}`}

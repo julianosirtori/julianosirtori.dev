@@ -172,7 +172,7 @@ export function Workbench() {
               aria-pressed={view === id}
               aria-controls="craft-caption"
               onClick={() => setView(id)}
-              className="text-fg-muted hover:text-fg aria-pressed:border-fg aria-pressed:text-fg focus-visible:ring-accent -mb-px inline-flex min-h-12 items-center gap-2 border-b-2 border-transparent px-1 text-sm transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none motion-reduce:transition-none"
+              className="text-fg-muted hover:text-fg aria-pressed:border-fg aria-pressed:text-fg focus-visible:ring-accent -mb-px inline-flex min-h-12 cursor-pointer items-center gap-2 border-b-2 border-transparent px-1 text-sm transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none motion-reduce:transition-none"
             >
               <Icon width={15} height={15} aria-hidden="true" />
               {t(`views.${id}.label`)}

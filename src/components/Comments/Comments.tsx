@@ -6,6 +6,8 @@ import { useTheme } from "next-themes";
 import { useTranslations } from "next-intl";
 import { TComments } from "./Comments.types";
 
+import { track } from "@/lib/analytics";
+
 const Giscus = dynamic(() => import("@giscus/react"), { ssr: false });
 
 export const Comments = ({ locale }: TComments) => {
@@ -28,7 +30,10 @@ export const Comments = ({ locale }: TComments) => {
       </p>
       <button
         type="button"
-        onClick={() => setIsOpen(true)}
+        onClick={() => {
+          setIsOpen(true);
+          track("comments_open", { location: "article" });
+        }}
         aria-expanded={isOpen}
         aria-controls="post-comments"
         disabled={isOpen}

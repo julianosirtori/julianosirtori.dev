@@ -1,4 +1,7 @@
+import { ReactionSummary } from "@/components/Reactions/Reactions";
+import { copyFor } from "@/components/Audience/copy";
 import { allPosts } from "contentlayer/generated";
+import Image from "next/image";
 import { getLocale, getTranslations, setRequestLocale } from "next-intl/server";
 
 import { HomeRail } from "@/components/HomeRail";
@@ -64,6 +67,7 @@ export default async function Home({ params }: HomeProps) {
             viewAll={t("viewAllPosts")}
             readTime={t("readTime")}
           />
+          <ReactionSummary />
         </section>
 
         <section id="recommendations" className="scroll-mt-24">
@@ -71,30 +75,47 @@ export default async function Home({ params }: HomeProps) {
             {t("recommendations.label")}
           </h2>
           <div className="divide-border border-border divide-y border-y">
-            {recommendations.map((recommendation) => (
+            {recommendations.slice(0, 3).map((recommendation) => (
               <figure key={recommendation.name} className="py-6">
                 <blockquote className="text-fg-muted flex flex-col gap-3 text-[15px] leading-relaxed">
                   {recommendation.content.map((paragraph) => (
                     <p key={paragraph.slice(0, 32)}>{paragraph}</p>
                   ))}
                 </blockquote>
-                <figcaption className="mt-4 text-sm">
-                  <a
-                    href={recommendation.linkedIn}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-fg hover:text-accent font-medium transition-colors"
-                  >
-                    {recommendation.name}
-                  </a>
-                  <span className="text-fg-subtle">
-                    {" "}
-                    · {recommendation.role}
-                  </span>
+                <figcaption className="mt-4 flex items-center gap-3 text-sm">
+                  {recommendation.photo && recommendation.photoAuthorized && (
+                    <Image
+                      src={recommendation.photo}
+                      alt=""
+                      width={40}
+                      height={40}
+                      className="size-10 shrink-0 rounded-full object-cover"
+                    />
+                  )}
+                  <div>
+                    <a
+                      href={recommendation.linkedIn}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-fg hover:text-accent font-medium transition-colors"
+                    >
+                      {recommendation.name}
+                    </a>
+                    <span className="text-fg-subtle">
+                      {" "}
+                      · {recommendation.role}
+                    </span>
+                  </div>
                 </figcaption>
               </figure>
             ))}
           </div>
+          <Link
+            href="/work-with-me#recommendations"
+            className="text-accent mt-5 inline-flex min-h-11 items-center text-sm"
+          >
+            {copyFor(lang).allRecommendations}
+          </Link>
         </section>
 
         <section id="contact" className="scroll-mt-24">

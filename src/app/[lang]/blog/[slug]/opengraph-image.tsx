@@ -3,8 +3,6 @@ import { IPostProps } from "./page";
 import { allPosts } from "contentlayer/generated";
 import { OgCard } from "@/app/og-card";
 
-export const runtime = "edge";
-
 export const contentType = "image/png";
 export const alt = "Juliano Sirtori — Full-stack software engineer.";
 

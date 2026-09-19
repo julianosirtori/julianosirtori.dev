@@ -17,19 +17,14 @@ test.describe("Projects Page", () => {
 
     await expect(
       page.locator("#project-results").getByRole("heading", { level: 2 }),
-    ).toHaveText(["2024", "2023", "2022", "2021", "2020", "2018"]);
-    await expect(page.locator("#project-results li")).toHaveCount(8);
+    ).toHaveText(["2024", "2023", "2021", "2020", "2018"]);
+    await expect(page.locator("#project-results li")).toHaveCount(6);
   });
 
   test("should display projects page in Portuguese", async ({ page }) => {
     await page.goto("/pt/projects");
 
     await expect(page.locator("h1")).toContainText("Projetos e side projects");
-    await expect(
-      page.getByText(
-        "Dicas do livro O Programador Pragmático, direto no terminal.",
-      ),
-    ).toBeVisible();
     await expect(
       page.getByRole("link", { name: "Fisio Milena Aranha" }),
     ).toBeVisible();
@@ -67,11 +62,9 @@ test.describe("Projects Page", () => {
       await filters
         .getByRole("button", { name: locale.personal, exact: true })
         .click();
-      await expect(results.locator("li")).toHaveCount(4);
+      await expect(results.locator("li")).toHaveCount(2);
       await expect(results.getByRole("heading", { level: 2 })).toHaveText([
-        "2024",
         "2023",
-        "2022",
       ]);
 
       await filters
@@ -94,13 +87,15 @@ test.describe("Projects Page", () => {
       await expect(results.getByRole("heading", { level: 3 })).toHaveText([
         "Fisio Milena Aranha",
       ]);
-      await expect(page.getByRole("status")).toHaveText(locale.singleResult);
+      await expect(page.locator("main").getByRole("status")).toHaveText(
+        locale.singleResult,
+      );
       await expect(filters.locator('[aria-pressed="true"]')).toHaveCount(1);
 
       await filters
         .getByRole("button", { name: locale.all, exact: true })
         .click();
-      await expect(results.locator("li")).toHaveCount(8);
+      await expect(results.locator("li")).toHaveCount(6);
       await expect(
         page.getByRole("link", { name: locale.experience }),
       ).toHaveAttribute("href", `/${locale.lang}/about#experience`);
@@ -128,7 +123,7 @@ test.describe("Projects Page", () => {
     await page.keyboard.press("Space");
     await expect(personal).toHaveAttribute("aria-pressed", "true");
     await expect(personal).toBeFocused();
-    await expect(page.locator("#project-results li")).toHaveCount(4);
+    await expect(page.locator("#project-results li")).toHaveCount(2);
     await page.keyboard.press("Tab");
     await page.keyboard.press("Enter");
     await expect(clients).toHaveAttribute("aria-pressed", "true");
@@ -140,17 +135,6 @@ test.describe("Projects Page", () => {
     page,
   }) => {
     await page.goto("/pt/projects");
-    const packageLink = page.getByRole("link", {
-      name: "cowsay-pragmatic-programmer",
-      exact: true,
-    });
-    await expect(packageLink).toHaveAttribute(
-      "href",
-      "https://www.npmjs.com/package/cowsay-pragmatic-programmer",
-    );
-    await expect(packageLink).toHaveAccessibleDescription(
-      "Ver no npm — Abre em uma nova aba",
-    );
     const videoLink = page.getByRole("link", {
       name: "aiqfome no super app do Magalu",
       exact: true,

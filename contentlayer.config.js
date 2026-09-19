@@ -134,6 +134,8 @@ export const Post = defineDocumentType(() => ({
 }));
 
 export default makeSource({
+  // Explicit paths in tsconfig work without the baseUrl deprecated by TypeScript 6.
+  disableImportAliasWarning: true,
   contentDirPath: "content",
   documentTypes: [Post],
   mdx: {

@@ -6,6 +6,8 @@ import { useLocale } from "next-intl";
 import { usePathname, useRouter } from "@/locales/navigation";
 import { languages } from "@/locales/languages";
 
+import { track } from "@/lib/analytics";
+
 export const HeaderSelectLang = () => {
   const pathname = usePathname();
   const router = useRouter();
@@ -14,7 +16,22 @@ export const HeaderSelectLang = () => {
   const langs = useMemo(() => Object.keys(languages), []);
 
   const handleSelect = (locale: string) => {
-    router.push(pathname, { locale });
+    track("language_change", {
+      location: "header",
+      target_language: locale as "pt" | "en",
+    });
+    const query = new URLSearchParams();
+    if (/^\/newsletter\/(confirm|unsubscribe)$/.test(pathname)) {
+      const current = new URLSearchParams(window.location.search);
+      const keys = pathname.endsWith("/confirm")
+        ? ["token"]
+        : ["id", "signature"];
+      for (const key of keys) {
+        const value = current.get(key);
+        if (value) query.set(key, value);
+      }
+    }
+    router.push(`${pathname}${query.size ? `?${query}` : ""}`, { locale });
   };
 
   return (

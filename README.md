@@ -87,16 +87,28 @@ To get a local copy up and running follow these simple example steps.
    pnpm install
    ```
 3. Change the `.env.*` files with your own data
-    ```
-      NEXT_PUBLIC_LOCAL_DOMAIN="http://localhost:3000"
-      RESEND_API_KEY=""
-    ```
-    You need generate the resend api key: [create-api-key](https://resend.com/docs/api-reference/api-keys/create-api-key )
 
-4. Start the project`
+   ```
+     NEXT_PUBLIC_LOCAL_DOMAIN="http://localhost:3000"
+     RESEND_API_KEY=""
+   ```
+
+   You need generate the resend api key: [create-api-key](https://resend.com/docs/api-reference/api-keys/create-api-key)
+
+4. Start the project
    ```sh
     pnpm run dev
    ```
+
+The development server explicitly listens on IPv4 (`0.0.0.0`) so Windows can access it through WSL localhost forwarding even when IPv6 is disabled in Linux. Open the `Local` URL printed by Next.js. To use port 3001:
+
+```sh
+pnpm dev --port 3001
+```
+
+Then open `http://localhost:3001`. Stop an older server before starting another; otherwise Next.js may choose a different port. See [Microsoft's WSL networking documentation](https://learn.microsoft.com/en-us/windows/wsl/networking).
+
+The Turbopack filesystem cache is disabled in development because cached route entries caused existing articles and API routes to return 404 even after a restart. The first compilation after starting the server can take longer; subsequent requests still use the running server's in-memory cache.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -110,7 +122,7 @@ To get a local copy up and running follow these simple example steps.
 
 - [ ] Add E2E Tests
 - [ ] Create a workflow for run the e2e tests
-- [ ] Replace https://kbar.vercel.app/ for  https://cmdk.paco.me/
+- [ ] Replace https://kbar.vercel.app/ for https://cmdk.paco.me/
 
 See the [open issues](https://github.com/julianosirtori/life-in-weeks/issues) for a full list of proposed features (and known issues).
 
@@ -165,20 +177,20 @@ Project Link: [https://github.com/julianosirtori/julianosirtori.dev](https://git
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/juliano-sirtori
 [product-screenshot]: public/images/screenshot.png
-
 [next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [next-url]: https://nextjs.org/
-
 [react.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [react-url]: https://reactjs.org/
-
 [tailwindcss]: https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white
 [tailwindcss-url]: https://tailwindcss.com/
-
-[markdown]: 	https://img.shields.io/badge/Markdown-000000?style=for-the-badge&logo=markdown&logoColor=white
+[markdown]: https://img.shields.io/badge/Markdown-000000?style=for-the-badge&logo=markdown&logoColor=white
 [markdown-url]: https://tailwindcss.com/
-
-[vercel]: 	https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white
+[vercel]: https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white
 [vercel-url]: https://tailwindcss.com/
-
 [resend-url]: https://resend.com/
+
+## Audience features (phase 2)
+
+Newsletter, GitHub guestbook moderation, and article reactions use Turso/libSQL with Drizzle. Copy `.env.example` to `.env.local`, configure services, and run `pnpm db:migrate` before `pnpm dev`. Run `pnpm newsletter:retry` to reprocess pending newsletter operations.
+
+See [operations and launch requirements](docs/phase-2/operations.md), [GA4 setup and explorations](docs/phase-2/analytics.md), and [the first three editorial briefs](docs/phase-2/editorial.md). Production activation and two additional authorized testimonials remain pending.

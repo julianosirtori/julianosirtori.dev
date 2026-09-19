@@ -20,6 +20,8 @@ import { LOGO } from "./data/ascii";
 import { autocomplete as runAutocomplete } from "./autocomplete";
 import { useRouter } from "@/locales/navigation";
 
+import { track } from "@/lib/analytics";
+
 const MAX_HISTORY = 100;
 
 interface UseTerminalArgs {
@@ -56,6 +58,14 @@ export function useTerminal({ initialLang }: UseTerminalArgs): TerminalApi {
   const [history, setHistory] = useState<string[]>([]);
   const [historyIdx, setHistoryIdx] = useState<number | null>(null);
   const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    if (overlay.kind === "snake")
+      track("playground_game_start", {
+        location: "playground",
+        action_id: "snake",
+      });
+  }, [overlay.kind]);
 
   const draftRef = useRef("");
   const bootRanRef = useRef(false);
@@ -148,8 +158,15 @@ export function useTerminal({ initialLang }: UseTerminalArgs): TerminalApi {
     push([line(prompt, "input")]);
     if (!parsed) return;
 
-    const cmd = registry[parsed.name];
+    const cmd = Object.hasOwn(registry, parsed.name)
+      ? registry[parsed.name]
+      : undefined;
     if (!cmd) {
+      track("playground_command", {
+        location: "playground",
+        action_id: "unknown",
+        result: "unknown",
+      });
       const suggestion = closestMatch(parsed.name, allCommandKeys);
       const errors: OutputLine[] = [err(`command not found: ${parsed.name}`)];
       if (suggestion) errors.push(dim(`did you mean: ${suggestion}?`));
@@ -165,9 +182,21 @@ export function useTerminal({ initialLang }: UseTerminalArgs): TerminalApi {
         cwd,
         env,
       });
+      track("playground_command", {
+        location: "playground",
+        action_id: cmd.name,
+        result: result.some((line) => line.kind === "error")
+          ? "error"
+          : "success",
+      });
       const piped = parsed.pipe ? applyPipe(result, parsed.pipe) : result;
       if (piped.length > 0) push(piped);
     } catch (error) {
+      track("playground_command", {
+        location: "playground",
+        action_id: cmd.name,
+        result: "error",
+      });
       push([err(`error: ${(error as Error).message}`)]);
     }
   }, [input, lang, cwd, push, env]);
