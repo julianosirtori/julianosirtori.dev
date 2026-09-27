@@ -1,0 +1,52 @@
+---
+title: "Criei um MCP para as minhas notas do Obsidian"
+date: 2026-09-27
+description: "Queria ler e editar minhas notas do Obsidian pelo ChatGPT no celular, sem deixar o PC ligado. Conto os requisitos, a arquitetura com OAuth e o repositório do projeto."
+meta:
+  keywords:
+    - mcp
+    - obsidian
+    - chatgpt
+    - claude
+    - oauth
+    - self-hosting
+bannerCloudinaryId: unsplash/photo-1499750310107-5fef28a66643
+bannerCredit: Photo by [Andrew Neel](https://unsplash.com/pt-br/@andrewtneel)
+bannerAlt: "Caderno aberto ao lado de um laptop sobre a mesa"
+---
+
+Uso o Obsidian há um tempo e queria acessar, adicionar e editar minhas notas pelo ChatGPT, de qualquer lugar e de qualquer dispositivo onde eu abrisse o chat. Pesquisando, encontrei soluções como o [MCP-Obsidian](https://github.com/MarkusPfundstein/mcp-obsidian), mas quase todas esbarravam no mesmo ponto. Ou eu precisava deixar meu computador ligado, ou exigiam a instalação do app do ChatGPT no computador.
+
+## Requisitos inegociáveis
+
+Antes de escrever qualquer linha, mapeei o que eu não abriria mão:
+
+* Funcionar no app mobile do ChatGPT.
+* Funcionar em outros modelos, como o chat do Claude.
+* Continuar funcionando com meu computador desligado.
+* Não instalar nada no meu computador.
+* Abrir em qualquer dispositivo que tenha acesso à minha conta do ChatGPT.
+
+Desses pontos, duas decisões ficaram claras. Eu teria que hospedar o MCP. E ele precisaria de autenticação [OAuth](https://developers.openai.com/plugins/build/auth#publish-oauth-metadata-from-your-authorization-server).
+
+## Um porteiro na frente do MCP
+
+O ponto mais sensível era segurança. Uma brecha significaria expor todas as minhas notas para a internet. Para resolver isso, coloquei um porteiro na frente do MCP. Esse porteiro não conhece nada do vault. Nele eu implemento a autenticação OAuth e encaminho as requisições já autenticadas para o MCP.
+
+Para endurecer mais, o **mcp-server** exige que o worker envie um header (`x-origin-secret`) em cada requisição. Só o worker e o mcp-server conhecem esse segredo.
+
+A arquitetura final ficou assim:
+
+![Arquitetura do projeto, com o ChatGPT e o Claude passando pelo worker de autenticação antes de chegar ao mcp-server](/images/vault-mcp-architecture.png)
+
+## Dois meses de uso
+
+Já faz dois meses que uso e tem funcionado melhor do que eu esperava. Ainda precisa de ajustes, como deixar a tela do OAuth visualmente melhor, mas está funcional e isso que importa. No meu roadmap também quero simplificar o setup da VPS. Para pessoas leigas, acredito que ficou bem complicado. Acredito que dá para melhorar isso com a criação de imagens Docker.
+
+Mas caso você já queira instalar, pode seguir este [tutorial](https://github.com/julianosirtori/vault-mcp/blob/main/docs/setup.pt-br.md).
+
+Sugestões são sempre bem-vindas.
+
+*Obs: apenas a imagem da arquitetura foi gerada por IA, todo o texto foi escrito e revisado por humanos.*
+
+* [Repositório do projeto](https://github.com/julianosirtori/vault-mcp)
