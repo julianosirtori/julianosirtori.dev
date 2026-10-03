@@ -1314,6 +1314,8 @@ Fechamento entre produto e design antes do desenvolvimento. Onde esta seção e 
 
 - **Entra:** todos os itens Must Have (lista, detalhe, instalação, SEO, analytics, webhook) e, dos Should Have, o TOC no detalhe, a contagem de arquivos no card, o JSON-LD e a chamada discreta na home.
 - **Fica para depois:** lembrar o agente escolhido e todos os itens Could Have.
+- **Atalho na home (Must, pedido do Juliano):** um link fixo para `/skills` no `HomeRail`, abaixo da navegação das seções, visível no desktop e no mobile. A linha no bloco "Studying" do `TechStack` é complementar.
 - **Header:** sem link na v1, conforme a IA do PRD. A promoção acontece quando houver 3 skills.
 - **Token do GitHub:** é opcional no código. Sem token, o catálogo funciona e omite as datas de atualização. Em produção, o recomendado é configurar o token.
 - **Pasta manual do Codex:** vale o que a documentação oficial do Codex disser. Se divergir do README do repo de skills, o README é corrigido lá numa mudança separada.
+- **Webhook configurado:** o webhook de `push` do repo `julianosirtori/skills` aponta para `https://www.julianosirtori.dev/api/webhooks/skills`. O domínio sem `www` responde 308, e o GitHub não segue redirect na entrega. O segredo vai em `SKILLS_WEBHOOK_SECRET` na Vercel.
