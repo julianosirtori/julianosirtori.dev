@@ -3,6 +3,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 
+import { Link } from "@/locales/navigation";
+
 const SECTIONS = [
   "craft",
   "stack",
@@ -117,6 +119,20 @@ export function HomeRail() {
             );
           })}
         </nav>
+
+        {/* A page link, not a section: accent, arrow and spacing keep it apart from the scroll nav. */}
+        <Link
+          href="/skills"
+          className="group hover:bg-accent-muted focus-visible:ring-accent mt-6 -ml-2 flex min-h-11 w-fit flex-col justify-center rounded-md px-2 py-1.5 transition-colors focus-visible:ring-2 focus-visible:outline-none motion-reduce:transition-none lg:mt-10"
+        >
+          <span className="text-accent flex items-center gap-2 font-mono text-xs tracking-[0.14em] uppercase">
+            <span aria-hidden="true">→</span>
+            {t("skillsShortcut.label")}
+          </span>
+          <span className="text-fg-muted mt-0.5 text-xs">
+            {t("skillsShortcut.hint")}
+          </span>
+        </Link>
       </div>
 
       <div>

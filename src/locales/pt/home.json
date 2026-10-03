@@ -10,6 +10,10 @@
     "recommendations": "Recomendações",
     "contact": "Contato"
   },
+  "skillsShortcut": {
+    "label": "Skills para agentes",
+    "hint": "Código aberto, instala com um comando"
+  },
   "workbench": {
     "label": "Na prática",
     "title": "O que eu construo.",
