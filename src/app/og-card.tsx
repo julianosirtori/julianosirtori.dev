@@ -34,9 +34,11 @@ interface OgCardProps {
   title: string;
   category?: string;
   meta: string;
+  /** Title font size in px. Long unbroken titles (skill slugs) need less. */
+  titleSize?: number;
 }
 
-export function OgCard({ title, category, meta }: OgCardProps) {
+export function OgCard({ title, category, meta, titleSize = 66 }: OgCardProps) {
   const accent = categoryAccent(category);
 
   return (
@@ -111,7 +113,7 @@ export function OgCard({ title, category, meta }: OgCardProps) {
       <div
         style={{
           display: "flex",
-          fontSize: "66px",
+          fontSize: `${titleSize}px`,
           fontWeight: 600,
           letterSpacing: "-0.03em",
           lineHeight: 1.1,
