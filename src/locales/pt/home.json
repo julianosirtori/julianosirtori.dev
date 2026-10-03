@@ -69,7 +69,9 @@
   "stack": {
     "label": "Tech Stack",
     "studyingLabel": "Estudando",
-    "studyingDescription": "Assuntos que estou aprofundando, não uma stack de entrega."
+    "studyingDescription": "Assuntos que estou aprofundando, não uma stack de entrega.",
+    "skillsNote": "As skills que uso com agentes de código ficam abertas no GitHub.",
+    "skillsLink": "Ver as skills"
   },
   "writing": {
     "label": "Escrita"

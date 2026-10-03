@@ -59,7 +59,8 @@
     "learning": {
       "title": "What I'm learning now",
       "p1": "I also work on products and solutions that use AI. It's an area I've been exploring through hands-on work.",
-      "p2": "I'm going deeper into LLM applications, RAG architectures and agents, building projects to understand these ideas and expand what I can deliver."
+      "p2": "I'm going deeper into LLM applications, RAG architectures and agents, building projects to understand these ideas and expand what I can deliver.",
+      "skills": "Some of this work is public: <link>agent skills I wrote and use</link>."
     }
   },
   "contact": {

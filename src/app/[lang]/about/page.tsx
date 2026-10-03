@@ -217,6 +217,20 @@ export default async function About({ params }: AboutProps) {
               <div className="text-fg-muted flex max-w-[72ch] flex-col gap-4 pb-7 text-base leading-7">
                 <p>{t(`notes.${note}.p1`)}</p>
                 <p>{t(`notes.${note}.p2`)}</p>
+                {note === "learning" && (
+                  <p>
+                    {t.rich("notes.learning.skills", {
+                      link: (chunks) => (
+                        <Link
+                          href="/skills"
+                          className="text-fg border-border hover:border-accent hover:text-accent focus-visible:ring-accent rounded-sm border-b pb-0.5 transition-colors focus-visible:ring-2 focus-visible:outline-none"
+                        >
+                          {chunks}
+                        </Link>
+                      ),
+                    })}
+                  </p>
+                )}
               </div>
             </details>
           ))}

@@ -9,6 +9,7 @@ import {
   BackpackIcon,
   CodeIcon,
   CommitIcon,
+  CubeIcon,
   EnvelopeClosedIcon,
   FileTextIcon,
   HomeIcon,
@@ -112,6 +113,15 @@ export default function CommandBarDialog({
         keywords: "projects work portfolio",
         perform: () => router.push("/projects"),
         icon: <BackpackIcon />,
+      },
+      {
+        id: "skills",
+        label: t("skills"),
+        section: "navigate",
+        keywords:
+          "skills agent agents claude opencode codex cursor gemini copilot ai ia",
+        perform: () => router.push("/skills"),
+        icon: <CubeIcon />,
       },
       {
         id: "playground",

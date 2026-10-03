@@ -59,7 +59,8 @@
     "learning": {
       "title": "O que estou estudando hoje",
       "p1": "Hoje também trabalho com produtos e soluções que usam IA. É uma frente que venho explorando na prática.",
-      "p2": "Continuo aprofundando aplicações com LLMs, arquiteturas RAG e agentes, criando projetos para entender esses conceitos e ampliar o que consigo entregar."
+      "p2": "Continuo aprofundando aplicações com LLMs, arquiteturas RAG e agentes, criando projetos para entender esses conceitos e ampliar o que consigo entregar.",
+      "skills": "Parte disso é pública: <link>skills para agentes que escrevi e uso</link>."
     }
   },
   "contact": {
