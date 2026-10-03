@@ -6,6 +6,10 @@ import { OG_SIZE, SkillDetailCard, SkillsListCard, skillsOgCopy } from "../og";
 
 export const contentType = "image/png";
 export const size = OG_SIZE;
+// generateImageMetadata would make this an on-demand static route, but the
+// card reads the catalog at request time. In route handlers force-dynamic
+// does not bypass the data cache, so the catalog still comes from it.
+export const dynamic = "force-dynamic";
 
 interface ImageProps {
   params: Promise<{ lang: string; slug: string }>;
