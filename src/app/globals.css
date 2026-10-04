@@ -322,6 +322,20 @@
     color: var(--shiki-dark);
   }
 
+  /* github-light and github-dark paint comments #6a737d, under 4.5:1 on the
+     code block background in both themes. */
+  code[data-theme*=" "] span[style*="--shiki-light:#6a737d" i] {
+    color: var(--fg-muted);
+  }
+
+  .dark code[data-theme*=" "] span[style*="--shiki-light:#6a737d" i] {
+    color: var(--shiki-dark);
+  }
+
+  .dark code[data-theme*=" "] span[style*="--shiki-dark:#6a737d" i] {
+    color: var(--fg-muted);
+  }
+
   [data-rehype-pretty-code-figure] .line {
     padding: 0.15rem 0;
   }
