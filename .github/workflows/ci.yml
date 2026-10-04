@@ -129,3 +129,6 @@ jobs:
           lhci autorun
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+          # The skills pages read a fixture instead of GitHub, so the job
+          # does not depend on GitHub's unauthenticated rate limit.
+          SKILLS_FIXTURE: one
