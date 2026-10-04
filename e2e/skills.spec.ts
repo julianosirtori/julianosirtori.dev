@@ -753,6 +753,31 @@ test.describe("Skills catalog QA round 1", () => {
     await expect(link).toHaveAttribute("href", "/en/skills");
   });
 
+  test("T1: body headings carry the user-content- prefix and the TOC and anchors point to them", async ({
+    page,
+  }) => {
+    await page.goto(`/en/skills/${SLUG}`);
+    const heading = page
+      .locator("#instructions h3")
+      .filter({ hasText: "Three tiers" });
+    await expect(heading).toHaveAttribute("id", "user-content-three-tiers");
+    await expect(heading.locator("a.anchor")).toHaveAttribute(
+      "href",
+      "#user-content-three-tiers",
+    );
+    const ids = await page
+      .locator("#instructions .prose [id]")
+      .evaluateAll((nodes) => nodes.map((node) => node.id));
+    expect(ids.filter((id) => !id.startsWith("user-content-"))).toEqual([]);
+    for (const id of ["install", "triggers", "details", "instructions"]) {
+      await expect(page.locator(`[id="${id}"]`)).toHaveCount(1);
+    }
+    const toc = page.getByRole("navigation", { name: "On this page" }).first();
+    await toc.getByRole("link", { name: "Three tiers" }).click();
+    await expect(page).toHaveURL(/#user-content-three-tiers$/);
+    await expect(heading).toBeInViewport();
+  });
+
   test("AC-52: the home shortcut is visible on a phone and keeps the language", async ({
     browser,
   }) => {
