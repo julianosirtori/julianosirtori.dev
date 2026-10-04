@@ -148,6 +148,16 @@ describe("renderSkillMarkdown", () => {
     );
   });
 
+  it("drops <style> blocks together with their CSS", async () => {
+    const { html: out } = await html(
+      "Before\n\n<style>body{display:none}</style>\n\nAfter\n",
+    );
+    expect(out).not.toContain("display:none");
+    expect(out).not.toMatch(/<style/i);
+    expect(out).toContain("Before");
+    expect(out).toContain("After");
+  });
+
   it("prefixes heading ids so they never collide with the page's own ids", async () => {
     const { html: out } = await html(
       "## Install\n\n## Details\n\n### Install\n",

@@ -65,6 +65,15 @@ const prettyCodeOptions: PrettyCodeOptions = {
 const SCHEME_RE = /^[a-z][a-z0-9+.-]*:/i;
 
 /**
+ * GitHub's schema, but `<style>` is removed with its content. By default only
+ * `<script>` is, so CSS from a SKILL.md would show up as visible text.
+ */
+const sanitizeSchema = {
+  ...defaultSchema,
+  strip: [...(defaultSchema.strip ?? []), "style"],
+};
+
+/**
  * Relative links point to the file on GitHub and relative images load from
  * raw.githubusercontent.com, both pinned to the commit the page was read from.
  * Absolute URLs, in-page anchors and protocol-relative URLs stay as they are.
@@ -209,7 +218,7 @@ export async function renderSkillMarkdown(
     // The sanitizer adds CONTENT_ID_PREFIX; adding it here too would double it.
     .use(remarkRehype, { allowDangerousHtml: true, clobberPrefix: "" })
     .use(rehypeRaw)
-    .use(rehypeSanitize, defaultSchema)
+    .use(rehypeSanitize, sanitizeSchema)
     .use(rehypeSkillStructure, context, output)
     .use(rehypeAutolinkHeadings, {
       behavior: "wrap",
