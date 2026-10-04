@@ -20,13 +20,15 @@ import { visit } from "unist-util-visit";
 
 import { SKILLS_DIR, repoBlobUrl, repoRawUrl, repoTreeUrl } from "./constants";
 
-/** Ids the detail page uses for its own sections. */
-export const RESERVED_SECTION_IDS = [
-  "install",
-  "triggers",
-  "details",
-  "instructions",
-];
+/**
+ * Every id and name that comes from SKILL.md carries this prefix exactly once,
+ * as on GitHub. Unprefixed ids could clobber page globals through named access
+ * on `window` (an element with id `__next_f` breaks hydration) or collide with
+ * the page's own ids (`install`, `details`...).
+ */
+export const CONTENT_ID_PREFIX = "user-content-";
+
+const FOOTNOTE_LABEL_ID = `${CONTENT_ID_PREFIX}footnote-label`;
 
 export interface SkillHeading {
   level: number;
@@ -114,6 +116,20 @@ function headingRank(node: Element): number | null {
   return match ? Number(match[1]) : null;
 }
 
+/** In-page `#foo` links point to `#user-content-foo` when that target exists. */
+function resolveFragment(href: string, targets: Set<string>): string {
+  let fragment: string;
+  try {
+    fragment = decodeURIComponent(href.slice(1));
+  } catch {
+    return href;
+  }
+  if (targets.has(`${CONTENT_ID_PREFIX}${fragment}`)) {
+    return `#${CONTENT_ID_PREFIX}${fragment}`;
+  }
+  return href;
+}
+
 function rehypeSkillStructure(
   context: SkillMarkdownContext,
   output: Pick<RenderedSkillMarkdown, "headings" | "h2Count">,
@@ -128,23 +144,42 @@ function rehypeSkillStructure(
       tree.children.splice(first, 1);
     }
 
+    // rehype-sanitize already prefixed every id and name from the source.
+    // Reserve them so a heading cannot take the same id.
+    const targets = new Set<string>();
     const slugger = new GithubSlugger();
-    for (const id of RESERVED_SECTION_IDS) slugger.slug(id);
+    visit(tree, "element", (node) => {
+      for (const key of ["id", "name"] as const) {
+        const value = node.properties[key];
+        if (typeof value !== "string") continue;
+        targets.add(value);
+        if (!headingRank(node) && value.startsWith(CONTENT_ID_PREFIX)) {
+          slugger.slug(value.slice(CONTENT_ID_PREFIX.length));
+        }
+      }
+    });
 
     visit(tree, "element", (node) => {
       const rank = headingRank(node);
-      if (rank) {
-        if (rank === 2) output.h2Count += 1;
-        const level = Math.min(rank + 1, 6);
-        const text = toString(node).trim();
-        const id = slugger.slug(text);
-        node.tagName = `h${level}`;
-        node.properties.id = id;
-        if (level === 3) output.headings.push({ level: 3, text, slug: id });
-        return;
-      }
+      if (!rank) return;
+      node.tagName = `h${Math.min(rank + 1, 6)}`;
+      // GFM's visually hidden "Footnotes" heading keeps the id its
+      // references point to and stays out of the table of contents.
+      if (node.properties.id === FOOTNOTE_LABEL_ID) return;
+      if (rank === 2) output.h2Count += 1;
+      const text = toString(node).trim();
+      const id = `${CONTENT_ID_PREFIX}${slugger.slug(text)}`;
+      node.properties.id = id;
+      targets.add(id);
+      if (rank === 2) output.headings.push({ level: 3, text, slug: id });
+    });
+
+    visit(tree, "element", (node) => {
       if (node.tagName === "a" && typeof node.properties.href === "string") {
-        const href = resolveSkillUrl(node.properties.href, "link", context);
+        const raw = node.properties.href.trim();
+        const href = raw.startsWith("#")
+          ? resolveFragment(raw, targets)
+          : resolveSkillUrl(raw, "link", context);
         node.properties.href = href;
         if (/^https?:/i.test(href)) {
           node.properties.rel = ["nofollow", "noopener", "noreferrer"];
@@ -170,7 +205,8 @@ export async function renderSkillMarkdown(
   const processor = unified()
     .use(remarkParse)
     .use(remarkGfm)
-    .use(remarkRehype, { allowDangerousHtml: true })
+    // The sanitizer adds CONTENT_ID_PREFIX; adding it here too would double it.
+    .use(remarkRehype, { allowDangerousHtml: true, clobberPrefix: "" })
     .use(rehypeRaw)
     .use(rehypeSanitize, defaultSchema)
     .use(rehypeSkillStructure, context, output)

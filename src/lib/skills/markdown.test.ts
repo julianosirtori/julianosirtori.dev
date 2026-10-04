@@ -96,15 +96,15 @@ describe("renderSkillMarkdown", () => {
 
     expect(h2Count).toBe(4);
     expect(headings.map((heading) => heading.slug)).toEqual([
-      "three-tiers",
-      "ground-rules-and-why",
-      "workflow",
-      "automation",
+      "user-content-three-tiers",
+      "user-content-ground-rules-and-why",
+      "user-content-workflow",
+      "user-content-automation",
     ]);
     expect(out).toContain(
-      '<h3 id="three-tiers"><a class="anchor" href="#three-tiers">',
+      '<h3 id="user-content-three-tiers"><a class="anchor" href="#user-content-three-tiers">',
     );
-    expect(out).toContain('<h4 id="1-baseline">');
+    expect(out).toContain('<h4 id="user-content-1-baseline">');
   });
 
   it("highlights code blocks like the blog", async () => {
@@ -140,20 +140,69 @@ describe("renderSkillMarkdown", () => {
     );
   });
 
-  it("does not let body headings collide with the page section ids", async () => {
+  it("prefixes heading ids so they never collide with the page's own ids", async () => {
     const { html: out } = await html(
       "## Install\n\n## Details\n\n### Install\n",
     );
-    expect(out).toContain('id="install-1"');
-    expect(out).toContain('id="details-1"');
-    expect(out).toContain('id="install-2"');
-    expect(out).not.toContain('id="install"');
+    expect(out).toContain('id="user-content-install"');
+    expect(out).toContain('id="user-content-details"');
+    expect(out).toContain('id="user-content-install-1"');
+    expect(out).not.toMatch(/id="(install|details)"/);
+  });
+
+  it("cannot clobber page globals through heading or raw HTML ids", async () => {
+    const { html: out } = await html(
+      '## __next_f\n\n## __next\n\n<div id="__NEXT_DATA__">x</div>\n\n<a name="self">y</a>\n',
+    );
+    const ids = [...out.matchAll(/\s(?:id|name)="([^"]*)"/g)].map(
+      (match) => match[1],
+    );
+    expect(ids.length).toBeGreaterThan(0);
+    for (const id of ids) {
+      expect(id.startsWith("user-content-")).toBe(true);
+      expect(id.startsWith("user-content-user-content-")).toBe(false);
+    }
+    expect(out).toContain('id="user-content-__next_f"');
+  });
+
+  it("links footnotes both ways with a single prefix", async () => {
+    const {
+      html: out,
+      headings,
+      h2Count,
+    } = await html("Text with a note.[^1]\n\n## Usage\n\n[^1]: The note.\n");
+    const ref =
+      /<a href="(#[^"]+)" id="([^"]+)"[^>]*aria-describedby="([^"]+)"/.exec(
+        out,
+      );
+    expect(ref).not.toBeNull();
+    const [, refHref, refId, describedBy] = ref!;
+    expect(refHref).toBe("#user-content-fn-1");
+    expect(refId).toBe("user-content-fnref-1");
+    expect(out).toContain(`<li id="${refHref.slice(1)}">`);
+    expect(out).toContain(`href="#${refId}"`);
+    expect(out).toContain(`id="${describedBy}"`);
+    expect(out).not.toContain("user-content-user-content-");
+    // The hidden "Footnotes" heading is not a section of the skill.
+    expect(h2Count).toBe(1);
+    expect(headings.map((heading) => heading.text)).toEqual(["Usage"]);
+  });
+
+  it("points in-page links at the prefixed anchor when it exists", async () => {
+    const { html: out } = await html(
+      '<a name="top"></a>\n\n## Workflow\n\n[up](#top) [flow](#workflow) [page](#install)\n',
+    );
+    expect(out).toContain('name="user-content-top"');
+    expect(out).toContain('href="#user-content-top"');
+    expect(out).toContain('href="#user-content-workflow"');
+    // Not a target in the body: left alone.
+    expect(out).toContain('href="#install"');
   });
 
   it("only drops the H1 when it is the first node and shifts the rest", async () => {
     const { html: out } = await html("Intro\n\n# Later title\n\n###### Deep\n");
-    expect(out).toContain('<h2 id="later-title">');
-    expect(out).toContain('<h6 id="deep">');
+    expect(out).toContain('<h2 id="user-content-later-title">');
+    expect(out).toContain('<h6 id="user-content-deep">');
   });
 
   it("marks external links as nofollow", async () => {
