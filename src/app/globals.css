@@ -163,6 +163,14 @@
     scroll-margin-top: 12rem;
   }
 
+  .prose :is(h5, h6) {
+    margin: 1.5em 0 0.5em;
+    color: var(--fg);
+    font-size: 1rem;
+    font-weight: 600;
+    scroll-margin-top: 12rem;
+  }
+
   .prose a {
     text-decoration: none;
     border-bottom: 0.5px solid var(--fg-muted);
@@ -175,12 +183,12 @@
     color: var(--accent);
   }
 
-  .prose :is(h2, h3, h4) a.anchor {
+  .prose :is(h2, h3, h4, h5, h6) a.anchor {
     border: 0;
     color: inherit;
   }
 
-  .prose :is(h2, h3, h4) a.anchor:hover {
+  .prose :is(h2, h3, h4, h5, h6) a.anchor:hover {
     color: var(--accent);
   }
 
@@ -314,6 +322,20 @@
     color: var(--shiki-dark);
   }
 
+  /* github-light and github-dark paint comments #6a737d, under 4.5:1 on the
+     code block background in both themes. */
+  code[data-theme*=" "] span[style*="--shiki-light:#6a737d" i] {
+    color: var(--fg-muted);
+  }
+
+  .dark code[data-theme*=" "] span[style*="--shiki-light:#6a737d" i] {
+    color: var(--shiki-dark);
+  }
+
+  .dark code[data-theme*=" "] span[style*="--shiki-dark:#6a737d" i] {
+    color: var(--fg-muted);
+  }
+
   [data-rehype-pretty-code-figure] .line {
     padding: 0.15rem 0;
   }
@@ -380,7 +402,7 @@
 }
 
 @media (min-width: 640px) {
-  .prose :is(h2, h3, h4) {
+  .prose :is(h2, h3, h4, h5, h6) {
     scroll-margin-top: 8rem;
   }
 }

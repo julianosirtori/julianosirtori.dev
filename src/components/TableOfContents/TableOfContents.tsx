@@ -12,9 +12,17 @@ export interface TocItem {
 interface TableOfContentsProps {
   items: TocItem[];
   label: string;
+  /** Grid placement on large screens. Defaults to the blog post layout. */
+  className?: string;
 }
 
-export function TableOfContents({ items, label }: TableOfContentsProps) {
+const DEFAULT_PLACEMENT = "lg:col-start-2 lg:row-span-2 lg:row-start-1";
+
+export function TableOfContents({
+  items,
+  label,
+  className = DEFAULT_PLACEMENT,
+}: TableOfContentsProps) {
   const [activeSlug, setActiveSlug] = useState<string | null>(null);
   const detailsRef = useRef<HTMLDetailsElement>(null);
 
@@ -63,7 +71,9 @@ export function TableOfContents({ items, label }: TableOfContentsProps) {
   };
 
   return (
-    <aside className="min-w-0 lg:sticky lg:top-28 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:h-fit lg:max-h-[calc(100dvh-8rem)] lg:overflow-y-auto">
+    <aside
+      className={`min-w-0 lg:sticky lg:top-28 lg:h-fit lg:max-h-[calc(100dvh-8rem)] lg:overflow-y-auto ${className}`}
+    >
       <nav aria-label={label} className="hidden lg:block">
         <p className="text-fg mb-4 text-sm font-medium">{label}</p>
         <TocList items={items} activeSlug={activeSlug} onSelect={onSelect} />

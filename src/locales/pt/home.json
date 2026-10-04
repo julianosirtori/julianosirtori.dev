@@ -10,6 +10,10 @@
     "recommendations": "Recomendações",
     "contact": "Contato"
   },
+  "skillsShortcut": {
+    "label": "Skills para agentes",
+    "hint": "Código aberto, instala com um comando"
+  },
   "workbench": {
     "label": "Na prática",
     "title": "O que eu construo.",
@@ -69,7 +73,9 @@
   "stack": {
     "label": "Tech Stack",
     "studyingLabel": "Estudando",
-    "studyingDescription": "Assuntos que estou aprofundando, não uma stack de entrega."
+    "studyingDescription": "Assuntos que estou aprofundando, não uma stack de entrega.",
+    "skillsNote": "As skills que uso com agentes de código ficam abertas no GitHub.",
+    "skillsLink": "Ver as skills"
   },
   "writing": {
     "label": "Escrita"

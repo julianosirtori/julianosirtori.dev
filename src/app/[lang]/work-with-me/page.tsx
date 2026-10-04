@@ -4,6 +4,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { ContactForm } from "@/components/ContactForm";
 import { importLocale } from "@/locales";
+import { Link } from "@/locales/navigation";
 
 interface WorkWithMeProps {
   params: Promise<{
@@ -89,7 +90,23 @@ export default async function WorkWithMe({ params }: WorkWithMeProps) {
           </h2>
           <ul className="text-fg-muted flex flex-col gap-3 text-sm leading-relaxed">
             {contributionKeys.map((key) => (
-              <li key={key}>{t(key)}</li>
+              <li key={key}>
+                {t(key)}
+                {key === "contributions.ai" && (
+                  <p className="text-fg-muted mt-1">
+                    {t.rich("contributions.aiEvidence", {
+                      link: (chunks) => (
+                        <Link
+                          href="/skills"
+                          className="text-fg border-border hover:border-accent hover:text-accent focus-visible:ring-accent rounded-sm border-b pb-0.5 transition-colors focus-visible:ring-2 focus-visible:outline-none"
+                        >
+                          {chunks}
+                        </Link>
+                      ),
+                    })}
+                  </p>
+                )}
+              </li>
             ))}
           </ul>
           <p className="text-fg-subtle mt-6 text-sm leading-relaxed">

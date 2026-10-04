@@ -21,6 +21,11 @@ module.exports = {
         "http://localhost:3000/en/blog/hello-world",
         "http://localhost:3000/en/projects",
         "http://localhost:3000/pt/projects",
+        // Skills catalog, served from the `one` fixture (SKILLS_FIXTURE in ci.yml).
+        "http://localhost:3000/en/skills",
+        "http://localhost:3000/pt/skills",
+        "http://localhost:3000/en/skills/mac-cleanup",
+        "http://localhost:3000/pt/skills/mac-cleanup",
       ],
       startServerCommand: "pnpm run start",
       numberOfRuns: 3,

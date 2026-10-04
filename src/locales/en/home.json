@@ -10,6 +10,10 @@
     "recommendations": "Recommendations",
     "contact": "Contact"
   },
+  "skillsShortcut": {
+    "label": "Agent skills",
+    "hint": "Open source, one command to install"
+  },
   "workbench": {
     "label": "In practice",
     "title": "What I build.",
@@ -69,7 +73,9 @@
   "stack": {
     "label": "Tech Stack",
     "studyingLabel": "Studying",
-    "studyingDescription": "Subjects I am actively learning, not a delivery stack."
+    "studyingDescription": "Subjects I am actively learning, not a delivery stack.",
+    "skillsNote": "I keep the agent skills I use open on GitHub.",
+    "skillsLink": "See the skills"
   },
   "writing": {
     "label": "Writing"

@@ -25,7 +25,8 @@
     "blog": "Blog",
     "project": "Projetos",
     "playground": "Playground",
-    "defaultSearch": "Pesquisar"
+    "defaultSearch": "Pesquisar",
+    "skills": "Skills para agentes"
   },
   "goTo": "Ir Para",
   "general": "Geral",
@@ -35,5 +36,9 @@
     "linkedin": "https://www.linkedin.com/in/juliano-sirtori/",
     "discord": "https://discordapp.com/users/juliano_sirtori",
     "twitter": "https://twitter.com/julianosirtori"
+  },
+  "footer": {
+    "label": "Mais",
+    "skills": "Skills"
   }
 }

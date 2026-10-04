@@ -38,10 +38,7 @@ export const Footer = () => {
         <p className="text-fg-muted">
           © {new Date().getFullYear()} juliano sirtori
         </p>
-        <nav
-          aria-label={lang === "pt" ? "Comunidade" : "Community"}
-          className="flex gap-5"
-        >
+        <nav aria-label={t("footer.label")} className="flex gap-5">
           <Link
             className="hover:text-accent inline-flex min-h-11 items-center"
             href={`/${lang}/newsletter`}
@@ -53,6 +50,12 @@ export const Footer = () => {
             href={`/${lang}/guestbook`}
           >
             {copy.guestbook}
+          </Link>
+          <Link
+            className="hover:text-accent inline-flex min-h-11 items-center"
+            href={`/${lang}/skills`}
+          >
+            {t("footer.skills")}
           </Link>
         </nav>
         <ul className="flex flex-row items-center gap-1">

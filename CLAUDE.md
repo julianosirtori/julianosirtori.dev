@@ -62,10 +62,12 @@ The `prebuild` and `pretest` hooks run `contentlayer2 build` so a fresh checkout
 │   │   │   ├── now/
 │   │   │   ├── playground/          # Interactive terminal
 │   │   │   ├── projects/
+│   │   │   ├── skills/              # Agent skills catalog (list, [slug] detail, OG cards)
 │   │   │   ├── layout.tsx           # Wraps in ThemeProvider, CommandBar, KonamiEgg, ConsoleGreeting
 │   │   │   ├── opengraph-image.tsx  # OG image generator (editorial style)
 │   │   │   └── blog/[slug]/opengraph-image.tsx
 │   │   ├── api/email/               # Email API (server-validated)
+│   │   ├── api/webhooks/skills/     # GitHub push webhook, refreshes the skills catalog
 │   │   ├── fonts/                   # geist re-exports
 │   │   ├── globals.css              # Tailwind v4 @theme + semantic tokens + light/dark
 │   │   ├── layout.tsx               # Root layout
@@ -75,9 +77,11 @@ The `prebuild` and `pretest` hooks run `contentlayer2 build` so a fresh checkout
 │   │   ├── BackToTop/
 │   │   ├── BlogSearch/
 │   │   ├── CommandBar/              # cmdk + Radix Dialog + useCommandBar context
+│   │   ├── CommandSnippet/          # Command bar + copy button + exact <pre> (skills install)
 │   │   ├── Comments/                # Giscus
 │   │   ├── ConsoleGreeting/         # ASCII greeting + playground hint on mount
 │   │   ├── ContactForm/
+│   │   ├── CopyButton/              # Generic copy button, translated labels via props
 │   │   ├── FeaturedProjects/
 │   │   ├── Footer/
 │   │   ├── Guestbook/               # uses safe storage util
@@ -90,6 +94,13 @@ The `prebuild` and `pretest` hooks run `contentlayer2 build` so a fresh checkout
 │   │   ├── Reactions/               # uses safe storage util
 │   │   ├── ReadingProgress/
 │   │   ├── RelatedPosts/            # by shared tags/categories
+│   │   ├── SkillCard/               # One row of the skills list
+│   │   ├── SkillFiles/              # Skill folder files grouped by directory
+│   │   ├── SkillInstall/            # Install tabs, plugin, manual install, prompt
+│   │   ├── SkillMarkdown/           # Sanitized SKILL.md tree rendered in .prose
+│   │   ├── SkillSourceLink/         # GitHub link that reports skill_source_click
+│   │   ├── SkillsCatalog/           # List + text/category filters from 8 skills on
+│   │   ├── SkillsState/             # Empty and error states
 │   │   ├── TableOfContents/         # sticky sidebar + mobile drawer + IntersectionObserver
 │   │   ├── TechStack/
 │   │   ├── TemplateEmail/
@@ -97,9 +108,12 @@ The `prebuild` and `pretest` hooks run `contentlayer2 build` so a fresh checkout
 │   │   ├── ThemeProvider/           # next-themes wrapper
 │   │   ├── ThemeToggle/             # 3-state cycle (system/light/dark)
 │   │   └── Toast/
-│   ├── data/                        # Static data (projects, experiences, featured-projects)
+│   ├── data/                        # Static data (projects, experiences, skill-agents)
+│   ├── lib/
+│   │   ├── analytics.ts             # Closed list of events and params
+│   │   └── skills/                  # Skills catalog: GitHub source, validation, cache, markdown, fixtures
 │   ├── locales/                     # i18n translations
-│   │   ├── en/                      # global, home, blog, about, contacts, projects, guestbook, now, playground
+│   │   ├── en/                      # global, home, blog, about, projects, work-with-me, playground, skills
 │   │   └── pt/                      # same set
 │   ├── utils/
 │   │   └── storage.ts               # Safe namespaced localStorage wrapper
@@ -129,7 +143,8 @@ The `prebuild` and `pretest` hooks run `contentlayer2 build` so a fresh checkout
 │   ├── i18n.spec.ts
 │   ├── navigation.spec.ts
 │   ├── projects.spec.ts
-│   └── seo.spec.ts
+│   ├── seo.spec.ts
+│   └── skills.spec.ts               # Runs in skills fixture mode
 ├── docs/
 │   ├── prd/                         # Product requirement docs (rebrand, blog, playground)
 │   └── voice-guide.md               # Writing voice rules (bilingual)
@@ -265,6 +280,17 @@ Articles already include the banner image as the first MDX node (`![alt](url)`).
 
 The `posts`, `contact`, and `hire-me` commands navigate the router. `posts` and `contact` are opt-in via `--open`; `hire-me` is hidden and intentionally side-effecting.
 
+## Skills catalog
+
+`/[lang]/skills` lists the agent skills in the public repo `julianosirtori/skills`; `/[lang]/skills/[slug]` shows one skill with install commands and its rendered SKILL.md. Nothing is edited in this repo to publish a skill.
+
+- **Data** (`src/lib/skills/`): server-only. Two REST calls (head SHA of `main` and the recursive tree), then files from `raw.githubusercontent.com` pinned to that SHA. Update dates cost one call per skill and only run with `SKILLS_GITHUB_TOKEN`. Validation mirrors `scripts/validate.py` of the skills repo; invalid skills are skipped with a `console.warn`.
+- **Cache**: `unstable_cache` with a 60 minute window and the `skills-catalog` tag (the project does not use `cacheComponents`). Failed reads throw and are never cached; stale entries keep being served while they refresh. The catalog is only read at request time (`connection()`), so builds never call GitHub.
+- **Webhook**: `POST /api/webhooks/skills` checks `X-Hub-Signature-256` against `SKILLS_WEBHOOK_SECRET` and calls `revalidateTag("skills-catalog", "max")` on a push to `main`.
+- **Markdown**: GFM, never MDX. Raw HTML goes through `rehype-sanitize` (GitHub schema) before anything else; code blocks use the blog's `rehype-pretty-code` setup and render with `CodeBlock`.
+- **Commands** are generated in `src/lib/skills/commands.ts`; agent ids and folders live in `src/data/skill-agents.ts`.
+- **Fixture mode**: `SKILLS_FIXTURE=<empty|one|many|thirty|invalid|down>` feeds the catalog from `src/lib/skills/fixtures/` instead of GitHub. In that mode a `skills-fixture` cookie switches the dataset per request. Ignored on Vercel. Playwright starts its server with `SKILLS_FIXTURE=one`.
+
 ## API Routes
 
 ### Email — `POST /api/email`
@@ -279,6 +305,9 @@ Validates `name`, `email` (regex + length cap), and `message` server-side. Retur
 ```env
 NEXT_PUBLIC_LOCAL_DOMAIN=https://julianosirtori.dev   # sitemap/robots
 RESEND_API_KEY=re_xxxxxxxxx                            # Resend email API
+SKILLS_GITHUB_TOKEN=                                   # optional, read-only token; enables skill update dates and a higher rate limit
+SKILLS_WEBHOOK_SECRET=                                 # secret of the GitHub push webhook on julianosirtori/skills
+SKILLS_FIXTURE=                                        # tests only: empty|one|many|thirty|invalid|down; ignored on Vercel
 ```
 
 ## Git Workflow

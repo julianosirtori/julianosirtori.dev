@@ -1,0 +1,163 @@
+{
+  "meta": {
+    "listTitle": "Skills para agentes",
+    "listDescription": "Skills de código aberto do Juliano Sirtori para Claude Code, OpenCode, Codex e outros agentes. Copie o comando e instale.",
+    "detailTitle": "{name} · Agent skill",
+    "ogListMeta": "Código aberto, para Claude Code, OpenCode e Codex",
+    "ogDetailMeta": "Skill para agentes",
+    "ogAlt": "Skills para agentes do Juliano Sirtori"
+  },
+  "list": {
+    "kicker": "Código aberto · MIT",
+    "title": "Skills para agentes",
+    "lede": "Escrevi estas skills para o meu dia a dia com agentes de código. Cada uma é uma pasta com um SKILL.md, então funciona no Claude Code, no OpenCode, no Codex e em qualquer agente que leia esse formato. Escolhe uma e copia o comando de instalação.",
+    "count": "{count, plural, one {# skill} other {# skills}}",
+    "repoLink": "Ver o repositório",
+    "footnote": "Cada skill daqui vem direto do repositório. Quando publico uma nova, ela aparece nesta página."
+  },
+  "card": {
+    "updated": "Atualizada em {date}",
+    "scripts": "{count, plural, one {# script} other {# scripts}}",
+    "references": "{count, plural, one {# referência} other {# referências}}"
+  },
+  "filter": {
+    "region": "Filtrar skills",
+    "label": "Filtrar por nome ou palavra-chave",
+    "clear": "Limpar filtro",
+    "categories": "Categorias",
+    "all": "Todas",
+    "showing": "Mostrando {visible} de {total}",
+    "noResults": "Nenhuma skill bate com \"{query}\".",
+    "clearFilters": "Limpar filtros"
+  },
+  "state": {
+    "empty": "Ainda não tem skill publicada por aqui. O repositório é público, dá pra acompanhar pelo GitHub.",
+    "error": "O GitHub não respondeu agora. As skills continuam no repositório.",
+    "detailError": "O GitHub não respondeu agora. Os arquivos da skill continuam no repositório.",
+    "openRepo": "Abrir o repositório",
+    "openFolder": "Abrir a pasta no GitHub",
+    "retry": "Tentar de novo",
+    "loading": "Carregando as skills"
+  },
+  "notFound": {
+    "title": "Essa skill não está no catálogo.",
+    "description": "Pode ter mudado de nome ou saído do repositório.",
+    "link": "Ver todas as skills"
+  },
+  "detail": {
+    "back": "Todas as skills",
+    "viewOnGitHub": "Ver no GitHub",
+    "newTab": "abre em uma nova aba",
+    "languageNote": "A skill é escrita em inglês, igual no repositório.",
+    "onThisPage": "Nesta página",
+    "facts": {
+      "label": "Dados da skill",
+      "version": "Versão",
+      "license": "Licença",
+      "updated": "Atualizada em",
+      "requirements": "Requisitos"
+    },
+    "triggers": {
+      "title": "Quando o agente usa",
+      "hint": "É esse texto que o agente lê para decidir quando carregar a skill."
+    },
+    "details": {
+      "title": "Detalhes",
+      "requirements": "Requisitos",
+      "tools": "Ferramentas pré-aprovadas",
+      "toolsHint": "O agente pode usar essas ferramentas sem te pedir permissão a cada vez.",
+      "keywords": "Palavras-chave",
+      "source": "Origem",
+      "sourceValue": "{repo} no commit {sha}",
+      "files": "Arquivos",
+      "filesCount": "{count, plural, one {# arquivo} other {# arquivos}}",
+      "showAllFiles": "Mostrar os {count} arquivos"
+    },
+    "scripts": {
+      "notice": "{count, plural, one {Esta skill traz um script que roda na sua máquina. Dá uma lida nele antes de instalar.} other {Esta skill traz # scripts que rodam na sua máquina. Dá uma lida neles antes de instalar.}}",
+      "link": "{count, plural, one {Ver o script} other {Ver os scripts}}"
+    },
+    "instructions": {
+      "title": "Instruções para o agente"
+    },
+    "report": "Achou algo errado na skill? <link>Abre uma issue</link>."
+  },
+  "install": {
+    "title": "Instalar",
+    "tabsLabel": "Escolha o seu agente",
+    "tabs": {
+      "any": "Qualquer agente",
+      "claudeCode": "Claude Code",
+      "opencode": "OpenCode",
+      "codex": "Codex",
+      "other": "Outros agentes"
+    },
+    "context": {
+      "terminal": "terminal",
+      "insideClaudeCode": "dentro do Claude Code",
+      "prompt": "prompt"
+    },
+    "hints": {
+      "any": "O CLI skills encontra os agentes da sua máquina e coloca a skill na pasta de cada um. O <code>-g</code> instala para o seu usuário, em todos os projetos.",
+      "agent": "O <code>-a {agentId}</code> instala só no {agent}. O <code>-g</code> deixa a skill disponível em todos os projetos.",
+      "claudeCode": "Chame com <code>/{name}</code>, ou só descreva o problema que o Claude encontra a skill.",
+      "restart": "Se a skill não aparecer, reinicia o agente.",
+      "other": "O mesmo CLI, apontado para um agente só."
+    },
+    "plugin": {
+      "title": "Ou como plugin do Claude Code",
+      "hint": "Esses comandos rodam dentro do Claude Code, um de cada vez. Skill de plugin ganha prefixo: chame com <code>/{plugin}:{name}</code>, ou só descreva o problema que o Claude encontra a skill.",
+      "step1": "1 · adicionar o marketplace",
+      "step2": "2 · instalar o plugin"
+    },
+    "copyLink": "Copiar link do GitHub",
+    "linkCopied": "Link copiado",
+    "otherWays": "Outras formas de instalar",
+    "prompt": {
+      "title": "Pedir pro seu agente",
+      "hint": "Cola isso no Claude Code, no OpenCode, no Codex ou em outro agente com acesso ao terminal.",
+      "text": "Instala pra mim a skill que está em {url}, no nível do usuário. Se tiver Node.js, roda `{command}`. Se não tiver, copia essa pasta para o diretório de skills do usuário que você lê. No fim, me diz onde ela ficou e como chamar."
+    },
+    "manual": {
+      "title": "Instalar na mão",
+      "text": "Clona o repositório e cria um link da pasta da skill no diretório de skills do seu agente.",
+      "agentLabel": "Agente",
+      "step1": "1 · clonar",
+      "step2": "2 · criar o link",
+      "tableCaption": "Pasta de skills por agente",
+      "colAgent": "Agente",
+      "colUser": "Para o seu usuário",
+      "colProject": "Para um projeto",
+      "projectHint": "A pasta de projeto fica na raiz do projeto e só vale nele."
+    },
+    "try": {
+      "title": "Testar sem instalar",
+      "hint": "Passa a skill para uma sessão do Claude Code. Nada vai para a sua pasta de skills."
+    },
+    "update": {
+      "title": "Atualizar ou remover",
+      "updateLabel": "atualizar",
+      "removeLabel": "remover"
+    }
+  },
+  "copy": {
+    "copy": "Copiar",
+    "copied": "Copiado",
+    "failed": "A cópia automática falhou. O texto ficou selecionado para você copiar.",
+    "context": {
+      "command": "comando de instalação ({agent})",
+      "anyAgent": "qualquer agente",
+      "pluginStep": "passo {step} do plugin",
+      "manualStep": "passo {step} da instalação na mão",
+      "prompt": "prompt para o agente",
+      "try": "comando para testar",
+      "update": "comando para atualizar",
+      "remove": "comando para remover"
+    },
+    "announce": {
+      "command": "Comando copiado",
+      "link": "Link copiado",
+      "prompt": "Prompt copiado"
+    }
+  }
+}
