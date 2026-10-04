@@ -39,6 +39,14 @@ describe("resolveSkillUrl", () => {
     );
   });
 
+  it("keeps the query and the fragment of relative links", () => {
+    expect(
+      resolveSkillUrl("references/locations.md?plain=1#L3", "link", context),
+    ).toBe(
+      `https://github.com/julianosirtori/skills/blob/${SHA}/skills/mac-cleanup/references/locations.md?plain=1#L3`,
+    );
+  });
+
   it("uses tree URLs for folders", () => {
     expect(resolveSkillUrl("scripts/", "link", context)).toBe(
       `https://github.com/julianosirtori/skills/tree/${SHA}/skills/mac-cleanup/scripts`,

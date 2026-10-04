@@ -108,7 +108,8 @@ export function resolveSkillUrl(
     isDir || knownDir || clean === `${SKILLS_DIR}/${context.slug}`
       ? repoTreeUrl(context.sha, clean)
       : repoBlobUrl(context.sha, clean);
-  return suffix.startsWith("#") ? `${target}${suffix}` : target;
+  // Keep the query and the fragment (`?plain=1#L3` selects lines on GitHub).
+  return `${target}${suffix}`;
 }
 
 function headingRank(node: Element): number | null {
