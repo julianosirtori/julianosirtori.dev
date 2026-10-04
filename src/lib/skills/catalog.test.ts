@@ -94,6 +94,43 @@ describe("fixture mode", () => {
     expect(String(fetchMock.mock.calls[0][0])).toContain("api.github.com");
   });
 
+  it.each(["empty", "one", "many", "thirty", "invalid", "down"])(
+    "reads GitHub on Vercel even with SKILLS_FIXTURE and the %s cookie",
+    async (cookie) => {
+      vi.stubEnv("SKILLS_FIXTURE", "one");
+      vi.stubEnv("VERCEL", "1");
+      vi.stubEnv("VERCEL_ENV", "preview");
+      cookieStore.value = cookie;
+      const sha = "b".repeat(40);
+      fetchMock.mockImplementation(async (input: string) => {
+        const url = String(input);
+        if (url.endsWith("/commits/main")) return new Response(sha);
+        if (url.includes("/git/trees/")) {
+          return Response.json({
+            tree: [
+              { path: "skills/from-github/SKILL.md", type: "blob", size: 70 },
+            ],
+          });
+        }
+        if (url.endsWith("/skills/from-github/SKILL.md")) {
+          return new Response(
+            "---\nname: from-github\ndescription: Served by GitHub.\n---\nBody\n",
+          );
+        }
+        return new Response("missing", { status: 404 });
+      });
+
+      expect(fixtureModeDefault()).toBeNull();
+      const result = await getCatalogResult();
+      expect(result.status).toBe("ok");
+      expect(
+        result.status === "ok" &&
+          result.catalog.skills.map((skill) => skill.slug),
+      ).toEqual(["from-github"]);
+      expect(result.status === "ok" && result.catalog.sha).toBe(sha);
+    },
+  );
+
   it("ignores unknown fixture names", () => {
     vi.stubEnv("SKILLS_FIXTURE", "everything");
     vi.stubEnv("VERCEL", "");
