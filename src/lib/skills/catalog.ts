@@ -6,7 +6,7 @@ import { unstable_cache } from "next/cache";
 import { unstable_rethrow } from "next/navigation";
 import { cache } from "react";
 
-import { buildCatalog } from "./build";
+import { CATALOG_FORMAT_VERSION, buildCatalog } from "./build";
 import {
   fixtureSource,
   isSkillsFixtureName,
@@ -71,7 +71,7 @@ async function activeFixture(
  */
 const readGithubCatalog = unstable_cache(
   async (): Promise<Catalog> => buildCatalog(githubSource()),
-  ["skills-catalog", "v1"],
+  ["skills-catalog", CATALOG_FORMAT_VERSION],
   { revalidate: SKILLS_REVALIDATE_SECONDS, tags: [SKILLS_CACHE_TAG] },
 );
 

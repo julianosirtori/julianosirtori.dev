@@ -28,6 +28,12 @@ import { SKILLS_DIR, repoBlobUrl, repoRawUrl, repoTreeUrl } from "./constants";
  */
 export const CONTENT_ID_PREFIX = "user-content-";
 
+/**
+ * Part of the render cache key. Bump it whenever the pipeline's output
+ * changes; the Data Cache outlives deploys and would keep the old render.
+ */
+export const SKILL_MARKDOWN_VERSION = "v2";
+
 const FOOTNOTE_LABEL_ID = `${CONTENT_ID_PREFIX}footnote-label`;
 
 export interface SkillHeading {

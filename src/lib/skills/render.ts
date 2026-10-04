@@ -2,12 +2,16 @@ import "server-only";
 
 import { unstable_cache } from "next/cache";
 
-import { renderSkillMarkdown, type RenderedSkillMarkdown } from "./markdown";
+import {
+  SKILL_MARKDOWN_VERSION,
+  renderSkillMarkdown,
+  type RenderedSkillMarkdown,
+} from "./markdown";
 import type { Skill } from "./types";
 
 /**
- * The rendered tree is keyed by commit, slug and body, so a cached entry can
- * never be out of date. Caching it skips shiki on every detail request.
+ * The rendered tree is keyed by pipeline version, commit, slug and body, so a
+ * cached entry is never out of date. Caching it skips shiki on every request.
  */
 const renderCached = unstable_cache(
   async (
@@ -17,7 +21,7 @@ const renderCached = unstable_cache(
     files: string[],
   ): Promise<RenderedSkillMarkdown> =>
     renderSkillMarkdown(body, { slug, sha, files }),
-  ["skill-markdown", "v1"],
+  ["skill-markdown", SKILL_MARKDOWN_VERSION],
   { revalidate: 60 * 60 * 24 * 30 },
 );
 

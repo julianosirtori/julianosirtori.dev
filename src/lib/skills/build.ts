@@ -12,6 +12,12 @@ import {
 import { SkillsSourceError, type SkillsSource } from "./source";
 import type { Catalog, Skill, SkillFile, SkillPlugin } from "./types";
 
+/**
+ * Part of the catalog cache key. Bump it whenever buildCatalog's output
+ * changes (shape, parsing or validation); the Data Cache outlives deploys.
+ */
+export const CATALOG_FORMAT_VERSION = "v2";
+
 const MARKETPLACE_PATH = ".claude-plugin/marketplace.json";
 /** validate.py caps SKILL.md at 500 lines; anything this large is not a skill. */
 const MAX_SKILL_MD_BYTES = 256 * 1024;
