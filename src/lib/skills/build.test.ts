@@ -1,6 +1,11 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { buildCatalog, countFilesIn, sortSkills } from "./build";
+import {
+  buildCatalog,
+  countFilesIn,
+  installablePlugin,
+  sortSkills,
+} from "./build";
 import { FIXTURE_SHA, fixtureSource, memorySource } from "./fixtures";
 import {
   normalizeRepoPath,
@@ -133,6 +138,45 @@ describe("buildCatalog failure handling", () => {
     const source = memorySource({ files });
     expect(source.lastCommitDate).toBeUndefined();
     expect((await buildCatalog(source)).skills[0].updatedAt).toBeUndefined();
+  });
+});
+
+describe("installablePlugin", () => {
+  it("keeps kebab-case plugin and marketplace names", () => {
+    expect(
+      installablePlugin({ name: "mac-cleanup" }, "julianosirtori-skills", "x"),
+    ).toEqual({ name: "mac-cleanup", marketplace: "julianosirtori-skills" });
+  });
+
+  it.each([
+    ["a plugin with a space", "mac cleanup", "market"],
+    ["a plugin with a shell separator", "mac-cleanup; rm -rf ~", "market"],
+    ["a marketplace with a newline", "mac-cleanup", "market\n/plugin x"],
+    ["uppercase names", "Mac-Cleanup", "market"],
+    ["a scoped marketplace", "mac-cleanup", "@owner/market"],
+  ])("hides the plugin install for %s", (_, plugin, marketplace) => {
+    vi.spyOn(console, "warn").mockImplementation(() => {});
+    expect(
+      installablePlugin({ name: plugin }, marketplace, "x"),
+    ).toBeUndefined();
+    expect(console.warn).toHaveBeenCalledOnce();
+  });
+
+  it("leaves the plugin out of the catalog when the marketplace name is invalid", async () => {
+    vi.spyOn(console, "warn").mockImplementation(() => {});
+    const source = memorySource({
+      files: {
+        "skills/demo/SKILL.md":
+          "---\nname: demo\ndescription: Demo.\n---\nBody\n",
+        ".claude-plugin/marketplace.json": JSON.stringify({
+          name: "bad market; echo pwned",
+          plugins: [{ name: "demo", source: "./", skills: ["./skills/demo"] }],
+        }),
+      },
+    });
+    const [skill] = (await buildCatalog(source)).skills;
+    expect(skill.slug).toBe("demo");
+    expect(skill.plugin).toBeUndefined();
   });
 });
 

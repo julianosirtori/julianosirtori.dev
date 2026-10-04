@@ -1,4 +1,4 @@
-import { SKILLS_DIR } from "./constants";
+import { SKILLS_DIR, isValidSkillSlug } from "./constants";
 import {
   shortCompatibility,
   summaryFromDescription,
@@ -10,7 +10,7 @@ import {
   type Marketplace,
 } from "./marketplace";
 import { SkillsSourceError, type SkillsSource } from "./source";
-import type { Catalog, Skill, SkillFile } from "./types";
+import type { Catalog, Skill, SkillFile, SkillPlugin } from "./types";
 
 const MARKETPLACE_PATH = ".claude-plugin/marketplace.json";
 /** validate.py caps SKILL.md at 500 lines; anything this large is not a skill. */
@@ -34,6 +34,26 @@ async function mapLimit<T, R>(
     Array.from({ length: Math.min(limit, items.length) }, worker),
   );
   return results;
+}
+
+/**
+ * The plugin option is shown only when both names are kebab-case, the format
+ * Claude Code requires. Anything else would put a broken or misleading
+ * `/plugin install <plugin>@<marketplace>` on the page.
+ */
+export function installablePlugin(
+  plugin: { name: string } | undefined,
+  marketplaceName: string | undefined,
+  where: string,
+): SkillPlugin | undefined {
+  if (!plugin || !marketplaceName) return undefined;
+  if (!isValidSkillSlug(plugin.name) || !isValidSkillSlug(marketplaceName)) {
+    console.warn(
+      `[skills] ${where}: plugin "${plugin.name}" or marketplace "${marketplaceName}" is not kebab-case; hiding the plugin install`,
+    );
+    return undefined;
+  }
+  return { name: plugin.name, marketplace: marketplaceName };
 }
 
 /** Most recently updated first; skills without a date go after, alphabetically. */
@@ -126,10 +146,7 @@ export async function buildCatalog(source: SkillsSource): Promise<Catalog> {
         allowedTools: frontmatter.allowedTools,
         category: plugin?.category,
         keywords: plugin?.keywords ?? [],
-        plugin:
-          plugin && marketplace?.name
-            ? { name: plugin.name, marketplace: marketplace.name }
-            : undefined,
+        plugin: installablePlugin(plugin, marketplace?.name, where),
         files: [...bucket.files].sort((a, b) => a.path.localeCompare(b.path)),
         body: result.body,
       };
