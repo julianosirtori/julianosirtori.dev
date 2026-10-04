@@ -535,3 +535,240 @@ test.describe("Skills entry points", () => {
     ).toHaveAttribute("href", "/pt/skills");
   });
 });
+
+test.describe("Skills catalog QA round 1", () => {
+  test("AC-2/AC-3: a skill that answered 404 opens once the index has it, without a deploy", async ({
+    page,
+    context,
+  }) => {
+    const missing = await page.goto("/en/skills/git-tidy");
+    expect(missing?.status()).toBe(404);
+
+    await useFixture(context, "many");
+    const found = await page.goto("/en/skills/git-tidy");
+    expect(found?.status()).toBe(200);
+    await expect(
+      page.getByRole("heading", { level: 1, name: "git-tidy" }),
+    ).toBeVisible();
+
+    await page.goto("/en/skills");
+    await expect(page.getByRole("link", { name: "git-tidy" })).toBeVisible();
+  });
+
+  test("AC-4: a skill removed from the index disappears from the list and answers 404", async ({
+    page,
+    context,
+  }) => {
+    await useFixture(context, "many");
+    expect((await page.goto("/en/skills/inbox-triage"))?.status()).toBe(200);
+
+    await useFixture(context, "one");
+    expect((await page.goto("/en/skills/inbox-triage"))?.status()).toBe(404);
+    await page.goto("/en/skills");
+    await expect(page.getByRole("link", { name: "inbox-triage" })).toHaveCount(
+      0,
+    );
+  });
+
+  test("AC-5/AC-6: invalid and hidden skills stay out of the list and answer 404", async ({
+    page,
+    context,
+  }) => {
+    await useFixture(context, "invalid");
+    await page.goto("/en/skills");
+    const list = page.locator("#skills-results");
+    for (const name of [
+      "name-mismatch",
+      "other-name",
+      "no-description",
+      "no-frontmatter",
+      "broken-yaml",
+      "Bad_Name",
+      ".hidden",
+      "no-skill-md",
+    ]) {
+      await expect(list).not.toContainText(name);
+    }
+    for (const slug of [
+      "name-mismatch",
+      "other-name",
+      "no-description",
+      "no-frontmatter",
+      "broken-yaml",
+      "no-skill-md",
+    ]) {
+      expect((await page.goto(`/en/skills/${slug}`))?.status()).toBe(404);
+    }
+  });
+
+  test("AC-7/AC-36: a skill outside the marketplace has npx and manual, no plugin and no scripts notice", async ({
+    page,
+    context,
+  }) => {
+    await useFixture(context, "invalid");
+    await page.goto("/en/skills/valid-skill");
+
+    await page.getByRole("tab", { name: "Claude Code" }).click();
+    await expect(
+      page.getByRole("button", {
+        name: "Copy install command for Claude Code",
+      }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "Or as a Claude Code plugin" }),
+    ).toHaveCount(0);
+    await expect(page.getByRole("button", { name: /plugin step/ })).toHaveCount(
+      0,
+    );
+
+    await page.getByText("Install by hand").click();
+    await expect(
+      page.locator("details", { hasText: "Install by hand" }),
+    ).toContainText(
+      "ln -s ~/Developer/skills/skills/valid-skill ~/.claude/skills/valid-skill",
+    );
+    await expect(page.getByText(/ships .*scripts? that run/)).toHaveCount(0);
+    await expect(
+      page.getByRole("link", { name: /See the scripts?/ }),
+    ).toHaveCount(0);
+  });
+
+  test("AC-18: one skill in Portuguese has no filter and counts 1 skill", async ({
+    page,
+  }) => {
+    await page.goto("/pt/skills");
+    await expect(page.getByText("1 skill", { exact: true })).toBeVisible();
+    await expect(page.getByRole("searchbox")).toHaveCount(0);
+    await expect(page.getByRole("group", { name: "Categorias" })).toHaveCount(
+      0,
+    );
+  });
+
+  test("AC-19: the filter matches keywords, ignoring accents and case", async ({
+    page,
+    context,
+  }) => {
+    await useFixture(context, "many");
+    await page.goto("/en/skills");
+    const results = page.locator("#skills-results li");
+    const filter = page.getByRole("searchbox", {
+      name: "Filter by name or keyword",
+    });
+
+    await filter.fill("WCAG");
+    await expect(results).toHaveCount(1);
+    await expect(results.first()).toContainText("a11y-audit");
+
+    await filter.fill("releasé");
+    await expect(results).toHaveCount(2);
+  });
+
+  test("AC-20: category filters work from the keyboard", async ({
+    page,
+    context,
+  }) => {
+    await useFixture(context, "many");
+    await page.goto("/en/skills");
+    const results = page.locator("#skills-results li");
+    const frontend = page
+      .getByRole("group", { name: "Categories" })
+      .getByRole("button", { name: /frontend/ });
+
+    await page.getByRole("searchbox").focus();
+    for (let i = 0; i < 6; i += 1) {
+      await page.keyboard.press("Tab");
+      if (await frontend.evaluate((el) => el === document.activeElement)) break;
+    }
+    await expect(frontend).toBeFocused();
+    await page.keyboard.press("Enter");
+    await expect(frontend).toHaveAttribute("aria-pressed", "true");
+    await expect(results).toHaveCount(4);
+
+    const all = page
+      .getByRole("group", { name: "Categories" })
+      .getByRole("button", { name: /^All/ });
+    await all.focus();
+    await page.keyboard.press("Space");
+    await expect(all).toHaveAttribute("aria-pressed", "true");
+    await expect(results).toHaveCount(12);
+  });
+
+  test("AC-22: the most recently updated skill comes first", async ({
+    page,
+    context,
+  }) => {
+    await useFixture(context, "many");
+    await page.goto("/en/skills");
+    const names = await page.locator("#skills-results li h2").allTextContents();
+    expect(names.slice(0, 4)).toEqual([
+      "mac-cleanup",
+      "git-tidy",
+      "inbox-triage",
+      "meeting-notes",
+    ]);
+  });
+
+  for (const term of ["skills", "agent", "codex"]) {
+    test(`AC-40: the command palette finds the catalog by "${term}"`, async ({
+      page,
+    }) => {
+      await page.goto("/pt");
+      await page.locator("body").press("ControlOrMeta+k");
+      const dialog = page.getByRole("dialog");
+      await expect(dialog).toBeVisible();
+      await page.keyboard.type(term);
+      await dialog.getByRole("option", { name: "Skills para agentes" }).click();
+      await expect(page).toHaveURL("/pt/skills");
+    });
+  }
+
+  for (const path of [
+    "/en/blog",
+    "/pt/projects",
+    "/en/skills/mac-cleanup",
+    "/pt/skills/does-not-exist",
+  ]) {
+    test(`AC-41: the footer links the catalog on ${path}`, async ({ page }) => {
+      await page.goto(path);
+      const lang = path.split("/")[1];
+      await expect(
+        page.getByRole("contentinfo").locator(`a[href="/${lang}/skills"]`),
+      ).toBeVisible();
+    });
+  }
+
+  test("AC-42: about (EN) and work with me (PT) link the catalog", async ({
+    page,
+  }) => {
+    await page.goto("/pt/work-with-me");
+    await expect(
+      page.getByRole("link", { name: "skills para agentes que escrevi e uso" }),
+    ).toHaveAttribute("href", "/pt/skills");
+
+    await page.goto("/en/about");
+    await page.getByText("What I'm learning now").click();
+    const link = page.getByRole("link", {
+      name: "agent skills I wrote and use",
+    });
+    await expect(link).toHaveAttribute("href", "/en/skills");
+  });
+
+  test("AC-52: the home shortcut is visible on a phone and keeps the language", async ({
+    browser,
+  }) => {
+    const context = await browser.newContext({
+      viewport: { width: 390, height: 844 },
+      isMobile: true,
+      hasTouch: true,
+    });
+    const page = await context.newPage();
+    await page.goto("/pt");
+    const shortcut = page
+      .locator("main aside")
+      .getByRole("link", { name: /^Skills para agentes/ });
+    await expect(shortcut).toBeVisible();
+    await shortcut.tap();
+    await expect(page).toHaveURL(/\/pt\/skills$/);
+    await context.close();
+  });
+});
