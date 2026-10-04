@@ -1,7 +1,16 @@
 "use client";
 
-import { useRef, useState, type KeyboardEvent, type ReactNode } from "react";
-import { ChevronDownIcon } from "@radix-ui/react-icons";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type KeyboardEvent,
+  type ReactNode,
+} from "react";
+import {
+  ChevronDownIcon,
+  ExclamationTriangleIcon,
+} from "@radix-ui/react-icons";
 import { useTranslations } from "next-intl";
 
 import { textButtonClass } from "@/components/Audience/copy";
@@ -66,6 +75,21 @@ export function SkillInstall({
   const [manualAgent, setManualAgent] = useState<SkillAgentId>("claude-code");
   const [announcement, setAnnouncement] = useState("");
   const tabRefs = useRef<Partial<Record<TabId, HTMLButtonElement | null>>>({});
+  const [linkFailed, setLinkFailed] = useState(false);
+  const linkRef = useRef<HTMLParagraphElement>(null);
+  const githubUrl = skillFolderUrl(slug);
+
+  // Same fallback as the command snippets: when the Clipboard API fails, the
+  // link appears as text, already selected, so it can be copied by hand.
+  useEffect(() => {
+    const node = linkRef.current;
+    const selection = window.getSelection();
+    if (!linkFailed || !node || !selection) return;
+    const range = document.createRange();
+    range.selectNodeContents(node);
+    selection.removeAllRanges();
+    selection.addRange(range);
+  }, [linkFailed]);
 
   const code = (chunks: ReactNode) => (
     <code className="bg-bg-muted text-fg rounded-[3px] px-1 font-mono text-[0.85em]">
@@ -241,14 +265,38 @@ export function SkillInstall({
           {t("install.title")}
         </h2>
         <CopyButton
-          text={skillFolderUrl(slug)}
+          text={githubUrl}
           label={t("install.copyLink")}
           copiedLabel={t("install.linkCopied")}
           icon="link"
           className={textButtonClass}
-          onCopied={() => copied("link", "link")}
+          onCopied={() => {
+            setLinkFailed(false);
+            copied("link", "link");
+          }}
+          onError={() => setLinkFailed(true)}
         />
       </div>
+      {linkFailed && (
+        <div className="mt-3">
+          <p
+            ref={linkRef}
+            className="bg-bg-muted border-border text-fg rounded-md border px-3 py-2 font-mono text-sm [overflow-wrap:anywhere]"
+          >
+            {githubUrl}
+          </p>
+          <p
+            role="alert"
+            className="text-fg-muted mt-2 flex items-start gap-2 text-sm"
+          >
+            <ExclamationTriangleIcon
+              aria-hidden="true"
+              className="mt-0.5 h-4 w-4 shrink-0"
+            />
+            {t("copy.failed")}
+          </p>
+        </div>
+      )}
 
       <div
         role="tablist"

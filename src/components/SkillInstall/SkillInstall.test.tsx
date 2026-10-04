@@ -117,3 +117,29 @@ describe("SkillInstall analytics", () => {
     ).toBeInTheDocument();
   });
 });
+
+describe("Copy GitHub link fallback", () => {
+  const URL = `https://github.com/julianosirtori/skills/tree/main/skills/${SLUG}`;
+
+  it("shows the link selected with an alert when the clipboard fails", async () => {
+    writeText.mockRejectedValueOnce(new Error("denied"));
+    renderInstall();
+    await copy("Copy GitHub link");
+
+    expect(screen.getByRole("alert")).toHaveTextContent(en.copy.failed);
+    expect(screen.getByText(URL)).toBeInTheDocument();
+    expect(window.getSelection()?.toString()).toBe(URL);
+    expect(track).not.toHaveBeenCalled();
+  });
+
+  it("hides the fallback after a later copy works", async () => {
+    writeText.mockRejectedValueOnce(new Error("denied"));
+    renderInstall();
+    await copy("Copy GitHub link");
+    expect(screen.getByRole("alert")).toBeInTheDocument();
+
+    await copy("Copy GitHub link");
+    expect(screen.queryByRole("alert")).toBeNull();
+    expect(lastEvent()?.[1]).toMatchObject({ action_id: "link" });
+  });
+});
