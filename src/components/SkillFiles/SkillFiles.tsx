@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 
 import { SkillSourceLink } from "@/components/SkillSourceLink";
 import { SKILLS_DIR, repoBlobUrl } from "@/lib/skills/constants";
+import { formatFileSize } from "@/lib/skills/format";
 import type { SkillFile } from "@/lib/skills/types";
 
 export interface SkillFilesProps {
@@ -55,13 +56,6 @@ export async function SkillFiles({
   locale,
 }: SkillFilesProps) {
   const t = await getTranslations("skills.detail");
-  const size = new Intl.NumberFormat(locale === "pt" ? "pt-BR" : "en-US", {
-    style: "unit",
-    unit: "kilobyte",
-    unitDisplay: "short",
-    minimumFractionDigits: 1,
-    maximumFractionDigits: 1,
-  });
 
   const fileLink = (file: SkillFile, name: string) => (
     <SkillSourceLink
@@ -72,7 +66,7 @@ export async function SkillFiles({
     >
       <span className="min-w-0 [overflow-wrap:anywhere]">{name}</span>
       <span className="text-fg-muted flex shrink-0 items-center gap-2 text-xs tabular-nums">
-        {size.format(file.size / 1000)}
+        {formatFileSize(file.size, locale)}
         <ArrowTopRightIcon aria-hidden="true" className="h-3 w-3" />
       </span>
     </SkillSourceLink>
