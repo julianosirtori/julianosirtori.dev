@@ -27,7 +27,8 @@
     "blog": "Blog",
     "project": "Projects",
     "playground": "Playground",
-    "defaultSearch": "Search"
+    "defaultSearch": "Search",
+    "skills": "Agent skills"
   },
   "email": "julianosirtori@gmail.com",
   "social": {
@@ -35,5 +36,9 @@
     "linkedin": "https://www.linkedin.com/in/juliano-sirtori/",
     "discord": "https://discordapp.com/users/juliano_sirtori",
     "twitter": "https://twitter.com/julianosirtori"
+  },
+  "footer": {
+    "label": "More",
+    "skills": "Skills"
   }
 }

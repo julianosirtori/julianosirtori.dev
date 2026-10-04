@@ -5,5 +5,6 @@ import global from "./global.json";
 import blog from "./blog.json";
 import projects from "./projects.json";
 import playground from "./playground.json";
+import skills from "./skills.json";
 
-export { home, about, workWithMe, global, blog, projects, playground };
+export { home, about, workWithMe, global, blog, projects, playground, skills };

@@ -30,6 +30,9 @@ export const eventNames = [
   "contact_form_error",
   "theme_change",
   "language_change",
+  "skill_install_copy",
+  "skill_source_click",
+  "skill_search",
 ] as const;
 export type AnalyticsEvent = (typeof eventNames)[number];
 type Params = {
@@ -42,7 +45,8 @@ type Params = {
     | "command"
     | "playground"
     | "contact"
-    | "content";
+    | "content"
+    | "skills";
   content_id?: string;
   action_id?: string;
   result?: "success" | "error" | "unknown";

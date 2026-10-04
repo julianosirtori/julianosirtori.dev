@@ -35,3 +35,21 @@ describe("analytics privacy boundary", () => {
     expect(window.gtag).not.toHaveBeenCalled();
   });
 });
+describe("skills catalog events", () => {
+  it("keeps install method ids and drops anything that is not an identifier", () => {
+    expect(
+      sanitizeParams({
+        location: "skills",
+        content_id: "mac-cleanup",
+        action_id: "npx-claude-code",
+      }),
+    ).toEqual({
+      location: "skills",
+      content_id: "mac-cleanup",
+      action_id: "npx-claude-code",
+    });
+    expect(
+      sanitizeParams({ location: "skills", action_id: "mac cleanup query" }),
+    ).toEqual({ location: "skills" });
+  });
+});

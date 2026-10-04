@@ -2,6 +2,7 @@ import { ReactionSummary } from "@/components/Reactions/Reactions";
 import { copyFor } from "@/components/Audience/copy";
 import { allPosts } from "contentlayer/generated";
 import Image from "next/image";
+import { ArrowRightIcon } from "@radix-ui/react-icons";
 import { getLocale, getTranslations, setRequestLocale } from "next-intl/server";
 
 import { HomeRail } from "@/components/HomeRail";
@@ -55,7 +56,18 @@ export default async function Home({ params }: HomeProps) {
             title={t("stack.label")}
             studyingLabel={t("stack.studyingLabel")}
             studyingDescription={t("stack.studyingDescription")}
-          />
+          >
+            <p className="text-fg-muted mt-4 text-sm leading-relaxed">
+              {t("stack.skillsNote")}{" "}
+              <Link
+                href="/skills"
+                className="text-fg hover:text-accent focus-visible:ring-accent inline-flex items-center gap-1 rounded-sm font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none"
+              >
+                {t("stack.skillsLink")}
+                <ArrowRightIcon aria-hidden="true" className="h-3.5 w-3.5" />
+              </Link>
+            </p>
+          </TechStack>
         </section>
 
         <section id="writing" className="scroll-mt-24">

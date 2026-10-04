@@ -78,6 +78,26 @@ test.describe("Home Page", () => {
     await expect(page).toHaveURL(/.*\/projects/);
   });
 
+  for (const { lang, label } of [
+    { lang: "en", label: "Agent skills" },
+    { lang: "pt", label: "Skills para agentes" },
+  ]) {
+    test(`should open the skills catalog from the ${lang} home rail`, async ({
+      page,
+    }) => {
+      await page.goto(`/${lang}`);
+      const shortcut = page
+        .locator("main aside")
+        .getByRole("link", { name: new RegExp(`^${label}`) });
+      await expect(shortcut).toBeVisible();
+      await shortcut.click();
+      await expect(page).toHaveURL(new RegExp(`/${lang}/skills$`));
+      await expect(
+        page.getByRole("heading", { level: 1, name: label }),
+      ).toBeVisible();
+    });
+  }
+
   test("should navigate to work-with-me", async ({ page }) => {
     await page.goto("/en");
 

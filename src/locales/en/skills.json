@@ -1,0 +1,163 @@
+{
+  "meta": {
+    "listTitle": "Agent skills",
+    "listDescription": "Open source agent skills by Juliano Sirtori for Claude Code, OpenCode, Codex and other agents. Copy the command and install.",
+    "detailTitle": "{name} · Agent skill",
+    "ogListMeta": "Open source, for Claude Code, OpenCode and Codex",
+    "ogDetailMeta": "Agent skill",
+    "ogAlt": "Agent skills by Juliano Sirtori"
+  },
+  "list": {
+    "kicker": "Open source · MIT",
+    "title": "Agent skills",
+    "lede": "Skills I wrote for my own work with coding agents. Each one is a folder with a SKILL.md, so it runs in Claude Code, OpenCode, Codex and any other agent that reads the format. Pick one and copy the install command.",
+    "count": "{count, plural, one {# skill} other {# skills}}",
+    "repoLink": "Browse the repository",
+    "footnote": "Every skill here comes straight from the repository. When I push a new one, it shows up on this page."
+  },
+  "card": {
+    "updated": "Updated {date}",
+    "scripts": "{count, plural, one {# script} other {# scripts}}",
+    "references": "{count, plural, one {# reference} other {# references}}"
+  },
+  "filter": {
+    "region": "Filter skills",
+    "label": "Filter by name or keyword",
+    "clear": "Clear filter",
+    "categories": "Categories",
+    "all": "All",
+    "showing": "Showing {visible} of {total}",
+    "noResults": "No skill matches \"{query}\".",
+    "clearFilters": "Clear filters"
+  },
+  "state": {
+    "empty": "No skills published yet. The repository is public, so you can follow it on GitHub.",
+    "error": "Couldn't reach GitHub right now. The skills are still in the repository.",
+    "detailError": "Couldn't reach GitHub right now. This skill's files are still in the repository.",
+    "openRepo": "Open the repository",
+    "openFolder": "Open the folder on GitHub",
+    "retry": "Try again",
+    "loading": "Loading the skills"
+  },
+  "notFound": {
+    "title": "This skill isn't in the catalog.",
+    "description": "It may have been renamed or removed from the repository.",
+    "link": "See all skills"
+  },
+  "detail": {
+    "back": "All skills",
+    "viewOnGitHub": "View on GitHub",
+    "newTab": "opens in a new tab",
+    "languageNote": "This skill is written in English, as in the repository.",
+    "onThisPage": "On this page",
+    "facts": {
+      "label": "Skill facts",
+      "version": "Version",
+      "license": "License",
+      "updated": "Updated",
+      "requirements": "Requirements"
+    },
+    "triggers": {
+      "title": "When the agent uses it",
+      "hint": "Your agent reads this description to decide when to load the skill."
+    },
+    "details": {
+      "title": "Details",
+      "requirements": "Requirements",
+      "tools": "Pre-approved tools",
+      "toolsHint": "Your agent can run these without asking you each time.",
+      "keywords": "Keywords",
+      "source": "Source",
+      "sourceValue": "{repo} at commit {sha}",
+      "files": "Files",
+      "filesCount": "{count, plural, one {# file} other {# files}}",
+      "showAllFiles": "Show all {count} files"
+    },
+    "scripts": {
+      "notice": "{count, plural, one {This skill ships a script that runs on your machine. Read it before installing.} other {This skill ships # scripts that run on your machine. Read them before installing.}}",
+      "link": "{count, plural, one {See the script} other {See the scripts}}"
+    },
+    "instructions": {
+      "title": "Instructions for the agent"
+    },
+    "report": "Something off with this skill? <link>Open an issue</link>."
+  },
+  "install": {
+    "title": "Install",
+    "tabsLabel": "Choose your agent",
+    "tabs": {
+      "any": "Any agent",
+      "claudeCode": "Claude Code",
+      "opencode": "OpenCode",
+      "codex": "Codex",
+      "other": "Other agents"
+    },
+    "context": {
+      "terminal": "terminal",
+      "insideClaudeCode": "inside Claude Code",
+      "prompt": "prompt"
+    },
+    "hints": {
+      "any": "The skills CLI finds the agents on your machine and links the skill into each one. <code>-g</code> installs it for your user, across all projects.",
+      "agent": "<code>-a {agentId}</code> installs it only for {agent}. <code>-g</code> makes it available in every project.",
+      "claudeCode": "Call it as <code>/{name}</code>, or describe the problem and Claude picks it up.",
+      "restart": "Restart the agent if the skill doesn't show up.",
+      "other": "Same CLI, pointed at one agent."
+    },
+    "plugin": {
+      "title": "Or as a Claude Code plugin",
+      "hint": "Run these inside Claude Code, one at a time. Plugin skills are namespaced, so call it as <code>/{plugin}:{name}</code>, or describe the problem and Claude picks it up.",
+      "step1": "1 · add the marketplace",
+      "step2": "2 · install the plugin"
+    },
+    "copyLink": "Copy GitHub link",
+    "linkCopied": "Link copied",
+    "otherWays": "Other ways to install",
+    "prompt": {
+      "title": "Ask your agent",
+      "hint": "Paste this into Claude Code, OpenCode, Codex or any agent with terminal access.",
+      "text": "Install the agent skill at {url} for my user. If Node.js is available, run `{command}`. If not, copy that folder into the user-level skills directory you read from. Then tell me where it was installed and how to call it."
+    },
+    "manual": {
+      "title": "Install by hand",
+      "text": "Clone the repository and link the skill folder into your agent's skills directory.",
+      "agentLabel": "Agent",
+      "step1": "1 · clone",
+      "step2": "2 · link",
+      "tableCaption": "Skills folder by agent",
+      "colAgent": "Agent",
+      "colUser": "For your user",
+      "colProject": "For one project",
+      "projectHint": "A project folder sits at the root of that project and only applies there."
+    },
+    "try": {
+      "title": "Try it without installing",
+      "hint": "Hands the skill to a single Claude Code session. Nothing goes into your skills folder."
+    },
+    "update": {
+      "title": "Update or remove",
+      "updateLabel": "update",
+      "removeLabel": "remove"
+    }
+  },
+  "copy": {
+    "copy": "Copy",
+    "copied": "Copied",
+    "failed": "Couldn't copy automatically. The text is selected so you can copy it yourself.",
+    "context": {
+      "command": "install command for {agent}",
+      "anyAgent": "any agent",
+      "pluginStep": "plugin step {step}",
+      "manualStep": "manual step {step}",
+      "prompt": "prompt for your agent",
+      "try": "command to try it",
+      "update": "update command",
+      "remove": "remove command"
+    },
+    "announce": {
+      "command": "Command copied",
+      "link": "Link copied",
+      "prompt": "Prompt copied"
+    }
+  }
+}

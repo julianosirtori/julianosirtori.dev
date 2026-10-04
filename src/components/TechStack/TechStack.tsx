@@ -1,7 +1,11 @@
+import type { ReactNode } from "react";
+
 interface TechStackProps {
   title: string;
   studyingLabel: string;
   studyingDescription: string;
+  /** Rendered at the end of the "Studying" block. */
+  children?: ReactNode;
 }
 
 const groups = [
@@ -46,6 +50,7 @@ export function TechStack({
   title,
   studyingLabel,
   studyingDescription,
+  children,
 }: TechStackProps) {
   return (
     <div>
@@ -79,6 +84,7 @@ export function TechStack({
             <li key={subject}>{subject}</li>
           ))}
         </ul>
+        {children}
       </div>
     </div>
   );
