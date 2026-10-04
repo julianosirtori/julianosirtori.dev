@@ -173,17 +173,19 @@ describe("GitHub source", () => {
     expect(result.status === "ok" && result.catalog.skills[0].slug).toBe(
       "demo",
     );
-    const urls = fetchMock.mock.calls.map(([url]) => String(url));
-    expect(urls.filter((url) => url.includes("api.github.com"))).toHaveLength(
-      2,
-    );
+    const urls = fetchMock.mock.calls.map(([url]) => new URL(String(url)));
     expect(
-      urls.filter((url) =>
-        url.includes("raw.githubusercontent.com/julianosirtori/skills/main"),
+      urls.filter((url) => url.hostname === "api.github.com"),
+    ).toHaveLength(2);
+    expect(
+      urls.filter(
+        (url) =>
+          url.hostname === "raw.githubusercontent.com" &&
+          url.pathname.startsWith("/julianosirtori/skills/main/"),
       ),
     ).toEqual([]);
     // No token, no per-skill date lookups.
-    expect(urls.some((url) => url.includes("/commits?"))).toBe(false);
+    expect(urls.some((url) => url.pathname.endsWith("/commits"))).toBe(false);
   });
 
   it("returns the error state when GitHub answers with an error", async () => {
