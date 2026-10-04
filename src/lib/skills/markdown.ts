@@ -32,7 +32,7 @@ export const CONTENT_ID_PREFIX = "user-content-";
  * Part of the render cache key. Bump it whenever the pipeline's output
  * changes; the Data Cache outlives deploys and would keep the old render.
  */
-export const SKILL_MARKDOWN_VERSION = "v2";
+export const SKILL_MARKDOWN_VERSION = "v3";
 
 const FOOTNOTE_LABEL_ID = `${CONTENT_ID_PREFIX}footnote-label`;
 
@@ -190,7 +190,24 @@ function rehypeSkillStructure(
       if (rank === 2) output.headings.push({ level: 3, text, slug: id });
     });
 
-    visit(tree, "element", (node) => {
+    visit(tree, "element", (node, index, parent) => {
+      // A link the sanitizer emptied (javascript:, no href) is not a link
+      // anymore: keep its text, drop the tag. Anchors with an id or name and
+      // no href stay, since they are scroll targets for in-page links.
+      if (
+        node.tagName === "a" &&
+        parent &&
+        index !== undefined &&
+        !(
+          typeof node.properties.href === "string" &&
+          node.properties.href.trim()
+        ) &&
+        node.properties.id === undefined &&
+        node.properties.name === undefined
+      ) {
+        parent.children.splice(index, 1, ...node.children);
+        return index;
+      }
       if (node.tagName === "a" && typeof node.properties.href === "string") {
         const raw = node.properties.href.trim();
         const href = raw.startsWith("#")

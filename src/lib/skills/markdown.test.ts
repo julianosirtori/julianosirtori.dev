@@ -148,6 +148,30 @@ describe("renderSkillMarkdown", () => {
     );
   });
 
+  it("keeps the text of links the sanitizer emptied, without the tag", async () => {
+    const { html: out } = await html(
+      [
+        '[script link](javascript:alert(1)) and <a href="javascript:void(0)" onclick="alert(1)">raw script</a>',
+        '<a>no href</a> and <a href="">empty href</a> and [empty]()',
+        '<a name="top"></a>[kept](https://example.com)',
+      ].join("\n\n"),
+    );
+    for (const text of [
+      "script link",
+      "raw script",
+      "no href",
+      "empty href",
+      "empty",
+    ]) {
+      expect(out).toContain(text);
+    }
+    const anchors = [...out.matchAll(/<a\b[^>]*>/g)].map((match) => match[0]);
+    expect(anchors).toHaveLength(2);
+    expect(anchors[0]).toContain('name="user-content-top"');
+    expect(anchors[1]).toContain('href="https://example.com"');
+    expect(out).not.toMatch(/javascript:|onclick/i);
+  });
+
   it("drops <style> blocks together with their CSS", async () => {
     const { html: out } = await html(
       "Before\n\n<style>body{display:none}</style>\n\nAfter\n",
