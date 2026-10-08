@@ -17,8 +17,8 @@ test.describe("Projects Page", () => {
 
     await expect(
       page.locator("#project-results").getByRole("heading", { level: 2 }),
-    ).toHaveText(["2024", "2023", "2021", "2020", "2018"]);
-    await expect(page.locator("#project-results li")).toHaveCount(6);
+    ).toHaveText(["2026", "2024", "2023", "2021", "2020", "2018"]);
+    await expect(page.locator("#project-results li")).toHaveCount(7);
   });
 
   test("should display projects page in Portuguese", async ({ page }) => {
@@ -62,8 +62,9 @@ test.describe("Projects Page", () => {
       await filters
         .getByRole("button", { name: locale.personal, exact: true })
         .click();
-      await expect(results.locator("li")).toHaveCount(2);
+      await expect(results.locator("li")).toHaveCount(3);
       await expect(results.getByRole("heading", { level: 2 })).toHaveText([
+        "2026",
         "2023",
       ]);
 
@@ -95,7 +96,7 @@ test.describe("Projects Page", () => {
       await filters
         .getByRole("button", { name: locale.all, exact: true })
         .click();
-      await expect(results.locator("li")).toHaveCount(6);
+      await expect(results.locator("li")).toHaveCount(7);
       await expect(
         page.getByRole("link", { name: locale.experience }),
       ).toHaveAttribute("href", `/${locale.lang}/about#experience`);
@@ -123,7 +124,7 @@ test.describe("Projects Page", () => {
     await page.keyboard.press("Space");
     await expect(personal).toHaveAttribute("aria-pressed", "true");
     await expect(personal).toBeFocused();
-    await expect(page.locator("#project-results li")).toHaveCount(2);
+    await expect(page.locator("#project-results li")).toHaveCount(3);
     await page.keyboard.press("Tab");
     await page.keyboard.press("Enter");
     await expect(clients).toHaveAttribute("aria-pressed", "true");

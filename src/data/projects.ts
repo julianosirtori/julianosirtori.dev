@@ -14,6 +14,18 @@ export type ProjectsByYear = Record<string, Project[]>;
 
 export const projects = {
   en: {
+    "2026": [
+      {
+        id: "morning-paper",
+        title: "Morning Paper",
+        description:
+          "A macOS app that builds a private news edition from RSS feeds and prints it on A4 every morning.",
+        href: "https://morning-paper-app.julianosirtori.dev/",
+        category: "personal",
+        context: "Tauri · React · Rust",
+        destination: "product",
+      },
+    ],
     "2024": [
       {
         id: "fisio-milena-aranha",
@@ -84,6 +96,18 @@ export const projects = {
     ],
   },
   pt: {
+    "2026": [
+      {
+        id: "morning-paper",
+        title: "Morning Paper",
+        description:
+          "App para macOS que monta uma edição de notícias só sua a partir de feeds RSS e imprime em A4 toda manhã.",
+        href: "https://morning-paper-app.julianosirtori.dev/",
+        category: "personal",
+        context: "Tauri · React · Rust",
+        destination: "product",
+      },
+    ],
     "2024": [
       {
         id: "fisio-milena-aranha",
