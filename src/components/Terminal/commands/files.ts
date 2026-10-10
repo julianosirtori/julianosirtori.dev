@@ -32,7 +32,7 @@ const FILES: Record<string, (lang: "en" | "pt") => OutputLine[]> = {
           line("local:   curitiba, pr"),
           line("foco:    full-stack, produtos digitais, ia"),
           line("anos:    10+ em tecnologia"),
-          line("hoje:    avenue code"),
+          line("hoje:    independente"),
         ]
       : [
           line("# me"),
@@ -41,7 +41,7 @@ const FILES: Record<string, (lang: "en" | "pt") => OutputLine[]> = {
           line("from:    curitiba, brazil"),
           line("focus:   full-stack, digital products, ai"),
           line("years:   10+ in tech"),
-          line("now:     avenue code"),
+          line("now:     independent"),
         ],
   "/projects/list.txt": (lang) => [
     line(
