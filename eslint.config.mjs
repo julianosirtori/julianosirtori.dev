@@ -21,7 +21,7 @@ const eslintConfig = [
   ...nextTypescript,
   prettierConfig,
   {
-    files: ["contentlayer.config.js", "lighthouserc.js", "postcss.config.js"],
+    files: ["contentlayer.config.js", "postcss.config.js"],
     rules: {
       "@typescript-eslint/no-require-imports": "off",
     },

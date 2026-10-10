@@ -10,6 +10,7 @@ export const experiences = [
       height: 30,
     },
     startDate: "2024-04-01",
+    endDate: "2025-07-14",
     location: "Remote · Stellantis (Fiat, Ram)",
     skills:
       "Vue.js · Microfrontends · AEM · CI/CD · Code Review · TypeScript · JavaScript · Scrum",

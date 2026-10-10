@@ -7,7 +7,6 @@
 
 # testing
 /coverage
-/.lighthouseci
 
 # next.js
 /.next/
