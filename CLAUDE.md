@@ -151,7 +151,7 @@ The `prebuild` and `pretest` hooks run `contentlayer2 build` so a fresh checkout
 ├── .husky/
 │   └── pre-commit                   # PATH-augmented for node/pnpm on Windows
 ├── .github/workflows/
-│   └── ci.yml                       # Lint+tests, Build, E2E, Lighthouse jobs
+│   └── ci.yml                       # Lint+tests, Build, E2E jobs
 ├── eslint.config.mjs                # ESLint flat config (eslint-config-next 16)
 ├── contentlayer.config.js           # Post schema + computed fields (toc, readTime, url, etc.)
 ├── next.config.mjs                  # withContentlayer + next-intl plugins
@@ -362,7 +362,7 @@ Specs live in `e2e/*.spec.ts`. Use stable selectors (`a[href*="/blog/"]`, `butto
 5. **Semantic tokens** are preferred over legacy color aliases for new code.
 6. **Contentlayer regenerates** during `pnpm dev` (turbopack) and via `prebuild`/`pretest` hooks.
 7. **Server components by default**; reach for `"use client"` only when interactivity demands it.
-8. **Tests**: run `pnpm test` for vitest; CI also runs Playwright + Lighthouse. Don't ship without local lint + test passing.
+8. **Tests**: run `pnpm test` for vitest; CI also runs Playwright. Don't ship without local lint + test passing.
 9. **Storage**: use `src/utils/storage.ts` (`createStorage(namespace)`) for any new localStorage need — it's SSR-safe and quota-tolerant.
 10. **Terminal commands**: each `CommandDef` carries its own bilingual `description`. Don't duplicate descriptions outside the command file.
 

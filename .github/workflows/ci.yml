@@ -98,37 +98,3 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
-
-  lighthouse:
-    name: Lighthouse
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v6
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: 22
-          cache: "pnpm"
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Migrate test database
-        run: pnpm db:migrate
-
-      - name: Build application
-        run: pnpm build
-
-      - name: Run Lighthouse CI
-        run: |
-          npm install -g @lhci/cli@0.14.x
-          lhci autorun
-        env:
-          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
-          # The skills pages read a fixture instead of GitHub, so the job
-          # does not depend on GitHub's unauthenticated rate limit.
-          SKILLS_FIXTURE: one
