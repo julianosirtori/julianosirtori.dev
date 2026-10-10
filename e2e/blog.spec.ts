@@ -271,7 +271,7 @@ test.describe("Blog Page", () => {
     const page = await context.newPage();
     await page.goto("/pt/blog");
     await expect(page.locator('#blog-results a[href*="/blog/"]')).toHaveCount(
-      17,
+      16,
     );
     await page.goto("/pt/blog/sse");
     await expect(page.locator("article")).toContainText(
