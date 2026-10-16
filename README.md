@@ -42,8 +42,10 @@
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
+        <li><a href="#running-the-tests">Running the tests</a></li>
       </ul>
     </li>
+    <li><a href="#audience-features-phase-2">Audience features (phase 2)</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
@@ -56,6 +58,8 @@
 ## About The Project
 
 [![Product Name Screen Shot][product-screenshot]](https://julianosirtori.dev/)
+
+A bilingual (English and Portuguese) personal site: an MDX blog with a table of contents and related posts, projects, a contact form, a guestbook, a newsletter, article reactions, a `⌘K` command palette, an interactive terminal at `/playground`, and a catalog of the agent skills published in [julianosirtori/skills](https://github.com/julianosirtori/skills).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -76,28 +80,32 @@
 
 To get a local copy up and running follow these simple example steps.
 
+### Prerequisites
+
+- Node.js 22 (see `.nvmrc`)
+- pnpm 11, the version pinned in `package.json` (`corepack enable` picks it up)
+
 ### Installation
 
 1. Clone the repo
    ```sh
-   git clone git@github.com:julianosirtori/julianosirtori.git
+   git clone git@github.com:julianosirtori/julianosirtori.dev.git
    ```
-2. Install NPM packages
+2. Install the dependencies
    ```sh
    pnpm install
    ```
-3. Change the `.env.*` files with your own data
-
-   ```
-     NEXT_PUBLIC_LOCAL_DOMAIN="http://localhost:3000"
-     RESEND_API_KEY=""
-   ```
-
-   You need generate the resend api key: [create-api-key](https://resend.com/docs/api-reference/api-keys/create-api-key)
-
-4. Start the project
+3. Copy `.env.example` to `.env.local` and fill in what you need. The defaults use a local SQLite file (`TURSO_DATABASE_URL=file:./local.db`). Email features need a Resend key: [create-api-key](https://resend.com/docs/api-reference/api-keys/create-api-key)
    ```sh
-    pnpm run dev
+   cp .env.example .env.local
+   ```
+4. Create the local database
+   ```sh
+   pnpm db:migrate
+   ```
+5. Start the project
+   ```sh
+   pnpm dev
    ```
 
 The development server explicitly listens on IPv4 (`0.0.0.0`) so Windows can access it through WSL localhost forwarding even when IPv6 is disabled in Linux. Open the `Local` URL printed by Next.js. To use port 3001:
@@ -110,7 +118,22 @@ Then open `http://localhost:3001`. Stop an older server before starting another;
 
 The Turbopack filesystem cache is disabled in development because cached route entries caused existing articles and API routes to return 404 even after a restart. The first compilation after starting the server can take longer; subsequent requests still use the running server's in-memory cache.
 
+### Running the tests
+
+```sh
+pnpm lint
+pnpm test run                                   # unit tests (Vitest), once
+pnpm exec playwright install chromium           # first time only
+pnpm exec playwright test --project=chromium    # end-to-end tests
+```
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Audience features (phase 2)
+
+Newsletter, GitHub guestbook moderation, and article reactions use Turso/libSQL with Drizzle. Run `pnpm newsletter:retry` to reprocess pending newsletter operations and `pnpm audience:status` for counts without personal data.
+
+See [operations and launch requirements](docs/phase-2/operations.md), [GA4 setup and explorations](docs/phase-2/analytics.md), and [the first three editorial briefs](docs/phase-2/editorial.md). Production activation and two additional authorized testimonials remain pending.
 
 <!-- ROADMAP -->
 
@@ -120,11 +143,11 @@ The Turbopack filesystem cache is disabled in development because cached route e
 
 ## Roadmap
 
-- [ ] Add E2E Tests
-- [ ] Create a workflow for run the e2e tests
-- [ ] Replace https://kbar.vercel.app/ for https://cmdk.paco.me/
+- [x] Add E2E Tests
+- [x] Create a workflow for run the e2e tests
+- [x] Replace https://kbar.vercel.app/ for https://cmdk.paco.me/
 
-See the [open issues](https://github.com/julianosirtori/life-in-weeks/issues) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/julianosirtori/julianosirtori.dev/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -184,13 +207,7 @@ Project Link: [https://github.com/julianosirtori/julianosirtori.dev](https://git
 [tailwindcss]: https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white
 [tailwindcss-url]: https://tailwindcss.com/
 [markdown]: https://img.shields.io/badge/Markdown-000000?style=for-the-badge&logo=markdown&logoColor=white
-[markdown-url]: https://tailwindcss.com/
+[markdown-url]: https://mdxjs.com/
 [vercel]: https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white
-[vercel-url]: https://tailwindcss.com/
+[vercel-url]: https://vercel.com/
 [resend-url]: https://resend.com/
-
-## Audience features (phase 2)
-
-Newsletter, GitHub guestbook moderation, and article reactions use Turso/libSQL with Drizzle. Copy `.env.example` to `.env.local`, configure services, and run `pnpm db:migrate` before `pnpm dev`. Run `pnpm newsletter:retry` to reprocess pending newsletter operations.
-
-See [operations and launch requirements](docs/phase-2/operations.md), [GA4 setup and explorations](docs/phase-2/analytics.md), and [the first three editorial briefs](docs/phase-2/editorial.md). Production activation and two additional authorized testimonials remain pending.
