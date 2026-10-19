@@ -114,7 +114,7 @@ export function track(event: AnalyticsEvent, params: Params = {}) {
         ? new URL(document.referrer).origin +
           safePath(new URL(document.referrer).pathname)
         : "",
-      ...(event === "page_view" ? { page_title: route } : {}),
+      ...(event === "page_view" ? { page_title: document.title || route } : {}),
     });
   } catch {
     /* Analytics must never affect a user action. */

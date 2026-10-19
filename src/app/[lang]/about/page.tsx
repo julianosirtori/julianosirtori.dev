@@ -3,10 +3,12 @@ import {
   ArrowTopRightIcon,
   ChevronDownIcon,
 } from "@radix-ui/react-icons";
+import type { Metadata } from "next";
 import Image from "next/image";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { experiences } from "@/data/about";
+import { importLocale } from "@/locales";
 import { Link } from "@/locales/navigation";
 
 export interface AboutProps {
@@ -16,6 +18,25 @@ export interface AboutProps {
 }
 
 const notes = ["beginnings", "teamwork", "learning"] as const;
+
+export async function generateMetadata({
+  params,
+}: AboutProps): Promise<Metadata> {
+  const { lang } = await params;
+  const { messages } = await importLocale(lang);
+  const title = `${messages.about.metaTitle} | Juliano Sirtori`;
+  const description = messages.about.metaDescription;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: `https://julianosirtori.dev/${lang}/about`,
+    },
+  };
+}
 
 export default async function About({ params }: AboutProps) {
   const { lang } = await params;

@@ -42,6 +42,22 @@ it("emits one pageview per navigation and excludes administrative pages", () => 
   rerender(<SiteAnalytics />);
   expect(count()).toBe(2);
 });
+it("reports the document title on pageviews and falls back to the route", () => {
+  const titles = () =>
+    vi
+      .mocked(window.gtag!)
+      .mock.calls.filter(
+        (call) => call[0] === "event" && call[1] === "page_view",
+      )
+      .map((call) => (call[2] as { page_title: string }).page_title);
+  document.title = "Todos os artigos | Juliano Sirtori";
+  const { rerender } = render(<SiteAnalytics />);
+  document.title = "";
+  navigation.path = "/pt/blog";
+  window.history.replaceState(null, "", navigation.path);
+  rerender(<SiteAnalytics />);
+  expect(titles()).toEqual(["Todos os artigos | Juliano Sirtori", "/pt/blog"]);
+});
 it("counts article milestones once and requires thirty visible seconds at the end", () => {
   vi.useFakeTimers();
   let visible = "visible";
