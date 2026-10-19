@@ -1,5 +1,7 @@
 {
   "title": "Descubra mais sobre mim",
+  "metaTitle": "Sobre mim",
+  "metaDescription": "Engenheiro full-stack com base em front-end. Minha trajetória, os lugares por onde passei e como trabalho com times.",
   "intro": {
     "lead": "Sou <important>engenheiro full-stack</important>, com uma base forte em front-end. Trabalho com tecnologia desde 2016 e com desenvolvimento de software desde 2017.",
     "context": "Já passei por apps Android, sistemas internos, delivery e produtos internacionais. Gosto de entender a operação e criar ferramentas que facilitem o trabalho de quem usa."
