@@ -26,6 +26,17 @@ const nextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      // The "squad" skill was renamed to "crew"; old links and search results
+      // still point at the previous slug.
+      {
+        source: "/:lang/skills/squad",
+        destination: "/:lang/skills/crew",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default withContentlayer(withNextIntl(nextConfig));
