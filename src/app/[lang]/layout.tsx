@@ -14,6 +14,7 @@ import { CommandBar } from "@/components/CommandBar";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { KonamiEgg } from "@/components/KonamiEgg";
 import { ConsoleGreeting } from "@/components/ConsoleGreeting";
+import { JsonLd } from "@/components/JsonLd";
 import { routing } from "@/locales/config";
 
 interface BlogRootLayoutProps {
@@ -67,6 +68,34 @@ export default async function BlogRootLayout({
 
   const locale = await getLocale();
   const messages = await getMessages();
+  const { messages: localeMessages } = await importLocale(locale);
+  const personAndWebsiteJsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://julianosirtori.dev/#person",
+        name: localeMessages.global.myFullName,
+        url: `https://julianosirtori.dev/${locale}/about`,
+        jobTitle: localeMessages.global.role,
+        description: localeMessages.global.slogan,
+        email: `mailto:${localeMessages.global.email}`,
+        sameAs: [
+          localeMessages.global.social.linkedin,
+          "https://github.com/julianosirtori",
+          localeMessages.global.social.twitter,
+        ],
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://julianosirtori.dev/#website",
+        url: "https://julianosirtori.dev/",
+        name: localeMessages.global.myFullName,
+        inLanguage: locale,
+        publisher: { "@id": "https://julianosirtori.dev/#person" },
+      },
+    ],
+  };
 
   return (
     <html
@@ -75,6 +104,7 @@ export default async function BlogRootLayout({
       className={`${GeistSans.variable} ${GeistMono.variable}`}
     >
       <body className="bg-bg text-fg relative font-sans antialiased">
+        <JsonLd data={personAndWebsiteJsonLd} />
         <ThemeProvider>
           <NextIntlClientProvider locale={locale} messages={messages}>
             <CommandBar>
