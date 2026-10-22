@@ -10,6 +10,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { experiences } from "@/data/about";
 import { importLocale } from "@/locales";
 import { Link } from "@/locales/navigation";
+import { alternatesFor } from "@/lib/seo";
 
 export interface AboutProps {
   params: Promise<{
@@ -30,6 +31,7 @@ export async function generateMetadata({
   return {
     title,
     description,
+    alternates: alternatesFor(lang, "/about"),
     openGraph: {
       title,
       description,

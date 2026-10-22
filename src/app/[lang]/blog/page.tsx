@@ -4,6 +4,7 @@ import { getLocale, getTranslations, setRequestLocale } from "next-intl/server";
 import { allPosts } from "contentlayer/generated";
 import { BlogSearch } from "@/components/BlogSearch";
 import { importLocale } from "@/locales";
+import { alternatesFor } from "@/lib/seo";
 
 interface BlogProps {
   params: Promise<{
@@ -21,6 +22,7 @@ export async function generateMetadata({
   return {
     title,
     description,
+    alternates: alternatesFor(lang, "/blog"),
     openGraph: {
       title,
       description,

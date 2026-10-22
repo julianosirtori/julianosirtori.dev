@@ -92,10 +92,14 @@ export function EntryCard({
     </article>
   );
 }
-export function GuestbookClient() {
+export function GuestbookClient({
+  initialEntries = null,
+}: {
+  initialEntries?: Entry[] | null;
+}) {
   const lang = useLocale();
   const t = copyFor(lang);
-  const [entries, setEntries] = useState<Entry[] | null>(null);
+  const [entries, setEntries] = useState<Entry[] | null>(initialEntries);
   const [failed, setFailed] = useState(false);
   const [name, setName] = useState<string | null>(null);
   const [sessionReady, setSessionReady] = useState(false);

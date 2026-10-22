@@ -1,6 +1,7 @@
 import { setRequestLocale } from "next-intl/server";
 import { GuestbookClient } from "@/components/Audience/Guestbook";
 import { copyFor } from "@/components/Audience/copy";
+import { listEntries } from "@/lib/server/guestbook";
 type Props = { params: Promise<{ lang: string }> };
 export async function generateMetadata({ params }: Props) {
   const { lang } = await params;
@@ -18,6 +19,7 @@ export default async function GuestbookPage({ params }: Props) {
   const { lang } = await params;
   setRequestLocale(lang);
   const t = copyFor(lang);
+  const initialEntries = await listEntries().catch(() => null);
   return (
     <main className="mx-auto w-full max-w-[760px] flex-1 px-5 pt-16 pb-20">
       <p className="text-accent mb-4 font-mono text-xs uppercase">Guestbook</p>
@@ -27,7 +29,7 @@ export default async function GuestbookPage({ params }: Props) {
       <p className="text-fg-muted mb-10 text-lg leading-relaxed">
         {t.guestIntro}
       </p>
-      <GuestbookClient />
+      <GuestbookClient initialEntries={initialEntries} />
     </main>
   );
 }

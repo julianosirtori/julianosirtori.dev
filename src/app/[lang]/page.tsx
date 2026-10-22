@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { ReactionSummary } from "@/components/Reactions/Reactions";
 import { copyFor } from "@/components/Audience/copy";
 import { allPosts } from "contentlayer/generated";
@@ -10,12 +11,34 @@ import { LatestPosts } from "@/components/LatestPosts";
 import { TechStack } from "@/components/TechStack";
 import { Workbench } from "@/components/Workbench";
 import { recommendations } from "@/data/about";
+import { importLocale } from "@/locales";
 import { Link } from "@/locales/navigation";
+import { alternatesFor } from "@/lib/seo";
 
 export interface HomeProps {
   params: Promise<{
     lang: string;
   }>;
+}
+
+export async function generateMetadata({
+  params,
+}: HomeProps): Promise<Metadata> {
+  const { lang } = await params;
+  const { messages } = await importLocale(lang);
+  const title = "Juliano Sirtori";
+  const description = messages.global.slogan;
+
+  return {
+    title,
+    description,
+    alternates: alternatesFor(lang, ""),
+    openGraph: {
+      title,
+      description,
+      url: `https://julianosirtori.dev/${lang}`,
+    },
+  };
 }
 
 const SectionLabel = ({ children }: { children: React.ReactNode }) => (
