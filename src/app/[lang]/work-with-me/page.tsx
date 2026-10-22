@@ -5,6 +5,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { ContactForm } from "@/components/ContactForm";
 import { importLocale } from "@/locales";
 import { Link } from "@/locales/navigation";
+import { alternatesFor } from "@/lib/seo";
 
 interface WorkWithMeProps {
   params: Promise<{
@@ -38,6 +39,7 @@ export async function generateMetadata({
   return {
     title,
     description,
+    alternates: alternatesFor(lang, "/work-with-me"),
     openGraph: {
       title,
       description,

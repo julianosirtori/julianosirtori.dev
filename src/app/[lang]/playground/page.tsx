@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { Metadata } from "next";
 
 import { Terminal } from "@/components/Terminal";
+import { alternatesFor } from "@/lib/seo";
 
 interface PlaygroundPageProps {
   params: Promise<{
@@ -24,6 +25,7 @@ export async function generateMetadata({
   return {
     title: `Juliano Sirtori - ${t("title")}`,
     description: t("description"),
+    alternates: alternatesFor(lang, "/playground"),
   };
 }
 

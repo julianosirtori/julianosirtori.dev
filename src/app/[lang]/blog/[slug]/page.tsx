@@ -37,10 +37,20 @@ export async function generateMetadata({
 
   const title = `Juliano Sirtori - ${post?.title}`;
   const description = post?.description || messages.global.slogan;
+  const availableLocales = routing.locales.filter((locale) =>
+    allPosts.some((p) => p.slug === slug && p.language === locale && !p.draft),
+  );
+  const languages = Object.fromEntries(
+    availableLocales.map((locale) => [locale, `/${locale}/blog/${slug}`]),
+  );
 
   return {
     title,
     description,
+    alternates: {
+      canonical: `/${lang}/blog/${slug}`,
+      languages,
+    },
     openGraph: {
       title,
       description,
