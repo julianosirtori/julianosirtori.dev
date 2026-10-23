@@ -11,6 +11,7 @@ import { experiences } from "@/data/about";
 import { importLocale } from "@/locales";
 import { Link } from "@/locales/navigation";
 import { alternatesFor } from "@/lib/seo";
+import { SITE_URL } from "@/lib/site";
 
 export interface AboutProps {
   params: Promise<{
@@ -35,7 +36,7 @@ export async function generateMetadata({
     openGraph: {
       title,
       description,
-      url: `https://julianosirtori.dev/${lang}/about`,
+      url: `${SITE_URL}/${lang}/about`,
     },
   };
 }

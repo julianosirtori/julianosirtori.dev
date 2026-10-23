@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { SITE_URL } from "../src/lib/site";
 
 test.describe("Blog Page", () => {
   test("keeps published articles reachable after a missing route", async ({
@@ -108,7 +109,7 @@ test.describe("Blog Page", () => {
       await expect(page).toHaveTitle(`Juliano Sirtori - ${title}`);
       await expect(page.locator('meta[property="og:url"]')).toHaveAttribute(
         "content",
-        `https://julianosirtori.dev/${locale}/blog/sse`,
+        `${SITE_URL}/${locale}/blog/sse`,
       );
       const navigation = page.getByRole("navigation", {
         name:

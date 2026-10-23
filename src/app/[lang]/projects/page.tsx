@@ -7,6 +7,7 @@ import { projects } from "@/data/projects";
 import { importLocale } from "@/locales";
 import { Link } from "@/locales/navigation";
 import { alternatesFor } from "@/lib/seo";
+import { SITE_URL } from "@/lib/site";
 
 interface ProjectsProps {
   params: Promise<{
@@ -29,7 +30,7 @@ export async function generateMetadata({
     openGraph: {
       title,
       description,
-      url: `https://julianosirtori.dev/${lang}/projects`,
+      url: `${SITE_URL}/${lang}/projects`,
     },
   };
 }

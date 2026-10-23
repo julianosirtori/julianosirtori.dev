@@ -52,7 +52,7 @@ export const projects = {
         title: "julianosirtori.dev",
         description:
           "This website. A home for my work, writing, and experiments.",
-        href: "https://julianosirtori.dev/",
+        href: "https://www.julianosirtori.dev/",
         category: "personal",
         context: "Next.js · TypeScript",
         destination: "website",
@@ -135,7 +135,7 @@ export const projects = {
         title: "julianosirtori.dev",
         description:
           "Este site. Onde reúno meu trabalho, textos e experimentos.",
-        href: "https://julianosirtori.dev/",
+        href: "https://www.julianosirtori.dev/",
         category: "personal",
         context: "Next.js · TypeScript",
         destination: "website",

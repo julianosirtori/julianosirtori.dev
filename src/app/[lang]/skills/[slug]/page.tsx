@@ -28,13 +28,14 @@ import {
 import type { RenderedSkillMarkdown } from "@/lib/skills/markdown";
 import { getSkillMarkdown } from "@/lib/skills/render";
 import type { Skill } from "@/lib/skills/types";
+import { alternatesFor } from "@/lib/seo";
+import { SITE_URL } from "@/lib/site";
 import { Link } from "@/locales/navigation";
 
 interface SkillPageProps {
   params: Promise<{ lang: string; slug: string }>;
 }
 
-const SITE = "https://julianosirtori.dev";
 /** The TOC only earns its place with a long SKILL.md. */
 const TOC_MIN_H2 = 4;
 
@@ -55,10 +56,7 @@ export async function generateMetadata({
   const result = await getCatalogResult();
   const title = `${t("detailTitle", { name: slug })} | Juliano Sirtori`;
   const path = `/${lang}/skills/${slug}`;
-  const alternates = {
-    canonical: path,
-    languages: { en: `/en/skills/${slug}`, pt: `/pt/skills/${slug}` },
-  };
+  const alternates = alternatesFor(lang, `/skills/${slug}`);
 
   if (result.status === "error") {
     return { title, alternates, robots: { index: false } };
@@ -71,7 +69,7 @@ export async function generateMetadata({
     title,
     description: skill.summary,
     alternates,
-    openGraph: { title, description: skill.summary, url: `${SITE}${path}` },
+    openGraph: { title, description: skill.summary, url: `${SITE_URL}${path}` },
   };
 }
 
@@ -99,7 +97,7 @@ function jsonLd(skill: Skill, lang: string) {
     "@type": "SoftwareSourceCode",
     name: skill.slug,
     description: skill.summary,
-    url: `${SITE}/${lang}/skills/${skill.slug}`,
+    url: `${SITE_URL}/${lang}/skills/${skill.slug}`,
     codeRepository: skillFolderUrl(skill.slug),
     inLanguage: "en",
     ...(skill.license && {
@@ -114,7 +112,7 @@ function jsonLd(skill: Skill, lang: string) {
     ...(skill.version && { version: skill.version }),
     ...(skill.updatedAt && { dateModified: skill.updatedAt }),
     ...(skill.keywords.length && { keywords: skill.keywords.join(", ") }),
-    author: { "@type": "Person", name: "Juliano Sirtori", url: SITE },
+    author: { "@type": "Person", name: "Juliano Sirtori", url: SITE_URL },
   };
   return JSON.stringify(data).replace(/</g, "\\u003c");
 }

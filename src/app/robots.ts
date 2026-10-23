@@ -1,8 +1,8 @@
 import { MetadataRoute } from "next";
+import { SITE_URL } from "@/lib/site";
 
 export default function robots(): MetadataRoute.Robots {
-  const host =
-    process.env.NEXT_PUBLIC_LOCAL_DOMAIN || "https://julianosirtori.dev";
+  const host = process.env.NEXT_PUBLIC_LOCAL_DOMAIN || SITE_URL;
   return {
     rules: {
       userAgent: "*",
