@@ -35,6 +35,14 @@ const nextConfig = {
         destination: "/:lang/skills/crew",
         permanent: true,
       },
+      // This slug had the English audio article under the wrong name, and the
+      // styled-components post has no English translation yet. Temporary so it
+      // can be dropped once that translation exists.
+      {
+        source: "/en/blog/recreating-styled-components",
+        destination: "/en/blog/capture-record-and-send-audio-in-the-browser",
+        permanent: false,
+      },
     ];
   },
 };
