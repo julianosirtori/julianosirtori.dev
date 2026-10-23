@@ -25,6 +25,16 @@ export const projects = {
         context: "Tauri · React · Rust",
         destination: "product",
       },
+      {
+        id: "biomoov",
+        title: "BioMoov",
+        description:
+          "The website for a physiotherapy and Pilates clinic in Maringá, with treatment pages, a blog, and courses for physiotherapists.",
+        href: "https://biomoovclinica.com.br/",
+        category: "client",
+        context: "Next.js",
+        destination: "website",
+      },
     ],
     "2024": [
       {
@@ -106,6 +116,16 @@ export const projects = {
         category: "personal",
         context: "Tauri · React · Rust",
         destination: "product",
+      },
+      {
+        id: "biomoov",
+        title: "BioMoov",
+        description:
+          "Site de uma clínica de fisioterapia e Pilates em Maringá, com páginas de tratamento, blog e cursos para fisioterapeutas.",
+        href: "https://biomoovclinica.com.br/",
+        category: "client",
+        context: "Next.js",
+        destination: "website",
       },
     ],
     "2024": [

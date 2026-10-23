@@ -18,7 +18,7 @@ test.describe("Projects Page", () => {
     await expect(
       page.locator("#project-results").getByRole("heading", { level: 2 }),
     ).toHaveText(["2026", "2024", "2023", "2021", "2020", "2018"]);
-    await expect(page.locator("#project-results li")).toHaveCount(7);
+    await expect(page.locator("#project-results li")).toHaveCount(8);
   });
 
   test("should display projects page in Portuguese", async ({ page }) => {
@@ -38,7 +38,7 @@ test.describe("Projects Page", () => {
       personal: "Pessoais",
       client: "Clientes",
       company: "Em equipe",
-      singleResult: "1 projeto nesta seleção",
+      clientResults: "2 projetos nesta seleção",
       experience: "veja minha experiência",
     },
     {
@@ -48,7 +48,7 @@ test.describe("Projects Page", () => {
       personal: "Personal",
       client: "Clients",
       company: "Teamwork",
-      singleResult: "1 project in this selection",
+      clientResults: "2 projects in this selection",
       experience: "see my experience",
     },
   ]) {
@@ -81,22 +81,24 @@ test.describe("Projects Page", () => {
       await filters
         .getByRole("button", { name: locale.client, exact: true })
         .click();
-      await expect(results.locator("li")).toHaveCount(1);
+      await expect(results.locator("li")).toHaveCount(2);
       await expect(results.getByRole("heading", { level: 2 })).toHaveText([
+        "2026",
         "2024",
       ]);
       await expect(results.getByRole("heading", { level: 3 })).toHaveText([
+        "BioMoov",
         "Fisio Milena Aranha",
       ]);
       await expect(page.locator("main").getByRole("status")).toHaveText(
-        locale.singleResult,
+        locale.clientResults,
       );
       await expect(filters.locator('[aria-pressed="true"]')).toHaveCount(1);
 
       await filters
         .getByRole("button", { name: locale.all, exact: true })
         .click();
-      await expect(results.locator("li")).toHaveCount(7);
+      await expect(results.locator("li")).toHaveCount(8);
       await expect(
         page.getByRole("link", { name: locale.experience }),
       ).toHaveAttribute("href", `/${locale.lang}/about#experience`);
@@ -129,7 +131,7 @@ test.describe("Projects Page", () => {
     await page.keyboard.press("Enter");
     await expect(clients).toHaveAttribute("aria-pressed", "true");
     await expect(clients).toBeFocused();
-    await expect(page.locator("#project-results li")).toHaveCount(1);
+    await expect(page.locator("#project-results li")).toHaveCount(2);
   });
 
   test("should describe external destinations and open them safely", async ({
