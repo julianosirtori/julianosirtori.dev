@@ -16,6 +16,8 @@ import { RelatedPosts } from "@/components/RelatedPosts";
 import { importLocale } from "@/locales";
 import { routing } from "@/locales/config";
 import { Link } from "@/locales/navigation";
+import { languagesFor } from "@/lib/seo";
+import { SITE_URL } from "@/lib/site";
 
 export interface IPostProps {
   params: Promise<{
@@ -40,8 +42,9 @@ export async function generateMetadata({
   const availableLocales = routing.locales.filter((locale) =>
     allPosts.some((p) => p.slug === slug && p.language === locale && !p.draft),
   );
-  const languages = Object.fromEntries(
-    availableLocales.map((locale) => [locale, `/${locale}/blog/${slug}`]),
+  const languages = languagesFor(
+    availableLocales,
+    (locale) => `/${locale}/blog/${slug}`,
   );
 
   return {
@@ -54,7 +57,7 @@ export async function generateMetadata({
     openGraph: {
       title,
       description,
-      url: `https://julianosirtori.dev/${lang}/blog/${slug}`,
+      url: `${SITE_URL}/${lang}/blog/${slug}`,
     },
   };
 }

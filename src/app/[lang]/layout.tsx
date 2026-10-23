@@ -15,6 +15,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { KonamiEgg } from "@/components/KonamiEgg";
 import { ConsoleGreeting } from "@/components/ConsoleGreeting";
 import { JsonLd } from "@/components/JsonLd";
+import { SITE_URL } from "@/lib/site";
 import { routing } from "@/locales/config";
 
 interface BlogRootLayoutProps {
@@ -39,13 +40,13 @@ export async function generateMetadata({
   const description = messages.global.slogan;
 
   return {
-    metadataBase: new URL("https://julianosirtori.dev"),
+    metadataBase: new URL(SITE_URL),
     title,
     description,
     openGraph: {
       title,
       description,
-      url: "https://julianosirtori.dev/",
+      url: `${SITE_URL}/`,
     },
   };
 }
@@ -74,9 +75,9 @@ export default async function BlogRootLayout({
     "@graph": [
       {
         "@type": "Person",
-        "@id": "https://julianosirtori.dev/#person",
+        "@id": `${SITE_URL}/#person`,
         name: localeMessages.global.myFullName,
-        url: `https://julianosirtori.dev/${locale}/about`,
+        url: `${SITE_URL}/${locale}/about`,
         jobTitle: localeMessages.global.role,
         description: localeMessages.global.slogan,
         email: `mailto:${localeMessages.global.email}`,
@@ -88,11 +89,11 @@ export default async function BlogRootLayout({
       },
       {
         "@type": "WebSite",
-        "@id": "https://julianosirtori.dev/#website",
-        url: "https://julianosirtori.dev/",
+        "@id": `${SITE_URL}/#website`,
+        url: `${SITE_URL}/`,
         name: localeMessages.global.myFullName,
         inLanguage: locale,
-        publisher: { "@id": "https://julianosirtori.dev/#person" },
+        publisher: { "@id": `${SITE_URL}/#person` },
       },
     ],
   };

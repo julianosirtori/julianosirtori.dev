@@ -1,4 +1,5 @@
 import { expect, test, type BrowserContext, type Page } from "@playwright/test";
+import { SITE_URL } from "../src/lib/site";
 
 /*
  * Skills catalog, in fixture mode.
@@ -424,7 +425,7 @@ test.describe("Skills SEO and privacy", () => {
       await expect(page).toHaveTitle(/Juliano Sirtori/);
       await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
         "href",
-        `https://julianosirtori.dev${path}`,
+        `${SITE_URL}${path}`,
       );
       for (const lang of ["en", "pt"]) {
         await expect(

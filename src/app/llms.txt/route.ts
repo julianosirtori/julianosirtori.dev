@@ -1,9 +1,8 @@
 import { allPosts } from "contentlayer/generated";
 import { getCatalogResult } from "@/lib/skills/catalog";
+import { SITE_URL } from "@/lib/site";
 
 export const revalidate = 86400;
-
-const SITE_URL = "https://julianosirtori.dev";
 
 export async function GET() {
   const posts = allPosts

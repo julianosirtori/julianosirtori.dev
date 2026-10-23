@@ -10,6 +10,8 @@ import { SkillsState } from "@/components/SkillsState";
 import { countFilesIn } from "@/lib/skills/build";
 import { getCatalogResult } from "@/lib/skills/catalog";
 import { SKILLS_REPO_URL } from "@/lib/skills/constants";
+import { alternatesFor } from "@/lib/seo";
+import { SITE_URL } from "@/lib/site";
 
 interface SkillsPageProps {
   params: Promise<{ lang: string }>;
@@ -27,14 +29,11 @@ export async function generateMetadata({
   return {
     title,
     description,
-    alternates: {
-      canonical: `/${lang}/skills`,
-      languages: { en: "/en/skills", pt: "/pt/skills" },
-    },
+    alternates: alternatesFor(lang, "/skills"),
     openGraph: {
       title,
       description,
-      url: `https://julianosirtori.dev/${lang}/skills`,
+      url: `${SITE_URL}/${lang}/skills`,
     },
     // The error state answers 200; keep "GitHub did not respond" out of search.
     ...(result.status === "error" ? { robots: { index: false } } : {}),

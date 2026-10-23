@@ -5,6 +5,7 @@ import { allPosts } from "contentlayer/generated";
 import { BlogSearch } from "@/components/BlogSearch";
 import { importLocale } from "@/locales";
 import { alternatesFor } from "@/lib/seo";
+import { SITE_URL } from "@/lib/site";
 
 interface BlogProps {
   params: Promise<{
@@ -26,7 +27,7 @@ export async function generateMetadata({
     openGraph: {
       title,
       description,
-      url: `https://julianosirtori.dev/${lang}/blog`,
+      url: `${SITE_URL}/${lang}/blog`,
     },
   };
 }
