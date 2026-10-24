@@ -3,7 +3,6 @@ import {
   DiscordLogoIcon,
   GitHubLogoIcon,
   LinkedInLogoIcon,
-  TwitterLogoIcon,
 } from "@radix-ui/react-icons";
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
@@ -24,7 +23,6 @@ export const Footer = () => {
     { label: "LinkedIn", href: t("social.linkedin"), icon: LinkedInLogoIcon },
     { label: "GitHub", href: t("social.github"), icon: GitHubLogoIcon },
     { label: "Discord", href: t("social.discord"), icon: DiscordLogoIcon },
-    { label: "Twitter", href: t("social.twitter"), icon: TwitterLogoIcon },
   ];
 
   return (

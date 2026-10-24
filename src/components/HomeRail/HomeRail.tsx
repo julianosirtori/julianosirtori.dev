@@ -179,17 +179,6 @@ export function HomeRail() {
               <circle cx="4" cy="4" r="2" />
             </svg>
           </a>
-          <a
-            href={tGlobal("social.twitter")}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="X"
-            className="text-fg-subtle hover:text-fg transition-colors"
-          >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-            </svg>
-          </a>
         </div>
         <p className="text-fg-subtle flex items-center gap-2 font-mono text-xs">
           <span className="bg-success h-1.5 w-1.5 animate-pulse rounded-full motion-reduce:animate-none" />

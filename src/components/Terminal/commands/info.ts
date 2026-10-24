@@ -132,7 +132,6 @@ export const social: CommandDef = {
     blank(),
     line("  github     github.com/julianosirtori"),
     line("  linkedin   linkedin.com/in/juliano-sirtori"),
-    line("  twitter    twitter.com/julianosirtori"),
     line("  discord    juliano_sirtori"),
     blank(),
     dim("tip: 'open <url>' opens in a new tab"),
