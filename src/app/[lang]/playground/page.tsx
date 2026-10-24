@@ -3,7 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { Metadata } from "next";
 
 import { Terminal } from "@/components/Terminal";
-import { alternatesFor } from "@/lib/seo";
+import { alternatesFor, openGraphFor } from "@/lib/seo";
 
 interface PlaygroundPageProps {
   params: Promise<{
@@ -22,10 +22,14 @@ export async function generateMetadata({
   const { lang } = await params;
   const t = await getTranslations({ locale: lang, namespace: "playground" });
 
+  const title = `Juliano Sirtori - ${t("title")}`;
+  const description = t("description");
+
   return {
-    title: `Juliano Sirtori - ${t("title")}`,
-    description: t("description"),
+    title,
+    description,
     alternates: alternatesFor(lang, "/playground"),
+    openGraph: openGraphFor(lang, "/playground", title, description),
   };
 }
 

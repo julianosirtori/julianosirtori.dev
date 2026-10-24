@@ -2,17 +2,21 @@ import Image from "next/image";
 import { setRequestLocale } from "next-intl/server";
 import { NewsletterForm } from "@/components/Audience/Newsletter";
 import { copyFor } from "@/components/Audience/copy";
+import { openGraphFor } from "@/lib/seo";
 type Props = { params: Promise<{ lang: string }> };
 export async function generateMetadata({ params }: Props) {
   const { lang } = await params;
   const t = copyFor(lang);
+  const title = `${t.title} | Juliano Sirtori`;
+  const description = t.intro;
   return {
-    title: `${t.title} | Juliano Sirtori`,
-    description: t.intro,
+    title,
+    description,
     alternates: {
       canonical: `/${lang}/newsletter`,
       languages: { pt: "/pt/newsletter", en: "/en/newsletter" },
     },
+    openGraph: openGraphFor(lang, "/newsletter", title, description),
   };
 }
 export default async function NewsletterPage({ params }: Props) {
