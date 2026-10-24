@@ -84,7 +84,7 @@ export default async function BlogRootLayout({
         sameAs: [
           localeMessages.global.social.linkedin,
           "https://github.com/julianosirtori",
-          localeMessages.global.social.twitter,
+          "https://bsky.app/profile/julianosirtori.dev",
         ],
       },
       {
