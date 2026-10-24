@@ -7,6 +7,7 @@ import { allPosts, type Post } from "contentlayer/generated";
 import { ArrowLeftIcon } from "@radix-ui/react-icons";
 
 import { Comments } from "@/components/Comments";
+import { JsonLd } from "@/components/JsonLd";
 import { Mdx } from "@/components/Mdx";
 import { ReadingProgress } from "@/components/ReadingProgress";
 import { Reactions } from "@/components/Reactions";
@@ -55,9 +56,13 @@ export async function generateMetadata({
       languages,
     },
     openGraph: {
+      type: "article",
       title,
       description,
       url: `${SITE_URL}/${lang}/blog/${slug}`,
+      publishedTime: post.date,
+      ...(post.updated ? { modifiedTime: post.updated } : {}),
+      authors: [`${SITE_URL}/${lang}/about`],
     },
   };
 }
@@ -138,8 +143,50 @@ export default async function PostPage({ params }: IPostProps) {
 
   const toc = (post.toc ?? []) as TocItem[];
 
+  // Only facts that are visible on the page: title, description, author, dates.
+  const postUrl = `${SITE_URL}/${locale}/blog/${slug}`;
+  const blogPostingJsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BlogPosting",
+        "@id": `${postUrl}#article`,
+        mainEntityOfPage: { "@type": "WebPage", "@id": postUrl },
+        url: postUrl,
+        headline: post.title,
+        description: post.description,
+        inLanguage: locale,
+        datePublished: post.date,
+        dateModified: post.updated ?? post.date,
+        image: `${postUrl}/opengraph-image`,
+        author: { "@id": `${SITE_URL}/#person` },
+        publisher: { "@id": `${SITE_URL}/#person` },
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: tGlobal("kbar.home"),
+            item: `${SITE_URL}/${locale}`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: tGlobal("kbar.blog"),
+            item: `${SITE_URL}/${locale}/blog`,
+          },
+          { "@type": "ListItem", position: 3, name: post.title, item: postUrl },
+        ],
+      },
+    ],
+  };
+
   return (
     <>
+      <JsonLd data={blogPostingJsonLd} />
       <ReadingProgress />
       <ArticleAnalytics slug={slug} />
       <main
