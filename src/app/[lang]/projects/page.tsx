@@ -6,8 +6,7 @@ import { ProjectArchive } from "@/components/ProjectArchive";
 import { projects } from "@/data/projects";
 import { importLocale } from "@/locales";
 import { Link } from "@/locales/navigation";
-import { alternatesFor } from "@/lib/seo";
-import { SITE_URL } from "@/lib/site";
+import { alternatesFor, openGraphFor } from "@/lib/seo";
 
 interface ProjectsProps {
   params: Promise<{
@@ -27,11 +26,7 @@ export async function generateMetadata({
     title,
     description,
     alternates: alternatesFor(lang, "/projects"),
-    openGraph: {
-      title,
-      description,
-      url: `${SITE_URL}/${lang}/projects`,
-    },
+    openGraph: openGraphFor(lang, "/projects", title, description),
   };
 }
 

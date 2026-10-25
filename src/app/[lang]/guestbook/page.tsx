@@ -2,17 +2,21 @@ import { setRequestLocale } from "next-intl/server";
 import { GuestbookClient } from "@/components/Audience/Guestbook";
 import { copyFor } from "@/components/Audience/copy";
 import { listEntries } from "@/lib/server/guestbook";
+import { openGraphFor } from "@/lib/seo";
 type Props = { params: Promise<{ lang: string }> };
 export async function generateMetadata({ params }: Props) {
   const { lang } = await params;
   const t = copyFor(lang);
+  const title = `${t.guestbook} | Juliano Sirtori`;
+  const description = t.guestIntro;
   return {
-    title: `${t.guestbook} | Juliano Sirtori`,
-    description: t.guestIntro,
+    title,
+    description,
     alternates: {
       canonical: `/${lang}/guestbook`,
       languages: { pt: "/pt/guestbook", en: "/en/guestbook" },
     },
+    openGraph: openGraphFor(lang, "/guestbook", title, description),
   };
 }
 export default async function GuestbookPage({ params }: Props) {
