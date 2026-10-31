@@ -4,6 +4,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { CaseStudies } from "@/components/CaseStudies";
 import { ContactForm } from "@/components/ContactForm";
+import { LeadLink } from "@/components/LeadLink";
 import { importLocale } from "@/locales";
 import { Link } from "@/locales/navigation";
 import { alternatesFor, openGraphFor } from "@/lib/seo";
@@ -135,20 +136,21 @@ export default async function WorkWithMe({ params }: WorkWithMeProps) {
             {t("start.alternative")}
           </p>
           <div className="mt-4 flex flex-col items-start gap-2 text-sm">
-            <a
+            <LeadLink
               href={`mailto:${tGlobal("email")}`}
+              action="email"
               className="text-fg hover:text-accent transition-colors"
             >
               {t("start.email")}
-            </a>
-            <a
+            </LeadLink>
+            <LeadLink
               href={tGlobal("social.linkedin")}
-              target="_blank"
-              rel="noopener noreferrer"
+              action="linkedin"
+              external
               className="text-fg hover:text-accent transition-colors"
             >
               {t("start.linkedin")}
-            </a>
+            </LeadLink>
           </div>
           <p className="text-accent mt-5 font-mono text-xs">
             {t("start.responseTime")}

@@ -35,6 +35,13 @@ export const eventNames = [
   "skill_search",
 ] as const;
 export type AnalyticsEvent = (typeof eventNames)[number];
+/**
+ * Where a `generate_lead` came from, sent as `action_id`. A form lead fires only
+ * after the backend accepts the message; the direct email and LinkedIn CTAs on
+ * /work-with-me fire on click, since the conversation leaves the site there.
+ */
+export const leadActions = ["form_submit", "email", "linkedin"] as const;
+export type LeadAction = (typeof leadActions)[number];
 type Params = {
   location?:
     | "header"
@@ -119,4 +126,7 @@ export function track(event: AnalyticsEvent, params: Params = {}) {
   } catch {
     /* Analytics must never affect a user action. */
   }
+}
+export function trackLead(action: LeadAction) {
+  track("generate_lead", { location: "contact", action_id: action });
 }

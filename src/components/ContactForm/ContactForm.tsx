@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 
 import { Toast } from "../Toast/Toast";
 
-import { track } from "@/lib/analytics";
+import { track, trackLead } from "@/lib/analytics";
 
 const collaborationTypes = [
   "long-term",
@@ -45,7 +45,7 @@ export const ContactForm = () => {
         throw new Error(`Email request failed: ${response.status}`);
 
       setIsEmailSent(true);
-      track("generate_lead", { location: "contact" });
+      trackLead("form_submit");
       form.reset();
     } catch {
       setIsEmailSent(false);

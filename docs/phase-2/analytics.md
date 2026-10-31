@@ -51,7 +51,7 @@ Também é possível definir `GA4_PROPERTY_ID` em `.env.local` e omitir `--prope
 1. Em Administrador → Fluxos de dados → Web → Medição otimizada, desative os pageviews por carregamento e mudanças de histórico (e as medições automáticas de formulários, pesquisa, scroll e download que sobrepõem os eventos próprios). `send_page_view:false` desativa o pageview automático no código. A instrumentação própria envia um evento por navegação do Next.js.
 2. Desative coleta de dados fornecidos pelo usuário. Não adicione parâmetros de email, nome, mensagem, query, token ou ID de sessão. Não configurar User-ID com o login do guestbook.
 3. Definições personalizadas, escopo evento: `language`, `route`, `location`, `content_id`, `action_id`, `result`, `progress`, `target_language`, `theme`, `active`. Evite cadastrar IDs de visitante. `result_count` é numérico; se necessário, criar métrica personalizada, unidade padrão.
-4. Eventos principais: `newsletter_confirmed` e `generate_lead`. Contagem uma vez por evento. O código emite sucesso somente depois da resposta bem-sucedida do backend; confirmação repetida de inscrição já ativa não gera nova conversão.
+4. Eventos principais: `newsletter_confirmed` e `generate_lead`. Contagem uma vez por evento. No formulário, o código emite `generate_lead` somente depois da resposta bem-sucedida do backend; confirmação repetida de inscrição já ativa não gera nova conversão. `generate_lead` leva `action_id`: `form_submit` (formulário aceito), `email` ou `linkedin` (clique nos links diretos de /work-with-me, onde a conversa sai do site). Para contar só leads confirmados, filtre `action_id` = `form_submit`.
 5. Depois das configurações, definir `NEXT_PUBLIC_ANALYTICS_ENABLED=true` **somente em produção** e reconstruir. Desenvolvimento e testes não enviam dados. Para DebugView, usar o preview autorizado com a flag ativada e a extensão Google Analytics Debugger; removê-la depois. Nenhuma chave administrativa pertence ao frontend.
 
 ## Explorações a criar
@@ -74,7 +74,7 @@ Todos recebem idioma, rota sanitizada e localização quando pertinente. `page_l
 - Newsletter: `newsletter_form_view` quando visível, `newsletter_submit`, `newsletter_confirmed`, `newsletter_error`.
 - Guestbook: `guestbook_login_start`, `guestbook_login_success`, `guestbook_submit`, `guestbook_error`.
 - Interação: `reaction_change` após persistência; `playground_command` usa só nome reconhecido e resultado, comandos desconhecidos são `unknown`; `playground_game_start`.
-- Contato/preferências: `contact_form_start`, `generate_lead`, `contact_form_error`, `theme_change`, `language_change`.
+- Contato/preferências: `contact_form_start`, `generate_lead` (com `action_id` de `leadActions` em `src/lib/analytics.ts`), `contact_form_error`, `theme_change`, `language_change`.
 
 ## DebugView e rede
 
