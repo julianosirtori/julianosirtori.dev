@@ -34,7 +34,7 @@ export async function generateMetadata({
   const { lang } = await params;
   const { messages } = await importLocale(lang);
   const title = `${messages.workWithMe.title} | Juliano Sirtori`;
-  const description = messages.workWithMe.description;
+  const description = messages.workWithMe.metaDescription;
 
   return {
     title,

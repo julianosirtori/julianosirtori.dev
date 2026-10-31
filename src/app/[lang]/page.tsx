@@ -27,8 +27,8 @@ export async function generateMetadata({
 }: HomeProps): Promise<Metadata> {
   const { lang } = await params;
   const { messages } = await importLocale(lang);
-  const title = "Juliano Sirtori";
-  const description = messages.global.slogan;
+  const title = messages.global.metaTitle;
+  const description = messages.global.metaDescription;
 
   return {
     title,

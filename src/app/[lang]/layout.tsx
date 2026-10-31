@@ -36,8 +36,8 @@ export async function generateMetadata({
 
   const { messages } = await importLocale(lang);
 
-  const title = "Juliano Sirtori";
-  const description = messages.global.slogan;
+  const title = messages.global.metaTitle;
+  const description = messages.global.metaDescription;
 
   return {
     metadataBase: new URL(SITE_URL),

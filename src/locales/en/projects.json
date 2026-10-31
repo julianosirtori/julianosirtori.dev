@@ -1,6 +1,7 @@
 {
   "title": "Projects and side projects",
   "description": "Personal projects, client work, and products I helped build at the companies I've worked for.",
+  "metaDescription": "Client websites, personal apps and products I helped build at aiqfome, Magalu and RP Info. Built with Next.js, React, Tauri and Rust, sorted by year.",
   "filters": {
     "label": "Filter projects",
     "all": "All",

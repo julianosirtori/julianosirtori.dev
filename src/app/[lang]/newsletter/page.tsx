@@ -8,7 +8,7 @@ export async function generateMetadata({ params }: Props) {
   const { lang } = await params;
   const t = copyFor(lang);
   const title = `${t.title} | Juliano Sirtori`;
-  const description = t.intro;
+  const description = t.newsletterMetaDescription;
   return {
     title,
     description,

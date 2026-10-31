@@ -1,6 +1,6 @@
 {
   "title": "playground",
-  "description": "Um terminal interativo. Digite um comando, aperte Enter. Tenta 'help' se estiver perdido.",
+  "description": "Um terminal no navegador com comandos sobre meu trabalho, alguns jogos e umas surpresas escondidas. Digite help para ver a lista e começar por ali.",
   "kicker": "Playground",
   "heroTitle": "Um terminal de verdade, escondido à vista",
   "heroLede": "Trinta comandos, jogos, easter eggs e pipes que funcionam. Digite <code>help</code> para começar, ou <code>tour</code> para um passeio guiado pelo site.",
