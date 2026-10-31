@@ -2,6 +2,7 @@
   "kicker": "Work with me",
   "title": "Let's work together",
   "description": "I build digital products end to end and can work wherever the problem calls for it, across frontend, backend, mobile applications, or solutions that use AI.",
+  "metaDescription": "Hire a freelance full-stack developer for web apps, mobile, AI integration or technical mentoring. React, Next.js, Node.js. I reply within 24 hours.",
   "availability": {
     "title": "Current availability",
     "intro": "I do not keep a public availability calendar. I prefer to understand the context, the stage of the project, and where my experience can be useful first.",
@@ -19,6 +20,33 @@
     "architecture": "Product architecture, evolution, and technical quality",
     "mentoring": "Technical mentoring and speaking",
     "description": "I have a generalist profile and can adapt to different technologies and forms of collaboration. The starting point is usually the problem that needs to be solved."
+  },
+  "services": {
+    "fullStack": {
+      "name": "Full-stack web development",
+      "description": "Web applications built end to end with React, Next.js, Node.js and TypeScript, from the interface to the API and the database."
+    },
+    "mobile": {
+      "name": "Mobile app development",
+      "description": "Mobile apps with React Native and Expo, plus native Android when the product needs it."
+    },
+    "ai": {
+      "name": "AI and LLM integration",
+      "description": "Features that use LLMs inside a product: agents, RAG and tools exposed through MCP."
+    },
+    "consulting": {
+      "name": "Technical consulting",
+      "description": "Product architecture, how it evolves and its technical quality, reviewed together with the team that maintains it."
+    },
+    "mentoring": {
+      "name": "Technical mentoring",
+      "description": "Technical mentoring for developers and teams, available on request."
+    }
+  },
+  "cases": {
+    "title": "Results in numbers",
+    "intro": "Numbers from products I worked on, most of them as part of a larger team. Only real figures go here. Client projects join the list once they have their own.",
+    "stack": "Stack"
   },
   "start": {
     "title": "How to start",

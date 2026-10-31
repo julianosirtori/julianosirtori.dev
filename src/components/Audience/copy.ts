@@ -3,6 +3,8 @@ export const audienceCopy = {
     title: "Notas do Juliano",
     intro:
       "Uma newsletter com o que me der vontade de compartilhar, a cada duas semanas.",
+    newsletterMetaDescription:
+      "Notas do Juliano chega a cada duas semanas com ferramentas que testei, projetos em andamento, opiniões sobre apps e algum meme. Cancele quando quiser.",
     email: "Seu e-mail",
     subscribe: "Quero receber",
     sending: "Enviando…",
@@ -26,6 +28,8 @@ export const audienceCopy = {
     guestbook: "Deixe um recado",
     guestIntro:
       "Passou por aqui? Conte de onde veio ou o que achou. Português e inglês dividem o mesmo mural.",
+    guestbookMetaDescription:
+      "Deixe um recado no mural do julianosirtori.dev. Entre com a sua conta do GitHub, conte de onde veio e leia o que outras pessoas já escreveram por aqui.",
     login: "Entrar com GitHub",
     logout: "Sair",
     message: "Seu recado",
@@ -59,6 +63,8 @@ export const audienceCopy = {
   en: {
     title: "Notas do Juliano",
     intro: "A newsletter about whatever I feel like sharing, every two weeks.",
+    newsletterMetaDescription:
+      "Notas do Juliano, a newsletter every two weeks. Tools I tried, projects in progress, opinions on apps and the occasional meme. Unsubscribe anytime.",
     email: "Your email",
     subscribe: "Subscribe",
     sending: "Sending…",
@@ -81,6 +87,8 @@ export const audienceCopy = {
     guestbook: "Leave a note",
     guestIntro:
       "Stopped by? Share where you came from or what you thought. Portuguese and English share the same wall.",
+    guestbookMetaDescription:
+      "Leave a note on the julianosirtori.dev guestbook. Sign in with GitHub, say where you came from and read what other visitors left before you.",
     login: "Sign in with GitHub",
     logout: "Sign out",
     message: "Your note",

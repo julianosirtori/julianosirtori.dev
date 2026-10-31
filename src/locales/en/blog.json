@@ -1,6 +1,7 @@
 {
   "title": "All articles",
   "description": "Notes on building software, front-end, back-end and what I learn along the way. No fixed schedule, just when I have something worth writing.",
+  "metaDescription": "Articles on React, Next.js, Node.js, TypeScript and AI agents. What I learned building software, written when there is something worth sharing.",
   "allArticles": "All articles",
   "readTime": "min read",
   "searchPlaceholder": "Title, topic or keyword…",

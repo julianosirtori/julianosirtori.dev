@@ -1,6 +1,7 @@
 {
   "title": "Projetos e side projects",
   "description": "Projetos pessoais, trabalhos para clientes e produtos que ajudei a construir nas empresas por onde passei.",
+  "metaDescription": "Sites para clientes, apps pessoais e produtos que ajudei a construir no aiqfome, Magalu e RP Info. Next.js, React, Tauri e Rust, organizados por ano.",
   "filters": {
     "label": "Filtrar projetos",
     "all": "Todos",

@@ -1,7 +1,7 @@
 {
   "meta": {
     "listTitle": "Agent skills",
-    "listDescription": "Open source agent skills by Juliano Sirtori for Claude Code, OpenCode, Codex and other agents. Copy the command and install.",
+    "listDescription": "Open source agent skills I wrote for Claude Code, OpenCode, Codex and other coding agents. Read what each one does, copy the command and install.",
     "detailTitle": "{name} · Agent skill",
     "ogListMeta": "Open source, for Claude Code, OpenCode and Codex",
     "ogDetailMeta": "Agent skill",

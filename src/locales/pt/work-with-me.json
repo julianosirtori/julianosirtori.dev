@@ -2,6 +2,7 @@
   "kicker": "Trabalhe comigo",
   "title": "Vamos trabalhar juntos?",
   "description": "Construo produtos digitais de ponta a ponta e tenho flexibilidade para atuar onde o problema exigir, seja no front-end, no back-end, em aplicações mobile ou em soluções com IA.",
+  "metaDescription": "Precisa de um dev full-stack freelancer? Atuo em apps web e mobile, integração com IA e mentoria técnica, com React, Next.js e Node.js. Respondo em 24h.",
   "availability": {
     "title": "Disponibilidade atual",
     "intro": "Não mantenho uma agenda pública de disponibilidade. Prefiro primeiro entender o contexto, o momento do projeto e como minha experiência pode contribuir.",
@@ -19,6 +20,33 @@
     "architecture": "Arquitetura, evolução e qualidade técnica de produtos",
     "mentoring": "Mentoria técnica e palestras",
     "description": "Tenho um perfil generalista e bastante flexível quanto à tecnologia ou ao formato da colaboração. O ponto de partida costuma ser o problema que precisa ser resolvido."
+  },
+  "services": {
+    "fullStack": {
+      "name": "Desenvolvimento web full-stack",
+      "description": "Aplicações web de ponta a ponta com React, Next.js, Node.js e TypeScript, da interface à API e ao banco de dados."
+    },
+    "mobile": {
+      "name": "Desenvolvimento de apps mobile",
+      "description": "Apps com React Native e Expo, e Android nativo quando o produto pede."
+    },
+    "ai": {
+      "name": "Integração com IA e LLMs",
+      "description": "Funcionalidades com LLMs dentro do produto: agentes, RAG e ferramentas expostas via MCP."
+    },
+    "consulting": {
+      "name": "Consultoria técnica",
+      "description": "Arquitetura do produto, sua evolução e a qualidade técnica, revisadas junto com o time que mantém o código."
+    },
+    "mentoring": {
+      "name": "Mentoria técnica",
+      "description": "Mentoria técnica para devs e times, sob consulta."
+    }
+  },
+  "cases": {
+    "title": "Resultados em números",
+    "intro": "Números de produtos em que trabalhei, quase sempre como parte de um time maior. Só entra aqui o que tem número de verdade. Projetos de clientes aparecem quando tiverem os seus.",
+    "stack": "Stack"
   },
   "start": {
     "title": "Como começar",

@@ -16,6 +16,7 @@ import { KonamiEgg } from "@/components/KonamiEgg";
 import { ConsoleGreeting } from "@/components/ConsoleGreeting";
 import { JsonLd } from "@/components/JsonLd";
 import { SITE_URL } from "@/lib/site";
+import { personAndWebsiteGraph } from "@/lib/person-schema";
 import { routing } from "@/locales/config";
 
 interface BlogRootLayoutProps {
@@ -36,8 +37,8 @@ export async function generateMetadata({
 
   const { messages } = await importLocale(lang);
 
-  const title = "Juliano Sirtori";
-  const description = messages.global.slogan;
+  const title = messages.global.metaTitle;
+  const description = messages.global.metaDescription;
 
   return {
     metadataBase: new URL(SITE_URL),
@@ -70,33 +71,7 @@ export default async function BlogRootLayout({
   const locale = await getLocale();
   const messages = await getMessages();
   const { messages: localeMessages } = await importLocale(locale);
-  const personAndWebsiteJsonLd = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Person",
-        "@id": `${SITE_URL}/#person`,
-        name: localeMessages.global.myFullName,
-        url: `${SITE_URL}/${locale}/about`,
-        jobTitle: localeMessages.global.role,
-        description: localeMessages.global.slogan,
-        email: `mailto:${localeMessages.global.email}`,
-        sameAs: [
-          localeMessages.global.social.linkedin,
-          "https://github.com/julianosirtori",
-          "https://bsky.app/profile/julianosirtori.dev",
-        ],
-      },
-      {
-        "@type": "WebSite",
-        "@id": `${SITE_URL}/#website`,
-        url: `${SITE_URL}/`,
-        name: localeMessages.global.myFullName,
-        inLanguage: locale,
-        publisher: { "@id": `${SITE_URL}/#person` },
-      },
-    ],
-  };
+  const personAndWebsiteJsonLd = personAndWebsiteGraph(locale, localeMessages);
 
   return (
     <html

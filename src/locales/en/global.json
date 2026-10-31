@@ -3,6 +3,8 @@
   "myFullName": "Juliano Sirtori",
   "role": "Full-stack software engineer",
   "slogan": "Full-stack software engineer building digital products end to end.",
+  "metaTitle": "Juliano Sirtori · Full-Stack Freelance Developer | React, Node, AI",
+  "metaDescription": "Juliano Sirtori, freelance full-stack developer in Brazil. I build web products with React, Next.js, Node.js and TypeScript, and add AI where it helps.",
   "tapToStart": "Press <firstKey>⌘</firstKey> <secondKey>k</secondKey> to navigate",
   "notFound": {
     "title": "This page was not found.",

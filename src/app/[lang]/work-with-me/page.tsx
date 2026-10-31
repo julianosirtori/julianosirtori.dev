@@ -2,7 +2,9 @@ import { TestimonialWall } from "@/components/Audience/Testimonials";
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
+import { CaseStudies } from "@/components/CaseStudies";
 import { ContactForm } from "@/components/ContactForm";
+import { LeadLink } from "@/components/LeadLink";
 import { importLocale } from "@/locales";
 import { Link } from "@/locales/navigation";
 import { alternatesFor, openGraphFor } from "@/lib/seo";
@@ -34,7 +36,7 @@ export async function generateMetadata({
   const { lang } = await params;
   const { messages } = await importLocale(lang);
   const title = `${messages.workWithMe.title} | Juliano Sirtori`;
-  const description = messages.workWithMe.description;
+  const description = messages.workWithMe.metaDescription;
 
   return {
     title,
@@ -113,6 +115,13 @@ export default async function WorkWithMe({ params }: WorkWithMeProps) {
         </section>
       </div>
 
+      <CaseStudies
+        lang={lang}
+        title={t("cases.title")}
+        intro={t("cases.intro")}
+        stackLabel={t("cases.stack")}
+      />
+
       <TestimonialWall lang={lang} />
 
       <section className="grid gap-10 pt-14 md:grid-cols-[0.8fr_1.2fr] md:gap-16">
@@ -127,20 +136,21 @@ export default async function WorkWithMe({ params }: WorkWithMeProps) {
             {t("start.alternative")}
           </p>
           <div className="mt-4 flex flex-col items-start gap-2 text-sm">
-            <a
+            <LeadLink
               href={`mailto:${tGlobal("email")}`}
+              action="email"
               className="text-fg hover:text-accent transition-colors"
             >
               {t("start.email")}
-            </a>
-            <a
+            </LeadLink>
+            <LeadLink
               href={tGlobal("social.linkedin")}
-              target="_blank"
-              rel="noopener noreferrer"
+              action="linkedin"
+              external
               className="text-fg hover:text-accent transition-colors"
             >
               {t("start.linkedin")}
-            </a>
+            </LeadLink>
           </div>
           <p className="text-accent mt-5 font-mono text-xs">
             {t("start.responseTime")}
