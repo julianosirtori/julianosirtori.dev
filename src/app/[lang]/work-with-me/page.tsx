@@ -2,6 +2,7 @@ import { TestimonialWall } from "@/components/Audience/Testimonials";
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
+import { CaseStudies } from "@/components/CaseStudies";
 import { ContactForm } from "@/components/ContactForm";
 import { importLocale } from "@/locales";
 import { Link } from "@/locales/navigation";
@@ -112,6 +113,13 @@ export default async function WorkWithMe({ params }: WorkWithMeProps) {
           </p>
         </section>
       </div>
+
+      <CaseStudies
+        lang={lang}
+        title={t("cases.title")}
+        intro={t("cases.intro")}
+        stackLabel={t("cases.stack")}
+      />
 
       <TestimonialWall lang={lang} />
 

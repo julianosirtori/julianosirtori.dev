@@ -43,6 +43,11 @@
       "description": "Technical mentoring for developers and teams, available on request."
     }
   },
+  "cases": {
+    "title": "Results in numbers",
+    "intro": "Numbers from products I worked on, most of them as part of a larger team. Only real figures go here. Client projects join the list once they have their own.",
+    "stack": "Stack"
+  },
   "start": {
     "title": "How to start",
     "description": "Send a message with your details, the kind of collaboration you are looking for, and a short summary of the context.",

@@ -43,6 +43,11 @@
       "description": "Mentoria técnica para devs e times, sob consulta."
     }
   },
+  "cases": {
+    "title": "Resultados em números",
+    "intro": "Números de produtos em que trabalhei, quase sempre como parte de um time maior. Só entra aqui o que tem número de verdade. Projetos de clientes aparecem quando tiverem os seus.",
+    "stack": "Stack"
+  },
   "start": {
     "title": "Como começar",
     "description": "Envie uma mensagem com seus dados, o formato de colaboração que procura e um breve resumo do contexto.",
