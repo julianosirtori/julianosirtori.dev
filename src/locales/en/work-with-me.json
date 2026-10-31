@@ -21,6 +21,28 @@
     "mentoring": "Technical mentoring and speaking",
     "description": "I have a generalist profile and can adapt to different technologies and forms of collaboration. The starting point is usually the problem that needs to be solved."
   },
+  "services": {
+    "fullStack": {
+      "name": "Full-stack web development",
+      "description": "Web applications built end to end with React, Next.js, Node.js and TypeScript, from the interface to the API and the database."
+    },
+    "mobile": {
+      "name": "Mobile app development",
+      "description": "Mobile apps with React Native and Expo, plus native Android when the product needs it."
+    },
+    "ai": {
+      "name": "AI and LLM integration",
+      "description": "Features that use LLMs inside a product: agents, RAG and tools exposed through MCP."
+    },
+    "consulting": {
+      "name": "Technical consulting",
+      "description": "Product architecture, how it evolves and its technical quality, reviewed together with the team that maintains it."
+    },
+    "mentoring": {
+      "name": "Technical mentoring",
+      "description": "Technical mentoring for developers and teams, available on request."
+    }
+  },
   "start": {
     "title": "How to start",
     "description": "Send a message with your details, the kind of collaboration you are looking for, and a short summary of the context.",

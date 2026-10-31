@@ -21,6 +21,28 @@
     "mentoring": "Mentoria técnica e palestras",
     "description": "Tenho um perfil generalista e bastante flexível quanto à tecnologia ou ao formato da colaboração. O ponto de partida costuma ser o problema que precisa ser resolvido."
   },
+  "services": {
+    "fullStack": {
+      "name": "Desenvolvimento web full-stack",
+      "description": "Aplicações web de ponta a ponta com React, Next.js, Node.js e TypeScript, da interface à API e ao banco de dados."
+    },
+    "mobile": {
+      "name": "Desenvolvimento de apps mobile",
+      "description": "Apps com React Native e Expo, e Android nativo quando o produto pede."
+    },
+    "ai": {
+      "name": "Integração com IA e LLMs",
+      "description": "Funcionalidades com LLMs dentro do produto: agentes, RAG e ferramentas expostas via MCP."
+    },
+    "consulting": {
+      "name": "Consultoria técnica",
+      "description": "Arquitetura do produto, sua evolução e a qualidade técnica, revisadas junto com o time que mantém o código."
+    },
+    "mentoring": {
+      "name": "Mentoria técnica",
+      "description": "Mentoria técnica para devs e times, sob consulta."
+    }
+  },
   "start": {
     "title": "Como começar",
     "description": "Envie uma mensagem com seus dados, o formato de colaboração que procura e um breve resumo do contexto.",
