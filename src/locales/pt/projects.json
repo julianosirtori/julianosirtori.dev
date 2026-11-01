@@ -18,7 +18,9 @@
     "website": "Abrir site",
     "package": "Ver no npm",
     "video": "Ver vídeo",
-    "product": "Ver produto"
+    "product": "Ver produto",
+    "code": "Ver no GitHub",
+    "case": "Ler o case"
   },
   "newTab": "Abre em uma nova aba",
   "results": "{count, plural, one {# projeto nesta seleção} other {# projetos nesta seleção}}",

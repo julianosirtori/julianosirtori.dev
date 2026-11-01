@@ -12,7 +12,11 @@ export const SITE_URL = "https://www.julianosirtori.dev";
  */
 export const PORTFOLIO_URL = "https://portfolio.julianosirtori.dev";
 
-export type PortfolioPlacement = "footer" | "home-cta" | "projects";
+export type PortfolioPlacement =
+  | "footer"
+  | "home-cta"
+  | "projects"
+  | "projects-list";
 
 export const portfolioLink = (placement: PortfolioPlacement, path = "/") => {
   const url = new URL(path, PORTFOLIO_URL);
