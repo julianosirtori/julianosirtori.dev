@@ -14,7 +14,7 @@ import { recommendations } from "@/data/about";
 import { importLocale } from "@/locales";
 import { Link } from "@/locales/navigation";
 import { alternatesFor } from "@/lib/seo";
-import { SITE_URL } from "@/lib/site";
+import { SITE_URL, portfolioLink } from "@/lib/site";
 
 export interface HomeProps {
   params: Promise<{
@@ -168,6 +168,18 @@ export default async function Home({ params }: HomeProps) {
           >
             {t("contact.cta")}
           </Link>
+          <p className="text-fg-muted mt-6 text-sm leading-relaxed">
+            {t("contact.portfolioPrompt")}{" "}
+            <a
+              href={portfolioLink("home-cta")}
+              target="_blank"
+              rel="noopener"
+              className="text-fg hover:text-accent focus-visible:ring-accent inline-flex items-center gap-1 rounded-sm font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none"
+            >
+              {t("contact.portfolioLink")}
+              <ArrowRightIcon aria-hidden="true" className="h-3.5 w-3.5" />
+            </a>
+          </p>
         </section>
 
         <p className="text-fg-subtle font-mono text-xs">{t("footer")}</p>

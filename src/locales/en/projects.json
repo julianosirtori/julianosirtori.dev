@@ -25,5 +25,9 @@
   "experience": {
     "prompt": "For more about my work at these companies,",
     "link": "see my experience"
+  },
+  "cases": {
+    "prompt": "Client projects have full write-ups,",
+    "link": "see all business cases"
   }
 }

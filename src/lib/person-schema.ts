@@ -1,4 +1,4 @@
-import { SITE_URL } from "@/lib/site";
+import { PORTFOLIO_URL, SITE_URL } from "@/lib/site";
 
 export const GITHUB_PROFILE_URL = "https://github.com/julianosirtori";
 
@@ -68,6 +68,7 @@ export function personAndWebsiteGraph(
           messages.global.social.linkedin,
           GITHUB_PROFILE_URL,
           messages.global.social.bluesky,
+          PORTFOLIO_URL,
         ],
         makesOffer: serviceKeys.map((key) => ({
           "@type": "Offer",

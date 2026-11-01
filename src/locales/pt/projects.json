@@ -25,5 +25,9 @@
   "experience": {
     "prompt": "Para conhecer melhor minha atuação nas empresas,",
     "link": "veja minha experiência"
+  },
+  "cases": {
+    "prompt": "Os projetos com clientes estão contados em detalhe no portfólio,",
+    "link": "veja todos os cases comerciais"
   }
 }

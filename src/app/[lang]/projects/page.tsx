@@ -7,6 +7,7 @@ import { projects } from "@/data/projects";
 import { importLocale } from "@/locales";
 import { Link } from "@/locales/navigation";
 import { alternatesFor, openGraphFor } from "@/lib/seo";
+import { portfolioLink } from "@/lib/site";
 
 interface ProjectsProps {
   params: Promise<{
@@ -51,15 +52,29 @@ export default async function Projects({ params }: ProjectsProps) {
 
       <ProjectArchive projects={groupedProjects} />
 
-      <footer className="border-border text-fg-muted mt-8 flex flex-wrap items-baseline gap-x-1.5 gap-y-2 border-t pt-6 text-sm leading-relaxed">
-        <p>{t("experience.prompt")}</p>
-        <Link
-          href="/about#experience"
-          className="group text-fg hover:text-accent focus-visible:ring-accent inline-flex items-center gap-1.5 rounded-sm py-1 transition-colors focus-visible:ring-2 focus-visible:outline-none"
-        >
-          {t("experience.link")}
-          <ArrowRightIcon aria-hidden="true" className="h-3.5 w-3.5" />
-        </Link>
+      <footer className="border-border text-fg-muted mt-8 flex flex-col gap-y-2 border-t pt-6 text-sm leading-relaxed">
+        <div className="flex flex-wrap items-baseline gap-x-1.5 gap-y-2">
+          <p>{t("experience.prompt")}</p>
+          <Link
+            href="/about#experience"
+            className="group text-fg hover:text-accent focus-visible:ring-accent inline-flex items-center gap-1.5 rounded-sm py-1 transition-colors focus-visible:ring-2 focus-visible:outline-none"
+          >
+            {t("experience.link")}
+            <ArrowRightIcon aria-hidden="true" className="h-3.5 w-3.5" />
+          </Link>
+        </div>
+        <div className="flex flex-wrap items-baseline gap-x-1.5 gap-y-2">
+          <p>{t("cases.prompt")}</p>
+          <a
+            href={portfolioLink("projects", "/cases/")}
+            target="_blank"
+            rel="noopener"
+            className="group text-fg hover:text-accent focus-visible:ring-accent inline-flex items-center gap-1.5 rounded-sm py-1 transition-colors focus-visible:ring-2 focus-visible:outline-none"
+          >
+            {t("cases.link")}
+            <ArrowRightIcon aria-hidden="true" className="h-3.5 w-3.5" />
+          </a>
+        </div>
       </footer>
     </main>
   );
