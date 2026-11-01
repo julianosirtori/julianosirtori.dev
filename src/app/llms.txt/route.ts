@@ -1,6 +1,6 @@
 import { allPosts } from "contentlayer/generated";
 import { getCatalogResult } from "@/lib/skills/catalog";
-import { SITE_URL } from "@/lib/site";
+import { PORTFOLIO_URL, SITE_URL } from "@/lib/site";
 
 export const revalidate = 86400;
 
@@ -33,6 +33,7 @@ Contact: julianosirtori@gmail.com. LinkedIn https://www.linkedin.com/in/juliano-
 - [Work with me](${SITE_URL}/en/work-with-me): availability, how I work, and how to start a project
 - [About](${SITE_URL}/en/about): background and experience
 - [Projects](${SITE_URL}/en/projects): shipped work for clients and personal projects
+- [Portfolio for businesses](${PORTFOLIO_URL}): commercial portfolio and client cases for companies hiring a project: strategic websites, custom systems and AI products
 
 ## Agent skills
 - [Agent skills catalog](${SITE_URL}/en/skills): skills I use with coding agents, published as reusable SKILL.md files

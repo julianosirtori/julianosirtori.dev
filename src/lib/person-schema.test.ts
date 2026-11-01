@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import * as en from "@/locales/en";
 import * as pt from "@/locales/pt";
-import { SITE_URL } from "./site";
+import { PORTFOLIO_URL, SITE_URL } from "./site";
 import {
   GITHUB_PROFILE_URL,
   personAndWebsiteGraph,
@@ -27,6 +27,7 @@ describe("personAndWebsiteGraph", () => {
       en.global.social.linkedin,
       GITHUB_PROFILE_URL,
       en.global.social.bluesky,
+      PORTFOLIO_URL,
     ]);
     expect(person.sameAs.join()).not.toMatch(/twitter\.com|x\.com/);
   });

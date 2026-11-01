@@ -1,6 +1,7 @@
 import { ArrowTopRightIcon } from "@radix-ui/react-icons";
 
 import type { Project } from "@/data/projects";
+import { PORTFOLIO_URL } from "@/lib/site";
 
 interface ProjectCardProps {
   project: Project;
@@ -20,7 +21,12 @@ export function ProjectCard({
       href={project.href}
       data-project={project.id}
       target="_blank"
-      rel="noopener noreferrer"
+      // Keep the referrer on links to the portfolio so referrals are counted.
+      rel={
+        project.href.startsWith(PORTFOLIO_URL)
+          ? "noopener"
+          : "noopener noreferrer"
+      }
       aria-labelledby={`project-${project.id}`}
       aria-describedby={`project-${project.id}-destination`}
       className="group hover:bg-bg-muted focus-visible:ring-accent -mx-3 grid gap-3 rounded-lg px-3 py-5 transition-colors focus-visible:ring-2 focus-visible:outline-none motion-reduce:transition-none sm:grid-cols-[minmax(0,1fr)_auto] sm:gap-8 sm:py-6"

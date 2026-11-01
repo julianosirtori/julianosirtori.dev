@@ -90,7 +90,9 @@
     "label": "Contact",
     "title": "Let's work together",
     "description": "If you have a project, a collaboration in mind, or want to talk about mentoring or speaking, tell me a little about the context.",
-    "cta": "See ways we can work together"
+    "cta": "See ways we can work together",
+    "portfolioPrompt": "Hiring for a company project?",
+    "portfolioLink": "See my portfolio for businesses"
   },
   "footer": "Built with Next.js and TypeScript"
 }

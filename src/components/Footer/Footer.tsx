@@ -10,6 +10,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NewsletterBlock } from "@/components/Audience/Newsletter";
 import { copyFor } from "@/components/Audience/copy";
+import { portfolioLink } from "@/lib/site";
 
 export const Footer = () => {
   const t = useTranslations("global");
@@ -55,6 +56,14 @@ export const Footer = () => {
           >
             {t("footer.skills")}
           </Link>
+          <a
+            className="hover:text-accent inline-flex min-h-11 items-center"
+            href={portfolioLink("footer")}
+            target="_blank"
+            rel="noopener"
+          >
+            {t("footer.portfolio")}
+          </a>
         </nav>
         <ul className="flex flex-row items-center gap-1">
           {links.map((link) => {

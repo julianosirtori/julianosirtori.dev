@@ -90,7 +90,9 @@
     "label": "Contato",
     "title": "Vamos trabalhar juntos?",
     "description": "Se você tem um projeto, uma colaboração em mente ou quer conversar sobre mentoria e palestras, me conte um pouco do contexto.",
-    "cta": "Ver formas de colaboração"
+    "cta": "Ver formas de colaboração",
+    "portfolioPrompt": "Quer contratar um projeto para sua empresa?",
+    "portfolioLink": "Veja meu portfólio"
   },
   "footer": "Construído com Next.js e TypeScript"
 }

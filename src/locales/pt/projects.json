@@ -18,12 +18,18 @@
     "website": "Abrir site",
     "package": "Ver no npm",
     "video": "Ver vídeo",
-    "product": "Ver produto"
+    "product": "Ver produto",
+    "code": "Ver no GitHub",
+    "case": "Ler o case"
   },
   "newTab": "Abre em uma nova aba",
   "results": "{count, plural, one {# projeto nesta seleção} other {# projetos nesta seleção}}",
   "experience": {
     "prompt": "Para conhecer melhor minha atuação nas empresas,",
     "link": "veja minha experiência"
+  },
+  "cases": {
+    "prompt": "Os projetos com clientes estão contados em detalhe no portfólio,",
+    "link": "veja todos os cases comerciais"
   }
 }

@@ -1,5 +1,7 @@
 import { test, expect } from "@playwright/test";
 
+import { PORTFOLIO_URL } from "../src/lib/site";
+
 test.describe("Projects Page", () => {
   test("should display the projects page", async ({ page }) => {
     await page.goto("/en/projects");
@@ -17,8 +19,8 @@ test.describe("Projects Page", () => {
 
     await expect(
       page.locator("#project-results").getByRole("heading", { level: 2 }),
-    ).toHaveText(["2026", "2024", "2023", "2021", "2020", "2018"]);
-    await expect(page.locator("#project-results li")).toHaveCount(8);
+    ).toHaveText(["2026", "2025", "2024", "2023", "2021", "2020", "2018"]);
+    await expect(page.locator("#project-results li")).toHaveCount(14);
   });
 
   test("should display projects page in Portuguese", async ({ page }) => {
@@ -62,17 +64,19 @@ test.describe("Projects Page", () => {
       await filters
         .getByRole("button", { name: locale.personal, exact: true })
         .click();
-      await expect(results.locator("li")).toHaveCount(3);
+      await expect(results.locator("li")).toHaveCount(7);
       await expect(results.getByRole("heading", { level: 2 })).toHaveText([
         "2026",
+        "2025",
         "2023",
       ]);
 
       await filters
         .getByRole("button", { name: locale.company, exact: true })
         .click();
-      await expect(results.locator("li")).toHaveCount(3);
+      await expect(results.locator("li")).toHaveCount(5);
       await expect(results.getByRole("heading", { level: 2 })).toHaveText([
+        "2024",
         "2021",
         "2020",
         "2018",
@@ -98,7 +102,7 @@ test.describe("Projects Page", () => {
       await filters
         .getByRole("button", { name: locale.all, exact: true })
         .click();
-      await expect(results.locator("li")).toHaveCount(8);
+      await expect(results.locator("li")).toHaveCount(14);
       await expect(
         page.getByRole("link", { name: locale.experience }),
       ).toHaveAttribute("href", `/${locale.lang}/about#experience`);
@@ -126,7 +130,7 @@ test.describe("Projects Page", () => {
     await page.keyboard.press("Space");
     await expect(personal).toHaveAttribute("aria-pressed", "true");
     await expect(personal).toBeFocused();
-    await expect(page.locator("#project-results li")).toHaveCount(3);
+    await expect(page.locator("#project-results li")).toHaveCount(7);
     await page.keyboard.press("Tab");
     await page.keyboard.press("Enter");
     await expect(clients).toHaveAttribute("aria-pressed", "true");
@@ -147,7 +151,12 @@ test.describe("Projects Page", () => {
     );
     for (const link of await page.locator("#project-results a").all()) {
       await expect(link).toHaveAttribute("target", "_blank");
-      await expect(link).toHaveAttribute("rel", "noopener noreferrer");
+      const href = (await link.getAttribute("href")) ?? "";
+      // Portfolio links keep the referrer so referrals are counted.
+      await expect(link).toHaveAttribute(
+        "rel",
+        href.startsWith(PORTFOLIO_URL) ? "noopener" : "noopener noreferrer",
+      );
     }
   });
 
@@ -167,7 +176,7 @@ test.describe("Projects Page", () => {
     await filters
       .getByRole("button", { name: "Em equipe", exact: true })
       .click();
-    await expect(page.locator("#project-results li")).toHaveCount(3);
+    await expect(page.locator("#project-results li")).toHaveCount(5);
     expect(
       await page.evaluate(() => document.documentElement.scrollWidth),
     ).toBeLessThanOrEqual(320);

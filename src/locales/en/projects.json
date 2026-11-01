@@ -18,12 +18,18 @@
     "website": "Visit site",
     "package": "View on npm",
     "video": "Watch video",
-    "product": "View product"
+    "product": "View product",
+    "code": "View on GitHub",
+    "case": "Read the case"
   },
   "newTab": "Opens in a new tab",
   "results": "{count, plural, one {# project in this selection} other {# projects in this selection}}",
   "experience": {
     "prompt": "For more about my work at these companies,",
     "link": "see my experience"
+  },
+  "cases": {
+    "prompt": "Client projects have full write-ups,",
+    "link": "see all business cases"
   }
 }
