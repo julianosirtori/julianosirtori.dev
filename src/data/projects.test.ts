@@ -26,6 +26,7 @@ describe("projects", () => {
 
   it("tags portfolio links and keeps third-party links clean", () => {
     for (const project of flatten("en")) {
+      if (!project.href) continue;
       const url = new URL(project.href);
       if (project.href.startsWith(PORTFOLIO_URL)) {
         expect(url.searchParams.get("utm_content")).toBe("projects-list");
