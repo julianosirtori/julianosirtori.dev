@@ -1,6 +1,9 @@
+import { existsSync, readFileSync } from "node:fs";
+import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
 import { PORTFOLIO_URL } from "@/lib/site";
+import { projectPreviews } from "./project-previews";
 import { projects } from "./projects";
 
 const flatten = (lang: keyof typeof projects) =>
@@ -36,6 +39,24 @@ describe("projects", () => {
   it("keeps copy free of em dashes and exclamations", () => {
     for (const project of [...flatten("en"), ...flatten("pt")]) {
       expect(`${project.title} ${project.description}`).not.toMatch(/[—!]/);
+    }
+  });
+
+  it("points every preview at a known project and an existing file", () => {
+    const ids = new Set(flatten("en").map((project) => project.id));
+    for (const [id, src] of Object.entries(projectPreviews)) {
+      expect(ids).toContain(id);
+      expect(existsSync(join(process.cwd(), "public", src!))).toBe(true);
+    }
+  });
+
+  it("keeps previews opaque so they read on both themes", () => {
+    for (const src of Object.values(projectPreviews)) {
+      const file = readFileSync(join(process.cwd(), "public", src!));
+      const chunk = file.toString("ascii", 12, 16);
+      // Lossless WebP (VP8L) may carry alpha; VP8X flags it in bit 4.
+      expect(chunk, src).not.toBe("VP8L");
+      if (chunk === "VP8X") expect(file[20] & 0x10, src).toBe(0);
     }
   });
 });
