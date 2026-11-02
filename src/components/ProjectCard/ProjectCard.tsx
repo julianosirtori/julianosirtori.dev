@@ -11,7 +11,8 @@ interface ProjectCardProps {
   // Cards in the first row are above the fold; load their previews eagerly.
   eager?: boolean;
   categoryLabel: string;
-  destinationLabel: string;
+  // Absent when the project has no public page left to link to.
+  destinationLabel?: string;
   newTabLabel: string;
 }
 
@@ -25,21 +26,11 @@ export function ProjectCard({
 }: ProjectCardProps) {
   const preview = projectPreviews[project.id];
 
-  return (
-    <a
-      href={project.href}
-      data-project={project.id}
-      target="_blank"
-      // Keep the referrer on links to the portfolio so referrals are counted.
-      rel={
-        project.href.startsWith(PORTFOLIO_URL)
-          ? "noopener"
-          : "noopener noreferrer"
-      }
-      aria-labelledby={`project-${project.id}`}
-      aria-describedby={`project-${project.id}-destination`}
-      className="group border-border bg-bg hover:border-border-strong focus-visible:ring-accent focus-visible:ring-offset-bg flex h-full flex-col overflow-hidden rounded-xl border transition-[border-color,box-shadow,translate] duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/5 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none motion-reduce:transition-none motion-reduce:hover:translate-y-0 dark:hover:shadow-black/40"
-    >
+  const cardClass =
+    "border-border bg-bg flex h-full flex-col overflow-hidden rounded-xl border";
+
+  const content = (
+    <>
       <div className="border-border bg-bg-muted relative aspect-[16/10] overflow-hidden border-b">
         {preview ? (
           <Image
@@ -88,18 +79,53 @@ export function ProjectCard({
         <p className="text-fg-muted mt-2 text-sm leading-relaxed">
           {project.description}
         </p>
-        <span
-          id={`project-${project.id}-destination`}
-          className="text-fg-muted group-hover:text-fg mt-auto inline-flex items-center gap-1.5 pt-5 text-sm whitespace-nowrap transition-colors motion-reduce:transition-none"
-        >
-          {destinationLabel}
-          <ArrowTopRightIcon
-            aria-hidden="true"
-            className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none"
-          />
-          <span className="sr-only"> — {newTabLabel}</span>
-        </span>
       </div>
+    </>
+  );
+
+  if (!project.href) {
+    return (
+      <article
+        data-project={project.id}
+        aria-labelledby={`project-${project.id}`}
+        className={cardClass}
+      >
+        {content}
+      </article>
+    );
+  }
+
+  return (
+    <a
+      href={project.href}
+      data-project={project.id}
+      target="_blank"
+      // Keep the referrer on links to the portfolio so referrals are counted.
+      rel={
+        project.href.startsWith(PORTFOLIO_URL)
+          ? "noopener"
+          : "noopener noreferrer"
+      }
+      aria-labelledby={`project-${project.id}`}
+      aria-describedby={`project-${project.id}-destination`}
+      className={`group ${cardClass} hover:border-border-strong focus-visible:ring-accent focus-visible:ring-offset-bg transition-[border-color,box-shadow,translate] duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/5 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none motion-reduce:transition-none motion-reduce:hover:translate-y-0 dark:hover:shadow-black/40`}
+    >
+      {content}
+      {destinationLabel && (
+        <span className="block px-5 pb-5">
+          <span
+            id={`project-${project.id}-destination`}
+            className="text-fg-muted group-hover:text-fg inline-flex items-center gap-1.5 text-sm whitespace-nowrap transition-colors motion-reduce:transition-none"
+          >
+            {destinationLabel}
+            <ArrowTopRightIcon
+              aria-hidden="true"
+              className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transform-none motion-reduce:transition-none"
+            />
+            <span className="sr-only"> — {newTabLabel}</span>
+          </span>
+        </span>
+      )}
     </a>
   );
 }

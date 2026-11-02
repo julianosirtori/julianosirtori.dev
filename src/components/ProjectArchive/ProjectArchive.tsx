@@ -75,7 +75,9 @@ export function ProjectArchive({ projects }: ProjectArchiveProps) {
               year={year}
               eager={index < 3}
               categoryLabel={t(`categories.${project.category}`)}
-              destinationLabel={t(`destinations.${project.destination}`)}
+              destinationLabel={
+                project.destination && t(`destinations.${project.destination}`)
+              }
               newTabLabel={t("newTab")}
             />
           </li>

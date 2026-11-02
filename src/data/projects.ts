@@ -2,15 +2,28 @@ import { portfolioLink } from "@/lib/site";
 
 export type ProjectCategory = "personal" | "client" | "company";
 
-export interface Project {
+export type ProjectDestination =
+  | "website"
+  | "package"
+  | "video"
+  | "product"
+  | "code"
+  | "case";
+
+interface ProjectBase {
   id: string;
   title: string;
   description: string;
-  href: string;
   category: ProjectCategory;
   context: string;
-  destination: "website" | "package" | "video" | "product" | "code" | "case";
 }
+
+// Projects whose public page went offline keep their card without a link.
+export type Project = ProjectBase &
+  (
+    | { href: string; destination: ProjectDestination }
+    | { href?: undefined; destination?: undefined }
+  );
 
 export type ProjectsByYear = Record<string, Project[]>;
 
@@ -110,10 +123,8 @@ export const projects = {
         id: "life-in-weeks",
         title: "Life in Weeks",
         description: "A visualization of a lifetime measured in weeks.",
-        href: "https://life-in-weeks.julianosirtori.dev/",
         category: "personal",
         context: "Web",
-        destination: "website",
       },
       {
         id: "portfolio",
@@ -166,10 +177,8 @@ export const projects = {
         title: "Task manager for supermarkets",
         description:
           "A supermarket operations product I contributed to at RP Info.",
-        href: "https://www.rpinfo.com.br/produto/task/79",
         category: "company",
         context: "RP Info",
-        destination: "product",
       },
     ],
   },
@@ -265,10 +274,8 @@ export const projects = {
         id: "life-in-weeks",
         title: "Life in Weeks",
         description: "Uma visualização do tempo de vida em semanas.",
-        href: "https://life-in-weeks.julianosirtori.dev/",
         category: "personal",
         context: "Web",
-        destination: "website",
       },
       {
         id: "portfolio",
@@ -321,10 +328,8 @@ export const projects = {
         title: "Gerenciador de tarefas para supermercados",
         description:
           "Produto para a operação de supermercados, desenvolvido com o time da RP Info.",
-        href: "https://www.rpinfo.com.br/produto/task/79",
         category: "company",
         context: "RP Info",
-        destination: "product",
       },
     ],
   },

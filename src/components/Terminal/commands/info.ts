@@ -153,7 +153,7 @@ export const projects: CommandDef = {
       out.push(dim(`  ${year}`));
       for (const project of data[year as keyof typeof data]) {
         out.push(line(`    · ${project.title}`));
-        out.push(dim(`        ${project.href}`));
+        if (project.href) out.push(dim(`        ${project.href}`));
       }
     }
     out.push(blank());
