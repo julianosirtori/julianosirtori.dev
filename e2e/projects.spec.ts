@@ -14,13 +14,31 @@ test.describe("Projects Page", () => {
     await expect(page.getByText(/case stud/i)).toHaveCount(0);
   });
 
-  test("should display projects grouped by year", async ({ page }) => {
+  test("should display projects as cards, newest first", async ({ page }) => {
     await page.goto("/en/projects");
+    const cards = page.locator("#project-results li");
 
+    await expect(cards).toHaveCount(14);
+    await expect(cards.locator("time")).toHaveText([
+      ...Array<string>(5).fill("2026"),
+      "2025",
+      "2024",
+      "2024",
+      "2023",
+      "2023",
+      "2021",
+      "2020",
+      "2018",
+      "2018",
+    ]);
     await expect(
-      page.locator("#project-results").getByRole("heading", { level: 2 }),
-    ).toHaveText(["2026", "2025", "2024", "2023", "2021", "2020", "2018"]);
-    await expect(page.locator("#project-results li")).toHaveCount(14);
+      page.locator("main").getByRole("heading", { level: 2 }),
+    ).toHaveCount(14);
+    await expect(page.locator('[data-project="biomoov"] img')).toBeVisible();
+    // Team cases have no screenshot and get the drawn cover instead.
+    await expect(
+      page.locator('[data-project="stellantis-b2b"] img'),
+    ).toHaveCount(0);
   });
 
   test("should display projects page in Portuguese", async ({ page }) => {
@@ -54,9 +72,7 @@ test.describe("Projects Page", () => {
       experience: "see my experience",
     },
   ]) {
-    test(`should filter projects and preserve year grouping in ${locale.lang}`, async ({
-      page,
-    }) => {
+    test(`should filter projects in ${locale.lang}`, async ({ page }) => {
       await page.goto(`/${locale.lang}/projects`);
       const filters = page.getByRole("group", { name: locale.group });
       const results = page.locator("#project-results");
@@ -65,9 +81,10 @@ test.describe("Projects Page", () => {
         .getByRole("button", { name: locale.personal, exact: true })
         .click();
       await expect(results.locator("li")).toHaveCount(7);
-      await expect(results.getByRole("heading", { level: 2 })).toHaveText([
-        "2026",
+      await expect(results.locator("time")).toHaveText([
+        ...Array<string>(4).fill("2026"),
         "2025",
+        "2023",
         "2023",
       ]);
 
@@ -75,10 +92,11 @@ test.describe("Projects Page", () => {
         .getByRole("button", { name: locale.company, exact: true })
         .click();
       await expect(results.locator("li")).toHaveCount(5);
-      await expect(results.getByRole("heading", { level: 2 })).toHaveText([
+      await expect(results.locator("time")).toHaveText([
         "2024",
         "2021",
         "2020",
+        "2018",
         "2018",
       ]);
 
@@ -86,11 +104,8 @@ test.describe("Projects Page", () => {
         .getByRole("button", { name: locale.client, exact: true })
         .click();
       await expect(results.locator("li")).toHaveCount(2);
+      await expect(results.locator("time")).toHaveText(["2026", "2024"]);
       await expect(results.getByRole("heading", { level: 2 })).toHaveText([
-        "2026",
-        "2024",
-      ]);
-      await expect(results.getByRole("heading", { level: 3 })).toHaveText([
         "BioMoov",
         "Fisio Milena Aranha",
       ]);

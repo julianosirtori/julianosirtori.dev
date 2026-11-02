@@ -18,20 +18,14 @@ export function ProjectArchive({ projects }: ProjectArchiveProps) {
   const t = useTranslations("projects");
   const [selectedFilter, setSelectedFilter] = useState<ProjectFilter>("all");
   const allProjects = Object.values(projects).flat();
-  const groups = Object.entries(projects)
+  const visibleProjects = Object.entries(projects)
     .sort(([firstYear], [secondYear]) => Number(secondYear) - Number(firstYear))
-    .map(([year, items]) => ({
-      year,
-      items: items.filter(
-        (project) =>
-          selectedFilter === "all" || project.category === selectedFilter,
-      ),
-    }))
-    .filter((group) => group.items.length > 0);
-  const visibleCount = groups.reduce(
-    (total, group) => total + group.items.length,
-    0,
-  );
+    .flatMap(([year, items]) => items.map((project) => ({ year, project })))
+    .filter(
+      ({ project }) =>
+        selectedFilter === "all" || project.category === selectedFilter,
+    );
+  const visibleCount = visibleProjects.length;
 
   return (
     <div>
@@ -70,34 +64,23 @@ export function ProjectArchive({ projects }: ProjectArchiveProps) {
         {t("results", { count: visibleCount })}
       </p>
 
-      <div id="project-results">
-        {groups.map(({ year, items }) => (
-          <section
-            key={year}
-            aria-labelledby={`projects-${year}`}
-            className="border-border grid border-t sm:grid-cols-[76px_minmax(0,1fr)] sm:gap-8"
-          >
-            <h2
-              id={`projects-${year}`}
-              className="text-fg-muted pt-5 font-mono text-sm tabular-nums sm:pt-6"
-            >
-              {year}
-            </h2>
-            <ul className="divide-border min-w-0 divide-y">
-              {items.map((project) => (
-                <li key={project.id}>
-                  <ProjectCard
-                    project={project}
-                    categoryLabel={t(`categories.${project.category}`)}
-                    destinationLabel={t(`destinations.${project.destination}`)}
-                    newTabLabel={t("newTab")}
-                  />
-                </li>
-              ))}
-            </ul>
-          </section>
+      <ul
+        id="project-results"
+        className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
+      >
+        {visibleProjects.map(({ year, project }, index) => (
+          <li key={project.id} className="min-w-0">
+            <ProjectCard
+              project={project}
+              year={year}
+              eager={index < 3}
+              categoryLabel={t(`categories.${project.category}`)}
+              destinationLabel={t(`destinations.${project.destination}`)}
+              newTabLabel={t("newTab")}
+            />
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   );
 }
