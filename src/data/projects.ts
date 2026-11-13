@@ -34,6 +34,16 @@ export const projects = {
   en: {
     "2026": [
       {
+        id: "black-friday-milena-aranha",
+        title: "Black Friday Milena Aranha",
+        description:
+          "A Black Friday page for Milena Aranha's courses: myofascial release, dry needling, and Pilates, each with its sale price, class dates in Maringá, and enrollment gifts.",
+        href: "https://blackfriday.fisiomilenaaranha.com/",
+        category: "client",
+        context: "Astro · Tailwind v4",
+        destination: "website",
+      },
+      {
         id: "biomoov",
         title: "BioMoov",
         description:
@@ -184,6 +194,16 @@ export const projects = {
   },
   pt: {
     "2026": [
+      {
+        id: "black-friday-milena-aranha",
+        title: "Black Friday Milena Aranha",
+        description:
+          "Página da Black Friday dos cursos da Milena Aranha. Liberação miofascial, dry needling e Pilates lado a lado, com preço no PIX, datas das turmas em Maringá e brindes de matrícula.",
+        href: "https://blackfriday.fisiomilenaaranha.com/",
+        category: "client",
+        context: "Astro · Tailwind v4",
+        destination: "website",
+      },
       {
         id: "biomoov",
         title: "BioMoov",

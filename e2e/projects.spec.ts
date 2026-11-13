@@ -18,9 +18,9 @@ test.describe("Projects Page", () => {
     await page.goto("/en/projects");
     const cards = page.locator("#project-results li");
 
-    await expect(cards).toHaveCount(14);
+    await expect(cards).toHaveCount(15);
     await expect(cards.locator("time")).toHaveText([
-      ...Array<string>(5).fill("2026"),
+      ...Array<string>(6).fill("2026"),
       "2025",
       "2024",
       "2024",
@@ -33,7 +33,7 @@ test.describe("Projects Page", () => {
     ]);
     await expect(
       page.locator("main").getByRole("heading", { level: 2 }),
-    ).toHaveCount(14);
+    ).toHaveCount(15);
     await expect(page.locator('[data-project="biomoov"] img')).toBeVisible();
     // Team cases have no screenshot and get the drawn cover instead.
     await expect(
@@ -58,7 +58,7 @@ test.describe("Projects Page", () => {
       personal: "Pessoais",
       client: "Clientes",
       company: "Em equipe",
-      clientResults: "2 projetos nesta seleção",
+      clientResults: "3 projetos nesta seleção",
       experience: "veja minha experiência",
     },
     {
@@ -68,7 +68,7 @@ test.describe("Projects Page", () => {
       personal: "Personal",
       client: "Clients",
       company: "Teamwork",
-      clientResults: "2 projects in this selection",
+      clientResults: "3 projects in this selection",
       experience: "see my experience",
     },
   ]) {
@@ -103,9 +103,14 @@ test.describe("Projects Page", () => {
       await filters
         .getByRole("button", { name: locale.client, exact: true })
         .click();
-      await expect(results.locator("li")).toHaveCount(2);
-      await expect(results.locator("time")).toHaveText(["2026", "2024"]);
+      await expect(results.locator("li")).toHaveCount(3);
+      await expect(results.locator("time")).toHaveText([
+        "2026",
+        "2026",
+        "2024",
+      ]);
       await expect(results.getByRole("heading", { level: 2 })).toHaveText([
+        "Black Friday Milena Aranha",
         "BioMoov",
         "Fisio Milena Aranha",
       ]);
@@ -117,7 +122,7 @@ test.describe("Projects Page", () => {
       await filters
         .getByRole("button", { name: locale.all, exact: true })
         .click();
-      await expect(results.locator("li")).toHaveCount(14);
+      await expect(results.locator("li")).toHaveCount(15);
       await expect(
         page.getByRole("link", { name: locale.experience }),
       ).toHaveAttribute("href", `/${locale.lang}/about#experience`);
@@ -150,7 +155,7 @@ test.describe("Projects Page", () => {
     await page.keyboard.press("Enter");
     await expect(clients).toHaveAttribute("aria-pressed", "true");
     await expect(clients).toBeFocused();
-    await expect(page.locator("#project-results li")).toHaveCount(2);
+    await expect(page.locator("#project-results li")).toHaveCount(3);
   });
 
   test("should describe external destinations and open them safely", async ({

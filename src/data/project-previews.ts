@@ -2,6 +2,8 @@
 // without one (team cases, offline links) get a drawn cover instead. Kept out
 // of projects.ts so the client card doesn't bundle the whole dataset.
 export const projectPreviews: Partial<Record<string, string>> = {
+  "black-friday-milena-aranha":
+    "/images/projects/black-friday-milena-aranha.webp",
   biomoov: "/images/projects/biomoov.webp",
   "morning-paper": "/images/projects/morning-paper.webp",
   "vault-mcp": "/images/projects/vault-mcp.webp",
