@@ -18,9 +18,9 @@ test.describe("Projects Page", () => {
     await page.goto("/en/projects");
     const cards = page.locator("#project-results li");
 
-    await expect(cards).toHaveCount(15);
+    await expect(cards).toHaveCount(16);
     await expect(cards.locator("time")).toHaveText([
-      ...Array<string>(6).fill("2026"),
+      ...Array<string>(7).fill("2026"),
       "2025",
       "2024",
       "2024",
@@ -33,7 +33,7 @@ test.describe("Projects Page", () => {
     ]);
     await expect(
       page.locator("main").getByRole("heading", { level: 2 }),
-    ).toHaveCount(15);
+    ).toHaveCount(16);
     await expect(page.locator('[data-project="biomoov"] img')).toBeVisible();
     // Team cases have no screenshot and get the drawn cover instead.
     await expect(
@@ -80,9 +80,9 @@ test.describe("Projects Page", () => {
       await filters
         .getByRole("button", { name: locale.personal, exact: true })
         .click();
-      await expect(results.locator("li")).toHaveCount(7);
+      await expect(results.locator("li")).toHaveCount(8);
       await expect(results.locator("time")).toHaveText([
-        ...Array<string>(4).fill("2026"),
+        ...Array<string>(5).fill("2026"),
         "2025",
         "2023",
         "2023",
@@ -122,7 +122,7 @@ test.describe("Projects Page", () => {
       await filters
         .getByRole("button", { name: locale.all, exact: true })
         .click();
-      await expect(results.locator("li")).toHaveCount(15);
+      await expect(results.locator("li")).toHaveCount(16);
       await expect(
         page.getByRole("link", { name: locale.experience }),
       ).toHaveAttribute("href", `/${locale.lang}/about#experience`);
@@ -150,7 +150,7 @@ test.describe("Projects Page", () => {
     await page.keyboard.press("Space");
     await expect(personal).toHaveAttribute("aria-pressed", "true");
     await expect(personal).toBeFocused();
-    await expect(page.locator("#project-results li")).toHaveCount(7);
+    await expect(page.locator("#project-results li")).toHaveCount(8);
     await page.keyboard.press("Tab");
     await page.keyboard.press("Enter");
     await expect(clients).toHaveAttribute("aria-pressed", "true");

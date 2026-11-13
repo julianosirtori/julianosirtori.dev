@@ -54,6 +54,16 @@ export const projects = {
         destination: "website",
       },
       {
+        id: "prompter",
+        title: "Prompter",
+        description:
+          "A PWA teleprompter for recording Reels, Shorts, and TikToks in 9:16: paste the AI script, rehearse, and record block by block while looking at the lens. Videos stay on the device.",
+        href: "https://prompter.julianosirtori.dev/",
+        category: "personal",
+        context: "React · TypeScript · PWA",
+        destination: "product",
+      },
+      {
         id: "morning-paper",
         title: "Morning Paper",
         description:
@@ -213,6 +223,16 @@ export const projects = {
         category: "client",
         context: "Next.js · Tailwind v4",
         destination: "website",
+      },
+      {
+        id: "prompter",
+        title: "Prompter",
+        description:
+          "PWA de teleprompter para gravar Reels, Shorts e TikToks em 9:16: cole o roteiro da IA, ensaie e grave bloco por bloco olhando para a lente. Os vídeos ficam no aparelho.",
+        href: "https://prompter.julianosirtori.dev/",
+        category: "personal",
+        context: "React · TypeScript · PWA",
+        destination: "product",
       },
       {
         id: "morning-paper",

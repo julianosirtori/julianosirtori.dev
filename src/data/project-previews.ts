@@ -5,6 +5,7 @@ export const projectPreviews: Partial<Record<string, string>> = {
   "black-friday-milena-aranha":
     "/images/projects/black-friday-milena-aranha.webp",
   biomoov: "/images/projects/biomoov.webp",
+  prompter: "/images/projects/prompter.webp",
   "morning-paper": "/images/projects/morning-paper.webp",
   "vault-mcp": "/images/projects/vault-mcp.webp",
   "claude-semaforo": "/images/projects/claude-semaforo.webp",
