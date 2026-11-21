@@ -32,6 +32,13 @@ export default async function sitemap() {
 
   const routes: MetadataRoute.Sitemap = [];
   for (const lang of langs) {
+    // Home: same URL as its canonical (`/${lang}`, no trailing slash).
+    routes.push({
+      url: `${host}/${lang}`,
+      lastModified: today,
+      alternates: alternates(langs, ""),
+    });
+
     for (const post of published.filter((post) => post.language === lang)) {
       const available = langs.filter((locale) =>
         published.some((p) => p.slug === post.slug && p.language === locale),
