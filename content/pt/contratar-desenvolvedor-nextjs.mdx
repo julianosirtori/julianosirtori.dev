@@ -1,0 +1,101 @@
+---
+title: "Contratar desenvolvedor Next.js: o que checar antes"
+date: 2026-11-23
+description: "Vai contratar um desenvolvedor Next.js? O que checar no portfólio, as perguntas que fazem diferença na entrevista e quando Next.js nem é a escolha certa."
+meta:
+  keywords:
+    - contratar desenvolvedor next.js
+    - next.js
+    - freelancer
+    - react
+    - seo técnico
+    - performance
+bannerCloudinaryId: unsplash/photo-1499750310107-5fef28a66643
+bannerCredit: Photo by [Andrew Neel](https://unsplash.com/pt-br/@andrewtneel)
+bannerAlt: "Caderno aberto ao lado de um laptop sobre a mesa"
+---
+
+Muito se fala em Next.js como se fosse resposta pra tudo. Se você chegou aqui, provavelmente tem um projeto na mão e precisa de alguém pra construir. Antes de abrir um marketplace e comparar perfis, vale saber o que olhar.
+
+Escrevo do outro lado da mesa. Programo desde 2017 e uso React e Next.js em boa parte do que construo: o front-end do aiqfome na entrada do super app do Magalu, uma plataforma B2B na CI&T, sites de clientes como a [BioMoov](https://biomoovclinica.com.br/) e o [Fisio Milena Aranha](https://fisiomilenaaranha.com/), o Fisio Rotina e este próprio site. Este texto junta o que eu checaria se estivesse contratando.
+
+## Quando Next.js faz sentido
+
+Next.js é um framework de React que renderiza páginas no servidor, gera páginas estáticas e roda código de back-end no mesmo projeto. Ele vale a pena quando o projeto tem pelo menos uma destas características:
+
+- **Precisa aparecer no Google.** Site institucional, blog, landing page, catálogo. O HTML chega pronto do servidor, e isso ajuda os buscadores e quem abre a página num celular fraco.
+- **Mistura conteúdo público com área logada.** Um SaaS com páginas de marketing e um painel para o cliente cabe no mesmo código.
+- **O time já trabalha com React.** Contratar Next.js nesse cenário é continuar no ecossistema que vocês conhecem.
+
+E quando não faz sentido? Uma página única, sem formulário e sem muito conteúdo, às vezes sai melhor com algo mais simples. A página da Black Friday da Milena Aranha, por exemplo, eu fiz em Astro, porque era isso que ela pedia. Um app que vive só dentro do celular também pede outra stack. **Um bom profissional diz quando Next.js não é a escolha certa**, mesmo que seja a ferramenta que ele mais usa.
+
+## Freelancer, agência ou marketplace
+
+As três opções funcionam. O que muda é o tipo de projeto que cada uma atende melhor.
+
+- **Marketplace** (Workana, Fiverr, Revelo e parecidos). Você vê muitos perfis rápido e o pagamento passa por um intermediário. Funciona bem para escopo fechado e pequeno. O trabalho de filtrar fica com você, e este texto existe justamente pra ajudar nisso.
+- **Agência.** Traz design, gestão de projeto e desenvolvimento juntos. Faz sentido quando você não tem ninguém do seu lado pra cuidar do produto e quer entregar a coordenação inteira.
+- **Freelancer direto.** Você fala com quem escreve o código. A conversa é mais curta e as decisões técnicas ficam visíveis. Em troca, a capacidade é de uma pessoa, então prazo e escopo precisam estar claros desde o começo.
+
+Eu trabalho como freelancer direto, então estou longe de ser neutro. Mesmo assim, as perguntas abaixo valem para qualquer um dos três caminhos.
+
+## O que pedir no portfólio
+
+Portfólio bonito não diz muito. Peça links de projetos no ar e abra cada um com calma. Três coisas separam quem conhece Next.js de quem só segue um tutorial.
+
+### Performance
+
+Abra o site no celular, com a rede do celular. Ele carrega rápido? A página pula enquanto as imagens chegam? Rode o [PageSpeed Insights](https://pagespeed.web.dev/) na página principal e pergunte sobre o resultado. Não precisa ser nota máxima. O que importa é a pessoa saber explicar o que pesa e o que fez para melhorar.
+
+Um exemplo de conversa que vale ter: como ela lida com a navegação entre páginas. Escrevi sobre [como o prefetch acelera a navegação](/pt/blog/improving-navigation-speed-using-prefetch) e por que ele cobra um preço em consumo de dados. Quem trabalha com Next.js no dia a dia tem opinião sobre isso.
+
+### SEO técnico
+
+Se o projeto precisa de tráfego orgânico, confira no portfólio:
+
+- Cada página tem título e descrição próprios?
+- Existe um `sitemap.xml`? Ele lista as páginas que importam?
+- Site em mais de um idioma tem `hreflang` ligando as versões?
+- As páginas têm URL canônica?
+- Artigos e produtos trazem dados estruturados (JSON-LD)?
+
+Dá pra ver tudo isso no código-fonte da página, sem ferramenta paga. Neste site, por exemplo, cada post tem canonical, versões em português e inglês ligadas por `hreflang` e JSON-LD de artigo. É o mínimo que eu espero de um projeto em Next.js que depende de busca.
+
+### Acessibilidade
+
+Tente navegar só com o teclado. Dá pra chegar em todos os links e botões? O foco aparece? As imagens têm texto alternativo? Os formulários têm rótulo? Acessibilidade costuma ser a primeira coisa cortada quando o prazo aperta, e é a mais difícil de colocar de volta depois.
+
+## Perguntas para a entrevista
+
+Currículo mostra por onde a pessoa passou. A entrevista mostra como ela pensa. Algumas perguntas que ajudam:
+
+1. **"Nesse projeto, o que você renderizaria no servidor e o que ficaria no cliente?"** Quem domina o App Router explica a escolha sem decorar termos.
+2. **"Como você protegeria uma Server Action que grava no banco?"** Espere ouvir sobre validação de entrada, autenticação e consultas parametrizadas. Escrevi sobre [Next.js e SQL injection](/pt/blog/nextjs-and-sql-injection) quando esse assunto virou polêmica, e a discussão continua útil pra testar o entendimento.
+3. **"Me mostra um projeto seu e me conta uma decisão que você mudaria hoje."** Quem só aponta acertos ainda não olhou com atenção pro próprio código.
+4. **"Como fica o projeto quando você sair?"** Pergunte sobre documentação, testes, acesso ao repositório e à hospedagem. O código e as contas precisam ficar no seu nome.
+5. **"Como você me mantém informado?"** Frequência de atualização, onde ficam as tarefas, como você vê o progresso sem precisar perguntar.
+
+Se a pessoa responder com segurança e admitir o que não sabe, já é um bom sinal.
+
+## Como é trabalhar comigo
+
+Na página [trabalhe comigo](/pt/work-with-me) está o processo, mas resumo aqui.
+
+Não mantenho agenda pública de disponibilidade. Prefiro primeiro entender o contexto, o momento do projeto e onde eu consigo ajudar. Projetos freelance eu avalio conforme o contexto, o escopo e o prazo. Colaborações de longo prazo também estão na mesa.
+
+Para começar, você me manda uma mensagem com seus dados, o formato de colaboração que procura e um resumo do contexto. Respondo em até 24 horas. Se preferir, também dá pra falar por e-mail ou LinkedIn.
+
+O que costumo assumir em projetos com Next.js:
+
+- Aplicações web de ponta a ponta com React, Next.js, Node.js e TypeScript, da interface à API e ao banco.
+- Sites de conteúdo que precisam aparecer no Google, com o SEO técnico descrito acima.
+- Funcionalidades com LLMs dentro do produto, como agentes, RAG e ferramentas via MCP.
+- Revisão de arquitetura e de qualidade técnica junto com o time que mantém o código.
+
+Se quiser ver o que já construí antes de conversar, os [projetos](/pt/projects) estão organizados por ano, com links para os que estão no ar.
+
+## Resumindo
+
+Antes de contratar um desenvolvedor Next.js, confirme que Next.js é a ferramenta certa pro seu caso. Depois, abra os projetos do portfólio e olhe performance, SEO técnico e acessibilidade com os próprios olhos. Na entrevista, pergunte sobre decisões, segurança e o que acontece quando o trabalho acaba.
+
+Se o seu projeto encaixa no que descrevi, [me conta o contexto](/pt/work-with-me).
