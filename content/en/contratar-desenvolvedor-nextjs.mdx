@@ -1,0 +1,101 @@
+---
+title: "Hire a Next.js developer: what to check first"
+date: 2026-11-23
+description: "Hiring a Next.js developer? What to look for in a portfolio, the interview questions that tell people apart, and when Next.js is the wrong pick."
+meta:
+  keywords:
+    - hire next.js developer
+    - next.js
+    - freelancer
+    - react
+    - technical seo
+    - performance
+bannerCloudinaryId: unsplash/photo-1499750310107-5fef28a66643
+bannerCredit: Photo by [Andrew Neel](https://unsplash.com/@andrewtneel)
+bannerAlt: "An open notebook next to a laptop on a desk"
+---
+
+Next.js gets pitched as the answer to almost everything. If you landed here, you probably have a project and need someone to build it. Before you start comparing profiles on a freelance platform, it helps to know what to look at.
+
+I'm writing from the other side of the table. I've been programming since 2017, and React and Next.js show up in most of what I build: aiqfome's front-end when it joined Magalu's super app, a B2B platform at CI&T, client sites like [BioMoov](https://biomoovclinica.com.br/) and [Fisio Milena Aranha](https://fisiomilenaaranha.com/), Fisio Rotina, and this site. This post is the checklist I would use if I were the one hiring.
+
+## When Next.js is a good fit
+
+Next.js is a React framework. It renders pages on the server, generates static pages, and runs backend code in the same project. It pays off when your project has at least one of these traits:
+
+- **It needs to rank on Google.** Company site, blog, landing page, catalog. The server sends finished HTML, which helps search engines and people opening the page on a cheap phone.
+- **Public content lives next to a logged-in area.** A SaaS with marketing pages and a customer dashboard can share one codebase.
+- **Your team already writes React.** Hiring for Next.js then means staying in an ecosystem you know.
+
+And when is it a poor fit? A single page with no forms and little content is sometimes better served by something simpler. I built the Black Friday page for Milena Aranha in Astro because that is what the job called for. An app that only lives on the phone needs a different stack too. **A good developer tells you when Next.js is the wrong tool**, even if it's the one they use most.
+
+## Freelancer, agency, or platform
+
+All three can work. They just suit different projects.
+
+- **Freelance platforms** (Upwork, Fiverr and the like). You see a lot of profiles quickly, and payment goes through a middleman. Good for small, well-defined scope. Filtering is on you, which is what this post is for.
+- **Agency.** Design, project management, and development under one roof. A sensible choice when nobody on your side can own the product and you want to hand off the coordination too.
+- **Direct freelancer.** You talk to the person writing the code. Conversations are shorter and technical decisions stay visible. The trade-off is that capacity is one person, so scope and timeline need to be clear from day one.
+
+I work as a direct freelancer, so I'm hardly neutral. The questions below still apply whichever route you take.
+
+## What to look for in a portfolio
+
+A polished portfolio page tells you little. Ask for links to live projects and take your time with each one. Three things separate people who know Next.js from people who followed a tutorial.
+
+### Performance
+
+Open the site on your phone, on mobile data. Does it load quickly? Does the layout jump around while images arrive? Run the homepage through [PageSpeed Insights](https://pagespeed.web.dev/) and ask about the result. A perfect score isn't the point. What matters is that the developer can explain what slows the page down and what they did about it.
+
+One conversation worth having is how they handle navigation between pages. I wrote about [how prefetching speeds up navigation](/en/blog/improving-navigation-speed-using-prefetch) and why it costs the user data. Anyone working with Next.js day to day has an opinion on that.
+
+### Technical SEO
+
+If the project depends on organic traffic, check the portfolio for:
+
+- A unique title and description on every page.
+- A `sitemap.xml` that lists the pages that matter.
+- `hreflang` tags connecting language versions, on multilingual sites.
+- A canonical URL on each page.
+- Structured data (JSON-LD) on articles and products.
+
+You can see all of this in the page source, no paid tools needed. On this site, every post has a canonical URL, English and Portuguese versions linked through `hreflang`, and article JSON-LD. That's the baseline I expect from a Next.js project that relies on search.
+
+### Accessibility
+
+Try using the site with only a keyboard. Can you reach every link and button? Is the focus visible? Do images have alt text? Do form fields have labels? Accessibility is often the first thing cut when a deadline gets tight, and the hardest to add back later.
+
+## Interview questions
+
+A résumé shows where someone has been. An interview shows how they think. A few questions that help:
+
+1. **"For this project, what would you render on the server and what would stay on the client?"** Someone comfortable with the App Router explains the choice without reciting jargon.
+2. **"How would you secure a Server Action that writes to the database?"** Listen for input validation, authentication, and parameterized queries. I wrote about [Next.js and SQL injection](/en/blog/nextjs-and-sql-injection) when that topic blew up, and it still works as a way to test understanding.
+3. **"Show me one of your projects and tell me a decision you would change today."** If they only point out what went right, they haven't looked closely at their own code.
+4. **"What does the project look like after you leave?"** Ask about documentation, tests, and access to the repository and hosting. The code and the accounts should be in your name.
+5. **"How will you keep me in the loop?"** How often you get updates, where tasks live, how you see progress without having to ask.
+
+If they answer with confidence and admit what they don't know, that's a good sign.
+
+## Working with me
+
+The full process is on the [work with me](/en/work-with-me) page. Here is the short version.
+
+I don't keep a public availability calendar. I'd rather understand the context first: where the project is and where I can actually help. I take freelance projects depending on context, scope, and timeline, and I'm open to long-term collaborations.
+
+To start, send me a message with your details, the kind of collaboration you're after, and a short summary of the context. I reply within 24 hours. Email and LinkedIn work too.
+
+What I usually take on in Next.js projects:
+
+- Web applications end to end with React, Next.js, Node.js, and TypeScript, from the interface to the API and the database.
+- Content sites that need to rank on Google, with the technical SEO described above.
+- LLM features inside the product, such as agents, RAG, and tools exposed over MCP.
+- Architecture and code quality reviews alongside the team that maintains the code.
+
+If you want to see what I've built before we talk, my [projects](/en/projects) are listed by year, with links to the ones that are live.
+
+## The short version
+
+Before hiring a Next.js developer, make sure Next.js fits your project. Then open the portfolio projects and check performance, technical SEO, and accessibility yourself. In the interview, ask about decisions, security, and what happens when the work is done.
+
+If your project sounds like what I described, [tell me about it](/en/work-with-me).
