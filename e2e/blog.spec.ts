@@ -80,7 +80,7 @@ test.describe("Blog Page", () => {
       const results = page.locator("#blog-results");
       const originalCount = await results.getByRole("link").count();
       await topic.selectOption("next.js");
-      await expect(results.getByRole("link")).toHaveCount(2);
+      await expect(results.getByRole("link")).toHaveCount(3);
       await search.fill("SSE");
       await expect(results.getByRole("link")).toHaveCount(1);
       await expect(page.locator("main").getByRole("status")).toHaveText(
@@ -124,7 +124,7 @@ test.describe("Blog Page", () => {
       const related = page.getByRole("region", {
         name: locale === "pt" ? "Leia em seguida" : "Read next",
       });
-      await expect(related.getByRole("link")).toHaveCount(2);
+      await expect(related.getByRole("link")).toHaveCount(3);
       await expect(related.locator('a[href$="/sse"]')).toHaveCount(0);
       await page
         .getByRole("link", {
@@ -272,7 +272,7 @@ test.describe("Blog Page", () => {
     const page = await context.newPage();
     await page.goto("/pt/blog");
     await expect(page.locator('#blog-results a[href*="/blog/"]')).toHaveCount(
-      16,
+      17,
     );
     await page.goto("/pt/blog/sse");
     await expect(page.locator("article")).toContainText(
